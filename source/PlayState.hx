@@ -118,7 +118,7 @@ class PlayState extends MusicBeatState
 
 	var focusOnDadGlobal:Bool = true;
 
-	var funnyFloatyBoys:Array<String> = ['dave-angey', 'bambi-3d', 'dave-annoyed-3d', 'dave-3d-standing-bruh-what', 'bambi-unfair', 'bambi-piss-3d', 'bandu', 'unfair-junker', 'split-dave-3d', 'badai', 'tunnel-dave', 'tunnel-bf', 'tunnel-bf-flipped', 'bandu-candy', 'bandu-origin', 'ringi', 'bambom', 'bendu'];
+	var funnyFloatyBoys:Array<String> = ['dave-angey', 'bambi-3d', 'dave-annoyed-3d', 'dave-3d-standing-bruh-what', 'bambi-unfair', 'bambi-piss-3d', 'bandu', 'unfair-junker', 'split-dave-3d', 'badai', 'tunnel-dave', 'tunnel-bf', 'tunnel-bf-flipped', 'bandu-candy', 'bandu-origin', 'ringi', 'bambom', 'bendu', 'switch'];
 
 	var storyDifficultyText:String = "";
 	var iconRPC:String = "";
@@ -337,7 +337,7 @@ class PlayState extends MusicBeatState
 			+ truncateFloat(accuracy, 2)
 			+ "% | Score: "
 			+ songScore
-			+ " | Misses: "
+			+ " | WuffGaming was here | Misses: "
 			+ misses, iconRPC);
 		#end
 		// var gameCam:FlxCamera = FlxG.camera;
@@ -748,7 +748,7 @@ class PlayState extends MusicBeatState
 		// Add Kade Engine watermark
 		kadeEngineWatermark = new FlxText(4, textYPos, 0,
 		SONG.song
-		+ " - " + engineName + "Engine (KE 1.2)", 16);
+		+ " - " + engineName + "Engine (GAMERCAAAT)", 16);
 		kadeEngineWatermark.setFormat(Paths.font("comic.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		kadeEngineWatermark.scrollFactor.set();
 		kadeEngineWatermark.borderSize = 1.25;
@@ -1378,7 +1378,7 @@ class PlayState extends MusicBeatState
 			+ truncateFloat(accuracy, 2)
 			+ "% | Score: "
 			+ songScore
-			+ " | Misses: "
+			+ " | WuffGaming was here | Misses: "
 			+ misses, iconRPC);
 		#end
 		FlxG.sound.music.onComplete = endSong;
@@ -1712,7 +1712,7 @@ class PlayState extends MusicBeatState
 				+ truncateFloat(accuracy, 2)
 				+ "% | Score: "
 				+ songScore
-				+ " | Misses: "
+				+ " | WuffGaming was here | Misses: "
 				+ misses, iconRPC);
 			#end
 			if (!startTimer.finished)
@@ -1743,7 +1743,7 @@ class PlayState extends MusicBeatState
 						+ truncateFloat(accuracy, 2)
 						+ "% | Score: "
 						+ songScore
-						+ " | Misses: "
+						+ " | WuffGaming was here | Misses: "
 						+ misses, iconRPC, true,
 						FlxG.sound.music.length
 						- Conductor.songPosition);
@@ -1777,7 +1777,7 @@ class PlayState extends MusicBeatState
 			+ truncateFloat(accuracy, 2)
 			+ "% | Score: "
 			+ songScore
-			+ " | Misses: "
+			+ " | WuffGaming was here | Misses: "
 			+ misses, iconRPC);
 		#end
 	}
@@ -2484,7 +2484,7 @@ class PlayState extends MusicBeatState
 						+ truncateFloat(accuracy, 2)
 						+ "% | Score: "
 						+ songScore
-						+ " | Misses: "
+						+ " | WuffGaming was here | Misses: "
 						+ misses, iconRPC);
 						#end
 				}
@@ -2518,7 +2518,7 @@ class PlayState extends MusicBeatState
 							+ truncateFloat(accuracy, 2)
 							+ "% | Score: "
 							+ songScore
-							+ " | Misses: "
+							+ " | WuffGaming was here | Misses: "
 							+ misses, iconRPC);
 							#end
 					}
@@ -3631,7 +3631,7 @@ class PlayState extends MusicBeatState
 			+ truncateFloat(accuracy, 2)
 			+ "% | Score: "
 			+ songScore
-			+ " | Misses: "
+			+ " | WuffGaming was here | Misses: "
 			+ misses, iconRPC, true,
 			FlxG.sound.music.length
 			- Conductor.songPosition);

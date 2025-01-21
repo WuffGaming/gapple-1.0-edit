@@ -41,7 +41,9 @@ class HealthIcon extends FlxSprite
 		'bambom',
 		'ringi',
 		'bendu',
-		'dave-wheels'
+		'dave-wheels',
+		'afnfg-boyfriend',
+		'switch'
 	];
 
 	public var charPublic:String = 'bf';
@@ -80,6 +82,8 @@ class HealthIcon extends FlxSprite
 
 			addIcon('bambi-good', 44);
 
+			addIcon('switch', 46);
+
 			addIcon('sart-producer', 26);
 
 			addIcon('sart-producer-night', 26);
@@ -106,7 +110,7 @@ class HealthIcon extends FlxSprite
 	
 			addIcon('bandu', 8);
 	
-			addIcon('bandu-candy', 8);
+			addIcon('bandu-candy', 48);
 	
 			addIcon('bandu-origin', 8);
 
@@ -129,6 +133,8 @@ class HealthIcon extends FlxSprite
 			addIcon('RECOVERED_PROJECT_2', 24);
 
 			addIcon('RECOVERED_PROJECT_3', 24);
+
+			addIcon('afnfg-boyfriend', 0);
 	
 			animation.play('face');
 		}

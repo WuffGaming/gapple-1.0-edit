@@ -724,6 +724,32 @@ class Character extends FlxSprite
 				antialiasing = false;
 		
 				playAnim('idle');
+				
+							case 'switch':
+				frames = Paths.getSparrowAtlas('alternated/switch');
+				
+				animation.addByPrefix('idle', 'SwitchIdle', 14, true);
+				animation.addByPrefix('singUP', 'SwitchUp', 14, false);
+				animation.addByPrefix('singRIGHT', 'SwitchRight', 14, false);
+				animation.addByPrefix('singDOWN', 'SwitchDown', 14, false);
+				animation.addByPrefix('singLEFT', 'SwitchLeft', 14, false);
+				
+				addOffset('idle');
+				addOffset("singUP", 134, 211);
+				addOffset("singRIGHT", 97, 232);
+				addOffset("singLEFT", 172, 48);
+				addOffset("singDOWN", -1, -290);
+
+				globaloffset[0] = -60;
+				globaloffset[1] = 60;
+
+				setGraphicSize(Std.int(width / furiosityScale));
+				updateHitbox();
+
+				antialiasing = false;
+
+				playAnim('idle');
+				
 			case 'bf':
 				var tex = Paths.getSparrowAtlas('BOYFRIEND');
 				frames = tex;
@@ -783,6 +809,28 @@ class Character extends FlxSprite
 				addOffset("singLEFT", 57);
 				addOffset("singDOWN");
 				addOffset('turn');
+
+				playAnim('idle');
+
+				flipX = true;
+
+				nativelyPlayable = true;
+				
+				case 'afnfg-boyfriend':
+				var tex = Paths.getSparrowAtlas('afnfg/afnfg_boyfriend');
+				frames = tex;
+
+				animation.addByPrefix('idle', 'idl', 60, false);
+				animation.addByPrefix('singUP', 'up', 24, false);
+				animation.addByPrefix('singLEFT', 'left', 24, false);
+				animation.addByPrefix('singRIGHT', 'right', 24, false);
+				animation.addByPrefix('singDOWN', 'down', 24, false);
+
+				addOffset('idle');
+				addOffset("singUP", 19, -17);
+				addOffset("singRIGHT", -9, -20);
+				addOffset("singLEFT", 38, -23);
+				addOffset("singDOWN", 1, -56);
 
 				playAnim('idle');
 

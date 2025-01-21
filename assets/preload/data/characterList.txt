@@ -14,6 +14,8 @@ garrett
 bandu-candy
 dave-png
 RECOVERED_PROJECT
+RECOVERED_PROJECT_2
+RECOVERED_PROJECT_3
 bandu-origin
 diamond-man
 ringi
@@ -22,3 +24,5 @@ bendu
 playrobot
 playrobot-crazy
 hall-monitor
+afnfg-boyfriend
+switch
