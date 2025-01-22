@@ -420,7 +420,7 @@ class PlayState extends MusicBeatState
 			gfVersion = 'gf-christmas';
 		}
 		if (SONG.song.toLowerCase() == 'sugar-rush') gfVersion = 'gf-only';
-		if (SONG.song.toLowerCase() == 'wheels') gfVersion = 'gf-wheels';
+		if (SONG.song.toLowerCase() == 'swag') gfVersion = 'gf-wheels';
 		gf = new Character(400 + charoffsetx, 130 + charoffsety, gfVersion);
 		gf.scrollFactor.set(0.95, 0.95);
 
@@ -535,7 +535,7 @@ class PlayState extends MusicBeatState
 				dad.x -= 100;
 			case 'sugar':
 				gf.setPosition(811, 200);
-			case 'wheels':
+			case 'swag':
 				gf.setPosition(400, boyfriend.getMidpoint().y);
 				gf.y -= gf.height / 2;
 				gf.x += 190;
@@ -727,8 +727,8 @@ class PlayState extends MusicBeatState
 				credits = 'Original song made by Vania for Vs. Sonic.exe!';
 			case 'bambi-666-level':
 				credits = 'Bambi 666 Level';
-			case 'wheels':
-				credits = 'this song is a joke please dont take it seriously';
+			case 'swag':
+				credits = 'Song by Goldd!';
 			default:
 				credits = '';
 		}
@@ -1059,8 +1059,8 @@ class PlayState extends MusicBeatState
 				daveFuckingDies.y = 1500;
 				add(daveFuckingDies);
 				daveFuckingDies.visible = false;
-			case 'wheels':
-				curStage = 'wheels';
+			case 'swag':
+				curStage = 'swag';
 
 				var bg = new FlxSprite(150, 100).loadGraphic(Paths.image('dave/swag'));
 				bg.scale.set(3, 3);
