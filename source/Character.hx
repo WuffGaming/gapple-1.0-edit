@@ -703,20 +703,20 @@ class Character extends FlxSprite
 
 				playAnim('idle');
 			case 'unfair-junker':
-				frames = Paths.getSparrowAtlas('bambi/UNFAIR_GUY_FAICNG_FORWARD');
+				frames = Paths.getSparrowAtlas('bambi/NEWER UNFAIR GUY');
 				animation.addByPrefix('idle', 'idle', 24, false);
 				animation.addByIndices('singUP', 'up', [0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2], '', 24, false);
 				animation.addByIndices('singRIGHT', 'right', [0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2], '', 24, false);
 				animation.addByIndices('singDOWN', 'down', [0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2], '', 24, false);
 				animation.addByIndices('singLEFT', 'left', [0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2], '', 24, false);
-				animation.addByIndices('inhale', 'INHALE', [0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 1, 2, 1, 2, 1, 0, 0], '', 24, false);
+				animation.addByIndices('inhale', 'inhaler', [0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 1, 2, 1, 2, 1, 0, 0], '', 24, false);
 
 				addOffset('idle');
-				addOffset("singUP");
-				addOffset("singRIGHT");
-				addOffset("singLEFT");
-				addOffset("singDOWN");
-				addOffset('inhale');
+				addOffset("singUP", 157, 67);
+				addOffset("singRIGHT", 225, 4);
+				addOffset("singLEFT", 222, 84);
+				addOffset("singDOWN", 113, -104);
+				addOffset('inhale', 71 -36);
 				globaloffset[0] = 150 * 1.3;
 				globaloffset[1] = 450 * 1.3; //this is the y
 				setGraphicSize(Std.int((width * 1.3) / furiosityScale));
