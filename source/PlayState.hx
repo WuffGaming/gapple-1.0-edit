@@ -309,7 +309,7 @@ class PlayState extends MusicBeatState
 				iconRPC = 'icon_og_dave';
 			case 'bambi-piss-3d':
 				iconRPC = 'icon_bambi_piss_3d';
-			case 'bandu' | 'bandu-candy' | 'bandu-scaredy' | 'bandu-origin':
+			case 'bandu' | 'bandu-candy' | 'bandu-origin':
 				iconRPC = 'icon_bandu';
 			case 'badai':
 				iconRPC = 'icon_badai';
@@ -389,6 +389,8 @@ class PlayState extends MusicBeatState
 				dialogue = CoolUtil.coolTextFile(Paths.txt('wireframe/wireDialogue'));
 			case 'algebra':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('algebra/algebraDialogue'));
+			case 'duper':
+				dialogue = CoolUtil.coolTextFile(Paths.txt('duper/duperDialogue'));
 		}
 
 		backgroundSprites = createBackgroundSprites(SONG.song.toLowerCase());
@@ -493,9 +495,6 @@ class PlayState extends MusicBeatState
 			case 'dave-old':
 				boyfriend.y = 100 + 270;
 				boyfriendOldIcon = 'dave';
-			case 'bandu-scaredy':
-				if (SONG.song.toLowerCase() == 'cycles')
-					boyfriend.setPosition(-202, 20);
 			case 'dave-angey' | 'dave-annoyed-3d' | 'dave-3d-standing-bruh-what':
 				boyfriend.y = 100;
 				switch(boyfriend.curCharacter)
@@ -723,8 +722,6 @@ class PlayState extends MusicBeatState
 				credits = 'OC created by Emiko!';
 			case 'keyboard':
 				credits = 'OC created by DanWiki!';
-			case 'cycles':
-				credits = 'Original song made by Vania for Vs. Sonic.exe!';
 			case 'bambi-666-level':
 				credits = 'Bambi 666 Level';
 			case 'swag':
@@ -827,7 +824,7 @@ class PlayState extends MusicBeatState
 		{
 			switch (curSong.toLowerCase())
 			{
-				case 'disruption' | 'applecore' | 'disability' | 'wireframe' | 'algebra':
+				case 'disruption' | 'applecore' | 'disability' | 'wireframe' | 'algebra' | 'duper':
 					schoolIntro(doof);
 				case 'origin':
 					originCutscene();
@@ -1073,11 +1070,6 @@ class PlayState extends MusicBeatState
 				defaultCamZoom = 0.6;
 
 				add(new FlxSprite(-1350, -1111).loadGraphic(Paths.image('sart/bg')));
-			case 'cycles':
-				curStage = 'house';
-				defaultCamZoom = 1.05;
-
-				add(new FlxSprite(-130, -94).loadGraphic(Paths.image('bambi/yesThatIsATransFlag')));
 			case 'thunderstorm':
 				curStage = 'out';
 				defaultCamZoom = 0.8;
@@ -2859,8 +2851,6 @@ class PlayState extends MusicBeatState
 
 			if (SONG.song.toLowerCase() == 'applecore') defaultCamZoom = 0.5;
 
-			if (boyfriend.curCharacter == 'bandu-scaredy') camFollow.x += 350;
-
 			if (SONG.song.toLowerCase() == 'tutorial')
 			{
 				FlxTween.tween(FlxG.camera, {zoom: 1}, (Conductor.stepCrochet * 4 / 1000), {ease: FlxEase.elasticInOut});
@@ -2893,9 +2883,6 @@ class PlayState extends MusicBeatState
 
 			case 'sart-producer':
 				camFollow.x -= 100;
-			case 'sart-producer-night':
-				camFollow.y += 250;
-				camFollow.x -= 425;
 			case 'dave-wheels':
 				camFollow.y -= 150;
 			case 'hall-monitor':
@@ -4239,11 +4226,6 @@ class PlayState extends MusicBeatState
 			case 'bambi-angey':
 				dad.y += 450;
 				dad.x += 100;
-			case 'bandu-scaredy':
-				dad.setPosition(-202, 20);
-			case 'sart-producer-night':
-				dad.setPosition(732, 83);
-				dad.y -= 200;
 			case 'RECOVERED_PROJECT' | 'RECOVERED_PROJECT_2' | 'RECOVERED_PROJECT_3':
 				dad.setPosition(-307, 10);
 			case 'sart-producer':

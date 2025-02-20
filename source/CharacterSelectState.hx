@@ -61,18 +61,10 @@ class CharacterSelectState extends MusicBeatState
 	public var characters:Array<CharacterInSelect> = 
 	[
 		new CharacterInSelect(['bf', '3d-bf', 'afnfg-boyfriend'], ["Boyfriend", '3D Boyfriend', 'AFNFG Boyfriend']),
-		new CharacterInSelect(['split-dave-3d', 'tunnel-dave', 'og-dave', 'og-dave-angey', 'dave-wheels'], ['Disability Dave', 'Decimated Dave', 'Algebra Dave', 'Algebra Dave (Angry)', 'Dave but Awesome']),
-		new CharacterInSelect(['bambi-piss-3d', 'unfair-junker'], ['Angry 3D Bambi', 'Unfair Bambi Facing Forward']),
-		new CharacterInSelect(['bandu', 'badai', 'bandu-candy', 'bandu-origin'], ['Bandu', 'Badai', 'Bandu (Sugar Rush)', 'Bandu (Origin)']),
-		new CharacterInSelect(['garrett'], ["Garrett"]),
-		new CharacterInSelect(['hall-monitor'], ["Hall Monitor"]),
-		new CharacterInSelect(['diamond-man'], ["Diamond Man"]),
-		new CharacterInSelect(['playrobot', 'playrobot-crazy'], ["Playrobot", 'Playrobot (Crazy)']),
-		new CharacterInSelect(['ringi'], ["Ringi"]),
-		new CharacterInSelect(['bambom'], ["Bambom"]),
-		new CharacterInSelect(['bendu'], ["Bendu"]),
-		new CharacterInSelect(['sart-producer', 'sart-producer-night'], ["Sart Producer", "Sart Producer (Night)"])
-
+		new CharacterInSelect(['split-dave-3d', 'tunnel-dave', 'og-dave', 'dave-wheels'], ['Disability Dave', 'Decimated Dave', 'Algebra Dave', 'Dave but Awesome']),
+		new CharacterInSelect(['bambi-piss-3d'], ['Angry 3D Bambi']),
+		new CharacterInSelect(['unfair-junker'], ['Unfair Expunged (Facing Forward)']),
+		new CharacterInSelect(['bandu', 'badai', 'bandu-origin'], ['Bandu', 'Badai', 'Bandu (Origin)'])
 	];
 	public function new() 
 	{
@@ -85,7 +77,7 @@ class CharacterSelectState extends MusicBeatState
 		Conductor.changeBPM(110);
 		if(PlayState.SONG.song.toLowerCase() == 'dave-x-bambi-shipping-cute')
 		{
-			characters = [new CharacterInSelect(['dave-good','split-dave-3d', 'tunnel-dave', 'og-dave', 'og-dave-angey'], ['Dave (Dave x Bambi)', 'Disability Dave', 'Wireframe Dave', 'Algebra Dave', 'Algebra Dave (Angry)'])];
+			characters = [new CharacterInSelect(['dave-good','split-dave-3d', 'tunnel-dave', 'og-dave', 'dave-wheels'], ['Dave (Dave x Bambi)', 'Disability Dave', 'Wireframe Dave', 'Algebra Dave', 'Dave but Awesome'])];
 		}
 		currentSelectedCharacter = characters[current];
 

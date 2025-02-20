@@ -69,7 +69,7 @@ class DialogueBox extends FlxSpriteGroup
 				case 'house' | 'insanity' | 'splitathon' | 'disability' | 'applecore' | 'algebra':
 					FlxG.sound.playMusic(Paths.music('DaveDialogue'), 0);
 					FlxG.sound.music.fadeIn(1, 0, 0.8);
-				case 'furiosity' | 'polygonized' | 'cheating' | 'unfairness' | 'disruption' | 'wireframe':
+				case 'furiosity' | 'polygonized' | 'cheating' | 'unfairness' | 'disruption' | 'wireframe' | 'duper':
 					FlxG.sound.playMusic(Paths.music('scaryAmbience'), 0);
 					FlxG.sound.music.fadeIn(1, 0, 0.8);
 				case 'supernovae' | 'glitch':
@@ -155,7 +155,7 @@ class DialogueBox extends FlxSpriteGroup
 				var face:FlxSprite = new FlxSprite(320, 170).loadGraphic(Paths.image('weeb/spiritFaceForward', 'week6'));
 				face.setGraphicSize(Std.int(face.width * 6));
 				add(face);
-			case 'house' | 'insanity' | 'furiosity' | 'polygonized' | 'supernovae' | 'cheating' | 'unfairness' | 'glitch' | 'blocked' | 'corn-theft' | 'maze' | 'splitathon' | 'disruption' | 'applecore' | 'disability' | 'wireframe' | 'algebra':
+			case 'house' | 'insanity' | 'furiosity' | 'polygonized' | 'supernovae' | 'cheating' | 'unfairness' | 'glitch' | 'blocked' | 'corn-theft' | 'maze' | 'splitathon' | 'disruption' | 'applecore' | 'disability' | 'wireframe' | 'algebra' | 'duper':
 				hasDialog = true;
 				box.frames = Paths.getSparrowAtlas('speech_bubble_talking');
 				box.setGraphicSize(Std.int(box.width / textBoxSizeFix));
@@ -184,7 +184,7 @@ class DialogueBox extends FlxSpriteGroup
 			case 'house' | 'insanity' | 'furiosity' | 'polygonized' | 'disability' | 'algebra' | 'wireframe':
 				portraitLeftCharacter = 'dave';
 				
-			case 'blocked' | 'corn-theft' | 'maze' | 'supernovae' | 'glitch' | 'splitathon' | 'cheating' | 'unfairness' | 'disruption' | 'applecore':
+			case 'blocked' | 'corn-theft' | 'maze' | 'supernovae' | 'glitch' | 'splitathon' | 'cheating' | 'unfairness' | 'disruption' | 'applecore' | 'duper':
 				portraitLeftCharacter = 'bambi';
 		}
 
@@ -247,6 +247,17 @@ class DialogueBox extends FlxSpriteGroup
 				swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
 				swagDialogue.font = 'Comic Sans MS Bold';
 				swagDialogue.color = 0xFF000000;
+				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText'), 0.6)];
+				add(swagDialogue);
+			case 'duper':
+				dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", 32);
+				dropText.font = 'Comic Sans MS Bold';
+				dropText.color = 0xFF00137F;
+				add(dropText);
+		
+				swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
+				swagDialogue.font = 'Comic Sans MS Bold';
+				swagDialogue.color = FlxColor.GREEN;
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText'), 0.6)];
 				add(swagDialogue);
 			default:
@@ -484,6 +495,9 @@ class DialogueBox extends FlxSpriteGroup
 					case 'applecore':
 						portrait.portraitPath = 'dialogue/bandu_portrait';
 						portrait.portraitPrefix = 'bandu portrait';
+					case 'duper':
+						portrait.portraitPath = 'dialogue/bambi_corntheft';
+						portrait.portraitPrefix = 'bambi corntheft portrait';
 					default:
 						portrait.portraitPath = 'dialogue/bambi_corntheft';
 						portrait.portraitPrefix = 'bambi corntheft portrait';
