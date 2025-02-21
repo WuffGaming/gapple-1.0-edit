@@ -29,7 +29,7 @@ class MainMenuState extends MusicBeatState
 
 	var realMenuItems:Int = 4;
 
-	var optionShit:Array<String> = ['play', 'options', 'credits', 'discord', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'dave x bambi shipping cute'];
+	var optionShit:Array<String> = ['play', 'options', 'credits', 'discord', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'dave x bambi shipping cute', '', '', '', '', '', '', '',  '', '', '', '', '', '', '',  '', '', '', '', '', '', '', 'player'];
 
 	var newGaming:FlxText;
 	var newGaming2:FlxText;
@@ -242,6 +242,8 @@ class MainMenuState extends MusicBeatState
 									FlxG.switchState(new CreditsMenuState());
 								case 'play':
 									FlxG.switchState(new PlayMenuState());
+								case 'player':
+									FlxG.switchState(new ExtraExtrasMenuState());
 								case 'dave x bambi shipping cute':
 									var poop:String = Highscore.formatSong('dave-x-bambi-shipping-cute', 1);
 

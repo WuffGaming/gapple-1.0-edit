@@ -1,6 +1,5 @@
 package;
 
-import flixel.math.FlxMath;
 import flixel.math.FlxRandom;
 import flixel.math.FlxPoint;
 import Controls.KeyboardScheme;
@@ -22,13 +21,17 @@ import Discord.DiscordClient;
 
 using StringTools;
 
-class PlayMenuState extends MusicBeatState
+class ExtraExtrasMenuState extends MusicBeatState
 {
 	var curSelected:Int = 0;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
 
-	var optionShit:Array<String> = ['duper', 'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'extras'];
+	var realMenuItems:Int = 4;
+
+	var optionShit:Array<String> = ['story mode', 'freeplay'];
+
+	// i love reusing code! so easy!
 
 	var newGaming:FlxText;
 	var newGaming2:FlxText;
@@ -38,17 +41,12 @@ class PlayMenuState extends MusicBeatState
 
 	public static var finishedFunnyMove:Bool = false;
 
-	public static var daRealEngineVer:String = 'Golden Apple';
+	public static var daRealEngineVer:String = 'Dave';
 
 	public static var engineVers:Array<String> = ['Golden Apple'];
 
-	public static var kadeEngineVer:String = "Golden Apple";
+	public static var kadeEngineVer:String = "DAVE";
 	public static var gameVer:String = "0.2.7.1";
-
-	var lerpScore:Int = 0;
-	var intendedScore:Int = 0;
-
-	var bg:FlxSprite;
 
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
@@ -78,7 +76,7 @@ class PlayMenuState extends MusicBeatState
 		}
 
 		#if desktop
-		DiscordClient.changePresence("In the Menus", null);
+		DiscordClient.changePresence("In the Fucked Menus", null);
 		#end
 		
 		if (FlxG.save.data.unlockedcharacters == null)
@@ -88,7 +86,7 @@ class PlayMenuState extends MusicBeatState
 
 		daRealEngineVer = engineVers[FlxG.random.int(0, 0)];
 		
-		bg = new FlxSprite(-80).loadGraphic(Paths.image('menu/${optionShit[0]}'));
+		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(randomizeBG());
 		bg.scrollFactor.set();
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
 		bg.updateHitbox();
@@ -109,8 +107,6 @@ class PlayMenuState extends MusicBeatState
 
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
-
-		var tex = Paths.getSparrowAtlas('FNF_main_menu_assets');
 
 		camFollow = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
@@ -133,6 +129,7 @@ class PlayMenuState extends MusicBeatState
 			menuItem.scrollFactor.set(0, 1);
 			menuItem.antialiasing = true;
 			menuItem.y = 60 + (i * 160);
+			if (firstStart)
 			{
 				menuItem.y += 2000;
 				FlxTween.tween(menuItem,{y: 60 + (i * 160)},1 + (i * 0.25) ,{ease: FlxEase.expoInOut, onComplete: function(flxTween:FlxTween) 
@@ -167,10 +164,17 @@ class PlayMenuState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-		if (FlxG.sound.music.volume < 0.7)
+		menuItems.forEach(function(spr:FlxSprite)
+		{
+			spr.screenCenter(X);
+		});
+
+		if (FlxG.sound.music.volume < 0.8)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 		}
+
+		super.update(elapsed);
 
 		if (!selectedSomethin)
 		{
@@ -188,18 +192,21 @@ class PlayMenuState extends MusicBeatState
 
 			if (controls.BACK)
 			{
-				FlxG.switchState(new MainMenuState());
+				FlxG.switchState(new TitleState());
 			}
 
 			if (controls.ACCEPT)
 			{
+				if(optionShit[curSelected] == '')
+				{
+					return;
+				}
+				if(optionShit[curSelected] == 'discord')
+				{
+					fancyOpenURL('https://discord.gg/UvyuaUrX');
+					return;
+				}
 				selectedSomethin = true;
-
-				magenta.loadGraphic(Paths.image('menu/${optionShit[curSelected]}'));
-				magenta.setGraphicSize(1280);
-				magenta.updateHitbox();
-				magenta.screenCenter();
-
 				FlxG.sound.play(Paths.sound('confirmMenu'));
 
 				FlxFlicker.flicker(magenta, 1.1, 0.15, false);
@@ -225,22 +232,10 @@ class PlayMenuState extends MusicBeatState
 							{
 								case 'story mode':
 									FlxG.switchState(new StoryMenuState());
-								case 'extras':
-									FlxG.switchState(new ExtraSongState());
-								default:
-									var poop:String = Highscore.formatSong(daChoice, 1);
-
-									trace(poop);
-						
-									PlayState.SONG = Song.loadFromJson(poop, daChoice);
-									PlayState.isStoryMode = false;
-									PlayState.storyDifficulty = 1;
-									PlayState.xtraSong = false;
-						
-									PlayState.storyWeek = 1;
-									PlayState.characteroverride = 'none';
-									PlayState.formoverride = 'none';
-									LoadingState.loadAndSwitchState(new PlayState());
+									trace("Story Menu Selected");
+								case 'freeplay':
+									FlxG.switchState(new FreeplayState());
+									trace("Freeplay Menu Selected");
 							}
 						});
 					}
@@ -248,13 +243,6 @@ class PlayMenuState extends MusicBeatState
 				
 			}
 		}
-
-		super.update(elapsed);
-
-		menuItems.forEach(function(spr:FlxSprite)
-		{
-			spr.screenCenter(X);
-		});
 	}
 
 	override function beatHit()
@@ -272,7 +260,7 @@ class PlayMenuState extends MusicBeatState
 			if (curSelected >= menuItems.length)
 				curSelected = 0;
 			if (curSelected < 0)
-				curSelected = menuItems.length - 1;	
+				curSelected = realMenuItems - 1;	
 		}
 
 		menuItems.forEach(function(spr:FlxSprite)
@@ -287,15 +275,6 @@ class PlayMenuState extends MusicBeatState
 
 			spr.updateHitbox();
 		});
-
-		#if !switch
-		intendedScore = Highscore.getScore(optionShit[curSelected], 1);
-		#end
-
-		bg.loadGraphic(Paths.image('menu/${optionShit[curSelected]}'));
-		bg.setGraphicSize(1280);
-		bg.updateHitbox();
-		bg.screenCenter();
 	}
 	public static function randomizeBG():flixel.system.FlxAssets.FlxGraphicAsset
 	{
