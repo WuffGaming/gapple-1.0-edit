@@ -32,6 +32,9 @@ class SaveDataHandler
 		if (FlxG.save.data.donoteclick == null)
 			FlxG.save.data.donoteclick = false;
 
+		if (FlxG.save.data.fps == null)
+			FlxG.save.data.fps = false;
+
 		if (FlxG.save.data.newInput != null && FlxG.save.data.lastversion == null)
 			FlxG.save.data.lastversion = "pre-beta2";
 		
