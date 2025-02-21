@@ -734,7 +734,7 @@ class PlayState extends MusicBeatState
 		switch(randomThingy)
 	    {
 			case 0:
-				engineName = 'Golden Apple ';
+				engineName = '';
 		}
 		var creditsText:Bool = credits != '';
 		var textYPos:Float = healthBarBG.y + 50;
@@ -745,7 +745,7 @@ class PlayState extends MusicBeatState
 		// Add Kade Engine watermark
 		kadeEngineWatermark = new FlxText(4, textYPos, 0,
 		SONG.song
-		+ " - " + engineName + "Engine (GAMERCAAAT)", 16);
+		+ "" + engineName + "", 16);
 		kadeEngineWatermark.setFormat(Paths.font("comic.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		kadeEngineWatermark.scrollFactor.set();
 		kadeEngineWatermark.borderSize = 1.25;
@@ -783,7 +783,7 @@ class PlayState extends MusicBeatState
 		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width / 2 - 150, healthBarBG.y + 40, 0, "", 20);
 		if (!FlxG.save.data.accuracyDisplay)
 			scoreTxt.x = healthBarBG.x + healthBarBG.width / 2;
-		scoreTxt.setFormat(Paths.font("comic.ttf"), 20, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		scoreTxt.setFormat(Paths.font("comic.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 		scoreTxt.borderSize = 1.5;
 		add(scoreTxt);
@@ -1786,6 +1786,94 @@ class PlayState extends MusicBeatState
 		return num;
 	}
 
+	function generateRanking():String
+	{
+		var ranking:String = "N/A";
+
+		if (misses == 0 && bads == 0 && shits == 0 && goods == 0) // Marvelous (SICK) Full Combo
+			ranking = "(MFC)";
+		else if (misses == 0 && bads == 0 && shits == 0 && goods >= 1) // Good Full Combo (Nothing but Goods & Sicks)
+			ranking = "(GFC)";
+		else if ((shits < 10 && shits != 0 || bads < 10 && bads != 0) && misses == 0) // Single Digit Combo Breaks
+			ranking = "(SDCB)";
+		else if (misses == 0 && (shits >= 10 || bads >= 10)) // Regular FC
+			ranking = "(FC)";
+		else if (misses >= 10 || (shits >= 10 || bads >= 10)) // Combo Breaks
+			ranking = "(CB)";
+		else
+			ranking = "";
+
+		// WIFE TIME :)))) (based on Wife3)
+
+		var wifeConditions:Array<Bool> = [
+			accuracy >= 99.9935, // AAAAA
+			accuracy >= 99.980, // AAAA:
+			accuracy >= 99.970, // AAAA.
+			accuracy >= 99.955, // AAAA
+			accuracy >= 99.90, // AAA:
+			accuracy >= 99.80, // AAA.
+			accuracy >= 99.70, // AAA
+			accuracy >= 99, // AA:
+			accuracy >= 96.50, // AA.
+			accuracy >= 93, // AA
+			accuracy >= 90, // A:
+			accuracy >= 85, // A.
+			accuracy >= 80, // A
+			accuracy >= 70, // B
+			accuracy >= 60, // C
+			accuracy < 60 // D
+		];
+
+		for(i in 0...wifeConditions.length)
+		{
+			var b = wifeConditions[i];
+			if (b)
+			{
+				switch(i)
+				{
+					case 0:
+						ranking += " AAAAA";
+					case 1:
+						ranking += " AAAA:";
+					case 2:
+						ranking += " AAAA.";
+					case 3:
+						ranking += " AAAA";
+					case 4:
+						ranking += " AAA:";
+					case 5:
+						ranking += " AAA.";
+					case 6:
+						ranking += " AAA";
+					case 7:
+						ranking += " AA:";
+					case 8:
+						ranking += " AA.";
+					case 9:
+						ranking += " AA";
+					case 10:
+						ranking += " A:";
+					case 11:
+						ranking += " A.";
+					case 12:
+						ranking += " A";
+					case 13:
+						ranking += " B";
+					case 14:
+						ranking += " C";
+					case 15:
+						ranking += " D";
+				}
+				break;
+			}
+		}
+
+		if (accuracy == 0)
+			ranking = "N/A";
+
+		return ranking;
+	}
+
 	private var banduJunk:Float = 0;
 	private var dadFront:Bool = false;
 	private var hasJunked:Bool = false;
@@ -2277,11 +2365,11 @@ class PlayState extends MusicBeatState
 
 		if (FlxG.save.data.accuracyDisplay)
 		{
-			scoreTxt.text = "Score:" + songScore + " | Misses:" + misses + " | Accuracy:" + truncateFloat(accuracy, 2) + "% ";
+			scoreTxt.text = "Score:" + songScore + " | Misses:" + misses + " | Accuracy:" + truncateFloat(accuracy, 2) + "% | " + generateRanking();
 		}
 		else
 		{
-			scoreTxt.text = "Score:" + songScore + " | Misses:" + misses + " | Accuracy:" + truncateFloat(accuracy, 2) + "% ";
+			scoreTxt.text = "Score:" + songScore + " | Misses:" + misses + " | Accuracy:" + truncateFloat(accuracy, 2) + "% | " + generateRanking();
 		}
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
 		{
