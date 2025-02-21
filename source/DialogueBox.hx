@@ -72,30 +72,6 @@ class DialogueBox extends FlxSpriteGroup
 				case 'furiosity' | 'polygonized' | 'cheating' | 'unfairness' | 'disruption' | 'wireframe' | 'duper':
 					FlxG.sound.playMusic(Paths.music('scaryAmbience'), 0);
 					FlxG.sound.music.fadeIn(1, 0, 0.8);
-				case 'supernovae' | 'glitch':
-					randomNumber = FlxG.random.int(0, 50);
-					if(randomNumber == 50)
-					{
-						FlxG.sound.playMusic(Paths.music('secret'), 0);
-						FlxG.sound.music.fadeIn(1, 0, 0.8);
-					}
-					else
-					{
-						FlxG.sound.playMusic(Paths.music('dooDooFeces'), 0);
-						FlxG.sound.music.fadeIn(1, 0, 0.8);
-					}
-				case 'blocked' | 'corn-theft' | 'maze':
-					randomNumber = FlxG.random.int(0, 50);
-					if(randomNumber == 50)
-					{
-						FlxG.sound.playMusic(Paths.music('secret'), 0);
-						FlxG.sound.music.fadeIn(1, 0, 0.8);
-					}
-					else
-					{
-						FlxG.sound.playMusic(Paths.music('DaveDialogue'), 0);
-						FlxG.sound.music.fadeIn(1, 0, 0.8);
-					}
 			}
 		}
 
@@ -252,12 +228,12 @@ class DialogueBox extends FlxSpriteGroup
 			case 'duper':
 				dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", 32);
 				dropText.font = 'Comic Sans MS Bold';
-				dropText.color = 0xFF00137F;
+				dropText.color = FlxColor.GREEN;
 				add(dropText);
 		
 				swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
 				swagDialogue.font = 'Comic Sans MS Bold';
-				swagDialogue.color = FlxColor.GREEN;
+				swagDialogue.color = 0xFFFFFFFF;
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText'), 0.6)];
 				add(swagDialogue);
 			default:

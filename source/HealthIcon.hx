@@ -43,7 +43,6 @@ class HealthIcon extends FlxSprite
 		'bendu',
 		'dave-wheels',
 		'afnfg-boyfriend',
-		'switch'
 	];
 
 	public var charPublic:String = 'bf';
@@ -81,8 +80,6 @@ class HealthIcon extends FlxSprite
 			addIcon('hall-monitor', 42);
 
 			addIcon('bambi-good', 44);
-
-			addIcon('switch', 46);
 
 			addIcon('sart-producer', 26);
 

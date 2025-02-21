@@ -725,31 +725,6 @@ class Character extends FlxSprite
 		
 				playAnim('idle');
 				
-							case 'switch':
-				frames = Paths.getSparrowAtlas('alternated/switch');
-				
-				animation.addByPrefix('idle', 'SwitchIdle', 14, true);
-				animation.addByPrefix('singUP', 'SwitchUp', 14, false);
-				animation.addByPrefix('singRIGHT', 'SwitchRight', 14, false);
-				animation.addByPrefix('singDOWN', 'SwitchDown', 14, false);
-				animation.addByPrefix('singLEFT', 'SwitchLeft', 14, false);
-				
-				addOffset('idle');
-				addOffset("singUP", 134, 211);
-				addOffset("singRIGHT", 97, 232);
-				addOffset("singLEFT", 172, 48);
-				addOffset("singDOWN", -1, -290);
-
-				globaloffset[0] = -60;
-				globaloffset[1] = 60;
-
-				setGraphicSize(Std.int(width / furiosityScale));
-				updateHitbox();
-
-				antialiasing = false;
-
-				playAnim('idle');
-				
 			case 'bf':
 				var tex = Paths.getSparrowAtlas('BOYFRIEND');
 				frames = tex;

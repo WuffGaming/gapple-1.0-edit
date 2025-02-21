@@ -29,7 +29,7 @@ class MainMenuState extends MusicBeatState
 
 	var realMenuItems:Int = 4;
 
-	var optionShit:Array<String> = ['play', 'ost', 'credits', 'options', 'discord', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'dave x bambi shipping cute'];
+	var optionShit:Array<String> = ['play', 'options', 'credits', 'discord', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'dave x bambi shipping cute'];
 
 	var newGaming:FlxText;
 	var newGaming2:FlxText;
@@ -238,8 +238,6 @@ class MainMenuState extends MusicBeatState
 									FlxG.switchState(new OptionsMenu());
 								case 'extras':
 									FlxG.switchState(new ExtraSongState());
-								case 'ost':
-									FlxG.switchState(new MusicPlayerState());
 								case 'credits':
 									FlxG.switchState(new CreditsMenuState());
 								case 'play':
