@@ -55,7 +55,13 @@ class CreditsMenuState extends MusicBeatState
    var peopleInCredits:Array<Person> = 
    [
       //devs
-      new Person("Grantare", CreditsType.Dev, "Director, Programmer, Composer, Animator, Charter",
+      new Person("WuffGaming", CreditsType.Editors, "The guy who edited Golden Apple 1.0",
+         [
+            new Social('youtube', 'https://www.youtube.com/@WuffGaming'),
+            new Social('twitter', 'https://bsky.app/profile/wuffgaming.bsky.social')
+         ]
+      ),
+      new Person("SkyFactorial", CreditsType.Dev, "Director, Programmer, Composer, Animator, Charter",
          [
             new Social('youtube', 'https://www.youtube.com/channel/UCKbKOSJPbP4u81cpBpoSntw'),
             new Social('twitter', 'https://twitter.com/GrantareP')
@@ -67,10 +73,9 @@ class CreditsMenuState extends MusicBeatState
             new Social('twitter', 'https://twitter.com/Lancey170')
          ]
       ),
-      new Person("CyndaquilDAC", CreditsType.Dev, "Programmer, Composer, Animator, Menu Button Artist, Charter",
+      new Person("The people who made the Duper Chart", CreditsType.Dev, "Duper Chart",
          [
-            new Social('youtube', 'https://www.youtube.com/channel/UCTaq4jni33NoaI1TfMXCRcA'),
-            new Social('twitter', 'https://twitter.com/CyndaquilDAC')
+            new Social('gamebanana', 'https://gamebanana.com/mods/412258'),
          ]
       ),
       new Person("BezieAnims", CreditsType.Dev, "Charter, Menu Button Artist, Cycles cover",
@@ -78,9 +83,14 @@ class CreditsMenuState extends MusicBeatState
             new Social('youtube', 'https://www.youtube.com/channel/UCdkHxFQnvyIKHSPcRRu-9PQ'),
          ]
       ),
-      new Person("RubysArt", CreditsType.Dev, "Wheels Composer, Charter, Concepts",
+      new Person("Aadsta", CreditsType.Dev, "Made Duper",
          [
-            new Social('twitter', 'https://twitter.com/RubysArt_')
+            new Social('youtube', 'https://www.youtube.com/watch?v=dTk5Z203Uxc'),
+         ]
+      ),
+      new Person("Goldd", CreditsType.Dev, "Swag Composer.",
+         [
+            new Social('youtube', 'https://www.youtube.com/@goldd7390')
          ]
       ),
       //contributors
@@ -131,11 +141,6 @@ class CreditsMenuState extends MusicBeatState
 	    new Social('twitter', 'https://twitter.com/RealT5mpler')
          ]
       ),
-      new Person("Cuzsie", CreditsType.BetaTester, "Beta Tester",
-         [
-            new Social('twitter', 'https://twitter.com/cuzsiedev')
-         ]
-      ),
       new Person("Billy Bobbo", CreditsType.BetaTester, "Beta Tester",
          [
             new Social('youtube', 'https://www.youtube.com/channel/UCWbxUPrpRb3lWFHULkmR0IQ'),
@@ -170,12 +175,6 @@ class CreditsMenuState extends MusicBeatState
             new Social('youtube', 'https://www.youtube.com/channel/UCvEK0fyppueqINTaWbLSaUw')
          ]
       ),
-      new Person("ThatPizzaTowerFan", CreditsType.BetaTester, "Beta Tester",
-         [
-            new Social('youtube', 'https://www.youtube.com/channel/UC7-0Iemmc842O6HYtVYl7MQ'),
-            new Social('twitter', 'https://twitter.com/abithorrified')
-         ]
-      ),
       new Person("Cótiles", CreditsType.BetaTester, "Beta Tester",
          [
             new Social('youtube', 'https://www.youtube.com/channel/UClNnrTqtgzAQ16w4_eC7rwA'),
@@ -185,12 +184,6 @@ class CreditsMenuState extends MusicBeatState
       new Person("EggsDeePrince", CreditsType.BetaTester, "Beta Tester",
          [
 
-         ]
-      ),
-      new Person("R34LD34L", CreditsType.BetaTester, "Beta Tester",
-         [
-            new Social('youtube', 'https://www.youtube.com/channel/UCVbNlXsQ-9WA2WcN8u2se_Q'),
-            new Social('twitter', 'https://twitter.com/TH3_R34L_D34L')
          ]
       ),
       new Person("Slóter", CreditsType.BetaTester, "Beta Tester",
@@ -294,6 +287,7 @@ class CreditsMenuState extends MusicBeatState
       bg.scrollFactor.set();
 		add(bg);
       
+      var editors:Array<Person> = new Array<Person>();
       var developers:Array<Person> = new Array<Person>();
       var betaTesters:Array<Person> = new Array<Person>();
       var contributors:Array<Person> = new Array<Person>();
@@ -302,6 +296,7 @@ class CreditsMenuState extends MusicBeatState
       {
          switch (person.creditsType)
          {
+            case Editors: editors.push(person);
             case Dev: developers.push(person);
             case BetaTester: betaTesters.push(person);
             case Contributor: contributors.push(person);
@@ -311,7 +306,7 @@ class CreditsMenuState extends MusicBeatState
       for (i in 0...peopleInCredits.length)
       {
          var currentPerson = peopleInCredits[i];
-         if (currentPerson == developers[0] || currentPerson == contributors[0] || currentPerson == betaTesters[0])
+         if (currentPerson == editors[0] || currentPerson == developers[0] || currentPerson == contributors[0] || currentPerson == betaTesters[0])
          {
             var textString:String = '';
             switch (currentPerson.creditsType)
@@ -321,7 +316,9 @@ class CreditsMenuState extends MusicBeatState
                case Contributor:
                   textString = 'Contributors';
                case BetaTester:
-                  textString = 'Beta Testers';
+                  textString = 'Beta Testers to the ORIGINAL mod.';
+               case Editors:
+                  textString = 'Editoor';
             }
             var titleText:FlxText = new FlxText(0, 0, 0, textString);
             titleText.setFormat("Comic Sans MS Bold", 64, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -716,7 +713,7 @@ class SocialButton
 }
 enum CreditsType
 {
-   Dev; BetaTester; Contributor;
+   Dev; BetaTester; Contributor; Editors;
 }
 enum State
 {

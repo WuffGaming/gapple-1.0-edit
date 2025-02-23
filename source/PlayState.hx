@@ -589,6 +589,12 @@ class PlayState extends MusicBeatState
 			dad.y -= 350;
 		}
 
+		if(dad.curCharacter == 'dupers')
+		{
+			dad.x -= -30;
+			dad.y -= -460;
+		}
+
 		dadChar = dad.curCharacter;
 		bfChar = boyfriend.curCharacter;
 

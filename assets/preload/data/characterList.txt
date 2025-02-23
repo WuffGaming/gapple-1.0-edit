@@ -25,4 +25,4 @@ playrobot
 playrobot-crazy
 hall-monitor
 afnfg-boyfriend
-switch
+dupers

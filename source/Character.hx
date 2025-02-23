@@ -552,6 +552,23 @@ class Character extends FlxSprite
 		
 				playAnim('idle');
 
+			case 'dupers':
+				// fucking Dupered out
+				frames = Paths.getSparrowAtlas('bambi/duperbamb');
+				animation.addByPrefix('idle', 'Idle', 24, false);
+				animation.addByPrefix('singDOWN', 'down', 24, false);
+				animation.addByPrefix('singUP', 'up', 24, false);
+				animation.addByPrefix('singLEFT', 'left', 24, false);
+				animation.addByPrefix('singRIGHT', 'right', 24, false);
+
+				addOffset('idle');
+				addOffset("singUP", 116, 95);
+				addOffset("singRIGHT", 37, -4);
+				addOffset("singLEFT", -5, -1);
+				addOffset("singDOWN", 107, 111);
+
+				playAnim('idle');
+
 			case 'bambi-piss-3d':
 				// BAMBI SHITE ANIMATION LOADING CODE
 				tex = Paths.getSparrowAtlas('dave/bambi_pissyboy');
