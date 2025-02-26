@@ -583,6 +583,7 @@ class PlayState extends MusicBeatState
 			gf.visible = false;
 		}
 
+
 		if(dad.curCharacter == 'bandu-origin')
 		{
 			dad.x -= 250;
@@ -868,6 +869,83 @@ class PlayState extends MusicBeatState
 				swag.antialiasing = false;
 
 				add(swag);
+
+			case 'duper':
+				defaultCamZoom = 0.9;
+	
+				var bg:FlxSprite = new FlxSprite(-700, 0).loadGraphic(Paths.image('bambi/sky'));
+				bg.antialiasing = true;
+				bg.scrollFactor.set(0.9, 0.9);
+				bg.active = false;
+				sprites.add(bg);
+	
+				var hills:FlxSprite = new FlxSprite(-250, 200).loadGraphic(Paths.image('bambi/orangey hills'));
+				hills.antialiasing = true;
+				hills.scrollFactor.set(0.9, 0.7);
+				hills.active = false;
+				sprites.add(hills);
+	
+				var farm:FlxSprite = new FlxSprite(150, 250).loadGraphic(Paths.image('bambi/funfarmhouse'));
+				farm.antialiasing = true;
+				farm.scrollFactor.set(1.1, 0.9);
+				farm.active = false;
+				sprites.add(farm);
+				
+				var foreground:FlxSprite = new FlxSprite(-400, 600).loadGraphic(Paths.image('bambi/grass lands'));
+				foreground.antialiasing = true;
+				foreground.active = false;
+				sprites.add(foreground);
+				
+				var cornSet:FlxSprite = new FlxSprite(-350, 325).loadGraphic(Paths.image('bambi/Cornys'));
+				cornSet.antialiasing = true;
+				cornSet.active = false;
+				sprites.add(cornSet);
+				
+				var cornSet2:FlxSprite = new FlxSprite(1050, 325).loadGraphic(Paths.image('bambi/Cornys'));
+				cornSet2.antialiasing = true;
+				cornSet2.active = false;
+				sprites.add(cornSet2);
+				
+				var fence:FlxSprite = new FlxSprite(-350, 450).loadGraphic(Paths.image('bambi/crazy fences'));
+				fence.antialiasing = true;
+				fence.active = false;
+				sprites.add(fence);
+	
+				var sign:FlxSprite = new FlxSprite(0, 500).loadGraphic(Paths.image('bambi/Sign'));
+				sign.antialiasing = true;
+				sign.active = false;
+				sprites.add(sign);
+
+				if (curStage == 'bambiFarmNight')
+				{
+					hills.color = nightColor;
+					farm.color = nightColor;
+					foreground.color = nightColor;
+					cornSet.color = nightColor;
+					cornSet2.color = nightColor;
+					fence.color = nightColor;
+					sign.color = nightColor;
+				}
+
+				if (curStage == 'bambiFarmSunset')
+				{
+					hills.color = sunsetColor;
+					farm.color = sunsetColor;
+					foreground.color = sunsetColor;
+					cornSet.color = sunsetColor;
+					cornSet2.color = sunsetColor;
+					fence.color = sunsetColor;
+					sign.color = sunsetColor;
+				}
+				
+				add(bg);
+				add(hills);
+				add(farm);
+				add(foreground);
+				add(cornSet);
+				add(cornSet2);
+				add(fence);
+				add(sign);
 				
 			case 'recovered-project':
 				defaultCamZoom = 0.85;
