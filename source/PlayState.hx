@@ -721,6 +721,8 @@ class PlayState extends MusicBeatState
 				credits = "Ghost tapping is forced off! Screw you!";
 			case 'cheating' | 'disruption':
 				credits = 'Screw you!';
+			case 'duper':
+				credits = 'What the FUCK?';
 			case 'thunderstorm':
 				credits = 'Original song made by Saruky for Vs. Shaggy!';
 			case 'metallic':

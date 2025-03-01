@@ -233,7 +233,7 @@ class DialogueBox extends FlxSpriteGroup
 		
 				swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
 				swagDialogue.font = 'Comic Sans MS Bold';
-				swagDialogue.color = 0xFFFFFFFF;
+				swagDialogue.color = 0xFF000000;
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText'), 0.6)];
 				add(swagDialogue);
 			default:
