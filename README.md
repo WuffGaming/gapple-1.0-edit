@@ -2,6 +2,11 @@
 ## Powered by a heavily modified version of Kade Engine!
 ![KadeEngineLogo](https://user-images.githubusercontent.com/26305836/110529589-4b4eb600-80ce-11eb-9c44-e899118b0bf0.png)
 
+## Hello!
+As you can probably see, this thing is quite WIP! The whole plan for this is to have a slightly different story, while also replacing all the stuff made by bad people "and adding new stuff along the way."
+
+If you want to play, I recommend checking the releases tab. That's where major releases will be. The newest release will always be from the source code, though, so if you want to see current changes, or even help, you can learn to compile. I could use all the help I could get, especially considering I'm hardly a coder at all! 
+
 ## Dave
 this is dave
 ![Dave](https://cdn.discordapp.com/attachments/826922537668968478/884915478592643102/this_is_dave.png)
