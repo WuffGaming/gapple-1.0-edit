@@ -573,25 +573,24 @@ class Character extends FlxSprite
 				// BAMBI SHITE ANIMATION LOADING CODE
 				tex = Paths.getSparrowAtlas('dave/bambi_pissyboy');
 				frames = tex;
-				animation.addByIndices('danceLeft', 'idle', [for (i in 0...13) i], "", 24, false);
-				animation.addByIndices('danceRight', 'idle', [for (i in 13...23) i], "", 24, false);
-				for (anim in ['left', 'down', 'up', 'right']) {
-					animation.addByPrefix('sing${anim.toUpperCase()}', anim, 24, false);
-				}
+				animation.addByPrefix('idle', 'idle', 24, false);
+				animation.addByPrefix('singDOWN', 'down', 24, false);
+				animation.addByPrefix('singUP', 'up', 24, false);
+				animation.addByPrefix('singLEFT', 'left', 24, false);
+				animation.addByPrefix('singRIGHT', 'right', 24, false);
 		
-				addOffset('danceLeft');
-				addOffset('danceRight');
-				addOffset("singUP", 10, 20);
-				addOffset("singRIGHT", 30, 20);
-				addOffset("singLEFT", 30);
-				addOffset("singDOWN", 0, -10);
+				addOffset('idle');
+				addOffset("singUP", -38, 135);
+				addOffset("singRIGHT", -3, -4);
+				addOffset("singLEFT", 37, 33);
+				addOffset("singDOWN", -97, -12);
 				globaloffset[0] = 150;
 				globaloffset[1] = 450; //this is the y
 				setGraphicSize(Std.int(width / furiosityScale));
 				updateHitbox();
 				antialiasing = false;
 		
-				playAnim('danceRight');
+				playAnim('idle');
 
 			case 'bandu':
 				frames = Paths.getSparrowAtlas('bambi/bandu');
@@ -914,7 +913,7 @@ class Character extends FlxSprite
 			var poopInPants:String = alt ? '-alt' : '';
 			switch (curCharacter)
 			{
-				case 'gf' | 'gf-christmas' | 'gf-pixel' | 'bandu-candy' | 'bambi-piss-3d' | 'gf-only' | 'dave-wheels':
+				case 'gf' | 'gf-christmas' | 'gf-pixel' | 'bandu-candy' | 'gf-only' | 'dave-wheels':
 					if (!animation.curAnim.name.startsWith('hair'))
 					{
 						danced = !danced;
