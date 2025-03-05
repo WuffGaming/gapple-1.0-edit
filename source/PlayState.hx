@@ -4129,9 +4129,13 @@ class PlayState extends MusicBeatState
 				switch (curBeat) {
 					case 256:
 						swapDad('RECOVERED_PROJECT_2');
+						if(iconP2.animation.getByName(dad.curCharacter) != null)
+							iconP2.animation.play(dad.curCharacter);
 					case 480:
 						thunderBlack.alpha = 1;
 						swapDad("RECOVERED_PROJECT_3");
+						if(iconP2.animation.getByName(dad.curCharacter) != null)
+							iconP2.animation.play(dad.curCharacter);
 					case 484:
 						FlxTween.tween(thunderBlack, {alpha: 0}, 1);
 				}
@@ -4373,8 +4377,11 @@ class PlayState extends MusicBeatState
 			case 'bambi-angey':
 				dad.y += 450;
 				dad.x += 100;
-			case 'RECOVERED_PROJECT' | 'RECOVERED_PROJECT_2' | 'RECOVERED_PROJECT_3':
+			case 'RECOVERED_PROJECT':
 				dad.setPosition(-307, 10);
+			case 'RECOVERED_PROJECT_2' | 'RECOVERED_PROJECT_3':
+				dad.y += -320;
+				dad.x += -600;
 			case 'sart-producer':
 				dad.x -= 750;
 				dad.y -= 360;

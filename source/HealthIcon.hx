@@ -129,9 +129,9 @@ class HealthIcon extends FlxSprite
 			
 			addIcon('RECOVERED_PROJECT', 24);
 
-			addIcon('RECOVERED_PROJECT_2', 24);
+			addIcon('RECOVERED_PROJECT_2', 50);
 
-			addIcon('RECOVERED_PROJECT_3', 24);
+			addIcon('RECOVERED_PROJECT_3', 52);
 
 			addIcon('afnfg-boyfriend', 0);
 	
