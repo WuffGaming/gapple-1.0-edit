@@ -43,6 +43,7 @@ class HealthIcon extends FlxSprite
 		'bendu',
 		'dave-wheels',
 		'afnfg-boyfriend',
+		'3d-bf-old',
 	];
 
 	public var charPublic:String = 'bf';
@@ -92,6 +93,8 @@ class HealthIcon extends FlxSprite
 			addIcon('tunnel-bf', 0);
 		
 			addIcon('bf-old', 2);
+
+			addIcon('3d-bf-old', 54);
 		
 			addIcon('gf', 57, true);
 

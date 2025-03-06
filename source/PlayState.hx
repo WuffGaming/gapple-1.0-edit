@@ -492,6 +492,8 @@ class PlayState extends MusicBeatState
 				boyfriendOldIcon = 'dave-old';
 			case 'tunnel-bf':
 				boyfriend.y = 100;
+			case '3d-bf':
+				boyfriendOldIcon = '3d-bf-old';
 			case 'dave-old':
 				boyfriend.y = 100 + 270;
 				boyfriendOldIcon = 'dave';

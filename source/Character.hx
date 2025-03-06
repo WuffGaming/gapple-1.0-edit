@@ -10,6 +10,7 @@ using StringTools;
 
 class Character extends FlxSprite
 {
+
 	public var animOffsets:Map<String, Array<Dynamic>>;
 	public var debugMode:Bool = false;
 
@@ -94,48 +95,6 @@ class Character extends FlxSprite
 				addOffset("singDOWN");
 
 				nativelyPlayable = flipX = true;
-
-				antialiasing = false;
-
-				playAnim('idle');
-			case 'bandu-scaredy':
-				frames = Paths.getSparrowAtlas('bambi/bandu_scaredy');
-				animation.addByPrefix('idle', 'idle', 24, false);
-				for (anim in ['left', 'down', 'up', 'right']) {
-					animation.addByPrefix('sing${anim.toUpperCase()}', anim, 24, false);
-				}
-
-				addOffset('idle');
-				addOffset('singLEFT');
-				addOffset('singDOWN');
-				addOffset('singUP');
-				addOffset('singRIGHT');
-
-				nativelyPlayable = flipX = true;
-
-				antialiasing = false;
-
-				setGraphicSize(1009);
-				updateHitbox();
-
-				playAnim('idle');
-			case 'sart-producer-night':
-				frames = Paths.getSparrowAtlas('bambi/sart_producer');
-				animation.addByPrefix('idle', 'idle', 24, false);
-				for (anim in ['left', 'down', 'up', 'right']) {
-					animation.addByPrefix('sing${anim.toUpperCase()}', anim, 24, false);
-				}
-
-				addOffset('idle');
-				addOffset('singLEFT');
-				addOffset('singDOWN');
-				addOffset('singUP');
-				addOffset('singRIGHT', -789);
-
-				nativelyPlayable = flipX = true;
-
-				setGraphicSize(811);
-				updateHitbox();
 
 				antialiasing = false;
 

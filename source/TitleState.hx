@@ -397,9 +397,9 @@ class TitleState extends MusicBeatState
 		switch (curBeat)
 		{
 			case 2:
-				addMoreText('Grantare\nLancey\nBezieAnims');
+				addMoreText('SkyFactorial\nLancey\nBezieAnims');
 			case 3:
-				addMoreText('RubysArt_\nCyndaquilDAC');
+				addMoreText('WuffGaming for EDITIIINGGGG');
 			case 4:
 				deleteCoolText();
 			case 5:
