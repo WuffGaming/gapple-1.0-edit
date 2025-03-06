@@ -950,7 +950,7 @@ class PlayState extends MusicBeatState
 				add(sign);
 				
 			case 'recovered-project':
-				defaultCamZoom = 0.85;
+				defaultCamZoom = 1.4;
 				curStage = 'recover';
 				var yea = new FlxSprite(-641, -222).loadGraphic(Paths.image('RECOVER_assets/q'));
 				yea.setGraphicSize(2478);
@@ -3032,6 +3032,9 @@ class PlayState extends MusicBeatState
 				camFollow.x -= 100;
 			case 'dave-wheels':
 				camFollow.y -= 150;
+			case 'RECOVERED_PROJECT_2' | 'RECOVERED_PROJECT_3':
+				camFollow.x -= -150;
+				camFollow.y -= -175;
 			case 'hall-monitor':
 				camFollow.x -= 200;
 				camFollow.y -= 180;
@@ -4125,19 +4128,54 @@ class PlayState extends MusicBeatState
 							});
 						}});
 				}
-			case 'recovered-project':
+			case 'recovered-project': // i discovered how to do shit so i can do better event funniesss
 				switch (curBeat) {
+					case 16:
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 0.85;
+					case 80:
+						FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
+						defaultCamZoom = 1.3;
+					case 112:
+						thunderBlack.alpha = 0;
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 0.85;
+					case 208:
+						FlxTween.tween(thunderBlack, {alpha: 0.7}, Conductor.stepCrochet / 500);
+						defaultCamZoom = 1;
 					case 256:
+						thunderBlack.alpha = 0;
 						swapDad('RECOVERED_PROJECT_2');
+						defaultCamZoom = 0.85;
 						if(iconP2.animation.getByName(dad.curCharacter) != null)
 							iconP2.animation.play(dad.curCharacter);
+					case 388:
+						defaultCamZoom = 1;
+					case 404:
+						defaultCamZoom = 0.85;
+					case 452:
+						FlxTween.tween(thunderBlack, {alpha: 0.7}, Conductor.stepCrochet / 500);
+						defaultCamZoom = 1;
+					case 468:
+						defaultCamZoom = 1.2;
+					case 476:
+						FlxTween.tween(thunderBlack, {alpha: 0}, Conductor.stepCrochet / 500);
+						defaultCamZoom = 0.85;
 					case 480:
+						defaultCamZoom = 1.1;
+						gf.visible = false;
+						kadeEngineWatermark.y -= 20;
+						creditsWatermark.text = "CORRUPTION IMMINENT. PLEASE RESTART YOUR GAME.";
 						thunderBlack.alpha = 1;
 						swapDad("RECOVERED_PROJECT_3");
-						if(iconP2.animation.getByName(dad.curCharacter) != null)
-							iconP2.animation.play(dad.curCharacter);
 					case 484:
 						FlxTween.tween(thunderBlack, {alpha: 0}, 1);
+						if(iconP2.animation.getByName(dad.curCharacter) != null)
+							iconP2.animation.play(dad.curCharacter);
+					case 532:
+						defaultCamZoom = 0.85;
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						kadeEngineWatermark.y -= 200000;
 				}
 			case 'wireframe':
 				FlxG.camera.shake(0.005, Conductor.crochet / 1000);
