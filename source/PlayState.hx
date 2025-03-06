@@ -4241,10 +4241,34 @@ class PlayState extends MusicBeatState
 				}
 			case 'disability':
 				switch(curBeat) {
+					case 32:
+						FlxG.camera.flash(FlxColor.WHITE, 1);
 					case 176 | 224 | 364 | 384:
 						gfSpeed = 2;
 					case 208 | 256 | 372 | 392:
 						gfSpeed = 1;
+				}
+			case 'swag':
+				switch(curBeat) {
+					case 4:
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+					case 132:
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+					case 164:
+						defaultCamZoom = 1.4;
+						FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
+						creditsWatermark.text = "Dance Party!";
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+					case 196:
+						defaultCamZoom = 1;
+						thunderBlack.alpha = 0;
+						creditsWatermark.text = "Song by Goldd!";
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+					case 228:
+						defaultCamZoom = 0.8;
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+					case 260:
+						defaultCamZoom = 1;
 				}
 		}
 
