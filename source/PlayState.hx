@@ -4178,6 +4178,7 @@ class PlayState extends MusicBeatState
 						defaultCamZoom = 0.85;
 						FlxG.camera.flash(FlxColor.WHITE, 1);
 						kadeEngineWatermark.y -= 200000;
+						theFunne = false;
 				}
 			case 'wireframe':
 				FlxG.camera.shake(0.005, Conductor.crochet / 1000);
@@ -4269,6 +4270,56 @@ class PlayState extends MusicBeatState
 						FlxG.camera.flash(FlxColor.WHITE, 1);
 					case 260:
 						defaultCamZoom = 1;
+				}
+			case 'duper':
+				switch(curBeat) {
+					case 256:
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 0.75;
+						creditsWatermark.text = "Screw You!";
+					case 320:
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 0.9;
+					case 384:
+						FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
+						defaultCamZoom = 1.3;
+					case 445:
+						defaultCamZoom = 1.2;
+					case 448:
+						thunderBlack.alpha = 0;
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 0.85;
+					case 480:
+						defaultCamZoom = 0.9;
+					case 508:
+						FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
+						defaultCamZoom = 1.2;
+					case 512:
+						thunderBlack.alpha = 0;
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 0.9;
+					case 576:
+						FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
+						defaultCamZoom = 1.2;
+					case 592:
+						FlxTween.tween(thunderBlack, {alpha: 0}, Conductor.stepCrochet / 500);
+						defaultCamZoom = 0.9;
+					case 636:
+						FlxTween.tween(thunderBlack, {alpha: 0.6}, Conductor.stepCrochet / 500);
+						defaultCamZoom = 1.2;
+					case 640:
+						thunderBlack.alpha = 0;
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 1;
+					case 696:
+						FlxTween.tween(thunderBlack, {alpha: 0.6}, Conductor.stepCrochet / 500);
+						defaultCamZoom = 1.3;
+					case 700:
+						FlxTween.tween(thunderBlack, {alpha: 0}, Conductor.stepCrochet / 500);
+						defaultCamZoom = 0.75;
+					case 704:
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 0.9;
 				}
 		}
 
