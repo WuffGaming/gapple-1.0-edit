@@ -391,6 +391,8 @@ class PlayState extends MusicBeatState
 				dialogue = CoolUtil.coolTextFile(Paths.txt('algebra/algebraDialogue'));
 			case 'duper':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('duper/duperDialogue'));
+			case 'recovered-project':
+				dialogue = CoolUtil.coolTextFile(Paths.txt('recovered-project/NULLDialogue'));
 		}
 
 		backgroundSprites = createBackgroundSprites(SONG.song.toLowerCase());
@@ -835,7 +837,7 @@ class PlayState extends MusicBeatState
 		{
 			switch (curSong.toLowerCase())
 			{
-				case 'disruption' | 'applecore' | 'disability' | 'wireframe' | 'algebra' | 'duper':
+				case 'disruption' | 'applecore' | 'disability' | 'wireframe' | 'algebra' | 'duper' | 'recovered-project':
 					schoolIntro(doof);
 				case 'origin':
 					originCutscene();

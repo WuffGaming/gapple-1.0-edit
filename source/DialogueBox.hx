@@ -69,7 +69,7 @@ class DialogueBox extends FlxSpriteGroup
 				case 'house' | 'insanity' | 'splitathon' | 'disability' | 'applecore' | 'algebra':
 					FlxG.sound.playMusic(Paths.music('DaveDialogue'), 0);
 					FlxG.sound.music.fadeIn(1, 0, 0.8);
-				case 'furiosity' | 'polygonized' | 'cheating' | 'unfairness' | 'disruption' | 'wireframe' | 'duper':
+				case 'furiosity' | 'polygonized' | 'cheating' | 'unfairness' | 'disruption' | 'wireframe' | 'duper' | 'recovered-project':
 					FlxG.sound.playMusic(Paths.music('scaryAmbience'), 0);
 					FlxG.sound.music.fadeIn(1, 0, 0.8);
 			}
@@ -131,7 +131,7 @@ class DialogueBox extends FlxSpriteGroup
 				var face:FlxSprite = new FlxSprite(320, 170).loadGraphic(Paths.image('weeb/spiritFaceForward', 'week6'));
 				face.setGraphicSize(Std.int(face.width * 6));
 				add(face);
-			case 'house' | 'insanity' | 'furiosity' | 'polygonized' | 'supernovae' | 'cheating' | 'unfairness' | 'glitch' | 'blocked' | 'corn-theft' | 'maze' | 'splitathon' | 'disruption' | 'applecore' | 'disability' | 'wireframe' | 'algebra' | 'duper':
+			case 'house' | 'insanity' | 'furiosity' | 'polygonized' | 'supernovae' | 'cheating' | 'unfairness' | 'glitch' | 'blocked' | 'corn-theft' | 'maze' | 'splitathon' | 'disruption' | 'applecore' | 'disability' | 'wireframe' | 'algebra' | 'duper' | 'recovered-project':
 				hasDialog = true;
 				box.frames = Paths.getSparrowAtlas('speech_bubble_talking');
 				box.setGraphicSize(Std.int(box.width / textBoxSizeFix));
@@ -157,7 +157,7 @@ class DialogueBox extends FlxSpriteGroup
 				portraitLeftCharacter = 'senpai';
 				portraitRightCharacter = 'bfPixel';
 				
-			case 'house' | 'insanity' | 'furiosity' | 'polygonized' | 'disability' | 'algebra' | 'wireframe':
+			case 'house' | 'insanity' | 'furiosity' | 'polygonized' | 'disability' | 'algebra' | 'wireframe' | 'recovered-project':
 				portraitLeftCharacter = 'dave';
 				
 			case 'blocked' | 'corn-theft' | 'maze' | 'supernovae' | 'glitch' | 'splitathon' | 'cheating' | 'unfairness' | 'disruption' | 'applecore' | 'duper':
@@ -214,7 +214,7 @@ class DialogueBox extends FlxSpriteGroup
 				handSelect.setGraphicSize(Std.int(handSelect.width * 6));
 				handSelect.updateHitbox();
 				add(handSelect);
-			case 'furiosity' | 'polygonized' | 'cheating' | 'unfairness' | 'disruption' | 'applecore' | 'disability' | 'wireframe' | 'algebra':
+			case 'furiosity' | 'polygonized' | 'cheating' | 'unfairness' | 'disruption' | 'applecore' | 'disability' | 'wireframe' | 'algebra' | 'recovered-project':
 				dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", 32);
 				dropText.font = 'Comic Sans MS Bold';
 				dropText.color = 0xFFFFFFFF;
@@ -458,6 +458,9 @@ class DialogueBox extends FlxSpriteGroup
 					case 'algebra':
 						portrait.portraitPath = 'dialogue/3d_dave_og_portrait';
 						portrait.portraitPrefix = 'dave 3d algebra portrait';
+					case 'recovered-project':
+						portrait.portraitPath = 'dialogue/RECOVERED_PORT';
+						portrait.portraitPrefix = 'recovered';
 					default:
 						portrait.portraitPath = 'dialogue/dave_house';
 						portrait.portraitPrefix = 'dave house portrait';
@@ -481,7 +484,7 @@ class DialogueBox extends FlxSpriteGroup
 			case 'bf':
 				switch (PlayState.SONG.song.toLowerCase())
 				{
-					case 'disruption' | 'wireframe':
+					case 'disruption' | 'wireframe' | 'recovered-project':
 						portrait.portraitPath = 'dialogue/bf_furiosity_corntheft';
 						portrait.portraitPrefix = 'bf furiosity & corntheft portrait';
 					default:
