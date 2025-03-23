@@ -66,9 +66,11 @@ class DialogueBox extends FlxSpriteGroup
 				case 'thorns':
 					FlxG.sound.playMusic(Paths.music('LunchboxScary'), 0);
 					FlxG.sound.music.fadeIn(1, 0, 0.8);
-				case 'house' | 'insanity' | 'splitathon' | 'disability' | 'applecore' | 'algebra':
+				case 'house' | 'insanity' | 'splitathon' | 'disability' | 'applecore':
 					FlxG.sound.playMusic(Paths.music('DaveDialogue'), 0);
 					FlxG.sound.music.fadeIn(1, 0, 0.8);
+				case 'algebra':
+					FlxG.sound.playMusic(Paths.music('Algebrah'), 0.7);
 				case 'furiosity' | 'polygonized' | 'cheating' | 'unfairness' | 'disruption' | 'wireframe' | 'duper' | 'recovered-project':
 					FlxG.sound.playMusic(Paths.music('scaryAmbience'), 0);
 					FlxG.sound.music.fadeIn(1, 0, 0.8);
@@ -131,7 +133,15 @@ class DialogueBox extends FlxSpriteGroup
 				var face:FlxSprite = new FlxSprite(320, 170).loadGraphic(Paths.image('weeb/spiritFaceForward', 'week6'));
 				face.setGraphicSize(Std.int(face.width * 6));
 				add(face);
-			case 'house' | 'insanity' | 'furiosity' | 'polygonized' | 'supernovae' | 'cheating' | 'unfairness' | 'glitch' | 'blocked' | 'corn-theft' | 'maze' | 'splitathon' | 'disruption' | 'applecore' | 'disability' | 'wireframe' | 'algebra' | 'duper' | 'recovered-project':
+			case 'algebra':
+				hasDialog = true;
+				box.frames = Paths.getSparrowAtlas('qualitybox');
+				box.setGraphicSize(Std.int(box.width / textBoxSizeFix));
+				box.updateHitbox();
+				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
+				box.animation.addByPrefix('normal', 'speech bubble normal', 24, true);
+				box.antialiasing = false;
+			case 'house' | 'insanity' | 'furiosity' | 'polygonized' | 'supernovae' | 'cheating' | 'unfairness' | 'glitch' | 'blocked' | 'corn-theft' | 'maze' | 'splitathon' | 'disruption' | 'applecore' | 'disability' | 'wireframe' | 'duper' | 'recovered-project':
 				hasDialog = true;
 				box.frames = Paths.getSparrowAtlas('speech_bubble_talking');
 				box.setGraphicSize(Std.int(box.width / textBoxSizeFix));

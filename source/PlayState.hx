@@ -866,8 +866,10 @@ class PlayState extends MusicBeatState
 		{
 			switch (curSong.toLowerCase())
 			{
-				case 'disruption' | 'applecore' | 'disability' | 'wireframe' | 'algebra' | 'duper' | 'recovered-project':
+				case 'disruption' | 'applecore' | 'disability' | 'wireframe' | 'duper' | 'recovered-project':
 					schoolIntro(doof);
+				case 'algebra':
+					baldiIntro(doof);
 				case 'origin':
 					originCutscene();
 				default:
@@ -1253,6 +1255,37 @@ class PlayState extends MusicBeatState
 		if (isStart)
 		{
 			FlxTween.tween(black, {alpha: 0}, stupidBasics);
+		}
+		else
+		{
+			black.alpha = 0;
+			stupidBasics = 0;
+		}
+		new FlxTimer().start(stupidBasics, function(fuckingSussy:FlxTimer)
+		{
+			if (dialogueBox != null)
+			{
+				add(dialogueBox);
+			}
+			else
+			{
+				startCountdown();
+			}
+		});
+	}
+
+	function baldiIntro(?dialogueBox:DialogueBox, isStart:Bool = true):Void
+	{
+		snapCamFollowToPos(boyfriend.getGraphicMidpoint().x - 200, dad.getGraphicMidpoint().y - 10);
+		var black:FlxSprite = new FlxSprite(0, 0).makeGraphic(FlxG.width * 5, FlxG.height * 5, FlxColor.BLACK);
+		black.screenCenter();
+		black.scrollFactor.set();
+		add(black);
+
+		var stupidBasics:Float = 1;
+		if (isStart)
+		{
+			black.alpha = 0;
 		}
 		else
 		{
