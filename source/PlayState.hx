@@ -204,6 +204,7 @@ class PlayState extends MusicBeatState
 	private var STUPDVARIABLETHATSHOULDNTBENEEDED:FlxSprite;
 
 	private var healthBarBG:FlxSprite;
+	private var healthBarThing:FlxSprite;
 	private var healthBar:FlxBar;
 
 	private var generatedMusic:Bool = false;
@@ -653,6 +654,10 @@ class PlayState extends MusicBeatState
 		timeTxt.borderSize = 2;
 		timeTxt.visible = showTime;
 		if(FlxG.save.data.downscroll) timeTxt.y = FlxG.height - 44;
+		if(SONG.song.toLowerCase() == 'algebra')
+		{
+			timeTxt.y = 5000000;
+		}
 
 		add(timeTxt);
 
@@ -702,6 +707,10 @@ class PlayState extends MusicBeatState
 		healthBarBG = new FlxSprite(0, FlxG.height * 0.9).loadGraphic(Paths.image('healthBar'));
 		if (FlxG.save.data.downscroll)
 			healthBarBG.y = 50;
+		if(SONG.song.toLowerCase() == 'algebra')
+		{
+			healthBarBG.loadGraphic(Paths.image('retroBar'));
+		}
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
 		add(healthBarBG);
@@ -711,6 +720,17 @@ class PlayState extends MusicBeatState
 		healthBar.scrollFactor.set();
 		healthBar.createFilledBar(0xFFFF0000, 0xFF66FF33);
 		add(healthBar);
+
+		healthBarThing = new FlxSprite(0, FlxG.height * 0.9).loadGraphic(Paths.image('healthBarThing'));
+		if (FlxG.save.data.downscroll)
+			healthBarThing.y = 50;
+		if(SONG.song.toLowerCase() == 'algebra')
+		{
+			healthBarThing.y = 5000000;
+		}
+		healthBarThing.screenCenter(X);
+		healthBarThing.scrollFactor.set();
+		add(healthBarThing);
 
 		var credits:String;
 		switch (SONG.song.toLowerCase())
@@ -762,6 +782,10 @@ class PlayState extends MusicBeatState
 		kadeEngineWatermark.setFormat(Paths.font("comic.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		kadeEngineWatermark.scrollFactor.set();
 		kadeEngineWatermark.borderSize = 1.25;
+		if(SONG.song.toLowerCase() == 'algebra')
+		{
+			kadeEngineWatermark.y = 5000000;
+		}
 		add(kadeEngineWatermark);
 
 		creditsWatermark = new FlxText(4, healthBarBG.y + 50, 0, credits, 16);
@@ -793,12 +817,16 @@ class PlayState extends MusicBeatState
 				preload('dave/recovered_project_3');
 		}
 
-		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width / 2 - 150, healthBarBG.y + 40, 0, "", 20);
-		if (!FlxG.save.data.accuracyDisplay)
-			scoreTxt.x = healthBarBG.x + healthBarBG.width / 2;
+		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width / 2 - 150, healthBarBG.y + 40, FlxG.width, "", 20);
 		scoreTxt.setFormat(Paths.font("comic.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		scoreTxt.scrollFactor.set();
 		scoreTxt.borderSize = 1.5;
+		scoreTxt.screenCenter(X);
+		if(SONG.song.toLowerCase() == 'algebra')
+		{
+			scoreTxt.x = 135;
+			scoreTxt.y -= 10;
+		}
 		add(scoreTxt);
 
 		var iconP1IsPlayer:Bool = true;
@@ -819,6 +847,7 @@ class PlayState extends MusicBeatState
 		notes.cameras = [camHUD];
 		healthBar.cameras = [camHUD];
 		healthBarBG.cameras = [camHUD];
+		healthBarThing.cameras = [camHUD];
 		iconP1.cameras = [camHUD];
 		iconP2.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
@@ -2426,9 +2455,10 @@ class PlayState extends MusicBeatState
 
 		super.update(elapsed);
 
-		if (FlxG.save.data.accuracyDisplay)
+
+		if (SONG.song.toLowerCase() == 'algebra')
 		{
-		scoreTxt.text = "Score:" + songScore + " | Misses:" + misses + " | Accuracy:" + truncateFloat(accuracy, 2) + "% | " + generateRanking();
+		scoreTxt.text = "Score:" + songScore;
 		}
 		else
 		{
