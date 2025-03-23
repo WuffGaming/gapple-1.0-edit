@@ -48,3 +48,6 @@ why kade engine 1.2 guide? well first off fuck you second off golden apple is bu
 
 this tutorial is pretty scuffed, all you need to know is you need to get 2019 polymod and also older versions of other crap. im sorry if you cant compile
 
+## Contributing
+
+Wanna help contribute?Then do that. You can make music and art and stuff, but what I'd really like is some code help. Reach out if you wanna work with me Personally
