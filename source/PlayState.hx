@@ -1950,7 +1950,7 @@ class PlayState extends MusicBeatState
 			ranking = "(SDCB)";
 		else if (misses == 0 && (shits >= 10 || bads >= 10)) // Regular FC
 			ranking = "(FC)";
-		else if (misses >= 10 || (shits >= 10 || bads >= 10)) // Combo Breaks
+		else if (misses <= 3) // Combo Breaks
 			ranking = "(CB)";
 		else
 			ranking = "";
@@ -1958,6 +1958,7 @@ class PlayState extends MusicBeatState
 		// WIFE GONE its no longer based on wife3 FUCK YOUUU
 
 		var wifeConditions:Array<Bool> = [
+			accuracy >= 98, // Spenis
 			accuracy >= 95, // AAA
 			accuracy >= 90, // AA
 			accuracy >= 85, // A
@@ -1975,18 +1976,20 @@ class PlayState extends MusicBeatState
 				switch(i)
 				{
 					case 1:
-						ranking += " AAA";
+						ranking += " S";
 					case 2:
-						ranking += " AA";
+						ranking += " AAA";
 					case 3:
-						ranking += " A";
+						ranking += " AA";
 					case 4:
-						ranking += " B";
+						ranking += " A";
 					case 5:
-						ranking += " C";
+						ranking += " B";
 					case 6:
-						ranking += " D";
+						ranking += " C";
 					case 7:
+						ranking += " D";
+					case 8:
 						ranking += " F";
 				}
 				break;
