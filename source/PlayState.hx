@@ -1044,7 +1044,7 @@ class PlayState extends MusicBeatState
 
 				for (i in 0...2) {
 					var pizza = new FlxSprite(FlxG.random.int(100, 1000), FlxG.random.int(100, 500));
-					pizza.frames = Paths.getSparrowAtlas('applecore/pizza');
+					pizza.frames = Paths.getSparrowAtlas('backgrounds/applecore/pizza');
 					pizza.animation.addByPrefix('idle', 'p', 12, true); // https://m.gjcdn.net/game-thumbnail/500/652229-crop175_110_1130_647-stnkjdtv-v4.jpg
 					pizza.animation.play('idle');
 					pizza.ID = i;
@@ -1167,7 +1167,7 @@ class PlayState extends MusicBeatState
 				curStage = 'redTunnel';
 				var stupidFuckingRedBg = new FlxSprite().makeGraphic(9999, 9999, FlxColor.fromRGB(42, 0, 0)).screenCenter();
 				add(stupidFuckingRedBg);
-				redTunnel = new FlxSprite(-1000, -700).loadGraphic(Paths.image('bambi/redTunnel'));
+				redTunnel = new FlxSprite(-1000, -700).loadGraphic(Paths.image('backgrounds/3dbg/redTunnel'));
 				redTunnel.setGraphicSize(Std.int(redTunnel.width * 1.15), Std.int(redTunnel.height * 1.15));
 				redTunnel.updateHitbox();
 				sprites.add(redTunnel);
@@ -4159,7 +4159,7 @@ class PlayState extends MusicBeatState
 					case 223:
 						wtfThing = true;
 						what.forEach(function(spr:FlxSprite){
-							spr.frames = Paths.getSparrowAtlas('backgrounds/3dbg/applecore/minion');
+							spr.frames = Paths.getSparrowAtlas('backgrounds/applecore/minion');
 							spr.animation.addByPrefix('hi', 'poip', 12, true);
 							spr.animation.play('hi');
 						});
@@ -4197,7 +4197,7 @@ class PlayState extends MusicBeatState
 						});
 						gfSpeed = 1;
 						wtfThing = false;
-						var dumbStupid = new FlxSprite().loadGraphic(Paths.image('backgrounds/3dbg/applecore/poop'));
+						var dumbStupid = new FlxSprite().loadGraphic(Paths.image('backgrounds/applecore/poop'));
 						dumbStupid.scrollFactor.set();
 						dumbStupid.screenCenter();
 						littleIdiot.alpha = 0;
@@ -4226,11 +4226,11 @@ class PlayState extends MusicBeatState
 							iconP2.animation.play('bambi-unfair');
 							orbit = false;
 							dad.visible = dadmirror.visible = swagger.visible = false;
-							var derez = new FlxSprite(dad.getMidpoint().x, dad.getMidpoint().y).loadGraphic(Paths.image('backgrounds/3dbg/applecore/monkey_guy'));
+							var derez = new FlxSprite(dad.getMidpoint().x, dad.getMidpoint().y).loadGraphic(Paths.image('backgrounds/applecore/monkey_guy'));
 							derez.setPosition(derez.x - derez.width / 2, derez.y - derez.height / 2);
 							derez.antialiasing = false;
 							add(derez);
-							var deez = new FlxSprite(swagger.getMidpoint().x, swagger.getMidpoint().y).loadGraphic(Paths.image('backgrounds/3dbg/applecore/monkey_person'));
+							var deez = new FlxSprite(swagger.getMidpoint().x, swagger.getMidpoint().y).loadGraphic(Paths.image('backgrounds/applecore/monkey_person'));
 							deez.setPosition(deez.x - deez.width / 2, deez.y - deez.height / 2);
 							deez.antialiasing = false;
 							add(deez);
