@@ -998,7 +998,7 @@ class PlayState extends MusicBeatState
 				swagger = new Character(-300, 100 - 900 - 400, 'bambi-piss-3d');
 				altSong = Song.loadFromJson('alt-notes', 'applecore');
 
-				scaryBG = new FlxSprite(-350, -375).loadGraphic(Paths.image('backgrounds/3dbg/applecore/yeah'));
+				scaryBG = new FlxSprite(-350, -375).loadGraphic(Paths.image('backgrounds/applecore/yeah'));
 				scaryBG.scale.set(2, 2);
 				var testshader3:Shaders.GlitchEffect = new Shaders.GlitchEffect();
 				testshader3.waveAmplitude = 0.25;
@@ -1010,7 +1010,7 @@ class PlayState extends MusicBeatState
 				add(scaryBG);
 				scaryBG.active = false;
 
-				swagBG = new FlxSprite(-600, -200).loadGraphic(Paths.image('backgrounds/3dbg/applecore/hi'));
+				swagBG = new FlxSprite(-600, -200).loadGraphic(Paths.image('backgrounds/applecore/hi'));
 				//swagBG.scrollFactor.set(0, 0);
 				swagBG.scale.set(1.75, 1.75);
 				//swagBG.updateHitbox();
@@ -1023,7 +1023,7 @@ class PlayState extends MusicBeatState
 				add(swagBG);
 				curbg = swagBG;
 
-				unswagBG = new FlxSprite(-600, -200).loadGraphic(Paths.image('backgrounds/3dbg/applecore/poop'));
+				unswagBG = new FlxSprite(-600, -200).loadGraphic(Paths.image('backgrounds/applecore/poop'));
 				unswagBG.scale.set(1.75, 1.75);
 				var testshader2:Shaders.GlitchEffect = new Shaders.GlitchEffect();
 				testshader2.waveAmplitude = 0.1;
@@ -1044,7 +1044,7 @@ class PlayState extends MusicBeatState
 
 				for (i in 0...2) {
 					var pizza = new FlxSprite(FlxG.random.int(100, 1000), FlxG.random.int(100, 500));
-					pizza.frames = Paths.getSparrowAtlas('backgrounds/3dbg/applecore/pizza');
+					pizza.frames = Paths.getSparrowAtlas('applecore/pizza');
 					pizza.animation.addByPrefix('idle', 'p', 12, true); // https://m.gjcdn.net/game-thumbnail/500/652229-crop175_110_1130_647-stnkjdtv-v4.jpg
 					pizza.animation.play('idle');
 					pizza.ID = i;
@@ -1167,7 +1167,7 @@ class PlayState extends MusicBeatState
 				curStage = 'redTunnel';
 				var stupidFuckingRedBg = new FlxSprite().makeGraphic(9999, 9999, FlxColor.fromRGB(42, 0, 0)).screenCenter();
 				add(stupidFuckingRedBg);
-				redTunnel = new FlxSprite(-1000, -700).loadGraphic(Paths.image('backgrounds/3dbg/redTunnel'));
+				redTunnel = new FlxSprite(-1000, -700).loadGraphic(Paths.image('bambi/redTunnel'));
 				redTunnel.setGraphicSize(Std.int(redTunnel.width * 1.15), Std.int(redTunnel.height * 1.15));
 				redTunnel.updateHitbox();
 				sprites.add(redTunnel);
@@ -3205,6 +3205,9 @@ class PlayState extends MusicBeatState
 
 	var endingSong:Bool = false;
 
+	var timeShown = 0;
+ 	var currentTimingShown:FlxText = null;
+
 	function nextSong()
 	{
 		var difficulty:String = "";
@@ -3248,7 +3251,7 @@ class PlayState extends MusicBeatState
 		var coolText:FlxText = new FlxText(0, 0, 0, placement, 32);
 		coolText.screenCenter();
 		coolText.x = FlxG.width * 0.55;
-		//
+		coolText.y -= 350;
 
 		var rating:FlxSprite = new FlxSprite();
 		var score:Int = 350;
@@ -3340,19 +3343,59 @@ class PlayState extends MusicBeatState
 
 			rating.loadGraphic(Paths.image(pixelShitPart1 + daRating + pixelShitPart2));
 			rating.screenCenter();
-			rating.x = coolText.x - 40;
-			rating.y -= 60;
+			rating.y -= 50;
+ 			rating.x = coolText.x - 125;
 			rating.acceleration.y = 550;
 			rating.velocity.y -= FlxG.random.int(140, 175);
 			rating.velocity.x -= FlxG.random.int(0, 10);
 
+ 			var msTiming = truncateFloat(noteDiff, 3);
+ 
+ 			if (currentTimingShown != null)
+ 				remove(currentTimingShown);
+ 
+ 			currentTimingShown = new FlxText(0,0,0,"0ms");
+ 			timeShown = 0;
+ 			switch(daRating)
+ 			{
+ 				case 'shit' | 'bad':
+ 					currentTimingShown.color = FlxColor.RED;
+ 				case 'good':
+ 					currentTimingShown.color = FlxColor.GREEN;
+ 				case 'sick':
+ 					currentTimingShown.color = FlxColor.CYAN;
+ 			}
+ 			currentTimingShown.borderStyle = OUTLINE;
+ 			currentTimingShown.borderSize = 1.4;
+ 			currentTimingShown.borderColor = FlxColor.BLACK;
+ 			currentTimingShown.text = msTiming + "ms";
+ 			currentTimingShown.font = Paths.font("comic.ttf");
+ 			currentTimingShown.size = 30;
+ 
+ 			if (currentTimingShown.alpha != 1)
+ 				currentTimingShown.alpha = 1;
+ 
+ 			add(currentTimingShown);
+ 			
 			var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'combo' + pixelShitPart2));
 			comboSpr.screenCenter();
-			comboSpr.x = coolText.x;
+			comboSpr.x = rating.x;
+ 			comboSpr.y = rating.y + 100;
 			comboSpr.acceleration.y = 600;
 			comboSpr.velocity.y -= 150;
 
+ 			currentTimingShown.screenCenter();
+ 			currentTimingShown.x = comboSpr.x + 100;
+			currentTimingShown.y = rating.y + 100;
+ 			currentTimingShown.acceleration.y = 600;
+ 			currentTimingShown.velocity.y -= 150;
+			if(SONG.song.toLowerCase() == 'algebra')
+			{
+				currentTimingShown.y += 2000;
+			}
+
 			comboSpr.velocity.x += FlxG.random.int(1, 10);
+			currentTimingShown.velocity.x += comboSpr.velocity.x;
 			add(rating);
 
 			if (!curStage.startsWith('school'))
@@ -3368,6 +3411,7 @@ class PlayState extends MusicBeatState
 				comboSpr.setGraphicSize(Std.int(comboSpr.width * daPixelZoom * 0.7));
 			}
 
+			currentTimingShown.updateHitbox();
 			comboSpr.updateHitbox();
 			rating.updateHitbox();
 
@@ -3389,9 +3433,9 @@ class PlayState extends MusicBeatState
 			{
 				var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'num' + Std.int(i) + pixelShitPart2));
 				numScore.screenCenter();
-				numScore.x = coolText.x + (43 * daLoop) - 90;
-				numScore.y += 80;
-
+				numScore.x = rating.x + (43 * daLoop) - 50;
+ 				numScore.y = rating.y + 100;
+ 
 				if (!curStage.startsWith('school'))
 				{
 					numScore.antialiasing = true;
@@ -3429,7 +3473,13 @@ class PlayState extends MusicBeatState
 			// add(coolText);
 
 			FlxTween.tween(rating, {alpha: 0}, 0.2, {
-				startDelay: Conductor.crochet * 0.001
+				startDelay: Conductor.crochet * 0.001,
+ 				onUpdate: function(tween:FlxTween)
+ 				{
+					if (currentTimingShown != null)
+ 						currentTimingShown.alpha -= 0.02;
+ 					timeShown++;
+ 				}
 			});
 
 			FlxTween.tween(comboSpr, {alpha: 0}, 0.2, {
@@ -3437,6 +3487,12 @@ class PlayState extends MusicBeatState
 				{
 					coolText.destroy();
 					comboSpr.destroy();
+
+					if (currentTimingShown != null && timeShown >= 100)
+ 					{
+ 						remove(currentTimingShown);
+ 						currentTimingShown = null;
+ 					}
 
 					rating.destroy();
 				},
