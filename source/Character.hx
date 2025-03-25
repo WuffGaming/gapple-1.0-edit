@@ -1,6 +1,7 @@
 package;
 
 import flixel.addons.effects.chainable.FlxEffectSprite;
+import flixel.util.FlxColor;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.animation.FlxBaseAnimation;
@@ -22,6 +23,7 @@ class Character extends FlxSprite
 	public var canDance:Bool = true;
 
 	public var nativelyPlayable:Bool = false;
+	public var barColor:FlxColor;
 
 	public var globaloffset:Array<Float> = [0,0];
 
@@ -68,6 +70,8 @@ class Character extends FlxSprite
 
 				addOffset('scared', -2, -17);
 
+				barColor = FlxColor.fromString('#33de39');
+
 				playAnim('danceRight');
 			case 'gf-only':
 				frames = Paths.getSparrowAtlas('characters/main/GF_ONLY');
@@ -78,6 +82,8 @@ class Character extends FlxSprite
 				addOffset('sad');
 				addOffset('danceLeft');
 				addOffset('danceRight');
+
+				barColor = FlxColor.fromString('#33de39');
 
 				playAnim('danceRight');
 			case '3d-bf':
@@ -98,6 +104,8 @@ class Character extends FlxSprite
 
 				antialiasing = false;
 
+				barColor = FlxColor.fromRGB(49, 176, 209);
+
 				playAnim('idle');
 			case 'sart-producer':
 				frames = Paths.getSparrowAtlas('characters/sart/sart-producer');
@@ -113,6 +121,8 @@ class Character extends FlxSprite
 				addOffset('singRIGHT');
 
 				antialiasing = false;
+
+				barColor = FlxColor.fromRGB(75, 90, 160);
 
 				playAnim('idle');
 			case 'playrobot':
@@ -132,6 +142,8 @@ class Character extends FlxSprite
 
 				antialiasing = false;
 
+				barColor = FlxColor.fromRGB(162, 150, 188);
+
 				playAnim('idle');
 			case 'playrobot-crazy':
 				frames = Paths.getSparrowAtlas('characters/algebra/ohshit');
@@ -150,6 +162,8 @@ class Character extends FlxSprite
 
 				antialiasing = false;
 
+				barColor = FlxColor.fromRGB(162, 150, 188);
+
 				playAnim('idle');
 			case 'hall-monitor':
 				frames = Paths.getSparrowAtlas('characters/algebra/HALL_MONITOR');
@@ -167,6 +181,8 @@ class Character extends FlxSprite
 				antialiasing = false;
 				scale.set(1.5, 1.5);
 				updateHitbox();
+
+				barColor = FlxColor.fromRGB(37, 191, 55);
 
 				playAnim('idle');
 			case 'diamond-man':
@@ -187,6 +203,8 @@ class Character extends FlxSprite
 
 				antialiasing = false;
 
+				barColor = FlxColor.fromRGB(129, 180, 227);
+
 				playAnim('idle');
 			case 'dave-wheels':
 				frames = Paths.getSparrowAtlas('characters/dave/cool');
@@ -206,6 +224,8 @@ class Character extends FlxSprite
 				scale.set(1.8, 1.8);
 				updateHitbox();
 
+				barColor = FlxColor.fromRGB(15, 95, 255);
+
 				playAnim('danceRight');
 			case 'gf-wheels':
 				loadGraphic(Paths.image('dave/best_gf'), true, 241, 231);
@@ -214,6 +234,8 @@ class Character extends FlxSprite
 				scale.set(1.9, 1.9);
 				antialiasing = false;
 				updateHitbox();
+
+				barColor = FlxColor.fromRGB(178, 7, 7);
 				
 				
 				playAnim('idle');
@@ -234,6 +256,8 @@ class Character extends FlxSprite
 				updateHitbox();
 
 				antialiasing = false;
+
+				barColor = FlxColor.fromRGB(199, 164, 165);
 
 				playAnim('idle');
 			case 'bambom':
@@ -256,6 +280,8 @@ class Character extends FlxSprite
 
 				antialiasing = false;
 
+				barColor = FlxColor.fromRGB(178, 7, 7);
+
 				playAnim('idle');
 			case 'bendu':
 				frames = Paths.getSparrowAtlas('characters/oc/bendu');
@@ -275,6 +301,8 @@ class Character extends FlxSprite
 
 				antialiasing = false;
 
+				barColor = FlxColor.fromRGB(253, 253, 63);
+
 				playAnim('idle');
 			case 'dave-png':
 				frames = Paths.getSparrowAtlas('characters/dave/dave-png');
@@ -288,6 +316,8 @@ class Character extends FlxSprite
 				addOffset('singDOWN', 28, -5);
 				addOffset('singUP', -2, 29);
 				addOffset('singRIGHT', 1);
+
+				barColor = FlxColor.fromRGB(15, 95, 255);
 
 				playAnim('idle');
 			case 'split-dave-3d':
@@ -308,6 +338,8 @@ class Character extends FlxSprite
 				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
 				updateHitbox();
 				antialiasing = false;
+
+				barColor = FlxColor.fromRGB(255, 203, 230);
 		
 				playAnim('idle');
 
@@ -331,6 +363,8 @@ class Character extends FlxSprite
 				updateHitbox();
 				antialiasing = false;
 		
+				barColor = FlxColor.fromRGB(255, 255, 179);
+
 				playAnim('idle');
 
 			case 'RECOVERED_PROJECT':
@@ -350,6 +384,8 @@ class Character extends FlxSprite
 				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
 				updateHitbox();
 				antialiasing = false;
+
+				barColor = FlxColor.fromRGB(201, 191, 183);
 		
 				playAnim('idle');
 
@@ -370,6 +406,8 @@ class Character extends FlxSprite
 				setGraphicSize(Std.int(765 * furiosityScale),Std.int(903 * furiosityScale));
 				updateHitbox();
 				antialiasing = false;
+
+				barColor = FlxColor.fromRGB(201, 191, 183);
 		
 				playAnim('idle');
 
@@ -390,6 +428,8 @@ class Character extends FlxSprite
 				setGraphicSize(Std.int(765 * furiosityScale),Std.int(903 * furiosityScale));
 				updateHitbox();
 				antialiasing = false;
+
+				barColor = FlxColor.fromRGB(201, 191, 183);
 		
 				playAnim('idle');
 
@@ -411,6 +451,8 @@ class Character extends FlxSprite
 				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
 				updateHitbox();
 				antialiasing = false;
+
+				barColor = FlxColor.fromRGB(218, 46, 138);
 		
 				playAnim('idle');
 
@@ -432,6 +474,8 @@ class Character extends FlxSprite
 				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
 				updateHitbox();
 				antialiasing = false;
+
+				barColor = FlxColor.fromRGB(230, 62, 61);
 		
 				playAnim('idle');
 
@@ -456,6 +500,8 @@ class Character extends FlxSprite
 				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
 				updateHitbox();
 				antialiasing = false;
+
+				barColor = FlxColor.fromRGB(181, 255, 255);
 		
 				playAnim('idle');
 
@@ -480,6 +526,8 @@ class Character extends FlxSprite
 				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
 				updateHitbox();
 				antialiasing = false;
+
+				barColor = FlxColor.fromRGB(181, 255, 255);
 		
 				playAnim('idle');
 
@@ -508,6 +556,8 @@ class Character extends FlxSprite
 				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
 				updateHitbox();
 				antialiasing = false;
+
+				barColor = FlxColor.fromRGB(253, 253, 63);
 		
 				playAnim('idle');
 
@@ -525,6 +575,8 @@ class Character extends FlxSprite
 				addOffset("singRIGHT", 37, -4);
 				addOffset("singLEFT", -5, -1);
 				addOffset("singDOWN", 107, 111);
+
+				barColor = FlxColor.fromRGB(37, 191, 55);
 
 				playAnim('idle');
 
@@ -548,6 +600,8 @@ class Character extends FlxSprite
 				setGraphicSize(Std.int(width / furiosityScale));
 				updateHitbox();
 				antialiasing = false;
+
+				barColor = FlxColor.fromRGB(37, 191, 55);
 		
 				playAnim('idle');
 
@@ -590,6 +644,8 @@ class Character extends FlxSprite
 
 				antialiasing = false;
 
+				barColor = FlxColor.fromRGB(72, 254, 45);
+
 				playAnim('idle');
 			case 'bandu-candy':
 				frames = Paths.getSparrowAtlas('characters/bandu/bandu_crazy');
@@ -621,29 +677,9 @@ class Character extends FlxSprite
 
 				antialiasing = false;
 
+				barColor = FlxColor.fromRGB(72, 254, 45);
+
 				playAnim('danceLeft');
-			case 'bambi-unfair':
-				// BAMBI SHITE ANIMATION LOADING CODE
-				tex = Paths.getSparrowAtlas('characters/bambi/unfair_bambi');
-				frames = tex;
-				animation.addByPrefix('idle', 'idle', 24, false);
-				animation.addByPrefix('singUP', 'singUP', 24, false);
-				animation.addByPrefix('singRIGHT', 'singRIGHT', 24, false);
-				animation.addByPrefix('singDOWN', 'singDOWN', 24, false);
-				animation.addByPrefix('singLEFT', 'singLEFT', 24, false);
-		
-				addOffset('idle');
-				addOffset("singUP", 140, 70);
-				addOffset("singRIGHT", -180, -60);
-				addOffset("singLEFT", 250, 0);
-				addOffset("singDOWN", 150, 50);
-				globaloffset[0] = 150 * 1.3;
-				globaloffset[1] = 450 * 1.3; //this is the y
-				setGraphicSize(Std.int((width * 1.3) / furiosityScale));
-				updateHitbox();
-				antialiasing = false;
-		
-				playAnim('idle');
 			case 'bambi-good':
 				// PLACEHOLDER! !  ! !
 				frames = Paths.getSparrowAtlas('characters/bambi/PLACEHOLDER_BAMBI');
@@ -658,6 +694,8 @@ class Character extends FlxSprite
 				addOffset("singRIGHT", -50, 0);
 				addOffset("singLEFT", 20, -7);
 				addOffset("singDOWN", -5, -43);
+
+				barColor = FlxColor.fromRGB(37, 191, 55);
 
 				playAnim('idle');
 			case 'dave-good':
@@ -675,6 +713,8 @@ class Character extends FlxSprite
 				addOffset("singRIGHT", -5, -2);
 				addOffset("singLEFT", -29, 2);
 				addOffset("singDOWN", -5, 2);
+
+				barColor = FlxColor.fromRGB(15, 95, 255);
 
 				playAnim('idle');
 			case 'unfair-junker':
@@ -697,6 +737,8 @@ class Character extends FlxSprite
 				setGraphicSize(Std.int((width * 1.3) / furiosityScale));
 				updateHitbox();
 				antialiasing = false;
+
+				barColor = FlxColor.fromRGB(178, 7, 7);
 		
 				playAnim('idle');
 				
@@ -740,6 +782,8 @@ class Character extends FlxSprite
 
 				nativelyPlayable = true;
 
+				barColor = FlxColor.fromRGB(49, 176, 209);
+
 				flipX = true;
 
 			case 'tunnel-bf':
@@ -762,6 +806,8 @@ class Character extends FlxSprite
 
 				playAnim('idle');
 
+				barColor = FlxColor.fromRGB(49, 176, 209);
+
 				flipX = true;
 
 				nativelyPlayable = true;
@@ -783,6 +829,8 @@ class Character extends FlxSprite
 				addOffset("singDOWN", 1, -56);
 
 				playAnim('idle');
+
+				barColor = FlxColor.fromRGB(49, 176, 209);
 
 				flipX = true;
 
@@ -807,6 +855,8 @@ class Character extends FlxSprite
 				addOffset('turn');
 
 				playAnim('idle');
+
+				barColor = FlxColor.fromRGB(49, 176, 209);
 
 				nativelyPlayable = true;
 		}

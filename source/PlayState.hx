@@ -718,7 +718,11 @@ class PlayState extends MusicBeatState
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
 			'health', 0, 2);
 		healthBar.scrollFactor.set();
-		healthBar.createFilledBar(0xFFFF0000, 0xFF66FF33);
+		healthBar.createFilledBar(dad.barColor, boyfriend.barColor);
+		if(SONG.song.toLowerCase() == 'algebra')
+		{
+			healthBar.createFilledBar(0xFFFF0000, 0xFF66FF33);
+		}
 		add(healthBar);
 
 		healthBarThing = new FlxSprite(0, FlxG.height * 0.9).loadGraphic(Paths.image('bar/healthBarThing'));
@@ -4224,6 +4228,7 @@ class PlayState extends MusicBeatState
 					case 667:
 						FlxTween.tween(littleIdiot, {"scale.x": littleIdiot.scale.x + 2.1, "scale.y": littleIdiot.scale.y + 2.1}, 1.35, {ease: FlxEase.cubeInOut, onComplete: function(twn:FlxTween){
 							iconP2.animation.play('bambi-unfair');
+							healthBar.createFilledBar(littleIdiot.barColor, boyfriend.barColor);
 							orbit = false;
 							dad.visible = dadmirror.visible = swagger.visible = false;
 							var derez = new FlxSprite(dad.getMidpoint().x, dad.getMidpoint().y).loadGraphic(Paths.image('backgrounds/applecore/monkey_guy'));
