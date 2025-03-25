@@ -52,7 +52,7 @@ class StoryMenuState extends MusicBeatState
 
 	var weekNames:Array<String> = [
 		"Tutorial",
-		"Deez!"
+		"Week1"
 	];
 
 	var txtWeekTitle:FlxText;

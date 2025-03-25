@@ -704,12 +704,12 @@ class PlayState extends MusicBeatState
 
 		FlxG.fixedTimestep = false;
 
-		healthBarBG = new FlxSprite(0, FlxG.height * 0.9).loadGraphic(Paths.image('healthBar'));
+		healthBarBG = new FlxSprite(0, FlxG.height * 0.9).loadGraphic(Paths.image('bar/healthBar'));
 		if (FlxG.save.data.downscroll)
 			healthBarBG.y = 50;
 		if(SONG.song.toLowerCase() == 'algebra')
 		{
-			healthBarBG.loadGraphic(Paths.image('retroBar'));
+			healthBarBG.loadGraphic(Paths.image('bar/retroBar'));
 		}
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
@@ -721,7 +721,7 @@ class PlayState extends MusicBeatState
 		healthBar.createFilledBar(0xFFFF0000, 0xFF66FF33);
 		add(healthBar);
 
-		healthBarThing = new FlxSprite(0, FlxG.height * 0.9).loadGraphic(Paths.image('healthBarThing'));
+		healthBarThing = new FlxSprite(0, FlxG.height * 0.9).loadGraphic(Paths.image('bar/healthBarThing'));
 		if (FlxG.save.data.downscroll)
 			healthBarThing.y = 50;
 		if(SONG.song.toLowerCase() == 'algebra')
@@ -899,7 +899,7 @@ class PlayState extends MusicBeatState
 				defaultCamZoom = 0.85;
 				curStage = 'sugar';
 
-				var swag:FlxSprite = new FlxSprite(120, -35).loadGraphic(Paths.image('bambi/pissing_too'));
+				var swag:FlxSprite = new FlxSprite(120, -35).loadGraphic(Paths.image('backgrounds/3dbg/pissing_too'));
 				swag.x -= 250;
 				swag.setGraphicSize(Std.int(swag.width  * 0.521814815));
 				swag.updateHitbox();
@@ -910,45 +910,45 @@ class PlayState extends MusicBeatState
 			case 'duper':
 				defaultCamZoom = 0.9;
 	
-				var bg:FlxSprite = new FlxSprite(-700, 0).loadGraphic(Paths.image('bambi/sky'));
+				var bg:FlxSprite = new FlxSprite(-700, 0).loadGraphic(Paths.image('backgrounds/farm/sky'));
 				bg.antialiasing = true;
 				bg.scrollFactor.set(0.9, 0.9);
 				bg.active = false;
 				sprites.add(bg);
 	
-				var hills:FlxSprite = new FlxSprite(-250, 200).loadGraphic(Paths.image('bambi/orangey hills'));
+				var hills:FlxSprite = new FlxSprite(-250, 200).loadGraphic(Paths.image('backgrounds/farm/orangey hills'));
 				hills.antialiasing = true;
 				hills.scrollFactor.set(0.9, 0.7);
 				hills.active = false;
 				sprites.add(hills);
 	
-				var farm:FlxSprite = new FlxSprite(150, 250).loadGraphic(Paths.image('bambi/funfarmhouse'));
+				var farm:FlxSprite = new FlxSprite(150, 250).loadGraphic(Paths.image('backgrounds/farm/funfarmhouse'));
 				farm.antialiasing = true;
 				farm.scrollFactor.set(1.1, 0.9);
 				farm.active = false;
 				sprites.add(farm);
 				
-				var foreground:FlxSprite = new FlxSprite(-400, 600).loadGraphic(Paths.image('bambi/grass lands'));
+				var foreground:FlxSprite = new FlxSprite(-400, 600).loadGraphic(Paths.image('backgrounds/farm/grass lands'));
 				foreground.antialiasing = true;
 				foreground.active = false;
 				sprites.add(foreground);
 				
-				var cornSet:FlxSprite = new FlxSprite(-350, 325).loadGraphic(Paths.image('bambi/Cornys'));
+				var cornSet:FlxSprite = new FlxSprite(-350, 325).loadGraphic(Paths.image('backgrounds/farm/Cornys'));
 				cornSet.antialiasing = true;
 				cornSet.active = false;
 				sprites.add(cornSet);
 				
-				var cornSet2:FlxSprite = new FlxSprite(1050, 325).loadGraphic(Paths.image('bambi/Cornys'));
+				var cornSet2:FlxSprite = new FlxSprite(1050, 325).loadGraphic(Paths.image('backgrounds/farm/Cornys'));
 				cornSet2.antialiasing = true;
 				cornSet2.active = false;
 				sprites.add(cornSet2);
 				
-				var fence:FlxSprite = new FlxSprite(-350, 450).loadGraphic(Paths.image('bambi/crazy fences'));
+				var fence:FlxSprite = new FlxSprite(-350, 450).loadGraphic(Paths.image('backgrounds/farm/crazy fences'));
 				fence.antialiasing = true;
 				fence.active = false;
 				sprites.add(fence);
 	
-				var sign:FlxSprite = new FlxSprite(0, 500).loadGraphic(Paths.image('bambi/Sign'));
+				var sign:FlxSprite = new FlxSprite(0, 500).loadGraphic(Paths.image('backgrounds/farm/Sign'));
 				sign.antialiasing = true;
 				sign.active = false;
 				sprites.add(sign);
@@ -987,7 +987,7 @@ class PlayState extends MusicBeatState
 			case 'recovered-project':
 				defaultCamZoom = 1.4;
 				curStage = 'recover';
-				var yea = new FlxSprite(-641, -222).loadGraphic(Paths.image('RECOVER_assets/q'));
+				var yea = new FlxSprite(-641, -222).loadGraphic(Paths.image('backgrounds/RECOVER_assets/q'));
 				yea.setGraphicSize(2478);
 				yea.updateHitbox();
 				sprites.add(yea);
@@ -998,7 +998,7 @@ class PlayState extends MusicBeatState
 				swagger = new Character(-300, 100 - 900 - 400, 'bambi-piss-3d');
 				altSong = Song.loadFromJson('alt-notes', 'applecore');
 
-				scaryBG = new FlxSprite(-350, -375).loadGraphic(Paths.image('bambi/yeah'));
+				scaryBG = new FlxSprite(-350, -375).loadGraphic(Paths.image('backgrounds/3dbg/applecore/yeah'));
 				scaryBG.scale.set(2, 2);
 				var testshader3:Shaders.GlitchEffect = new Shaders.GlitchEffect();
 				testshader3.waveAmplitude = 0.25;
@@ -1010,7 +1010,7 @@ class PlayState extends MusicBeatState
 				add(scaryBG);
 				scaryBG.active = false;
 
-				swagBG = new FlxSprite(-600, -200).loadGraphic(Paths.image('bambi/hi'));
+				swagBG = new FlxSprite(-600, -200).loadGraphic(Paths.image('backgrounds/3dbg/applecore/hi'));
 				//swagBG.scrollFactor.set(0, 0);
 				swagBG.scale.set(1.75, 1.75);
 				//swagBG.updateHitbox();
@@ -1023,7 +1023,7 @@ class PlayState extends MusicBeatState
 				add(swagBG);
 				curbg = swagBG;
 
-				unswagBG = new FlxSprite(-600, -200).loadGraphic(Paths.image('bambi/poop'));
+				unswagBG = new FlxSprite(-600, -200).loadGraphic(Paths.image('backgrounds/3dbg/applecore/poop'));
 				unswagBG.scale.set(1.75, 1.75);
 				var testshader2:Shaders.GlitchEffect = new Shaders.GlitchEffect();
 				testshader2.waveAmplitude = 0.1;
@@ -1044,7 +1044,7 @@ class PlayState extends MusicBeatState
 
 				for (i in 0...2) {
 					var pizza = new FlxSprite(FlxG.random.int(100, 1000), FlxG.random.int(100, 500));
-					pizza.frames = Paths.getSparrowAtlas('bambi/pizza');
+					pizza.frames = Paths.getSparrowAtlas('backgrounds/3dbg/applecore/pizza');
 					pizza.animation.addByPrefix('idle', 'p', 12, true); // https://m.gjcdn.net/game-thumbnail/500/652229-crop175_110_1130_647-stnkjdtv-v4.jpg
 					pizza.animation.play('idle');
 					pizza.ID = i;
@@ -1059,7 +1059,7 @@ class PlayState extends MusicBeatState
 				curStage = 'algebra';
 				defaultCamZoom = 0.85;
 				swagSpeed = 1.6;
-				var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('dave/algebraBg'));
+				var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('backgrounds/algebra/algebraBg'));
 				bg.setGraphicSize(Std.int(bg.width * 1.35), Std.int(bg.height * 1.35));
 				bg.updateHitbox();
 				//this is temp until good positioning gets done
@@ -1103,44 +1103,44 @@ class PlayState extends MusicBeatState
 
 			case 'polygonized' | 'furiosity' | 'cheating' | 'unfairness' | 'disruption' | 'disability' | 'origin' | 'metallic' | 'strawberry' | 'keyboard':
 				defaultCamZoom = 0.9;
-				var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('dave/redsky'));
+				var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('backgrounds/3dbg/redsky'));
 				bg.active = true;
 	
 				switch (SONG.song.toLowerCase())
 				{
 					case 'cheating':
-						bg.loadGraphic(Paths.image('dave/cheater'));
+						bg.loadGraphic(Paths.image('backgrounds/3dbg/cheater'));
 						curStage = 'cheating';
 					case 'disruption':
 						gfSpeed = 2;
-						bg.loadGraphic(Paths.image('dave/disruptor'));
+						bg.loadGraphic(Paths.image('backgrounds/3dbg/disruptor'));
 						curStage = 'disrupt';
 					case 'unfairness':
-						bg.loadGraphic(Paths.image('dave/scarybg'));
+						bg.loadGraphic(Paths.image('backgrounds/3dbg/scarybg'));
 						curStage = 'unfairness';
 					case 'disability':
-						bg.loadGraphic(Paths.image('dave/disabled'));
+						bg.loadGraphic(Paths.image('backgrounds/3dbg/disabled'));
 						curStage = 'disabled';
 					case 'origin':
-						bg.loadGraphic(Paths.image('bambi/heaven'));
+						bg.loadGraphic(Paths.image('backgrounds/3dbg/heaven'));
 						curStage = 'origin';
 					case 'metallic':
 						defaultCamZoom = 0.7;
-						bg.loadGraphic(Paths.image('bambi/metal'));
+						bg.loadGraphic(Paths.image('backgrounds/3dbg/metal'));
 						bg.y -= 235;
 						curStage = 'metallic';
 					case 'strawberry':
 						defaultCamZoom = 0.69;
-						bg.loadGraphic(Paths.image('bambi/strawberries'));
+						bg.loadGraphic(Paths.image('backgrounds/3dbg/strawberries'));
 						bg.scrollFactor.set(0, 0);
 						bg.y -= 200;
 						bg.x -= 100;
 						curStage = 'strawberry';
 					case 'keyboard':
-						bg.loadGraphic(Paths.image('bambi/keyboard'));
+						bg.loadGraphic(Paths.image('backgrounds/3dbg/keyboard'));
 						curStage = 'keyboard';
 					default:
-						bg.loadGraphic(Paths.image('dave/redsky'));
+						bg.loadGraphic(Paths.image('backgrounds/3dbg/redsky'));
 						curStage = 'daveEvilHouse';
 				}
 				
@@ -1167,7 +1167,7 @@ class PlayState extends MusicBeatState
 				curStage = 'redTunnel';
 				var stupidFuckingRedBg = new FlxSprite().makeGraphic(9999, 9999, FlxColor.fromRGB(42, 0, 0)).screenCenter();
 				add(stupidFuckingRedBg);
-				redTunnel = new FlxSprite(-1000, -700).loadGraphic(Paths.image('bambi/redTunnel'));
+				redTunnel = new FlxSprite(-1000, -700).loadGraphic(Paths.image('backgrounds/3dbg/redTunnel'));
 				redTunnel.setGraphicSize(Std.int(redTunnel.width * 1.15), Std.int(redTunnel.height * 1.15));
 				redTunnel.updateHitbox();
 				sprites.add(redTunnel);
@@ -1180,7 +1180,7 @@ class PlayState extends MusicBeatState
 			case 'swag':
 				curStage = 'swag';
 
-				var bg = new FlxSprite(150, 100).loadGraphic(Paths.image('dave/swag'));
+				var bg = new FlxSprite(150, 100).loadGraphic(Paths.image('backgrounds/other/swag'));
 				bg.scale.set(3, 3);
 				bg.updateHitbox();
 				bg.scale.set(4.5, 4.5);
@@ -1190,24 +1190,24 @@ class PlayState extends MusicBeatState
 				curStage = 'sart';
 				defaultCamZoom = 0.6;
 
-				add(new FlxSprite(-1350, -1111).loadGraphic(Paths.image('sart/bg')));
+				add(new FlxSprite(-1350, -1111).loadGraphic(Paths.image('backgrounds/sart/bg')));
 			case 'thunderstorm':
 				curStage = 'out';
 				defaultCamZoom = 0.8;
 
-				var sky:ShaggyModMoment = new ShaggyModMoment('thunda/sky', -1204, -456, 0.15, 1, 0);
+				var sky:ShaggyModMoment = new ShaggyModMoment('backgrounds/thunda/sky', -1204, -456, 0.15, 1, 0);
 				add(sky);
 
-				//var clouds:ShaggyModMoment = new ShaggyModMoment('thunda/clouds', -988, -260, 0.25, 1, 1);
+				//var clouds:ShaggyModMoment = new ShaggyModMoment('backgrounds/thunda/clouds', -988, -260, 0.25, 1, 1);
 				//add(clouds);
 
-				var backMount:ShaggyModMoment = new ShaggyModMoment('thunda/backmount', -700, -40, 0.4, 1, 2);
+				var backMount:ShaggyModMoment = new ShaggyModMoment('backgrounds/thunda/backmount', -700, -40, 0.4, 1, 2);
 				add(backMount);
 
-				var middleMount:ShaggyModMoment = new ShaggyModMoment('thunda/middlemount', -240, 200, 0.6, 1, 3);
+				var middleMount:ShaggyModMoment = new ShaggyModMoment('backgrounds/thunda/middlemount', -240, 200, 0.6, 1, 3);
 				add(middleMount);
 
-				var ground:ShaggyModMoment = new ShaggyModMoment('thunda/ground', -660, 624, 1, 1, 4);
+				var ground:ShaggyModMoment = new ShaggyModMoment('backgrounds/thunda/ground', -660, 624, 1, 1, 4);
 				add(ground);
 			default:
 				defaultCamZoom = 0.9;
@@ -4103,7 +4103,7 @@ class PlayState extends MusicBeatState
 					case 223:
 						wtfThing = true;
 						what.forEach(function(spr:FlxSprite){
-							spr.frames = Paths.getSparrowAtlas('bambi/minion');
+							spr.frames = Paths.getSparrowAtlas('backgrounds/3dbg/applecore/minion');
 							spr.animation.addByPrefix('hi', 'poip', 12, true);
 							spr.animation.play('hi');
 						});
@@ -4141,7 +4141,7 @@ class PlayState extends MusicBeatState
 						});
 						gfSpeed = 1;
 						wtfThing = false;
-						var dumbStupid = new FlxSprite().loadGraphic(Paths.image('bambi/poop'));
+						var dumbStupid = new FlxSprite().loadGraphic(Paths.image('backgrounds/3dbg/applecore/poop'));
 						dumbStupid.scrollFactor.set();
 						dumbStupid.screenCenter();
 						littleIdiot.alpha = 0;
@@ -4170,11 +4170,11 @@ class PlayState extends MusicBeatState
 							iconP2.animation.play('bambi-unfair');
 							orbit = false;
 							dad.visible = dadmirror.visible = swagger.visible = false;
-							var derez = new FlxSprite(dad.getMidpoint().x, dad.getMidpoint().y).loadGraphic(Paths.image('bambi/monkey_guy'));
+							var derez = new FlxSprite(dad.getMidpoint().x, dad.getMidpoint().y).loadGraphic(Paths.image('backgrounds/3dbg/applecore/monkey_guy'));
 							derez.setPosition(derez.x - derez.width / 2, derez.y - derez.height / 2);
 							derez.antialiasing = false;
 							add(derez);
-							var deez = new FlxSprite(swagger.getMidpoint().x, swagger.getMidpoint().y).loadGraphic(Paths.image('bambi/monkey_person'));
+							var deez = new FlxSprite(swagger.getMidpoint().x, swagger.getMidpoint().y).loadGraphic(Paths.image('backgrounds/3dbg/applecore/monkey_person'));
 							deez.setPosition(deez.x - deez.width / 2, deez.y - deez.height / 2);
 							deez.antialiasing = false;
 							add(deez);
@@ -4626,7 +4626,7 @@ class PlayState extends MusicBeatState
 	}
 
 	function bgImg(Path:String) {
-		return Paths.image('dave/bgJunkers/$Path');
+		return Paths.image('backgrounds/algebra/bgJunkers/$Path');
 	}
 
 	public function preload(graphic:String) //preload assets
