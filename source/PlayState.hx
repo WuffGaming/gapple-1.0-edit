@@ -3353,7 +3353,7 @@ class PlayState extends MusicBeatState
 			rating.velocity.y -= FlxG.random.int(140, 175);
 			rating.velocity.x -= FlxG.random.int(0, 10);
 
- 			var msTiming = truncateFloat(noteDiff, 3);
+ 			var msTiming = truncateFloat(noteDiff, 0);
  
  			if (currentTimingShown != null)
  				remove(currentTimingShown);
