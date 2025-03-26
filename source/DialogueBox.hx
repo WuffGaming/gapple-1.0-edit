@@ -111,28 +111,6 @@ class DialogueBox extends FlxSpriteGroup
 		var hasDialog = false;
 		switch (PlayState.SONG.song.toLowerCase())
 		{
-			case 'senpai':
-				hasDialog = false;
-				box.frames = Paths.getSparrowAtlas('weeb/pixelUI/dialogueBox-pixel');
-				box.animation.addByPrefix('normalOpen', 'Text Box Appear', 24, false);
-				box.animation.addByIndices('normal', 'Text Box Appear', [4], "", 24);
-			case 'roses':
-				hasDialog = false;
-				FlxG.sound.play(Paths.sound('ANGRY_TEXT_BOX'));
-
-				box.frames = Paths.getSparrowAtlas('weeb/pixelUI/dialogueBox-senpaiMad');
-				box.animation.addByPrefix('normalOpen', 'SENPAI ANGRY IMPACT SPEECH', 24, false);
-				box.animation.addByIndices('normal', 'SENPAI ANGRY IMPACT SPEECH', [4], "", 24);
-
-			case 'thorns':
-				hasDialog = false;
-				box.frames = Paths.getSparrowAtlas('weeb/pixelUI/dialogueBox-evil');
-				box.animation.addByPrefix('normalOpen', 'Spirit Textbox spawn', 24, false);
-				box.animation.addByIndices('normal', 'Spirit Textbox spawn', [11], "", 24);
-				
-				var face:FlxSprite = new FlxSprite(320, 170).loadGraphic(Paths.image('weeb/spiritFaceForward', 'week6'));
-				face.setGraphicSize(Std.int(face.width * 6));
-				add(face);
 			case 'algebra':
 				hasDialog = true;
 				box.frames = Paths.getSparrowAtlas('qualitybox');
@@ -167,11 +145,20 @@ class DialogueBox extends FlxSpriteGroup
 				portraitLeftCharacter = 'senpai';
 				portraitRightCharacter = 'bfPixel';
 				
-			case 'house' | 'insanity' | 'furiosity' | 'polygonized' | 'disability' | 'algebra' | 'wireframe' | 'recovered-project':
+			case 'house' | 'insanity' | 'furiosity' | 'polygonized' | 'disability' | 'wireframe':
 				portraitLeftCharacter = 'dave';
+
+			case 'algebra':
+				portraitLeftCharacter = 'olddave';
+
+			case 'recovered-project':
+				portraitLeftCharacter = 'recover';
 				
-			case 'blocked' | 'corn-theft' | 'maze' | 'supernovae' | 'glitch' | 'splitathon' | 'cheating' | 'unfairness' | 'disruption' | 'applecore' | 'duper':
+			case 'blocked' | 'corn-theft' | 'maze' | 'supernovae' | 'glitch' | 'splitathon' | 'cheating' | 'unfairness' | 'disruption' | 'duper':
 				portraitLeftCharacter = 'bambi';
+
+			case 'applecore':
+				portraitLeftCharacter = 'bandu';
 		}
 
 		var leftPortrait:Portrait = getPortrait(portraitLeftCharacter);
@@ -272,17 +259,27 @@ class DialogueBox extends FlxSpriteGroup
 		{
 			curshader.shader.uTime.value[0] += elapsed;
 		}
-		// HARD CODING CUZ IM STUPDI
-		if (PlayState.SONG.song.toLowerCase() == 'roses')
-			portraitLeft.visible = false;
-		if (PlayState.SONG.song.toLowerCase() == 'thorns')
-		{
-			portraitLeft.color = FlxColor.BLACK;
-			swagDialogue.color = FlxColor.WHITE;
-			dropText.color = FlxColor.BLACK;
-		}
 
 		dropText.text = swagDialogue.text;
+		switch (curCharacter)
+		{
+			case 'dave':
+				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/daveDialogue'), 0.9)];
+			case 'olddave':
+				swagDialogue.sounds = [FlxG.sound.load(Paths.soundRandom('dialogue/retroDialogue', 1, 3), 0.6)];
+			case 'recover':
+				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/RECOVER'), 0.9)];
+			case 'bambi':
+				swagDialogue.sounds = [FlxG.sound.load(Paths.soundRandom('dialogue/bambDialogue', 1, 3), 0.6)];
+			case 'bandu':
+				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/banduDialogue'), 0.9)];
+			case 'bf':
+				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/bfDialogue'), 0.6)];		
+			case 'gf':
+				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/gfDialogue'), 0.6)];	
+			default:
+				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/pixelText'), 0.6)];	
+		}
 
 		if (box.animation.curAnim != null)
 		{
@@ -305,8 +302,6 @@ class DialogueBox extends FlxSpriteGroup
 			
 			switch (PlayState.SONG.song.toLowerCase())
 			{
-				case 'senpai' | 'thorns' | 'roses':
-					FlxG.sound.play(Paths.sound('clickText'), 0.8);
 				default:
 					FlxG.sound.play(Paths.sound('textclickmodern'), 0.8);
 			}
@@ -399,7 +394,7 @@ class DialogueBox extends FlxSpriteGroup
 			}
 			switch (curCharacter)
 			{
-				case 'dave' | 'bambi' | 'tristan' | 'insanityEndDave': //guys its the funny bambi character
+				case 'dave' | 'bambi' | 'olddave' | 'bandu' | 'recover': //guys its the funny bambi character
 						portraitLeft.setPosition(220, 220);
 				case 'bf' | 'gf': //create boyfriend & genderbent boyfriend
 					portraitRight.setPosition(570, 220);
@@ -465,15 +460,23 @@ class DialogueBox extends FlxSpriteGroup
 					case 'wireframe':
 						portrait.portraitPath = 'dialogue/3d_dave_wireframe_portrait';
 						portrait.portraitPrefix = 'dave 3d wireframe portrait';
-					case 'algebra':
-						portrait.portraitPath = 'dialogue/3d_dave_og_portrait';
-						portrait.portraitPrefix = 'dave 3d algebra portrait';
-					case 'recovered-project':
-						portrait.portraitPath = 'dialogue/RECOVERED_PORT';
-						portrait.portraitPrefix = 'recovered';
 					default:
 						portrait.portraitPath = 'dialogue/dave_house';
 						portrait.portraitPrefix = 'dave house portrait';
+				}
+			case 'olddave':
+				switch (PlayState.SONG.song.toLowerCase())
+				{
+					default:
+						portrait.portraitPath = 'dialogue/3d_dave_og_portrait';
+						portrait.portraitPrefix = 'dave 3d algebra portrait';
+				}
+			case 'recover':
+				switch (PlayState.SONG.song.toLowerCase())
+				{
+					default:
+						portrait.portraitPath = 'dialogue/RECOVERED_PORT';
+						portrait.portraitPrefix = 'recovered';
 				}
 			case 'bambi':
 				switch (PlayState.SONG.song.toLowerCase())
@@ -481,15 +484,19 @@ class DialogueBox extends FlxSpriteGroup
 					case 'disruption':
 						portrait.portraitPath = 'dialogue/3d_bambi_disruption_portrait';
 						portrait.portraitPrefix = '3d bambi disruption portrait';
-					case 'applecore':
-						portrait.portraitPath = 'dialogue/bandu_portrait';
-						portrait.portraitPrefix = 'bandu portrait';
 					case 'duper':
 						portrait.portraitPath = 'dialogue/bambi_corntheft';
 						portrait.portraitPrefix = 'bambi corntheft portrait';
 					default:
 						portrait.portraitPath = 'dialogue/bambi_corntheft';
 						portrait.portraitPrefix = 'bambi corntheft portrait';
+				}
+			case 'bandu':
+				switch (PlayState.SONG.song.toLowerCase())
+				{
+					default:
+						portrait.portraitPath = 'dialogue/bandu_portrait';
+						portrait.portraitPrefix = 'bandu portrait';
 				}
 			case 'bf':
 				switch (PlayState.SONG.song.toLowerCase())

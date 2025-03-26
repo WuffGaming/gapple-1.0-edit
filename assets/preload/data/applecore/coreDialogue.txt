@@ -1,13 +1,13 @@
-:bambi:Howdy!
+:bandu:Howdy!
 :bf:Bop?
-:bambi:Can I show you something?
+:bandu:Can I show you something?
 :bf:Bep!
-:bambi:Check this out!
-:bambi:I got lots o' phones!
-:bambi:Neat, huh?
+:bandu:Check this out!
+:bandu:I got lots o' phones!
+:bandu:Neat, huh?
 :bf:Boop!
-:bambi:Ooh, is that a microphone?
-:bambi:Are you a singer?
+:bandu:Ooh, is that a microphone?
+:bandu:Are you a singer?
 :bf:Beep!
-:bambi:Wanna sing?
+:bandu:Wanna sing?
 :bf:Brap

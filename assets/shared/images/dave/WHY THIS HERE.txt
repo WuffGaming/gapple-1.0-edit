@@ -1,0 +1,1 @@
+Whoever coded Wireframe made sure to make it really hard to change where the spritesheet locates, and I'm too lazy to fix it. Bye!
