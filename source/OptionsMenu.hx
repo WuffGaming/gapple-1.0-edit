@@ -26,6 +26,7 @@ class OptionsMenu extends MusicBeatState
 		new HitsoundOption(),
 		new CutsceneOption(),
 		new EyesoresOption(),
+		new InstantRespawn(),
 		#if !mobile
 		new FPSOption(),
 		#end

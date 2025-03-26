@@ -158,3 +158,21 @@ class HitsoundOption extends Option
 		return "Hitsounds " + (!FlxG.save.data.donoteclick ? "off" : "on");
 	}
 }
+
+
+class InstantRespawn extends Option
+{
+ 
+ 	public override function press():Bool
+ 	{
+ 		FlxG.save.data.InstantRespawn = !FlxG.save.data.InstantRespawn;
+ 		display = updateDisplay();
+ 		return true;
+ 	}
+ 
+ 	private override function updateDisplay():String
+ 	{
+ 		return "Instant Respawn " + (!FlxG.save.data.InstantRespawn ? "off" : "on");
+ 	}
+}
+ 

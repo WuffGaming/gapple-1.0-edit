@@ -88,34 +88,56 @@ class CharacterSelectState extends MusicBeatState
 		add(end);
 		
 		//create stage
-		var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('stageback'));
+		var bg:FlxSprite = new FlxSprite(-700, -250).loadGraphic(Paths.image('backgrounds/farm/sky'));
 		bg.antialiasing = true;
 		bg.scrollFactor.set(0.9, 0.9);
 		bg.active = false;
+	
+		var hills:FlxSprite = new FlxSprite(-250, 200).loadGraphic(Paths.image('backgrounds/farm/orangey hills'));
+		hills.antialiasing = true;
+		hills.scrollFactor.set(0.9, 0.7);
+		hills.active = false;
+	
+		var farm:FlxSprite = new FlxSprite(150, 250).loadGraphic(Paths.image('backgrounds/farm/funfarmhouse'));
+		farm.antialiasing = true;
+		farm.scrollFactor.set(1.1, 0.9);
+		farm.active = false;
+				
+		var foreground:FlxSprite = new FlxSprite(-400, 600).loadGraphic(Paths.image('backgrounds/farm/grass lands'));
+		foreground.antialiasing = true;
+		foreground.active = false;
+				
+		var cornSet:FlxSprite = new FlxSprite(-350, 325).loadGraphic(Paths.image('backgrounds/farm/Cornys'));
+		cornSet.antialiasing = true;
+		cornSet.active = false;
+				
+		var cornSet2:FlxSprite = new FlxSprite(1050, 325).loadGraphic(Paths.image('backgrounds/farm/Cornys'));
+		cornSet2.antialiasing = true;
+		cornSet2.active = false;
+				
+		var fence:FlxSprite = new FlxSprite(-350, 450).loadGraphic(Paths.image('backgrounds/farm/crazy fences'));
+		fence.antialiasing = true;
+		fence.active = false;
+	
+		var sign:FlxSprite = new FlxSprite(0, 500).loadGraphic(Paths.image('backgrounds/farm/Sign'));
+		sign.antialiasing = true;
+		sign.active = false;
+
 		add(bg);
-
-		var stageFront:FlxSprite = new FlxSprite(-650, 600).loadGraphic(Paths.image('stagefront'));
-		stageFront.setGraphicSize(Std.int(stageFront.width * 1.1));
-		stageFront.updateHitbox();
-		stageFront.antialiasing = true;
-		stageFront.scrollFactor.set(0.9, 0.9);
-		stageFront.active = false;
-		add(stageFront);
-
-		var stageCurtains:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('stagecurtains'));
-		stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.9));
-		stageCurtains.updateHitbox();
-		stageCurtains.antialiasing = true;
-		stageCurtains.scrollFactor.set(1.3, 1.3);
-		stageCurtains.active = false;
-		add(stageCurtains);
+		add(hills);
+		add(farm);
+		add(foreground);
+		add(cornSet);
+		add(cornSet2);
+		add(fence);
+		add(sign);
 
 		FlxG.camera.zoom = 0.75;
 
 		//create character
 		char = new Boyfriend(FlxG.width / 2, FlxG.height / 2, "bf");
 		char.screenCenter();
-		char.y = 450;
+		char.y = 350;
 		add(char);
 		
 		characterText = new FlxText((FlxG.width / 9) - 50, (FlxG.height / 8) - 225, "Boyfriend");
@@ -132,7 +154,7 @@ class CharacterSelectState extends MusicBeatState
 		funnyIconMan.visible = false;
 		add(funnyIconMan);
 
-		var tutorialThing:FlxSprite = new FlxSprite(-100, -100).loadGraphic(Paths.image('charSelectGuide'));
+		var tutorialThing:FlxSprite = new FlxSprite(-100, -80).loadGraphic(Paths.image('charSelectGuide'));
 		tutorialThing.setGraphicSize(Std.int(tutorialThing.width * 1.5));
 		tutorialThing.antialiasing = true;
 		add(tutorialThing);
@@ -274,7 +296,7 @@ class CharacterSelectState extends MusicBeatState
 				char.y = 100 + 400;
 			case 'bambi-angey':
 				char.y = 100 + 450;
-			case 'bf' | '3d-bf' | 'bf-pixel' | 'bf-christmas':
+			case 'bf' | '3d-bf' | 'bf-pixel' | 'bf-christmas' | 'afnfg-boyfriend':
 				//dont do anything
 			default: char.y = 100;
 		}

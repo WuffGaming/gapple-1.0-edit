@@ -280,7 +280,7 @@ class Character extends FlxSprite
 
 				antialiasing = false;
 
-				barColor = FlxColor.fromRGB(178, 7, 7);
+				barColor = FlxColor.fromRGB(255, 0, 0);
 
 				playAnim('idle');
 			case 'bendu':
