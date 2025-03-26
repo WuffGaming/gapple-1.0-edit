@@ -223,6 +223,7 @@ class PlayState extends MusicBeatState
 	private var iconP2:HealthIcon;
 	private var BAMBICUTSCENEICONHURHURHUR:HealthIcon;
 	private var camHUD:FlxCamera;
+	private var camDialogue:FlxCamera;
 	private var camGame:FlxCamera;
 
 	var dialogue:Array<String> = ['blah blah blah', 'coolswag'];
@@ -344,10 +345,13 @@ class PlayState extends MusicBeatState
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
+		camDialogue = new FlxCamera();
+		camDialogue.bgColor.alpha = 0;
 		camHUD.bgColor.alpha = 0;
 
 		FlxG.cameras.reset(camGame);
 		FlxG.cameras.add(camHUD);
+		FlxG.cameras.add(camDialogue);
 		FlxG.mouse.visible = false;
 
 		FlxCamera.defaultCameras = [camGame];
@@ -3155,6 +3159,21 @@ class PlayState extends MusicBeatState
 			{
 				switch (curSong.toLowerCase())
 				{
+					case 'applecore':
+						canPause = false;
+						FlxG.sound.music.volume = 0;
+						vocals.volume = 0;
+						generatedMusic = false; // stop the game from trying to generate anymore music and to just cease attempting to play the music in general
+						boyfriend.stunned = true;
+						var doof:DialogueBox = new DialogueBox(false, CoolUtil.coolTextFile(Paths.txt('applecore/coreDialogueEnd')));
+						doof.scrollFactor.set();
+						doof.finishThing = function()
+						{
+							FlxG.switchState(new PlayMenuState());
+						};
+						doof.cameras = [camDialogue];
+						schoolIntro(doof, false);
+
 					default:
 						FlxG.switchState(new PlayMenuState());
 				}
@@ -3191,6 +3210,17 @@ class PlayState extends MusicBeatState
 			{
 				switch (SONG.song.toLowerCase())
 				{
+					case 'applecore':
+						canPause = false;
+						FlxG.sound.music.volume = 0;
+						vocals.volume = 0;
+						generatedMusic = false; // stop the game from trying to generate anymore music and to just cease attempting to play the music in general
+						boyfriend.stunned = true;
+						var doof:DialogueBox = new DialogueBox(false, CoolUtil.coolTextFile(Paths.txt('applecore/coreDialogueEnd')));
+						doof.scrollFactor.set();
+						doof.finishThing = ughWhyDoesThisHaveToFuckingExist;
+						doof.cameras = [camDialogue];
+						schoolIntro(doof, false);
 					default:
 						FlxG.switchState(new PlayMenuState());
 				}

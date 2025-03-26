@@ -36,7 +36,8 @@ class DialogueBox extends FlxSpriteGroup
 
 	public var finishThing:Void->Void;
 
-	public var noAa:Array<String> = ["dialogue/dave_furiosity", "dialogue/3d_bamb", "dialogue/unfairnessPortrait", 'dialogue/3d_bambi_disruption_portrait', 'dialogue/bandu_portrait', 'dialogue/3d_splitathon_dave_port', 'dialogue/3d_dave_wireframe_portrait', 'dialogue/3d_dave_og_portrait'];
+	public var noAa:Array<String> = ["dialogue/dave_furiosity", "dialogue/3d_bamb", "dialogue/unfairnessPortrait", 'dialogue/3d_bambi_disruption_portrait', 'dialogue/bandu_portrait', 'dialogue/3d_splitathon_dave_port', 'dialogue/3d_dave_wireframe_portrait', 'dialogue/3d_dave_og_portrait', 
+'dialogue/EXPUNGED'];
 
 	var portraitLeft:FlxSprite;
 	var portraitRight:FlxSprite;
@@ -141,9 +142,6 @@ class DialogueBox extends FlxSpriteGroup
 
 		switch (PlayState.SONG.song.toLowerCase())
 		{
-			case 'senpai' | 'roses' | 'thorns':
-				portraitLeftCharacter = 'senpai';
-				portraitRightCharacter = 'bfPixel';
 				
 			case 'house' | 'insanity' | 'furiosity' | 'polygonized' | 'disability' | 'wireframe':
 				portraitLeftCharacter = 'dave';
@@ -206,11 +204,6 @@ class DialogueBox extends FlxSpriteGroup
 
 		switch (PlayState.SONG.song.toLowerCase())
 		{
-			case 'senpai' | 'roses' | 'thorns':
-				handSelect = new FlxSprite(FlxG.width * 0.9, FlxG.height * 0.9).loadGraphic(Paths.image('weeb/pixelUI/hand_textbox'));
-				handSelect.setGraphicSize(Std.int(handSelect.width * 6));
-				handSelect.updateHitbox();
-				add(handSelect);
 			case 'furiosity' | 'polygonized' | 'cheating' | 'unfairness' | 'disruption' | 'applecore' | 'disability' | 'wireframe' | 'algebra' | 'recovered-project':
 				dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", 32);
 				dropText.font = 'Comic Sans MS Bold';
@@ -276,7 +269,9 @@ class DialogueBox extends FlxSpriteGroup
 			case 'bf':
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/bfDialogue'), 0.6)];		
 			case 'gf':
-				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/gfDialogue'), 0.6)];	
+				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/gfDialogue'), 0.6)];
+			case 'expunged':
+				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/expungedDialogue'), 0.9)];	
 			default:
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/pixelText'), 0.6)];	
 		}
@@ -481,7 +476,7 @@ class DialogueBox extends FlxSpriteGroup
 			case 'bambi':
 				switch (PlayState.SONG.song.toLowerCase())
 				{
-					case 'disruption':
+					case 'disruption' | 'applecore':
 						portrait.portraitPath = 'dialogue/3d_bambi_disruption_portrait';
 						portrait.portraitPrefix = '3d bambi disruption portrait';
 					case 'duper':
@@ -497,6 +492,13 @@ class DialogueBox extends FlxSpriteGroup
 					default:
 						portrait.portraitPath = 'dialogue/bandu_portrait';
 						portrait.portraitPrefix = 'bandu portrait';
+				}
+			case 'expunged':
+				switch (PlayState.SONG.song.toLowerCase())
+				{
+					default:
+						portrait.portraitPath = 'dialogue/EXPUNGED';
+						portrait.portraitPrefix = 'EXPUNGED';
 				}
 			case 'bf':
 				switch (PlayState.SONG.song.toLowerCase())
