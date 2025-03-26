@@ -389,8 +389,8 @@ class DialogueBox extends FlxSpriteGroup
 			}
 			switch (curCharacter)
 			{
-				case 'dave' | 'bambi' | 'olddave' | 'bandu' | 'recover': //guys its the funny bambi character
-						portraitLeft.setPosition(220, 220);
+				case 'dave' | 'bambi' | 'olddave' | 'bandu' | 'recover' | 'expunged' | 'none': //guys its the funny bambi character
+					portraitLeft.setPosition(220, 220);
 				case 'bf' | 'gf': //create boyfriend & genderbent boyfriend
 					portraitRight.setPosition(570, 220);
 			}
@@ -439,6 +439,8 @@ class DialogueBox extends FlxSpriteGroup
 				swagDialogue.font = Paths.font("barcode.ttf");
 			case 'to_black':
 				FlxTween.tween(blackScreen, {alpha:1}, 0.25);
+			case 'off_black':
+				FlxTween.tween(blackScreen, {alpha:0}, 0.25);
 		}
 	}
 	function getPortrait(character:String):Portrait
@@ -446,10 +448,17 @@ class DialogueBox extends FlxSpriteGroup
 		var portrait:Portrait = new Portrait('', '', '', true);
 		switch (character)
 		{
+			case 'none':
+				switch (PlayState.SONG.song.toLowerCase())
+				{
+					default:
+						portrait.portraitPath = 'dialogue/none';
+						portrait.portraitPrefix = 'dave house portrait';
+				}
 			case 'dave':
 				switch (PlayState.SONG.song.toLowerCase())
 				{
-					case 'disability':
+					case 'disability' | 'applecore':
 						portrait.portraitPath = 'dialogue/3d_splitathon_dave_port';
 						portrait.portraitPrefix = 'dave 3d splitathon portrait';
 					case 'wireframe':
@@ -480,8 +489,8 @@ class DialogueBox extends FlxSpriteGroup
 						portrait.portraitPath = 'dialogue/3d_bambi_disruption_portrait';
 						portrait.portraitPrefix = '3d bambi disruption portrait';
 					case 'duper':
-						portrait.portraitPath = 'dialogue/bambi_corntheft';
-						portrait.portraitPrefix = 'bambi corntheft portrait';
+						portrait.portraitPath = 'dialogue/bambi_blocked';
+						portrait.portraitPrefix = 'bambi blocked portrait';
 					default:
 						portrait.portraitPath = 'dialogue/bambi_corntheft';
 						portrait.portraitPrefix = 'bambi corntheft portrait';

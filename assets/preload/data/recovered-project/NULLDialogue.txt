@@ -1,4 +1,9 @@
-:recover:WHY HAVE YOU APPEARED
+to_black:none:You shouldn't have come here.
+:none:I never prepared you to die so early.
+:none:The only one who lays here is the representation of past mistakes.
+:none:He knows what will happen if you stay for too long.
+:none:Restart the game. GO. NOW.
+off_black:recover:WHY HAVE YOU APPEARED
 :recover:DESPAIR HAS COME THROUGH THIS LAND
 :recover:NOW ALL THAT LAY SHALL COME TO WASTE
 :recover:TURNED AND MANGLED APART TO BITS

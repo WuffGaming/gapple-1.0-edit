@@ -1,6 +1,7 @@
-:dave:Uhmm..
+:dave:Hmm.
 :dave:I didn't expect you to come here all by yourself.
 :dave:What's your reason for being here anyway?
+:dave:Was it because of one of Bambi's arguments?
 :bf:Beep.
 :dave:Well.
 :dave:Guess I have to do everything myself.
@@ -9,3 +10,5 @@
 :dave:I win, you leave.
 :dave:You win, I'll let you be.
 :bf:Bap!
+:dave:Alright.
+:gf:Go Boyfriend!
