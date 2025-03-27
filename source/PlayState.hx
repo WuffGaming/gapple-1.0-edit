@@ -757,16 +757,16 @@ class PlayState extends MusicBeatState
 				credits = 'What the FUCK?';
 			case 'thunderstorm':
 				credits = 'Original song made by Saruky for Vs. Shaggy!';
-			case 'metallic':
+			case 'tantalum':
 				credits = 'OC created by Dragolii!';
-			case 'strawberry':
+			case 'jam':
 				credits = 'OC created by Emiko!';
 			case 'keyboard':
 				credits = 'OC created by DanWiki!';
 			case 'bambi-666-level':
 				credits = 'Bambi 666 Level';
 			case 'swag':
-				credits = 'Song by Goldd!';
+				credits = 'Swag!';
 			default:
 				credits = '';
 		}
@@ -1109,7 +1109,7 @@ class PlayState extends MusicBeatState
 				}
 				
 
-			case 'polygonized' | 'furiosity' | 'cheating' | 'unfairness' | 'disruption' | 'disability' | 'origin' | 'metallic' | 'strawberry' | 'keyboard':
+			case 'polygonized' | 'furiosity' | 'cheating' | 'unfairness' | 'disruption' | 'disability' | 'origin' | 'tantalum' | 'jam' | 'keyboard':
 				defaultCamZoom = 0.9;
 				var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('backgrounds/3dbg/redsky'));
 				bg.active = true;
@@ -1132,18 +1132,18 @@ class PlayState extends MusicBeatState
 					case 'origin':
 						bg.loadGraphic(Paths.image('backgrounds/3dbg/heaven'));
 						curStage = 'origin';
-					case 'metallic':
+					case 'tantalum':
 						defaultCamZoom = 0.7;
 						bg.loadGraphic(Paths.image('backgrounds/3dbg/metal'));
 						bg.y -= 235;
-						curStage = 'metallic';
-					case 'strawberry':
+						curStage = 'tantalum';
+					case 'jam':
 						defaultCamZoom = 0.69;
 						bg.loadGraphic(Paths.image('backgrounds/3dbg/strawberries'));
 						bg.scrollFactor.set(0, 0);
 						bg.y -= 200;
 						bg.x -= 100;
-						curStage = 'strawberry';
+						curStage = 'jam';
 					case 'keyboard':
 						bg.loadGraphic(Paths.image('backgrounds/3dbg/keyboard'));
 						curStage = 'keyboard';
@@ -1321,15 +1321,8 @@ class PlayState extends MusicBeatState
 		dad.canDance = false;
 		focusOnDadGlobal = false;
 		focusOnChar(boyfriend);
-		new FlxTimer().start(1, function(suckMyGoddamnCock:FlxTimer)
-		{
-			FlxG.sound.play(Paths.sound('origin_bf_call'));
-			boyfriend.canDance = false;
-			bfSpazOut = true;
-			new FlxTimer().start(1.35, function(cockAndBalls:FlxTimer)
+		new FlxTimer().start(1.35, function(cockAndBalls:FlxTimer) // this code is either atrocious or VERY weird
 			{
-				boyfriend.canDance = true;
-				bfSpazOut = false;
 				focusOnDadGlobal = true;
 				focusOnChar(dad);
 				new FlxTimer().start(0.5, function(ballsInJaws:FlxTimer)
@@ -1346,13 +1339,8 @@ class PlayState extends MusicBeatState
 							dad.canDance = true;
 							focusOnDadGlobal = false;
 							focusOnChar(boyfriend);
-							boyfriend.canDance = false;
-							bfSpazOut = true;
-							FlxG.sound.play(Paths.sound('origin_bf_talk'));
 							new FlxTimer().start(1.5, function(buttAssAnusGluteus:FlxTimer)
 							{
-								boyfriend.canDance = true;
-								bfSpazOut = false;
 								focusOnDadGlobal = true;
 								focusOnChar(dad);
 								startCountdown();
@@ -1361,8 +1349,7 @@ class PlayState extends MusicBeatState
 					});
 				});
 			});
-		});
-	}
+		}
 
 	var startTimer:FlxTimer;
 	var perfectMode:Bool = false;
@@ -4422,7 +4409,7 @@ class PlayState extends MusicBeatState
 					case 196:
 						defaultCamZoom = 1;
 						thunderBlack.alpha = 0;
-						creditsWatermark.text = "Song by Goldd!";
+						creditsWatermark.text = "Swagger!";
 						FlxG.camera.flash(FlxColor.WHITE, 1);
 					case 228:
 						defaultCamZoom = 0.8;

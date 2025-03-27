@@ -57,7 +57,7 @@ class ExtraSongState extends MusicBeatState
 		bg.color = 0xFF4965FF;
 		add(bg);
         
-		addWeek(['Sugar-Rush', 'Origin', 'Metallic', 'Strawberry', 'Keyboard'], 2, ['bandu-candy', 'bandu-origin', 'ringi', 'bambom', 'bendu']);
+		addWeek(['Sugar-Rush', 'Origin', 'Tantalum', 'Jam', 'Keyboard'], 2, ['bandu-candy', 'bandu-origin', 'ringi', 'bambom', 'bendu']);
         addWeek(['Thunderstorm', 'Swag', 'Dave-x-Bambi-Shipping-Cute', 'RECOVERED-PROJECT'], 1, ['dave-png', 'dave-wheels', 'dave-good', 'RECOVERED_PROJECT']);
 		addWeek(['Sart-Producer'], 4, ['sart-producer']);
 		addWeek(['Tutorial'], 5, ['gf']);

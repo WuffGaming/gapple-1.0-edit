@@ -64,7 +64,7 @@ class CreditsMenuState extends MusicBeatState
       new Person("SkyFactorial", CreditsType.Dev, "Director, Programmer, Composer, Animator, Charter",
          [
             new Social('youtube', 'https://www.youtube.com/channel/UCKbKOSJPbP4u81cpBpoSntw'),
-            new Social('twitter', 'https://twitter.com/GrantareP')
+            new Social('twitter', 'https://twitter.com/SkyFactorial')
          ]
       ),
       new Person("Lancey", CreditsType.Dev, "Artist, Animator",
@@ -73,14 +73,30 @@ class CreditsMenuState extends MusicBeatState
             new Social('twitter', 'https://twitter.com/Lancey170')
          ]
       ),
-      new Person("The people who made the Duper Chart", CreditsType.Dev, "Duper Chart",
-         [
-            new Social('gamebanana', 'https://gamebanana.com/mods/412258'),
-         ]
-      ),
+	// everyone under here i stole from lol
       new Person("BezieAnims", CreditsType.Dev, "Charter, Menu Button Artist, Cycles cover",
          [
             new Social('youtube', 'https://www.youtube.com/channel/UCdkHxFQnvyIKHSPcRRu-9PQ'),
+         ]
+      ),
+      new Person("Sr.William", CreditsType.Dev, "Made Jam",
+         [
+            new Social('youtube', 'https://www.youtube.com/watch?v=UJyFkJg3yk8')
+         ]
+      ),
+      new Person("unixversal", CreditsType.Dev, "Made Origin",
+         [
+            new Social('youtube', 'https://www.youtube.com/watch?v=GhDZgEMkUK0')
+         ]
+      ),
+      new Person("wildy", CreditsType.Dev, "Made Keyboard for the new Golden Apple Update. And I robbed him at gunpointsorry",
+         [
+            new Social('youtube', 'https://www.youtube.com/watch?v=xsS9MRJSwJo')
+         ]
+      ),
+      new Person("ActuallyMaddix", CreditsType.Dev, "Made Tantalum for the new Golden Apple Update and I robbed it at night while they were sleeping.",
+         [
+            new Social('youtube', 'https://www.youtube.com/watch?v=xsS9MRJSwJo')
          ]
       ),
       new Person("Aadsta", CreditsType.Dev, "Made Duper",
@@ -88,9 +104,14 @@ class CreditsMenuState extends MusicBeatState
             new Social('youtube', 'https://www.youtube.com/watch?v=dTk5Z203Uxc'),
          ]
       ),
-      new Person("Goldd", CreditsType.Dev, "Swag Composer.",
+      new Person("Goldd", CreditsType.Dev, "Swag",
          [
-            new Social('youtube', 'https://www.youtube.com/@goldd7390')
+            new Social('youtube', 'https://www.youtube.com/watch?v=uzKDvj_IF4c')
+         ]
+      ),
+      new Person("The people who made the Duper Chart", CreditsType.Dev, "Duper Chart",
+         [
+            new Social('gamebanana', 'https://gamebanana.com/mods/412258'),
          ]
       ),
       //contributors
@@ -107,159 +128,6 @@ class CreditsMenuState extends MusicBeatState
       new Person("DanWiki", CreditsType.Contributor, "Bendu OC, Beta Tester",
          [
             new Social('youtube', 'https://www.youtube.com/channel/UC-EX5eyi6RpP80wp54RpX0A')
-         ]
-      ),
-      //testers
-      new Person("MoldyGH", CreditsType.BetaTester, "Beta Tester",
-         [
-           new Social('youtube', 'https://www.youtube.com/channel/UCHIvkOUDfbMCv-BEIPGgpmA'), 
-           new Social('twitter', 'https://twitter.com/moldy_gh'),
-           new Social('soundcloud', 'https://soundcloud.com/moldygh')
-         ]
-      ),
-      new Person("MissingTextureMan101", CreditsType.BetaTester, "Beta Tester",
-         [
-            new Social('youtube', 'https://www.youtube.com/channel/UCCJna2KG54d1604L2lhZINQ'),
-            new Social('twitter', 'https://twitter.com/OfficialMTM101')
-         ]
-      ),
-      new Person("rapparep lol", CreditsType.BetaTester, "Beta Tester",
-         [
-            new Social('youtube', 'https://www.youtube.com/channel/UCKfdkmcdFftv4pFWr0Bh45A'),
-            new Social('twitter', 'https://twitter.com/rappareplol')
-         ]
-      ),
-      new Person("TheBuilderXD", CreditsType.BetaTester, "Beta Tester",
-         [
-            new Social('youtube', 'https://www.youtube.com/user/99percentMember'),
-            new Social('twitter', 'https://twitter.com/TheBuilderXD')
-         ]
-      ),
-      new Person("T5mpler", CreditsType.BetaTester, "Beta Tester",
-         [
-	    new Social('youtube', 'https://www.youtube.com/channel/UCgNoOsE_NDjH6ac4umyADrw'),
-	    new Social('twitter', 'https://twitter.com/RealT5mpler')
-         ]
-      ),
-      new Person("Billy Bobbo", CreditsType.BetaTester, "Beta Tester",
-         [
-            new Social('youtube', 'https://www.youtube.com/channel/UCWbxUPrpRb3lWFHULkmR0IQ'),
-            new Social('twitter', 'https://twitter.com/BillyBobboLOL')
-         ]
-      ),
-      new Person("Rodri", CreditsType.BetaTester, "Beta Tester",
-         [
-            new Social('youtube', 'https://www.youtube.com/channel/UCzQM6rrim_Xj-SQ_w6uVBDA'),
-            new Social('twitter', 'https://twitter.com/RodriX5000')
-         ]
-      ),
-      new Person("GamingTastic", CreditsType.BetaTester, "Beta Tester",
-         [
-            new Social('youtube', 'https://www.youtube.com/channel/UCuPWpA6fqAF9QAxT9Hl-f-A'),
-            new Social('twitter', 'https://twitter.com/GamingTatic')
-         ]
-      ),
-      new Person("Memory_001", CreditsType.BetaTester, "Beta Tester",
-         [
-
-         ]
-      ),
-      new Person("mfhx99", CreditsType.BetaTester, "Beta Tester",
-         [
-            new Social('youtube', 'https://www.youtube.com/channel/UCAIeiM_Vo8emQDm4SDNyAFQ'),
-            new Social('twitter', 'https://twitter.com/dave_algebra')
-         ]
-      ),
-      new Person("Knocks", CreditsType.BetaTester, "Beta Tester",
-         [
-            new Social('youtube', 'https://www.youtube.com/channel/UCvEK0fyppueqINTaWbLSaUw')
-         ]
-      ),
-      new Person("Cótiles", CreditsType.BetaTester, "Beta Tester",
-         [
-            new Social('youtube', 'https://www.youtube.com/channel/UClNnrTqtgzAQ16w4_eC7rwA'),
-            new Social('twitter', 'https://twitter.com/Ctiles1')
-         ]
-      ),
-      new Person("EggsDeePrince", CreditsType.BetaTester, "Beta Tester",
-         [
-
-         ]
-      ),
-      new Person("Slóter", CreditsType.BetaTester, "Beta Tester",
-         [
-            new Social('youtube', 'https://www.youtube.com/channel/UClICtrOL6iNLD532CjQd-HQ')
-         ]
-      ),
-      new Person("Galcy / Turron", CreditsType.BetaTester, "Beta Tester",
-         [
-            new Social('twitter', 'https://twitter.com/Galcy6660')
-         ]
-      ),
-      new Person("Awesomepancake3001", CreditsType.BetaTester, "Beta Tester",
-         [
-            new Social('youtube', 'https://www.youtube.com/channel/UCVJE4Q2duYszNHIGfC18Fyw'),
-            new Social('twitter', 'https://twitter.com/TheAmazingAD1')
-         ]
-      ),
-      new Person("WhatsDown", CreditsType.BetaTester, "Beta Tester",
-         [
-            new Social('youtube', 'https://www.youtube.com/channel/UCL3oNN5ss7sI8bHq8i9Unhg'),
-            new Social('twitter', 'https://twitter.com/WhatisDownnnnn')
-         ]
-      ),
-      new Person("DaveDotCom", CreditsType.BetaTester, "Beta Tester",
-         [
-            new Social('youtube', 'https://www.youtube.com/channel/UCrbiBK9StsF8mZ_M7y-p7XA'),
-            new Social('twitter', 'https://twitter.com/DavedotComLIVE')
-         ]
-      ),
-      new Person("NewPlayer", CreditsType.BetaTester, "Beta Tester",
-         [
-            new Social('youtube', 'https://www.youtube.com/channel/UCqxtnCuemVF_EXK7P0Mo3lw')
-         ]
-      ),
-      new Person("Foxnap", CreditsType.BetaTester, "Beta Tester",
-         [
-            new Social('youtube', 'https://www.youtube.com/channel/UCFMq8C3d6QvZlzR8vBBnITg'),
-            new Social('twitter', 'https://twitter.com/Foxnap2')
-         ]
-      ),
-      new Person("Grunf", CreditsType.BetaTester, "Beta Tester",
-         [
-            new Social('youtube', 'https://www.youtube.com/channel/UChTTBaqjvCw5_1rFQ5cHj3g')
-         ]
-      ),
-      new Person("Jukebox", CreditsType.BetaTester, "Beta Tester",
-         [
-            new Social('youtube', 'https://www.youtube.com/channel/UCwA3jnG5cu3toaVCOhc-Tqw'),
-            new Social('twitter', 'https://twitter.com/Culistic1')
-         ]
-      ),
-      new Person("Log Man", CreditsType.BetaTester, "Beta Tester",
-         [
-            new Social('youtube', 'https://www.youtube.com/channel/UCnGg-cLnXuQNfSzIq6xF8hw')
-         ]
-      ),
-      new Person("PumpkinPelt", CreditsType.BetaTester, "Beta Tester",
-         [
-            new Social('twitter', 'https://twitter.com/peltpumpkin')
-         ]
-      ),
-      new Person("J (ReverbfartSFX)", CreditsType.BetaTester, "Beta Tester",
-         [
-            new Social('twitter', 'https://twitter.com/reverbfartsfx')
-         ]
-      ),
-      new Person("TheLoser", CreditsType.BetaTester, "Beta Tester",
-         [
-
-         ]
-      ),
-      new Person("Villezen", CreditsType.BetaTester, "Beta Tester",
-         [
-            new Social('youtube', 'https://www.youtube.com/channel/UCo0J58hC0TqrM7G8uaQilxA'),
-            new Social('twitter', 'https://twitter.com/villezen1')
          ]
       ),
    ];
