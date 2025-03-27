@@ -228,7 +228,7 @@ class Character extends FlxSprite
 
 				playAnim('danceRight');
 			case 'gf-wheels':
-				loadGraphic(Paths.image('dave/best_gf'), true, 241, 231);
+				loadGraphic(Paths.image('characters/dave/best_gf'), true, 241, 231);
 				animation.add('idle', [0], 0, false);
 
 				scale.set(1.9, 1.9);

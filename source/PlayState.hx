@@ -4397,9 +4397,7 @@ class PlayState extends MusicBeatState
 				}
 			case 'swag':
 				switch(curBeat) {
-					case 4:
-						FlxG.camera.flash(FlxColor.WHITE, 1);
-					case 132:
+					case 4 | 36 | 132:
 						FlxG.camera.flash(FlxColor.WHITE, 1);
 					case 164:
 						defaultCamZoom = 1.4;
