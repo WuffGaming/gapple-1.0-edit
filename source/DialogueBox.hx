@@ -70,8 +70,6 @@ class DialogueBox extends FlxSpriteGroup
 				case 'house' | 'insanity' | 'splitathon' | 'disability' | 'applecore':
 					FlxG.sound.playMusic(Paths.music('DaveDialogue'), 0);
 					FlxG.sound.music.fadeIn(1, 0, 0.8);
-				case 'algebra':
-					FlxG.sound.playMusic(Paths.music('Algebrah'), 0.7);
 				case 'furiosity' | 'polygonized' | 'cheating' | 'unfairness' | 'disruption' | 'wireframe' | 'duper' | 'recovered-project':
 					FlxG.sound.playMusic(Paths.music('scaryAmbience'), 0);
 					FlxG.sound.music.fadeIn(1, 0, 0.8);
@@ -409,38 +407,26 @@ class DialogueBox extends FlxSpriteGroup
 		}
 		switch (curMod)
 		{
-			case 'distort':
-				/*var shad:Shaders.PulseEffect = new Shaders.PulseEffect();
-				curshader = shad;
-				shad.waveAmplitude = 1;
-				shad.waveFrequency = 2;
-				shad.waveSpeed = 1;
-				shad.shader.uTime.value[0] = new flixel.math.FlxRandom().float(-100000,100000);
-				shad.shader.uampmul.value[0] = 1;*/
-				PlayState.screenshader.Enabled = true;
-			case 'undistort':
-				PlayState.screenshader.Enabled = false;
-			case 'distortbg':
-				var shad:Shaders.DistortBGEffect = new Shaders.DistortBGEffect();
-				curshader = shad;
-				shad.waveAmplitude = 0.1;
-				shad.waveFrequency = 5;
-				shad.waveSpeed = 2;
-				if (curCharacter != 'generic')
-				{
-					portraitLeft.shader = shad.shader;
-					portraitRight.shader = shad.shader;
-				}
 			case 'setfont_normal':
 				dropText.font = 'Comic Sans MS Bold';
 				swagDialogue.font = 'Comic Sans MS Bold';
 			case 'setfont_code':
 				dropText.font = Paths.font("barcode.ttf");
 				swagDialogue.font = Paths.font("barcode.ttf");
+			case 'black':
+				blackScreen.alpha = 1;
+			case 'no_black':
+				blackScreen.alpha = 0;
 			case 'to_black':
 				FlxTween.tween(blackScreen, {alpha:1}, 0.25);
 			case 'off_black':
 				FlxTween.tween(blackScreen, {alpha:0}, 0.25);
+			case 'algebrah':
+				FlxG.sound.playMusic(Paths.music('Algebrah'), 0.7);
+			case 'musicoff':
+				FlxG.sound.volume(0);
+			case 'musicon':
+				FlxG.sound.volume(0.8);
 		}
 	}
 	function getPortrait(character:String):Portrait

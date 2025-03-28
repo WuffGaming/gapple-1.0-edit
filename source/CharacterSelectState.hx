@@ -64,7 +64,8 @@ class CharacterSelectState extends MusicBeatState
 		new CharacterInSelect(['split-dave-3d', 'tunnel-dave', 'og-dave', 'dave-wheels'], ['Disability Dave', 'Decimated Dave', 'Algebra Dave', 'Dave but Awesome']),
 		new CharacterInSelect(['bambi-piss-3d'], ['Angry 3D Bambi']),
 		new CharacterInSelect(['unfair-junker'], ['Unfair Expunged (Facing Forward)']),
-		new CharacterInSelect(['bandu', 'badai', 'bandu-origin'], ['Bandu', 'Badai', 'Bandu (Origin)'])
+		new CharacterInSelect(['bandu', 'badai', 'bandu-origin'], ['Bandu', 'Badai', 'Bandu (Origin)']),
+		new CharacterInSelect(['cameo-origin'], ['Cameo'])
 	];
 	public function new() 
 	{
@@ -296,7 +297,7 @@ class CharacterSelectState extends MusicBeatState
 				char.y = 100 + 400;
 			case 'bambi-angey':
 				char.y = 100 + 450;
-			case 'bf' | '3d-bf' | 'bf-pixel' | 'bf-christmas' | 'afnfg-boyfriend':
+			case 'bf' | '3d-bf' | 'bf-pixel' | 'bf-christmas' | 'afnfg-boyfriend' | 'cameo':
 				//dont do anything
 			default: char.y = 100;
 		}

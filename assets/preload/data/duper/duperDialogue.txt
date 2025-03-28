@@ -1,4 +1,4 @@
-to_black:none:It's been a normal day for Boyfriend and Girlfriend.
+black:none:It's been a normal day for Boyfriend and Girlfriend.
 :none:They've had some fun with Dave, and wanted to see if Bambi could take them on next..
 :none:Unfortunately, he isn't very happy.
 off_black:bf:Beep?

@@ -367,6 +367,33 @@ class Character extends FlxSprite
 
 				playAnim('idle');
 
+			case 'cameo-origin':
+				tex = Paths.getSparrowAtlas('characters/bandu/cameo_origin');
+				frames = tex;
+				animation.addByPrefix('idle', 'idle', 24, false);
+				animation.addByPrefix('singUP', 'up', 24, false);
+				animation.addByPrefix('singRIGHT', 'right', 24, false);
+				animation.addByPrefix('singDOWN', 'down', 24, false);
+				animation.addByPrefix('singLEFT', 'left', 24, false);
+		
+				addOffset('idle');
+				addOffset("singUP", -90, 97);
+				addOffset("singRIGHT", -129, -8);
+				addOffset("singLEFT", -11, -6);
+				addOffset("singDOWN", 7, -20);
+				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
+				updateHitbox();
+				antialiasing = false;
+
+				nativelyPlayable = true;
+
+				flipX = true;
+		
+				barColor = FlxColor.fromRGB(251, 247, 50);
+
+				playAnim('idle');
+
+
 			case 'RECOVERED_PROJECT':
 				tex = Paths.getSparrowAtlas('characters/recover/RECOVERED_PROJECT_01');
 				frames = tex;

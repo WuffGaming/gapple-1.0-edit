@@ -592,11 +592,23 @@ class PlayState extends MusicBeatState
 			gf.visible = false;
 		}
 
+		if(curStage == 'origin')
+		{
+			boyfriend.y += 150;
+		}
+
+
 
 		if(dad.curCharacter == 'bandu-origin')
 		{
 			dad.x -= 250;
 			dad.y -= 350;
+		}
+
+		if(dad.curCharacter == 'cameo-origin')
+		{
+			dad.x -= 60;
+			dad.y -= 120;
 		}
 
 		if(dad.curCharacter == 'dupers')

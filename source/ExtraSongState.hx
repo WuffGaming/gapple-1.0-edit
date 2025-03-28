@@ -152,7 +152,7 @@ class ExtraSongState extends MusicBeatState
 					PlayState.formoverride = 'none';
 
                     PlayState.storyWeek = songs[curSelected].week;
-					if(songs[curSelected].songName.toLowerCase() == 'cycles')
+					if(songs[curSelected].songName.toLowerCase() == 'origin')
 					{
 						LoadingState.loadAndSwitchState(new PlayState());
 					}

@@ -44,6 +44,7 @@ class HealthIcon extends FlxSprite
 		'dave-wheels',
 		'afnfg-boyfriend',
 		'3d-bf-old',
+		'cameo-origin',
 	];
 
 	public var charPublic:String = 'bf';
@@ -115,6 +116,8 @@ class HealthIcon extends FlxSprite
 			addIcon('bandu-candy', 48);
 	
 			addIcon('bandu-origin', 8);
+
+			addIcon('cameo-origin', 60);
 
 			addIcon('bandu-scaredy', 8);
 	
