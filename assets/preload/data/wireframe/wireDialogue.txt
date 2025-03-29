@@ -1,14 +1,14 @@
 black:none:A huge explosion occurs right in the midst of the rapping.
-:none:Girlfriend and Boyfriend are sent away to opposite ways, yet Dave is able to catch up.
+:none:Girlfriend and Boyfriend are sent away to opposite ways, yet wiredave is able to catch up.
 :none:And he's pissed.
-off_black:dave:ALRIGHT, THAT IS IT! 
-:dave:NO MORE FOOLING AROUND!
-:bf:Beep?!
-:dave:LISTEN UP, BLUE ONE...
-:bf:...
-:dave:IF YOU THINK YOU CAN STAY HERE, AND EXPECT NOTHING LIKE THAT...
-:dave:YOU ARE DEAD WRONG!
-:dave:YOU DIDN'T LISTEN TO ME, I TOLD YOU TO LEAVE..
-:dave:..YET YOU STAYED. AND LOOK WHAT HAPPENED!
-:dave:THIS IS YOUR LAST CHANCE TO LEAVE, BEFORE THE 3D WORLD SHATTERS!!
+off_black:wiredave:ALRIGHT, THAT IS IT! 
+:wiredave:NO MORE FOOLING AROUND!
+:bfconfuse:Beep?!
+:wiredave:LISTEN UP, BLUE ONE...
+:bfconfuse:...
+:wiredave:IF YOU THINK YOU CAN STAY HERE, AND EXPECT NOTHING LIKE THAT...
+:wiredave:YOU ARE DEAD WRONG!
+:wiredave:YOU DIDN'T LISTEN TO ME, I TOLD YOU TO LEAVE..
+:wiredave:..YET YOU STAYED. AND LOOK WHAT HAPPENED!
+:wiredave:THIS IS YOUR LAST CHANCE TO LEAVE, BEFORE THE 3D WORLD SHATTERS!!
 :bf:Bap!

@@ -1,11 +1,19 @@
 OK OK so theres many things to do with Dialogue.
 
-There are currently 8 characters.
+There are currently 17 characters.
 
 :dave:Hi!
+:3ddave:Wait
+:wiredave:FUCKKKK
 :bambi:WHAT?
+:bambimad:WHAT THE FUCK!!
+:3dbambi:FUCK YOU!!!
 :bf:Beep da!
+:bfconfuse:..bo
 :gf:Wow. What a smart, honest, working man I could trust.
+:gfcasual:Anyways..
+:gfconfuse:uhh
+:gfwhat:what
 :expunged:FUCK OFF!!!
 :bandu:Buddy boy, that's quite a rude thing to say!
 :olddave:I don't expect this class to succeed in anything..
@@ -20,18 +28,21 @@ black:none:Instant black.
 no_black:none:Instant no more black.
 to_black:none:Transition into darkness.
 off_black:none:Transition out of darkness.
-algebrah:olddave:Turn on the Algebra music!
+algebrah:olddave:Turn on the Algebra music! Also removes the black if it's visible.
+droptext_green:bambi:I'm green now!
+droptext_blue:dave:I'm blue now!
+droptext_white:gfcasual:White people tomorrow morning
 
 Only one event can happen at a time currently.
 
 Now, you can make dialogue like this:
 
-setfont_code:dave:AHHH!! HELP!!
+setfont_code:3ddave:AHHH!! HELP!!
 setfont_normal:bf:Beep!
 to_black:none:And then, tragedy struck..
-no_black:bambi:WHEN DID IT GO WRONNG....
+no_black:3dbambi:WHEN DID IT GO WRONNG....
 :bandu:I know you're sad that he died..
-:dave:dead
+:3ddave:dead
 :bandu:But what's ahead is your destiny.
 :bandu:YOU are the one in control of deciding what happens next..
 :bandu:..And even if Dave's gone for good, you have-
@@ -39,9 +50,10 @@ no_black:bambi:WHEN DID IT GO WRONNG....
 :expunged:FUCKING HELL MAN!!!
 :olddave:Relax, everyone! I have the cure to cancer!
 :gf:That'll do so much for the world!
-:bf:OH GOD... LOOK AT THE LIGHTS!
-:bf:THEY GOT THE DOG!!!
+:bfconfuse:OH GOD... LOOK AT THE LIGHTS!
+:bfconfuse:THEY GOT THE DOG!!!
 to_black:none:And everyone would die after that.
 :none:Goodbye, Dave.... And everyone
+:bambimad:FUCK
 
 Side note: If you make dialogue like that, I will personally hunt you down.

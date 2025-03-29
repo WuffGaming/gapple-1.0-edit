@@ -254,19 +254,19 @@ class DialogueBox extends FlxSpriteGroup
 		dropText.text = swagDialogue.text;
 		switch (curCharacter)
 		{
-			case 'dave':
+			case 'dave' | '3ddave' | 'wiredave':
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/daveDialogue'), 0.9)];
 			case 'olddave':
 				swagDialogue.sounds = [FlxG.sound.load(Paths.soundRandom('dialogue/retroDialogue', 1, 3), 0.6)];
 			case 'recover':
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/RECOVER'), 0.9)];
-			case 'bambi':
+			case 'bambi' | 'bambimad' | '3dbambi':
 				swagDialogue.sounds = [FlxG.sound.load(Paths.soundRandom('dialogue/bambDialogue', 1, 3), 0.6)];
 			case 'bandu':
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/banduDialogue'), 0.9)];
-			case 'bf':
+			case 'bf' | 'bfconfuse':
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/bfDialogue'), 0.6)];		
-			case 'gf':
+			case 'gf' | 'gfcasual' | 'gfconfuse' | 'gfwhat':
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/gfDialogue'), 0.6)];
 			case 'expunged':
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/expungedDialogue'), 0.9)];	
@@ -387,9 +387,9 @@ class DialogueBox extends FlxSpriteGroup
 			}
 			switch (curCharacter)
 			{
-				case 'dave' | 'bambi' | 'olddave' | 'bandu' | 'recover' | 'expunged' | 'none': //guys its the funny bambi character
+				case 'dave' | '3ddave' | 'wiredave' | 'bambi' | 'bambimad' | '3dbambi' | 'olddave' | 'bandu' | 'recover' | 'expunged' | 'none':
 					portraitLeft.setPosition(220, 220);
-				case 'bf' | 'gf': //create boyfriend & genderbent boyfriend
+				case 'bf' | 'bfconfuse' | 'gf' | 'gfcasual' | 'gfconfuse' | 'gfwhat': //create boyfriend & genderbent boyfriend
 					portraitRight.setPosition(570, 220);
 			}
 			box.flipX = portraitLeft.visible;
@@ -422,7 +422,14 @@ class DialogueBox extends FlxSpriteGroup
 			case 'off_black':
 				FlxTween.tween(blackScreen, {alpha:0}, 0.25);
 			case 'algebrah':
+				blackScreen.alpha = 0;
 				FlxG.sound.playMusic(Paths.music('Algebrah'), 0.7);
+			case 'droptext_green':
+				dropText.color = FlxColor.GREEN;
+			case 'droptext_white':
+				dropText.color = FlxColor.WHITE;
+			case 'droptext_blue':
+				dropText.color = FlxColor.BLUE;
 		}
 	}
 	function getPortrait(character:String):Portrait
@@ -440,15 +447,23 @@ class DialogueBox extends FlxSpriteGroup
 			case 'dave':
 				switch (PlayState.SONG.song.toLowerCase())
 				{
-					case 'disability' | 'applecore':
-						portrait.portraitPath = 'dialogue/3d_splitathon_dave_port';
-						portrait.portraitPrefix = 'dave 3d splitathon portrait';
-					case 'wireframe':
-						portrait.portraitPath = 'dialogue/3d_dave_wireframe_portrait';
-						portrait.portraitPrefix = 'dave 3d wireframe portrait';
 					default:
 						portrait.portraitPath = 'dialogue/dave_house';
 						portrait.portraitPrefix = 'dave house portrait';
+				}
+			case '3ddave':
+				switch (PlayState.SONG.song.toLowerCase())
+				{
+					default:
+						portrait.portraitPath = 'dialogue/3d_splitathon_dave_port';
+						portrait.portraitPrefix = 'dave 3d splitathon portrait';
+				}
+			case 'wiredave':
+				switch (PlayState.SONG.song.toLowerCase())
+				{
+					default:
+						portrait.portraitPath = 'dialogue/3d_dave_wireframe_portrait';
+						portrait.portraitPrefix = 'dave 3d wireframe portrait';
 				}
 			case 'olddave':
 				switch (PlayState.SONG.song.toLowerCase())
@@ -467,15 +482,23 @@ class DialogueBox extends FlxSpriteGroup
 			case 'bambi':
 				switch (PlayState.SONG.song.toLowerCase())
 				{
-					case 'disruption' | 'applecore':
-						portrait.portraitPath = 'dialogue/3d_bambi_disruption_portrait';
-						portrait.portraitPrefix = '3d bambi disruption portrait';
-					case 'duper':
-						portrait.portraitPath = 'dialogue/bambi_blocked';
-						portrait.portraitPrefix = 'bambi blocked portrait';
 					default:
 						portrait.portraitPath = 'dialogue/bambi_corntheft';
 						portrait.portraitPrefix = 'bambi corntheft portrait';
+				}
+			case 'bambimad':
+				switch (PlayState.SONG.song.toLowerCase())
+				{
+					default:
+						portrait.portraitPath = 'dialogue/bambi_blocked';
+						portrait.portraitPrefix = 'bambi blocked portrait';
+				}
+			case '3dbambi':
+				switch (PlayState.SONG.song.toLowerCase())
+				{
+					default:
+						portrait.portraitPath = 'dialogue/3d_bambi_disruption_portrait';
+						portrait.portraitPrefix = '3d bambi disruption portrait';
 				}
 			case 'bandu':
 				switch (PlayState.SONG.song.toLowerCase())
@@ -494,12 +517,17 @@ class DialogueBox extends FlxSpriteGroup
 			case 'bf':
 				switch (PlayState.SONG.song.toLowerCase())
 				{
-					case 'disruption' | 'wireframe' | 'recovered-project':
-						portrait.portraitPath = 'dialogue/bf_furiosity_corntheft';
-						portrait.portraitPrefix = 'bf furiosity & corntheft portrait';
 					default:
 						portrait.portraitPath = 'dialogue/bf_insanity_splitathon';
 						portrait.portraitPrefix = 'bf insanity & splitathon portrait';
+				}
+				portrait.left = false;
+			case 'bfconfuse':
+				switch (PlayState.SONG.song.toLowerCase())
+				{
+					default:
+						portrait.portraitPath = 'dialogue/bf_furiosity_corntheft';
+						portrait.portraitPrefix = 'bf furiosity & corntheft portrait';
 				}
 				portrait.left = false;
 			case 'gf':
@@ -508,6 +536,30 @@ class DialogueBox extends FlxSpriteGroup
 					default:
 						portrait.portraitPath = 'dialogue/gf_splitathon';
 						portrait.portraitPrefix = 'gf splitathon portrait';
+				}
+				portrait.left = false;
+			case 'gfcasual':
+				switch (PlayState.SONG.song.toLowerCase())
+				{
+					default:
+						portrait.portraitPath = 'dialogue/gf_blocked';
+						portrait.portraitPrefix = 'gf blocked portrait';
+				}
+				portrait.left = false;
+			case 'gfconfuse':
+				switch (PlayState.SONG.song.toLowerCase())
+				{
+					default:
+						portrait.portraitPath = 'dialogue/gf_corntheft';
+						portrait.portraitPrefix = 'gf corntheft portrait';
+				}
+				portrait.left = false;
+			case 'gfwhat':
+				switch (PlayState.SONG.song.toLowerCase())
+				{
+					default:
+						portrait.portraitPath = 'dialogue/gf_maze';
+						portrait.portraitPrefix = 'gf maze portrait';
 				}
 				portrait.left = false;
 			case 'tristan':
