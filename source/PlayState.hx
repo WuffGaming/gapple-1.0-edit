@@ -150,8 +150,6 @@ class PlayState extends MusicBeatState
 
 	private var daveExpressionSplitathon:Character;
 
-	//dad.curCharacter == 'bambi-unfair' || dad.curCharacter == 'bambi-3d' || dad.curCharacter == 'bambi-piss-3d'
-
 	public static var shakingChars:Array<String> = ['bambi-unfair', 'bambi-3d', 'bambi-piss-3d', 'badai', 'unfair-junker', 'tunnel-dave'];
 
 	private var notes:FlxTypedGroup<Note>;
