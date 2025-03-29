@@ -423,10 +423,6 @@ class DialogueBox extends FlxSpriteGroup
 				FlxTween.tween(blackScreen, {alpha:0}, 0.25);
 			case 'algebrah':
 				FlxG.sound.playMusic(Paths.music('Algebrah'), 0.7);
-			case 'musicoff':
-				FlxG.sound.volume(0);
-			case 'musicon':
-				FlxG.sound.volume(0.8);
 		}
 	}
 	function getPortrait(character:String):Portrait
