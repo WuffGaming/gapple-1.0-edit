@@ -114,6 +114,11 @@ class CreditsMenuState extends MusicBeatState
             new Social('gamebanana', 'https://gamebanana.com/mods/412258'),
          ]
       ),
+      new Person("Panbread", CreditsType.Dev, "Many charts.",
+         [
+            new Social('youtube', 'https://www.youtube.com/channel/UCKpemsMbyC7q4PDTpLzjrjA'),
+         ]
+      ),
       //contributors
       new Person("Dragolii", CreditsType.Contributor, "Ringi OC, Beta Tester",
          [
