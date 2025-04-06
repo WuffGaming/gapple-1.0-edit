@@ -440,7 +440,7 @@ class PlayState extends MusicBeatState
 			gf.visible = false;
 		}
 
-		if(SONG.song.toLowerCase() == 'algebra')
+		if(SONG.song.toLowerCase() == 'algebra' || SONG.song.toLowerCase() == 'origin')
 		{
 			gf.visible = false;
 		}
@@ -592,6 +592,7 @@ class PlayState extends MusicBeatState
 
 		if(curStage == 'origin')
 		{
+			dad.x -= 35;
 			boyfriend.y += 150;
 		}
 
