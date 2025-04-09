@@ -674,6 +674,29 @@ class Character extends FlxSprite
 				barColor = FlxColor.fromRGB(72, 254, 45);
 
 				playAnim('idle');
+			case 'little-bandu':
+				frames = Paths.getSparrowAtlas('characters/bandu/litt le bandu');
+				
+				animation.addByPrefix('idle', 'idle', 24, true);
+				animation.addByPrefix('singUP', 'up', 24, false);
+				animation.addByPrefix('singRIGHT', 'right', 24, false);
+				animation.addByPrefix('singDOWN', 'down', 24, false);
+				animation.addByPrefix('singLEFT', 'left', 24, false);
+				
+				addOffset('idle');
+				addOffset("singUP");
+				addOffset("singRIGHT");
+				addOffset("singLEFT");
+				addOffset("singDOWN");
+
+				setGraphicSize(Std.int(width / furiosityScale));
+				updateHitbox();
+
+				antialiasing = false;
+
+				barColor = FlxColor.fromRGB(72, 254, 45);
+
+				playAnim('idle');
 			case 'bandu-candy':
 				frames = Paths.getSparrowAtlas('characters/bandu/bandu_crazy');
 				

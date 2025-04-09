@@ -118,7 +118,7 @@ class PlayState extends MusicBeatState
 
 	var focusOnDadGlobal:Bool = true;
 
-	var funnyFloatyBoys:Array<String> = ['dave-angey', 'bambi-3d', 'dave-annoyed-3d', 'dave-3d-standing-bruh-what', 'bambi-unfair', 'bambi-piss-3d', 'bandu', 'unfair-junker', 'split-dave-3d', 'badai', 'tunnel-dave', 'tunnel-bf', 'tunnel-bf-flipped', 'bandu-candy', 'bandu-origin', 'ringi', 'bambom', 'bendu'];
+	var funnyFloatyBoys:Array<String> = ['dave-angey', 'bambi-3d', 'dave-annoyed-3d', 'dave-3d-standing-bruh-what', 'bambi-unfair', 'bambi-piss-3d', 'bandu', 'unfair-junker', 'split-dave-3d', 'badai', 'tunnel-dave', 'tunnel-bf', 'tunnel-bf-flipped', 'bandu-candy', 'bandu-origin', 'ringi', 'bambom', 'bendu', 'little-bandu'];
 
 	var storyDifficultyText:String = "";
 	var iconRPC:String = "";
@@ -1157,6 +1157,7 @@ class PlayState extends MusicBeatState
 						curStage = 'jam';
 					case 'keyboard':
 						bg.loadGraphic(Paths.image('backgrounds/3dbg/keyboard'));
+						bg.scrollFactor.set(0.1, 0.1);
 						curStage = 'keyboard';
 					default:
 						bg.loadGraphic(Paths.image('backgrounds/3dbg/redsky'));
@@ -2267,6 +2268,10 @@ class PlayState extends MusicBeatState
 				case 'badai':
 					dad.angle += elapsed * 10;
 					dad.y += (Math.sin(elapsedtime) * 0.6);
+				case 'little-bandu':
+					dad.angle += elapsed * 2;
+					dad.y += (Math.sin(elapsedtime) * 0.65);
+					dad.x = -125 + Math.sin(elapsedtime) * 425;
 				case 'ringi':
 					dad.y += (Math.sin(elapsedtime) * 0.6);
 					dad.x += (Math.sin(elapsedtime) * 0.6);
@@ -4395,6 +4400,24 @@ class PlayState extends MusicBeatState
 								daveFuckingDies.inCutscene = false;
 							});
 						});
+				}
+			case 'keyboard':
+				switch(curBeat)
+				{
+					case 324:
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 1.1;
+						FlxTween.tween(thunderBlack, {alpha: 0.7}, Conductor.stepCrochet / 500);
+						swapDad('little-bandu');
+						iconP2.animation.play('bandu');
+						healthBar.createFilledBar(dad.barColor, boyfriend.barColor);
+					case 386:
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 0.9;
+						thunderBlack.alpha = 0;
+						swapDad('bendu');
+						iconP2.animation.play('bendu');
+						healthBar.createFilledBar(dad.barColor, boyfriend.barColor);
 				}
 			case 'disability':
 				switch(curBeat) {
