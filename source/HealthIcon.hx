@@ -140,6 +140,8 @@ class HealthIcon extends FlxSprite
 			addIcon('RECOVERED_PROJECT_3', 52);
 
 			addIcon('afnfg-boyfriend', 0);
+
+			addIcon('radical', 62);
 	
 			animation.play('face');
 		}

@@ -389,7 +389,7 @@ class DialogueBox extends FlxSpriteGroup
 			{
 				case 'dave' | '3ddave' | 'wiredave' | 'bambi' | 'bambimad' | '3dbambi' | 'olddave' | 'bandu' | 'recover' | 'expunged' | 'none':
 					portraitLeft.setPosition(220, 220);
-				case 'bf' | 'bfconfuse' | 'gf' | 'gfcasual' | 'gfconfuse' | 'gfwhat': //create boyfriend & genderbent boyfriend
+				case 'bf' | 'bfconfuse' | 'gf' | 'gfcasual' | 'gfconfuse' | 'gfwhat' | 'radical': //create boyfriend, genderbent boyfriend, and gay boyfriend
 					portraitRight.setPosition(570, 220);
 			}
 			box.flipX = portraitLeft.visible;
@@ -565,6 +565,14 @@ class DialogueBox extends FlxSpriteGroup
 			case 'tristan':
 				portrait.portraitPath = 'dialogue/tristanPortrait';
 				portrait.portraitPrefix = 'tristan portrait';
+			case 'radical':
+				switch (PlayState.SONG.song.toLowerCase())
+				{
+					default:
+						portrait.portraitPath = 'dialogue/radical';
+						portrait.portraitPrefix = 'radical';
+				}
+				portrait.left = false;
 		}
 		return portrait;
 	}

@@ -396,6 +396,10 @@ class PlayState extends MusicBeatState
 				dialogue = CoolUtil.coolTextFile(Paths.txt('duper/duperDialogue'));
 			case 'recovered-project':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('recovered-project/NULLDialogue'));
+				if(formoverride == "radical")
+				{
+					dialogue = CoolUtil.coolTextFile(Paths.txt('recovered-project/RadicalNULLDialogue'));
+				}
 		}
 
 		backgroundSprites = createBackgroundSprites(SONG.song.toLowerCase());
@@ -425,6 +429,10 @@ class PlayState extends MusicBeatState
 		if(formoverride == "bf-christmas")
 		{
 			gfVersion = 'gf-christmas';
+		}
+		if(formoverride == "radical")
+		{
+			gfVersion = 'gamingtastic';
 		}
 		if (SONG.song.toLowerCase() == 'sugar-rush') gfVersion = 'gf-only';
 		if (SONG.song.toLowerCase() == 'swag') gfVersion = 'gf-wheels';

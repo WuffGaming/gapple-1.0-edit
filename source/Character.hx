@@ -73,6 +73,19 @@ class Character extends FlxSprite
 				barColor = FlxColor.fromString('#33de39');
 
 				playAnim('danceRight');
+			case 'gamingtastic':
+				// GAMINGTASTIC CODE
+				tex = Paths.getSparrowAtlas('characters/radical/newgaming');
+				frames = tex;
+				animation.addByPrefix('danceLeft', 'idlel', 24, false);
+				animation.addByPrefix('danceRight', 'idler', 24, false);
+
+				addOffset('danceLeft', 0, -9);
+				addOffset('danceRight', 0, -9);
+
+				barColor = FlxColor.fromString('#33de39');
+
+				playAnim('danceRight');
 			case 'gf-only':
 				frames = Paths.getSparrowAtlas('characters/main/GF_ONLY');
 				animation.addByIndices('sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "", 24, false);
@@ -835,6 +848,40 @@ class Character extends FlxSprite
 				barColor = FlxColor.fromRGB(49, 176, 209);
 
 				flipX = true;
+
+			case 'radical':
+				var tex = Paths.getSparrowAtlas('characters/radical/radical');
+				frames = tex;
+				animation.addByPrefix('idle', 'idle', 24, false);
+				animation.addByPrefix('singUP', 'up', 24, false);
+				animation.addByPrefix('singLEFT', 'left', 24, false);
+				animation.addByPrefix('singRIGHT', 'right', 24, false);
+				animation.addByPrefix('singDOWN', 'down', 24, false);
+				animation.addByPrefix('singUPmiss', 'MISS up', 24, false);
+				animation.addByPrefix('singLEFTmiss', 'MISS left', 24, false);
+				animation.addByPrefix('singRIGHTmiss', 'MISS right', 24, false);
+				animation.addByPrefix('singDOWNmiss', 'MISS down', 24, false);
+				animation.addByPrefix('hey', 'hey', 24, false);
+
+				addOffset('idle', -5);
+				addOffset("singUP", -29, 27);
+				addOffset("singRIGHT", -38, -7);
+				addOffset("singLEFT", 12, -6);
+				addOffset("singDOWN", -10, -50);
+				addOffset("singUPmiss", -29, 27);
+				addOffset("singRIGHTmiss", -30, 21);
+				addOffset("singLEFTmiss", 12, 24);
+				addOffset("singDOWNmiss", -11, -19);
+				addOffset("hey", 7, 4);
+
+				playAnim('idle');
+
+				nativelyPlayable = true;
+
+				barColor = FlxColor.fromRGB(188, 70, 70);
+
+				flipX = true;
+
 
 			case 'tunnel-bf':
 				var tex = Paths.getSparrowAtlas('characters/dave/tunnel_bf');

@@ -61,6 +61,7 @@ class CharacterSelectState extends MusicBeatState
 	public var characters:Array<CharacterInSelect> = 
 	[
 		new CharacterInSelect(['bf', '3d-bf', 'afnfg-boyfriend'], ["Boyfriend", '3D Boyfriend', 'AFNFG Boyfriend']),
+		new CharacterInSelect(['radical'], ['Radical! (And Gamingtastic)']),
 		new CharacterInSelect(['split-dave-3d', 'tunnel-dave', 'og-dave', 'dave-wheels'], ['Disability Dave', 'Decimated Dave', 'Algebra Dave', 'Dave but Awesome']),
 		new CharacterInSelect(['bambi-piss-3d'], ['Angry 3D Bambi']),
 		new CharacterInSelect(['unfair-junker'], ['Unfair Expunged (Facing Forward)']),
@@ -297,7 +298,7 @@ class CharacterSelectState extends MusicBeatState
 				char.y = 100 + 400;
 			case 'bambi-angey':
 				char.y = 100 + 450;
-			case 'bf' | '3d-bf' | 'bf-pixel' | 'bf-christmas' | 'afnfg-boyfriend' | 'cameo':
+			case 'bf' | '3d-bf' | 'bf-pixel' | 'bf-christmas' | 'afnfg-boyfriend' | 'cameo' | 'radical':
 				//dont do anything
 			default: char.y = 100;
 		}
