@@ -400,11 +400,6 @@ class PlayState extends MusicBeatState
 				{
 					dialogue = CoolUtil.coolTextFile(Paths.txt('recovered-project/RadicalNULLDialogue'));
 				}
-			case 'tutorial':
-				if(formoverride == "radical")
-				{
-					dialogue = CoolUtil.coolTextFile(Paths.txt('tutorial/whothefuck'));
-				}
 		}
 
 		backgroundSprites = createBackgroundSprites(SONG.song.toLowerCase());
@@ -437,6 +432,7 @@ class PlayState extends MusicBeatState
 		if (!(formoverride == "bf" || formoverride == "none" || formoverride == "bf-pixel" || formoverride == "bf-christmas" || formoverride == "radical") && SONG.song != "Tutorial")
 		{
 			gf.visible = false;
+			charoffsety = 0;
 		}
 		else if (FlxG.save.data.tristanProgress == "pending play" && isStoryMode)
 		{
@@ -879,11 +875,6 @@ class PlayState extends MusicBeatState
 		timeTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
 
-		// if (SONG.song == 'South')
-		// FlxG.camera.alpha = 0.7;
-		// UI_camera.zoom = 1;
-
-		// cameras = [FlxG.cameras.list[1]];
 		startingSong = true;
 
 		if (isStoryMode || FlxG.save.data.freeplayCuts)
@@ -894,14 +885,6 @@ class PlayState extends MusicBeatState
 					schoolIntro(doof);
 				case 'algebra':
 					baldiIntro(doof);
-				/*
-				case 'tutorial':
-					if(formoverride == "radical")
-					{
-						schoolIntro(doof);
-					}
-					startCountdown();
-				*/
 				case 'origin':
 					originCutscene();
 				default:
