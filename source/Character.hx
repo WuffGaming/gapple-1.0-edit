@@ -80,8 +80,8 @@ class Character extends FlxSprite
 				animation.addByPrefix('danceLeft', 'idlel', 24, false);
 				animation.addByPrefix('danceRight', 'idler', 24, false);
 
-				addOffset('danceLeft', 0, -9);
-				addOffset('danceRight', 0, -9);
+				addOffset('danceLeft');
+				addOffset('danceRight', -63, 5);
 
 				barColor = FlxColor.fromString('#33de39');
 
@@ -863,16 +863,16 @@ class Character extends FlxSprite
 				animation.addByPrefix('singDOWNmiss', 'MISS down', 24, false);
 				animation.addByPrefix('hey', 'hey', 24, false);
 
-				addOffset('idle', -5);
-				addOffset("singUP", -29, 27);
-				addOffset("singRIGHT", -38, -7);
-				addOffset("singLEFT", 12, -6);
-				addOffset("singDOWN", -10, -50);
+				addOffset('idle');
+				addOffset("singUP", -22, 101);
+				addOffset("singRIGHT", -12, 20);
+				addOffset("singLEFT", 71, 6);
+				addOffset("singDOWN", 14, 2);
 				addOffset("singUPmiss", -29, 27);
 				addOffset("singRIGHTmiss", -30, 21);
 				addOffset("singLEFTmiss", 12, 24);
 				addOffset("singDOWNmiss", -11, -19);
-				addOffset("hey", 7, 4);
+				addOffset("hey", -19, 13);
 
 				playAnim('idle');
 
@@ -1019,7 +1019,7 @@ class Character extends FlxSprite
 			var poopInPants:String = alt ? '-alt' : '';
 			switch (curCharacter)
 			{
-				case 'gf' | 'gf-christmas' | 'gf-pixel' | 'bandu-candy' | 'gf-only' | 'dave-wheels':
+				case 'gf' | 'gf-christmas' | 'gf-pixel' | 'bandu-candy' | 'gf-only' | 'dave-wheels' | 'gamingtastic':
 					if (!animation.curAnim.name.startsWith('hair'))
 					{
 						danced = !danced;

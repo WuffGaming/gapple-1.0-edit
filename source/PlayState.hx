@@ -400,6 +400,11 @@ class PlayState extends MusicBeatState
 				{
 					dialogue = CoolUtil.coolTextFile(Paths.txt('recovered-project/RadicalNULLDialogue'));
 				}
+			case 'tutorial':
+				if(formoverride == "radical")
+				{
+					dialogue = CoolUtil.coolTextFile(Paths.txt('tutorial/whothefuck'));
+				}
 		}
 
 		backgroundSprites = createBackgroundSprites(SONG.song.toLowerCase());
@@ -419,27 +424,17 @@ class PlayState extends MusicBeatState
 		screenshader.shader.uTime.value[0] = new flixel.math.FlxRandom().float(-100000, 100000);
 		var charoffsetx:Float = 0;
 		var charoffsety:Float = 0;
-		if (formoverride == "bf-pixel"
-			&& (SONG.song != "Tutorial" && SONG.song != "Roses" && SONG.song != "Thorns" && SONG.song != "Senpai"))
-		{
-			gfVersion = 'gf-pixel';
-			charoffsetx += 300;
-			charoffsety += 300;
-		}
-		if(formoverride == "bf-christmas")
-		{
-			gfVersion = 'gf-christmas';
-		}
-		if(formoverride == "radical")
-		{
-			gfVersion = 'gamingtastic';
-		}
 		if (SONG.song.toLowerCase() == 'sugar-rush') gfVersion = 'gf-only';
 		if (SONG.song.toLowerCase() == 'swag') gfVersion = 'gf-wheels';
+		if(formoverride == "radical") 	gfVersion = 'gamingtastic'; // why the FUCK is this the thing that works? idk. FUCK YOU
+		if(formoverride == "radical")
+		{
+			charoffsety = 265;
+		}
 		gf = new Character(400 + charoffsetx, 130 + charoffsety, gfVersion);
 		gf.scrollFactor.set(0.95, 0.95);
 
-		if (!(formoverride == "bf" || formoverride == "none" || formoverride == "bf-pixel" || formoverride == "bf-christmas") && SONG.song != "Tutorial")
+		if (!(formoverride == "bf" || formoverride == "none" || formoverride == "bf-pixel" || formoverride == "bf-christmas" || formoverride == "radical") && SONG.song != "Tutorial")
 		{
 			gf.visible = false;
 		}
@@ -539,6 +534,8 @@ class PlayState extends MusicBeatState
 			case 'bambi-angey':
 				boyfriend.y = 100 + 450;
 				boyfriendOldIcon = 'bambi-old';
+			case 'radical':
+				boyfriend.x += 40;
 		}
 
 		switch (curStage) {
@@ -897,6 +894,14 @@ class PlayState extends MusicBeatState
 					schoolIntro(doof);
 				case 'algebra':
 					baldiIntro(doof);
+				/*
+				case 'tutorial':
+					if(formoverride == "radical")
+					{
+						schoolIntro(doof);
+					}
+					startCountdown();
+				*/
 				case 'origin':
 					originCutscene();
 				default:
@@ -979,28 +984,6 @@ class PlayState extends MusicBeatState
 				sign.antialiasing = true;
 				sign.active = false;
 				sprites.add(sign);
-
-				if (curStage == 'bambiFarmNight')
-				{
-					hills.color = nightColor;
-					farm.color = nightColor;
-					foreground.color = nightColor;
-					cornSet.color = nightColor;
-					cornSet2.color = nightColor;
-					fence.color = nightColor;
-					sign.color = nightColor;
-				}
-
-				if (curStage == 'bambiFarmSunset')
-				{
-					hills.color = sunsetColor;
-					farm.color = sunsetColor;
-					foreground.color = sunsetColor;
-					cornSet.color = sunsetColor;
-					cornSet2.color = sunsetColor;
-					fence.color = sunsetColor;
-					sign.color = sunsetColor;
-				}
 				
 				add(bg);
 				add(hills);
@@ -1131,7 +1114,8 @@ class PlayState extends MusicBeatState
 			case 'polygonized' | 'furiosity' | 'cheating' | 'unfairness' | 'disruption' | 'disability' | 'origin' | 'tantalum' | 'jam' | 'keyboard':
 				defaultCamZoom = 0.9;
 				var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('backgrounds/3dbg/redsky'));
-				bg.active = true;
+				bg.active = true;				
+				bg.scrollFactor.set(0.1, 0.1);
 	
 				switch (SONG.song.toLowerCase())
 				{
@@ -1165,7 +1149,6 @@ class PlayState extends MusicBeatState
 						curStage = 'jam';
 					case 'keyboard':
 						bg.loadGraphic(Paths.image('backgrounds/3dbg/keyboard'));
-						bg.scrollFactor.set(0.1, 0.1);
 						curStage = 'keyboard';
 					default:
 						bg.loadGraphic(Paths.image('backgrounds/3dbg/redsky'));
