@@ -252,6 +252,18 @@ class Character extends FlxSprite
 				
 				
 				playAnim('idle');
+			case 'gaming-wheels':
+				loadGraphic(Paths.image('characters/dave/radical_gf'), true, 241, 231);
+				animation.add('idle', [0], 0, false);
+
+				scale.set(1.9, 1.9);
+				antialiasing = false;
+				updateHitbox();
+
+				barColor = FlxColor.fromRGB(178, 7, 7);
+				
+				
+				playAnim('idle');
 			case 'ringi':
 				frames = Paths.getSparrowAtlas('characters/oc/ringi');
 				animation.addByPrefix('idle', 'IDLE', 24, false);
@@ -699,8 +711,8 @@ class Character extends FlxSprite
 				addOffset('idle');
 				addOffset("singUP");
 				addOffset("singRIGHT");
-				addOffset("singLEFT");
-				addOffset("singDOWN");
+				addOffset("singLEFT", -69, 0);
+				addOffset("singDOWN", -83, 0);
 
 				setGraphicSize(Std.int(width / furiosityScale));
 				updateHitbox();

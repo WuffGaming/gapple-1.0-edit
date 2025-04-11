@@ -1,6 +1,6 @@
 OK OK so theres many things to do with Dialogue.
 
-There are currently 17 characters.
+There are currently 18 characters.
 
 :dave:Hi!
 :3ddave:Wait
@@ -19,8 +19,9 @@ There are currently 17 characters.
 :olddave:I don't expect this class to succeed in anything..
 :none:Nothing
 :recover:Hi!
+:radical:Hello.
 
-There are currently 7 events that can happen in dialogue. This includes:
+There are currently 10 events that can happen in dialogue. This includes:
 
 setfont_code:none:You can't see my text!
 setfont_normal:none:You can see my text!
@@ -33,7 +34,7 @@ droptext_green:bambi:I'm green now!
 droptext_blue:dave:I'm blue now!
 droptext_white:gfcasual:White people tomorrow morning
 
-Only one event can happen at a time currently.
+Only one event can happen at a time.
 
 Now, you can make dialogue like this:
 

@@ -422,9 +422,14 @@ class PlayState extends MusicBeatState
 		if (SONG.song.toLowerCase() == 'sugar-rush') gfVersion = 'gf-only';
 		if (SONG.song.toLowerCase() == 'swag') gfVersion = 'gf-wheels';
 		if(formoverride == "radical") 	gfVersion = 'gamingtastic'; // why the FUCK is this the thing that works? idk. FUCK YOU
+		if (SONG.song.toLowerCase() == 'swag' && formoverride == "radical") gfVersion = 'gaming-wheels';
 		if(formoverride == "radical")
 		{
 			charoffsety = 265;
+		}
+		else if (SONG.song.toLowerCase() == 'swag' || SONG.song.toLowerCase() == 'sugar-rush' && formoverride == "radical") // hotboy
+		{
+			charoffsety = 0;
 		}
 		gf = new Character(400 + charoffsetx, 130 + charoffsety, gfVersion);
 		gf.scrollFactor.set(0.95, 0.95);
@@ -541,8 +546,19 @@ class PlayState extends MusicBeatState
 				gf.x += 70;
 				dad.x -= 100;
 			case 'sugar':
-				gf.setPosition(811, 200);
+				if(formoverride == "radical")
+				{
+					gf.x += 35;
+				}
+				else if(formoverride == "bf")
+				{
+					gf.setPosition(811, 200);
+				}
 			case 'swag':
+				if(formoverride == "radical")
+				{
+					boyfriend.y -= 60;
+				}
 				gf.setPosition(400, boyfriend.getMidpoint().y);
 				gf.y -= gf.height / 2;
 				gf.x += 190;
@@ -4392,6 +4408,21 @@ class PlayState extends MusicBeatState
 						swapDad('bendu');
 						iconP2.animation.play('bendu');
 						healthBar.createFilledBar(dad.barColor, boyfriend.barColor);
+				}
+			case 'jam':
+				switch(curBeat)
+				{
+					case 64:
+						defaultCamZoom = 1.1;
+						FlxTween.tween(thunderBlack, {alpha: 0.65}, Conductor.stepCrochet / 500);
+					case 96:
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 0.7;
+						thunderBlack.alpha = 0;
+					case 104:
+						defaultCamZoom = 0.95;
+					case 128:
+						defaultCamZoom = 0.9;
 				}
 			case 'disability':
 				switch(curBeat) {
