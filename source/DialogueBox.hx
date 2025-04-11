@@ -264,7 +264,7 @@ class DialogueBox extends FlxSpriteGroup
 				swagDialogue.sounds = [FlxG.sound.load(Paths.soundRandom('dialogue/bambDialogue', 1, 3), 0.6)];
 			case 'bandu':
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/banduDialogue'), 0.9)];
-			case 'bf' | 'bfconfuse':
+			case 'bf' | 'bfconfuse' | 'radical':
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/bfDialogue'), 0.6)];		
 			case 'gf' | 'gfcasual' | 'gfconfuse' | 'gfwhat':
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/gfDialogue'), 0.6)];
