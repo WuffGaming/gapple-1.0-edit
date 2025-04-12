@@ -4317,8 +4317,6 @@ class PlayState extends MusicBeatState
 					case 480:
 						defaultCamZoom = 1.1;
 						gf.visible = false;
-						kadeEngineWatermark.y -= 20;
-						creditsWatermark.text = "CORRUPTION IMMINENT. PLEASE RESTART YOUR GAME.";
 						thunderBlack.alpha = 1;
 						swapDad("RECOVERED_PROJECT_3");
 					case 484:
@@ -4328,6 +4326,7 @@ class PlayState extends MusicBeatState
 					case 532:
 						defaultCamZoom = 0.85;
 						FlxG.camera.flash(FlxColor.WHITE, 1);
+						creditsWatermark.text = "CORRUPTED FILE";
 						kadeEngineWatermark.y -= 200000;
 						theFunne = false;
 				}
@@ -4431,14 +4430,12 @@ class PlayState extends MusicBeatState
 						FlxTween.tween(boyfriend, {alpha: 0}, 1.5);
 						FlxTween.tween(gf, {alpha: 0}, 1.5);
 						FlxTween.tween(camHUD, {alpha: 0}, 1.5);
-						FlxTween.tween(thunderBlack, {alpha: 0.65}, 1.5);
 					case 32:
 						FlxTween.tween(boyfriend, {alpha: 1}, 0.2);
 						FlxTween.tween(gf, {alpha: 1}, 0.2);
 						FlxTween.tween(camHUD, {alpha: 1}, 0.2);
 						FlxG.camera.flash(FlxColor.WHITE, 1);
 						defaultCamZoom = 0.9;
-						thunderBlack.alpha = 0;
 					case 176 | 224 | 364 | 384:
 						gfSpeed = 2;
 					case 208 | 256 | 372 | 392:
