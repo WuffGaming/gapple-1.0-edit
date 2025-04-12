@@ -4426,8 +4426,19 @@ class PlayState extends MusicBeatState
 				}
 			case 'disability':
 				switch(curBeat) {
+					case 16:
+						defaultCamZoom = 1.1;
+						FlxTween.tween(boyfriend, {alpha: 0}, 1.5);
+						FlxTween.tween(gf, {alpha: 0}, 1.5);
+						FlxTween.tween(camHUD, {alpha: 0}, 1.5);
+						FlxTween.tween(thunderBlack, {alpha: 0.65}, 1.5);
 					case 32:
+						FlxTween.tween(boyfriend, {alpha: 1}, 0.2);
+						FlxTween.tween(gf, {alpha: 1}, 0.2);
+						FlxTween.tween(camHUD, {alpha: 1}, 0.2);
 						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 0.9;
+						thunderBlack.alpha = 0;
 					case 176 | 224 | 364 | 384:
 						gfSpeed = 2;
 					case 208 | 256 | 372 | 392:
@@ -4636,7 +4647,7 @@ class PlayState extends MusicBeatState
 			case 'bambi-3d' | 'bambi-piss-3d':
 				{
 					dad.y -= 250;
-					dad.x -= 185;
+					dad.x -= 145;
 				}
 			case 'ringi':
 				dad.y -= 475;
