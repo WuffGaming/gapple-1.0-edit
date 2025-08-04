@@ -308,6 +308,30 @@ class Character extends FlxSprite
 				barColor = FlxColor.fromRGB(255, 0, 0);
 
 				playAnim('idle');
+
+			case 'marcello':
+				frames = Paths.getSparrowAtlas('characters/other/nicecello');
+				animation.addByPrefix('idle', 'idle', 24, false);
+				for (anim in ['left', 'down', 'up', 'right']) {
+					animation.addByPrefix('sing${anim.toUpperCase()}', anim, 24, false);
+				}
+
+				addOffset('idle');
+				addOffset('singLEFT', -10, 44);
+				addOffset('singDOWN', 112, -21);
+				addOffset('singUP', -70, 65);
+				addOffset('singRIGHT', -57, 0);
+
+				furiosityScale = 3.5;
+
+				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
+				updateHitbox();
+
+				antialiasing = false;
+
+				barColor = FlxColor.fromRGB(255, 255, 0);
+
+				playAnim('idle');
 			case 'bendu':
 				frames = Paths.getSparrowAtlas('characters/oc/bendu');
 				animation.addByPrefix('idle', 'IDLE', 24, false);
