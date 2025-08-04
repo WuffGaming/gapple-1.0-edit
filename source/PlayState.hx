@@ -118,7 +118,7 @@ class PlayState extends MusicBeatState
 
 	var focusOnDadGlobal:Bool = true;
 
-	var funnyFloatyBoys:Array<String> = ['dave-angey', 'bambi-3d', 'dave-annoyed-3d', 'dave-3d-standing-bruh-what', 'bambi-unfair', 'bambi-piss-3d', 'bandu', 'unfair-junker', 'split-dave-3d', 'badai', 'tunnel-dave', 'tunnel-bf', 'tunnel-bf-flipped', 'bandu-candy', 'bandu-origin', 'ringi', 'bambom', 'bendu', 'little-bandu'];
+	var funnyFloatyBoys:Array<String> = ['dave-angey', 'bambi-3d', 'dave-annoyed-3d', 'dave-3d-standing-bruh-what', 'bambi-unfair', 'bambi-piss-3d', 'bandu', 'unfair-junker', 'split-dave-3d', 'badai', 'tunnel-dave', 'tunnel-bf', 'tunnel-bf-flipped', 'bandu-candy', 'bandu-origin', 'ringi', 'bambom', 'bendu', 'little-bandu', 'flycello'];
 
 	var storyDifficultyText:String = "";
 	var iconRPC:String = "";
@@ -625,6 +625,18 @@ class PlayState extends MusicBeatState
 		{
 			dad.x -= 60;
 			dad.y -= 120;
+		}
+
+		if(dad.curCharacter == 'marcello')
+		{
+			dad.x -= -180;
+			dad.y -= -320;
+		}
+
+		if(dad.curCharacter == 'flycello')
+		{
+			dad.x -= -70;
+			dad.y -= -290;
 		}
 
 		if(dad.curCharacter == 'dupers')
@@ -2258,6 +2270,10 @@ class PlayState extends MusicBeatState
 				case 'badai':
 					dad.angle += elapsed * 10;
 					dad.y += (Math.sin(elapsedtime) * 0.6);
+				case 'flycello':
+					dad.angle += elapsed * 0.1;
+					dad.y += (Math.sin(elapsedtime) * 0.45);
+					dad.x += (Math.sin(elapsedtime) * 0.45);
 				case 'little-bandu':
 					dad.angle += elapsed * 2;
 					dad.y += (Math.sin(elapsedtime) * 0.65);
@@ -3105,6 +3121,12 @@ class PlayState extends MusicBeatState
 			case 'RECOVERED_PROJECT_2' | 'RECOVERED_PROJECT_3':
 				camFollow.x -= -150;
 				camFollow.y -= -175;
+			case 'marcello':
+				camFollow.x -= 100;
+				camFollow.y -= 40;
+			case 'flycello':
+				camFollow.x -= 100;
+				camFollow.y -= 40;
 			case 'hall-monitor':
 				camFollow.x -= 200;
 				camFollow.y -= 180;
