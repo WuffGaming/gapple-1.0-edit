@@ -46,7 +46,6 @@ class HealthIcon extends FlxSprite
 		'3d-bf-old',
 		'cameo-origin',
 		'marcello',
-		'flycello',
 	];
 
 	public var charPublic:String = 'bf';
@@ -146,8 +145,6 @@ class HealthIcon extends FlxSprite
 			addIcon('radical', 62);
 
 			addIcon('marcello', 64);
-
-			addIcon('flycello', 64);
 	
 			animation.play('face');
 		}

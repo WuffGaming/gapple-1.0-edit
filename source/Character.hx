@@ -322,30 +322,7 @@ class Character extends FlxSprite
 				addOffset('singUP', -70, 65);
 				addOffset('singRIGHT', -57, 0);
 
-				furiosityScale = 2.6;
-
-				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
-				updateHitbox();
-
-				antialiasing = false;
-
-				barColor = FlxColor.fromRGB(255, 255, 0);
-
-				playAnim('idle');
-			case 'flycello':
-				frames = Paths.getSparrowAtlas('characters/other/flycello');
-				animation.addByPrefix('idle', 'idle', 24, false);
-				for (anim in ['left', 'down', 'up', 'right']) {
-					animation.addByPrefix('sing${anim.toUpperCase()}', anim, 24, false);
-				}
-
-				addOffset('idle');
-				addOffset('singLEFT', -10, 44);
-				addOffset('singDOWN', -8, 0);
-				addOffset('singUP', -41, 42);
-				addOffset('singRIGHT', -200, 0);
-
-				furiosityScale = 2.6;
+				furiosityScale = 3.5;
 
 				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
 				updateHitbox();
