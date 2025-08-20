@@ -45,7 +45,6 @@ class HealthIcon extends FlxSprite
 		'afnfg-boyfriend',
 		'3d-bf-old',
 		'cameo-origin',
-		'marcello',
 	];
 
 	public var charPublic:String = 'bf';
@@ -143,8 +142,6 @@ class HealthIcon extends FlxSprite
 			addIcon('afnfg-boyfriend', 0);
 
 			addIcon('radical', 62);
-
-			addIcon('marcello', 64);
 	
 			animation.play('face');
 		}
