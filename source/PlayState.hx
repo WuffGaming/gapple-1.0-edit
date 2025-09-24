@@ -4426,14 +4426,8 @@ class PlayState extends MusicBeatState
 			case 'disability':
 				switch(curBeat) {
 					case 16:
-						defaultCamZoom = 1.1;
-						FlxTween.tween(boyfriend, {alpha: 0}, 1.5);
-						FlxTween.tween(gf, {alpha: 0}, 1.5);
-						FlxTween.tween(camHUD, {alpha: 0}, 1.5);
+						defaultCamZoom = 1.4;
 					case 32:
-						FlxTween.tween(boyfriend, {alpha: 1}, 0.2);
-						FlxTween.tween(gf, {alpha: 1}, 0.2);
-						FlxTween.tween(camHUD, {alpha: 1}, 0.2);
 						FlxG.camera.flash(FlxColor.WHITE, 1);
 						defaultCamZoom = 0.9;
 					case 176 | 224 | 364 | 384:

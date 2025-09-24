@@ -109,7 +109,7 @@ class FPSOption extends Option
 
 	private override function updateDisplay():String
 	{
-		return "FPS Counter " + (!FlxG.save.data.fps ? "off" : "on");
+		return "FPS Counter " + (!FlxG.save.data.fps ? "on" : "off");
 	}
 }
 
@@ -124,7 +124,7 @@ class CutsceneOption extends Option
 
 	private override function updateDisplay():String
 	{
-		return "Cutscenes " + (!FlxG.save.data.freeplayCuts ? "off" : "on");
+		return "Cutscenes " + (!FlxG.save.data.freeplayCuts ? "on" : "off");
 	}
 }
 
