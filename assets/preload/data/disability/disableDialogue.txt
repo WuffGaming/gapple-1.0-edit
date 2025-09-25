@@ -1,14 +1,7 @@
-:3ddave:Hmm.
-:3ddave:I didn't expect you to come here all by yourself.
-:3ddave:What's your reason for being here anyway?
-:3ddave:Was it because of one of Bambi's arguments?
-:bf:Beep.
-:3ddave:Well.
-:3ddave:Guess I have to do everything myself.
-:3ddave:I can control the 3D world better than I thought I could.
-:3ddave:We'll sing one song.
-:3ddave:I win, you leave.
-:3ddave:You win, I'll let you be.
+:3ddave:...Hmm.
+:3ddave:Crud. I didn't expect this to happen so soon..
+:gfwhat:Now what? Are you going to tell us to *magically* get out of here?
+:gfconfused:We aren't even sure where we're even at.
+:3ddave:Oh, don't worry! The exit process is quite simple!
+:3ddave:Just follow my lead, and you'll be free in no time!
 :bf:Bap!
-:3ddave:Alright.
-:gf:Go Boyfriend!

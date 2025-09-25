@@ -1,7 +1,7 @@
-black:none:It's been a normal day for Boyfriend and Girlfriend.
-:none:They've had some fun with Dave, and wanted to see if bambimad could take them on next..
-:none:Unfortunately, he isn't very happy.
-off_black:bf:Beep?
+:gfcasual:It was fun singing with Dave some more without any risk of nearly turning the world into something that Haxe could truly never handle.
+:bf:Bah!
+:bambimad:MY PHONE!!!
+:bfconfuse:...wtf man
 :bambimad:WHY ARE YOU BACK?! YOU FUCKING CHEATER!!!
 :bf:Bop da.
 :bambimad:YOU'RE GOING DOWN.

@@ -158,35 +158,26 @@ class TitleState extends MusicBeatState
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		add(bg);
 
-		logoBl = new FlxSprite(-185, -430);
+		logoBl = new FlxSprite(-185, 1000);
 		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
 		logoBl.antialiasing = true;
-		logoBl.animation.addByIndices('bumpLeft', 'logo bumpin', [for (i in 0...14) i], '', 24, false);
-		logoBl.animation.addByIndices('bumpRight', 'logo bumpin', [for (i in 15...29) i], '', 24, false);
-		logoBl.animation.play('bumpLeft');
+		logoBl.animation.addByIndices('logobumpin', 'logobumpin', [for (i in 0...14) i], '', 24, false);
+		logoBl.animation.play('logobumpin');
 		logoBl.scale.set(0.75, 0.75);
 		logoBl.updateHitbox();
-
+		logoBl.antialiasing = false;
 		logoBl.screenCenter();
-		logoBl.x += 335;
+		logoBl.x -= 250;
 		logoBl.y -= 75;
 
 		logoBl.scale.set(0.85, 0.85);
 
-		titleDude = new FlxSprite(-150, 1000);
+		titleDude = new FlxSprite(570, -1000);
 		titleDude.frames = Paths.getSparrowAtlas('golden_apple_title_guys');
-		var fuckingStupid:Int = FlxG.random.int(0,999);
-		if(fuckingStupid == 0)
-		{
-			altIdle = true;
-		}
-		titleDude.animation.addByIndices('idle-alt-false', 'ALT-IDLE', [0, 1, 2, 3, 4, 5, 6], '', 24, false);
-		titleDude.animation.addByIndices('idle-false', 'IDLE', [0, 1, 2, 3, 4, 5, 6], '', 24, false);
-
-		titleDude.animation.addByIndices('idle-alt-true', 'ALT-IDLE', [6, 5, 4, 3, 2, 1, 0], '', 24, false);
-		titleDude.animation.addByIndices('idle-true', 'IDLE', [6, 5, 4, 3, 2, 1, 0], '', 24, false);
-
-		if(altIdle){titleDude.animation.play('idle-alt-true');}else{titleDude.animation.play('idle-true');}
+		titleDude.animation.addByIndices('idle', 'idle', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], '', 24, false);
+		titleDude.antialiasing = false;
+		titleDude.scale.set(0.8, 0.8);
+		titleDude.animation.play('idle');
 		add(titleDude);
 
 		add(logoBl);
@@ -362,16 +353,6 @@ class TitleState extends MusicBeatState
 		textGroup.remove(textGroup.members[0], true);
 	}
 
-	override function stepHit() {
-		super.stepHit();
-		if (curStep % 2 == 0) {
-			stupid++;
-			altIdle ?
-				titleDude.animation.play('idle-alt-${stupid % 2 == 0}', true):
-				titleDude.animation.play('idle-${stupid % 2 == 0}', true);
-		}
-	}
-
 	var stupid:Int = 0;
 
 	override function beatHit()
@@ -382,11 +363,13 @@ class TitleState extends MusicBeatState
 		{
 			if(danced)
 			{
-				logoBl.animation.play('bumpRight', true);
+				logoBl.animation.play('logobumpin', true);
+				titleDude.animation.play('idle', true);
 			}
 			else
 			{
-				logoBl.animation.play('bumpLeft', true);
+				logoBl.animation.play('logobumpin', true);
+				titleDude.animation.play('idle', true);
 			}
 		}
 
@@ -397,7 +380,7 @@ class TitleState extends MusicBeatState
 		switch (curBeat)
 		{
 			case 2:
-				addMoreText('SkyFactorial\nLancey\nBezieAnims');
+				addMoreText('Team Golden Apple');
 			case 3:
 				addMoreText('WuffGaming for EDITIIINGGGG');
 			case 4:
@@ -420,9 +403,9 @@ class TitleState extends MusicBeatState
 			case 12:
 				addMoreText("Friday Night Funkin'");
 			case 13:
-				addMoreText('VS. Dave and Bambi:');
-			case 14:
 				addMoreText('Golden Apple');
+			case 14:
+				addMoreText('EDITED!');
 			case 15:
 				deleteCoolText();
 			case 16:
@@ -440,7 +423,7 @@ class TitleState extends MusicBeatState
 
 			FlxG.camera.flash(FlxColor.WHITE, 4);
 			remove(credGroup);
-			FlxTween.tween(titleDude, {y: -50}, 1, {ease: FlxEase.expoInOut});
+			FlxTween.tween(titleDude, {y: -25}, 1, {ease: FlxEase.expoInOut});
 			skippedIntro = true;
 		}
 	}

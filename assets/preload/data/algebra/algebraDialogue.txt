@@ -1,10 +1,6 @@
-black:none:Hey.
-:none:You got kicked quite far.
-:none:The collapse of the 3D world was impending, but you got out before it could occur.
-:none:Now, you're somewhere odd.
-:none:You have to wake up.
-:none:Wake up.
-:none:WAKE UP.
+black:none:...?
+:none:Why is there..
+:none:. . .
 algebrah:olddave:Hey there!
 :olddave:Welcome to my school!
 :olddave:People don't visit me that often, so I'm glad you're here!

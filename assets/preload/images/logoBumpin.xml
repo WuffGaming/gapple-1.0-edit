@@ -1,35 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TextureAtlas imagePath="golden_apple_logo_bump.png">
-	<!-- Created with Adobe Animate version 21.0.1.37179 -->
+<TextureAtlas imagePath="logoBumpin.png">
+	<!-- Created with Adobe Animate version 21.0.6.41649 -->
 	<!-- http://www.adobe.com/products/animate.html -->
-	<SubTexture name="logo bumpin0000" x="1683" y="900" width="764" height="769" pivotX="38.6" pivotY="13.35" frameX="-102" frameY="-53" frameWidth="942" frameHeight="880"/>
-	<SubTexture name="logo bumpin0001" x="877" y="10" width="885" height="822" frameX="0" frameY="-32" frameWidth="942" frameHeight="880"/>
-	<SubTexture name="logo bumpin0002" x="877" y="10" width="885" height="822" frameX="0" frameY="-32" frameWidth="942" frameHeight="880"/>
-	<SubTexture name="logo bumpin0003" x="2596" y="10" width="812" height="833" frameX="-61" frameY="-23" frameWidth="942" frameHeight="880"/>
-	<SubTexture name="logo bumpin0004" x="2596" y="10" width="812" height="833" frameX="-61" frameY="-23" frameWidth="942" frameHeight="880"/>
-	<SubTexture name="logo bumpin0005" x="2596" y="853" width="776" height="792" frameX="-94" frameY="-43" frameWidth="942" frameHeight="880"/>
-	<SubTexture name="logo bumpin0006" x="2596" y="853" width="776" height="792" frameX="-94" frameY="-43" frameWidth="942" frameHeight="880"/>
-	<SubTexture name="logo bumpin0007" x="10" y="881" width="772" height="778" frameX="-98" frameY="-50" frameWidth="942" frameHeight="880"/>
-	<SubTexture name="logo bumpin0008" x="10" y="881" width="772" height="778" frameX="-98" frameY="-50" frameWidth="942" frameHeight="880"/>
-	<SubTexture name="logo bumpin0009" x="10" y="881" width="772" height="778" frameX="-98" frameY="-50" frameWidth="942" frameHeight="880"/>
-	<SubTexture name="logo bumpin0010" x="10" y="881" width="772" height="778" frameX="-98" frameY="-50" frameWidth="942" frameHeight="880"/>
-	<SubTexture name="logo bumpin0011" x="10" y="881" width="772" height="778" frameX="-98" frameY="-50" frameWidth="942" frameHeight="880"/>
-	<SubTexture name="logo bumpin0012" x="10" y="881" width="772" height="778" frameX="-98" frameY="-50" frameWidth="942" frameHeight="880"/>
-	<SubTexture name="logo bumpin0013" x="10" y="881" width="772" height="778" frameX="-98" frameY="-50" frameWidth="942" frameHeight="880"/>
-	<SubTexture name="logo bumpin0014" x="10" y="881" width="772" height="778" frameX="-98" frameY="-50" frameWidth="942" frameHeight="880"/>
-	<SubTexture name="logo bumpin0015" x="1683" y="900" width="764" height="769" frameX="-102" frameY="-53" frameWidth="942" frameHeight="880"/>
-	<SubTexture name="logo bumpin0016" x="10" y="10" width="857" height="861" frameX="-85" frameY="-12" frameWidth="942" frameHeight="880"/>
-	<SubTexture name="logo bumpin0017" x="10" y="10" width="857" height="861" frameX="-85" frameY="-12" frameWidth="942" frameHeight="880"/>
-	<SubTexture name="logo bumpin0018" x="1772" y="10" width="814" height="880" frameX="-97" frameY="0" frameWidth="942" frameHeight="880"/>
-	<SubTexture name="logo bumpin0019" x="1772" y="10" width="814" height="880" frameX="-97" frameY="0" frameWidth="942" frameHeight="880"/>
-	<SubTexture name="logo bumpin0020" x="877" y="842" width="796" height="780" frameX="-74" frameY="-49" frameWidth="942" frameHeight="880"/>
-	<SubTexture name="logo bumpin0021" x="877" y="842" width="796" height="780" frameX="-74" frameY="-49" frameWidth="942" frameHeight="880"/>
-	<SubTexture name="logo bumpin0022" x="10" y="881" width="772" height="778" frameX="-98" frameY="-50" frameWidth="942" frameHeight="880"/>
-	<SubTexture name="logo bumpin0023" x="10" y="881" width="772" height="778" frameX="-98" frameY="-50" frameWidth="942" frameHeight="880"/>
-	<SubTexture name="logo bumpin0024" x="10" y="881" width="772" height="778" frameX="-98" frameY="-50" frameWidth="942" frameHeight="880"/>
-	<SubTexture name="logo bumpin0025" x="10" y="881" width="772" height="778" frameX="-98" frameY="-50" frameWidth="942" frameHeight="880"/>
-	<SubTexture name="logo bumpin0026" x="10" y="881" width="772" height="778" frameX="-98" frameY="-50" frameWidth="942" frameHeight="880"/>
-	<SubTexture name="logo bumpin0027" x="10" y="881" width="772" height="778" frameX="-98" frameY="-50" frameWidth="942" frameHeight="880"/>
-	<SubTexture name="logo bumpin0028" x="10" y="881" width="772" height="778" frameX="-98" frameY="-50" frameWidth="942" frameHeight="880"/>
-	<SubTexture name="logo bumpin0029" x="10" y="881" width="772" height="778" frameX="-98" frameY="-50" frameWidth="942" frameHeight="880"/>
+	<SubTexture name="logobumpin0000" x="0" y="0" width="1142" height="796"/>
+	<SubTexture name="logobumpin0001" x="0" y="0" width="1142" height="796"/>
+	<SubTexture name="logobumpin0002" x="1144" y="0" width="996" height="744" frameX="-73" frameY="-26" frameWidth="1142" frameHeight="796"/>
+	<SubTexture name="logobumpin0003" x="1144" y="0" width="996" height="744" frameX="-73" frameY="-26" frameWidth="1142" frameHeight="796"/>
+	<SubTexture name="logobumpin0004" x="2142" y="0" width="865" height="677" frameX="-135" frameY="-56" frameWidth="1142" frameHeight="796"/>
+	<SubTexture name="logobumpin0005" x="2142" y="0" width="865" height="677" frameX="-135" frameY="-56" frameWidth="1142" frameHeight="796"/>
+	<SubTexture name="logobumpin0006" x="3009" y="0" width="833" height="656" frameX="-154" frameY="-70" frameWidth="1142" frameHeight="796"/>
+	<SubTexture name="logobumpin0007" x="3009" y="0" width="833" height="656" frameX="-154" frameY="-70" frameWidth="1142" frameHeight="796"/>
+	<SubTexture name="logobumpin0008" x="3009" y="0" width="833" height="656" frameX="-154" frameY="-70" frameWidth="1142" frameHeight="796"/>
+	<SubTexture name="logobumpin0009" x="3009" y="0" width="833" height="656" frameX="-154" frameY="-70" frameWidth="1142" frameHeight="796"/>
+	<SubTexture name="logobumpin0010" x="3009" y="0" width="833" height="656" frameX="-154" frameY="-70" frameWidth="1142" frameHeight="796"/>
+	<SubTexture name="logobumpin0011" x="3009" y="0" width="833" height="656" frameX="-154" frameY="-70" frameWidth="1142" frameHeight="796"/>
+	<SubTexture name="logobumpin0012" x="3009" y="0" width="833" height="656" frameX="-154" frameY="-70" frameWidth="1142" frameHeight="796"/>
+	<SubTexture name="logobumpin0013" x="3009" y="0" width="833" height="656" frameX="-154" frameY="-70" frameWidth="1142" frameHeight="796"/>
+	<SubTexture name="logobumpin0014" x="3009" y="0" width="833" height="656" frameX="-154" frameY="-70" frameWidth="1142" frameHeight="796"/>
+	<SubTexture name="logobumpin0015" x="3009" y="0" width="833" height="656" frameX="-154" frameY="-70" frameWidth="1142" frameHeight="796"/>
+	<SubTexture name="logobumpin0016" x="3009" y="0" width="833" height="656" frameX="-154" frameY="-70" frameWidth="1142" frameHeight="796"/>
+	<SubTexture name="logobumpin0017" x="3009" y="0" width="833" height="656" frameX="-154" frameY="-70" frameWidth="1142" frameHeight="796"/>
+	<SubTexture name="logobumpin0018" x="3009" y="0" width="833" height="656" frameX="-154" frameY="-70" frameWidth="1142" frameHeight="796"/>
+	<SubTexture name="logobumpin0019" x="3009" y="0" width="833" height="656" frameX="-154" frameY="-70" frameWidth="1142" frameHeight="796"/>
+	<SubTexture name="logobumpin0020" x="3009" y="0" width="833" height="656" frameX="-154" frameY="-70" frameWidth="1142" frameHeight="796"/>
+	<SubTexture name="logobumpin0021" x="3009" y="0" width="833" height="656" frameX="-154" frameY="-70" frameWidth="1142" frameHeight="796"/>
+	<SubTexture name="logobumpin0022" x="3009" y="0" width="833" height="656" frameX="-154" frameY="-70" frameWidth="1142" frameHeight="796"/>
+	<SubTexture name="logobumpin0023" x="3009" y="0" width="833" height="656" frameX="-154" frameY="-70" frameWidth="1142" frameHeight="796"/>
+	<SubTexture name="logobumpin0024" x="3009" y="0" width="833" height="656" frameX="-154" frameY="-70" frameWidth="1142" frameHeight="796"/>
 </TextureAtlas>

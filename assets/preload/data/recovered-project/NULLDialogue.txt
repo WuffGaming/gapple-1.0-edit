@@ -1,13 +1,5 @@
-black:none:You shouldn't have come here.
-:none:I never prepared you to die so early.
-:none:The only one who lays here is the representation of past mistakes.
-:none:He knows what will happen if you stay for too long.
-:none:Restart the game. GO. NOW.
-no_black:recover:WHY HAVE YOU APPEARED
-:recover:DESPAIR HAS COME THROUGH THIS LAND
-:recover:NOW ALL THAT LAY SHALL COME TO WASTE
-:recover:TURNED AND MANGLED APART TO BITS
-:recover:BEFORE YOU THINK OF SINGING ALONG
-:recover:FLEE BEFORE IT COMES ALONG.
+:recover:YOU SHOULDN'T HAVE COME HERE.
+:gfwhat:Yeah, uhh..
+:gfwhat:We've heard that about a billion times today.
 :bfconfuse:..Da bo?
-:recover:GOOD LUCK.
+:recover:..I'M SORRY FOR WHAT'S ABOUT TO HAPPEN.
