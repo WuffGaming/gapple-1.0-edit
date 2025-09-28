@@ -219,51 +219,6 @@ class Character extends FlxSprite
 				barColor = FlxColor.fromRGB(129, 180, 227);
 
 				playAnim('idle');
-			case 'dave-wheels':
-				frames = Paths.getSparrowAtlas('characters/dave/cool');
-				animation.addByIndices('danceLeft', 'idle', [0, 1, 2, 3, 4, 5, 6], '', 24, false);
-				animation.addByIndices('danceRight', 'idle', [7, 8, 9, 10, 11, 12, 13], '', 24, false);
-				for (anim in ['left', 'down', 'up', 'right']) {
-					animation.addByPrefix('sing${anim.toUpperCase()}', anim, 24, false);
-				}
-
-				addOffset('idle');
-				addOffset('singLEFT', 12, -23);
-				addOffset('singDOWN', -40, -23);
-				addOffset('singUP', -40, 214);
-				addOffset('singRIGHT', 9, -23);
-
-				antialiasing = false;
-				scale.set(1.8, 1.8);
-				updateHitbox();
-
-				barColor = FlxColor.fromRGB(15, 95, 255);
-
-				playAnim('danceRight');
-			case 'gf-wheels':
-				loadGraphic(Paths.image('characters/dave/best_gf'), true, 241, 231);
-				animation.add('idle', [0], 0, false);
-
-				scale.set(1.9, 1.9);
-				antialiasing = false;
-				updateHitbox();
-
-				barColor = FlxColor.fromRGB(178, 7, 7);
-				
-				
-				playAnim('idle');
-			case 'gaming-wheels':
-				loadGraphic(Paths.image('characters/dave/radical_gf'), true, 241, 231);
-				animation.add('idle', [0], 0, false);
-
-				scale.set(1.9, 1.9);
-				antialiasing = false;
-				updateHitbox();
-
-				barColor = FlxColor.fromRGB(178, 7, 7);
-				
-				
-				playAnim('idle');
 			case 'ringi':
 				frames = Paths.getSparrowAtlas('characters/oc/ringi');
 				animation.addByPrefix('idle', 'IDLE', 24, false);
@@ -1031,7 +986,7 @@ class Character extends FlxSprite
 			var poopInPants:String = alt ? '-alt' : '';
 			switch (curCharacter)
 			{
-				case 'gf' | 'gf-christmas' | 'gf-pixel' | 'bandu-candy' | 'gf-only' | 'dave-wheels' | 'gamingtastic':
+				case 'gf' | 'gf-christmas' | 'gf-pixel' | 'bandu-candy' | 'gf-only' | 'gamingtastic':
 					if (!animation.curAnim.name.startsWith('hair'))
 					{
 						danced = !danced;

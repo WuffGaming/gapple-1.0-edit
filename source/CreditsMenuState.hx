@@ -104,11 +104,6 @@ class CreditsMenuState extends MusicBeatState
             new Social('youtube', 'https://www.youtube.com/watch?v=dTk5Z203Uxc'),
          ]
       ),
-      new Person("Goldd", CreditsType.Dev, "Swag",
-         [
-            new Social('youtube', 'https://www.youtube.com/watch?v=uzKDvj_IF4c')
-         ]
-      ),
       new Person("The people who made the Duper Chart", CreditsType.Dev, "Duper Chart",
          [
             new Social('gamebanana', 'https://gamebanana.com/mods/412258'),

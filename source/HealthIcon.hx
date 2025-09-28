@@ -37,11 +37,9 @@ class HealthIcon extends FlxSprite
 		'bandu-origin',
 		'bandu-scaredy',
 		'sart-producer',
-		'sart-producer-night',
 		'bambom',
 		'ringi',
 		'bendu',
-		'dave-wheels',
 		'afnfg-boyfriend',
 		'3d-bf-old',
 		'cameo-origin',
@@ -86,10 +84,6 @@ class HealthIcon extends FlxSprite
 			addIcon('dupers', 46);
 
 			addIcon('sart-producer', 26);
-
-			addIcon('sart-producer-night', 26);
-
-			addIcon('dave-wheels', 36);
 	
 			addIcon('tunnel-bf', 0);
 		

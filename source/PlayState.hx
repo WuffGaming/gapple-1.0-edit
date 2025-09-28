@@ -420,14 +420,12 @@ class PlayState extends MusicBeatState
 		var charoffsetx:Float = 0;
 		var charoffsety:Float = 0;
 		if (SONG.song.toLowerCase() == 'sugar-rush') gfVersion = 'gf-only';
-		if (SONG.song.toLowerCase() == 'swag') gfVersion = 'gf-wheels';
 		if(formoverride == "radical") 	gfVersion = 'gamingtastic'; // why the FUCK is this the thing that works? idk. FUCK YOU
-		if (SONG.song.toLowerCase() == 'swag' && formoverride == "radical") gfVersion = 'gaming-wheels';
 		if(formoverride == "radical")
 		{
 			charoffsety = 265;
 		}
-		else if (SONG.song.toLowerCase() == 'swag' || SONG.song.toLowerCase() == 'sugar-rush' && formoverride == "radical") // hotboy
+		else if (SONG.song.toLowerCase() == 'sugar-rush' && formoverride == "radical") // hotboy
 		{
 			charoffsety = 0;
 		}
@@ -554,14 +552,6 @@ class PlayState extends MusicBeatState
 				{
 					gf.setPosition(811, 200);
 				}
-			case 'swag':
-				if(formoverride == "radical")
-				{
-					boyfriend.y -= 60;
-				}
-				gf.setPosition(400, boyfriend.getMidpoint().y);
-				gf.y -= gf.height / 2;
-				gf.x += 190;
 		}
 
 		if(darkLevels.contains(curStage) && SONG.song.toLowerCase() != "polygonized")
@@ -793,8 +783,6 @@ class PlayState extends MusicBeatState
 				credits = 'OC created by DanWiki!';
 			case 'bambi-666-level':
 				credits = 'Bambi 666 Level';
-			case 'swag':
-				credits = 'Swag!';
 			default:
 				credits = '';
 		}
@@ -1187,15 +1175,6 @@ class PlayState extends MusicBeatState
 				daveFuckingDies.y = 1500;
 				add(daveFuckingDies);
 				daveFuckingDies.visible = false;
-			case 'swag':
-				curStage = 'swag';
-
-				var bg = new FlxSprite(150, 100).loadGraphic(Paths.image('backgrounds/other/swag'));
-				bg.scale.set(3, 3);
-				bg.updateHitbox();
-				bg.scale.set(4.5, 4.5);
-				bg.antialiasing = false;
-				add(bg);
 			case 'sart-producer':
 				curStage = 'sart';
 				defaultCamZoom = 0.6;
@@ -4434,26 +4413,6 @@ class PlayState extends MusicBeatState
 						gfSpeed = 2;
 					case 208 | 256 | 372 | 392:
 						gfSpeed = 1;
-				}
-			case 'swag':
-				switch(curBeat) {
-					case 4 | 36 | 132:
-						FlxG.camera.flash(FlxColor.WHITE, 1);
-					case 164:
-						defaultCamZoom = 1.4;
-						FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
-						creditsWatermark.text = "Dance Party!";
-						FlxG.camera.flash(FlxColor.WHITE, 1);
-					case 196:
-						defaultCamZoom = 1;
-						thunderBlack.alpha = 0;
-						creditsWatermark.text = "Swagger!";
-						FlxG.camera.flash(FlxColor.WHITE, 1);
-					case 228:
-						defaultCamZoom = 0.8;
-						FlxG.camera.flash(FlxColor.WHITE, 1);
-					case 260:
-						defaultCamZoom = 1;
 				}
 			case 'duper':
 				switch(curBeat) {
