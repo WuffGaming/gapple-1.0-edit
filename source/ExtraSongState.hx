@@ -138,7 +138,7 @@ class ExtraSongState extends MusicBeatState
 		{
             switch (songs[curSelected].songName.toLowerCase()) {
                 case 'unknown':
-                    FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+                    FlxG.sound.play(Paths.sound('cancelMenu'), 0.5);
                 default:   
                     var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), 1);
 
