@@ -304,11 +304,11 @@ class Character extends FlxSprite
 				// DAVE SHITE ANIMATION LOADING CODE
 				tex = Paths.getSparrowAtlas('characters/dave/split_dave_3d');
 				frames = tex;
-				animation.addByPrefix('idle', 'IDLE', 24, false);
-				animation.addByPrefix('singUP', 'UP', 24, false);
-				animation.addByPrefix('singRIGHT', 'RIGHT', 24, false);
-				animation.addByPrefix('singDOWN', 'DOWN', 24, false);
-				animation.addByPrefix('singLEFT', 'LEFT', 24, false);
+				animation.addByPrefix('idle', 'idle', 24, false);
+				animation.addByPrefix('singUP', 'up', 24, false);
+				animation.addByPrefix('singRIGHT', 'right', 24, false);
+				animation.addByPrefix('singDOWN', 'down', 24, false);
+				animation.addByPrefix('singLEFT', 'left', 24, false);
 		
 				addOffset('idle');
 				addOffset("singUP");
@@ -598,10 +598,10 @@ class Character extends FlxSprite
 				animation.addByPrefix('singRIGHT', 'right', 24, false);
 		
 				addOffset('idle');
-				addOffset("singUP", -38, 135);
-				addOffset("singRIGHT", -3, -4);
-				addOffset("singLEFT", 37, 33);
-				addOffset("singDOWN", -97, -12);
+				addOffset("singUP", 138, 76);
+				addOffset("singRIGHT", 9, -11);
+				addOffset("singLEFT", 333, -2);
+				addOffset("singDOWN", -71, -24);
 				globaloffset[0] = 60;
 				globaloffset[1] = 450; //this is the y
 				setGraphicSize(Std.int(width / furiosityScale));

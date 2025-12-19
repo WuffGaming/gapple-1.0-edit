@@ -611,6 +611,11 @@ class PlayState extends MusicBeatState
 			dad.y -= 350;
 		}
 
+		if(dad.curCharacter == 'split-dave-3d')
+		{
+			dad.x -= 160;
+		}
+
 		if(dad.curCharacter == 'cameo-origin')
 		{
 			dad.x -= 60;
