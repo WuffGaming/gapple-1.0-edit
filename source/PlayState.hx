@@ -631,10 +631,10 @@ class PlayState extends MusicBeatState
 		dadChar = dad.curCharacter;
 		bfChar = boyfriend.curCharacter;
 
-		/*if(bfChar == '3d-bf')
+		if(bfChar == '3d-bf')
 		{
-			boyfriend.y += 75;
-		}*/
+			boyfriend.y += 20;
+		}
 
 		if (SONG.song.toLowerCase() == 'dave-x-bambi-shipping-cute') gf.visible = false;
 		if (curStage == 'house') gf.visible = false;

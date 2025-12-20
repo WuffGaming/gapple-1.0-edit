@@ -100,18 +100,28 @@ class Character extends FlxSprite
 
 				playAnim('danceRight');
 			case '3d-bf':
-				frames = Paths.getSparrowAtlas('characters/algebra/3D_BF');
-				animation.addByPrefix('idle', 'BF idle dance', 24, false);
-				animation.addByPrefix('singUP', 'BF NOTE UP0', 24, false);
-				animation.addByPrefix('singLEFT', 'BF NOTE LEFT0', 24, false);
-				animation.addByPrefix('singRIGHT', 'BF NOTE RIGHT0', 24, false);
-				animation.addByPrefix('singDOWN', 'BF NOTE DOWN0', 24, false);
+				frames = Paths.getSparrowAtlas('characters/main/3D_BF');
+				animation.addByPrefix('idle', 'idle', 24, false);
+				animation.addByPrefix('singUP', 'up', 24, false);
+				animation.addByPrefix('singLEFT', 'left', 24, false);
+				animation.addByPrefix('singRIGHT', 'right', 24, false);
+				animation.addByPrefix('singDOWN', 'down', 24, false);
+				animation.addByPrefix('singUPmiss', 'missedup', 24, false);
+				animation.addByPrefix('singLEFTmiss', 'missedleft', 24, false);
+				animation.addByPrefix('singRIGHTmiss', 'missedright', 24, false);
+				animation.addByPrefix('singDOWNmiss', 'misseddown', 24, false);
+				animation.addByPrefix('hey', 'BF HEY', 24, false);
 
 				addOffset('idle');
-				addOffset("singUP", 6, 10);
-				addOffset("singRIGHT", -3);
-				addOffset("singLEFT", 17);
-				addOffset("singDOWN");
+				addOffset("singUP", -20, 44);
+				addOffset("singRIGHT", -20, 7);
+				addOffset("singLEFT", -16, 4);
+				addOffset("singDOWN", -12, -8);
+				addOffset("singUPmiss", -20, 58);
+				addOffset("singRIGHTmiss", -20, 5);
+				addOffset("singLEFTmiss", 59, 28);
+				addOffset("singDOWNmiss", -20, -9);
+				addOffset("hey", -20, 0);
 
 				nativelyPlayable = flipX = true;
 

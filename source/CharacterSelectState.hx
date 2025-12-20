@@ -300,7 +300,9 @@ class CharacterSelectState extends MusicBeatState
 				char.y = 100 + 450;
 			case 'radical':
 				char.y = 100 + 125;
-			case 'bf' | '3d-bf' | 'bf-pixel' | 'bf-christmas' | 'afnfg-boyfriend' | 'cameo':
+			case '3d-bf':
+				char.y = 100 + 20;
+			case 'bf' | 'bf-pixel' | 'bf-christmas' | 'afnfg-boyfriend' | 'cameo':
 				//dont do anything
 			default: char.y = 100;
 		}
