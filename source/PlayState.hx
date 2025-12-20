@@ -140,7 +140,7 @@ class PlayState extends MusicBeatState
 
 	private var dad:Character;
 	private var dadmirror:Character;
-	private var badai:Character;
+	private var dad2:Character;
 	private var swagger:Character;
 	private var gf:Character;
 	private var boyfriend:Boyfriend;
@@ -460,7 +460,7 @@ class PlayState extends MusicBeatState
 		dad = new Character(100, 100, SONG.player2);
 		if(SONG.song.toLowerCase() == 'wireframe')
 		{
-			badai = new Character(-1250, -1250, 'badai');
+			dad2 = new Character(-1250, -1250, 'badai');
 		}
 		switch (SONG.song.toLowerCase())
 		{
@@ -582,10 +582,10 @@ class PlayState extends MusicBeatState
 				dad.y += 175;
 				boyfriend.y -= 190;
 		}
-		if(badai != null)
+		if(dad2 != null)
 		{
-			add(badai);
-			badai.visible = false;
+			add(dad2);
+			dad2.visible = false;
 		}
 
 		if(curStage == 'redTunnel')
@@ -826,12 +826,6 @@ class PlayState extends MusicBeatState
 
 		switch (curSong.toLowerCase())
 		{
-			case 'splitathon':
-				preload('splitathon/Bambi_WaitWhatNow');
-				preload('splitathon/Bambi_ChillingWithTheCorn');
-			case 'insanity':
-				preload('dave/redsky');
-				preload('dave/redsky_insanity');
 			case 'wireframe':
 				preload('bambi/badai');
 			case 'algebra':
@@ -2258,13 +2252,13 @@ class PlayState extends MusicBeatState
 					dad.y += (Math.sin(elapsedtime) * 0.6);
 			}
 		}
-		if(badai != null)
+		if(dad2 != null)
 		{
-			switch(badai.curCharacter) 
+			switch(dad2.curCharacter) 
 			{
 				case 'bandu':
-					badai.x = boyfriend.getMidpoint().x + Math.sin(banduJunk) * 500 - (dad.width / 2);
-					badai.y += (Math.sin(elapsedtime) * 0.2);
+					dad2.x = boyfriend.getMidpoint().x + Math.sin(banduJunk) * 500 - (dad.width / 2);
+					dad2.y += (Math.sin(elapsedtime) * 0.2);
 					dadmirror.setPosition(dad.x, dad.y);
 
 					/*
@@ -2285,13 +2279,13 @@ class PlayState extends MusicBeatState
 					if (hasJunked && !(Math.sin(banduJunk) >= 0.95 || Math.sin(banduJunk) <= -0.95)) hasJunked = false;
 
 					dadmirror.visible = dadFront;
-					badai.visible = !dadFront;
+					dad2.visible = !dadFront;
 				case 'badai':
-					badai.angle = Math.sin(elapsedtime) * 15;
-					badai.x += Math.sin(elapsedtime) * 0.6;
-					badai.y += (Math.sin(elapsedtime) * 0.6);
+					dad2.angle = Math.sin(elapsedtime) * 15;
+					dad2.x += Math.sin(elapsedtime) * 0.6;
+					dad2.y += (Math.sin(elapsedtime) * 0.6);
 				default:
-					badai.y += (Math.sin(elapsedtime) * 0.6);
+					dad2.y += (Math.sin(elapsedtime) * 0.6);
 			}
 		}
 		if (littleIdiot != null) {
@@ -2876,8 +2870,8 @@ class PlayState extends MusicBeatState
 						littleIdiot.holdTimer = 0;}: {
 							if(badaiTime)
 							{
-								badai.holdTimer = 0;
-								badai.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true);
+								dad2.holdTimer = 0;
+								dad2.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true);
 							}
 							dad.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true);
 							dadmirror.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true);
@@ -3038,7 +3032,7 @@ class PlayState extends MusicBeatState
 		}
 		if (focusondad)
 		{
-			focusOnChar(badaiTime ? badai : dad);
+			focusOnChar(badaiTime ? dad2 : dad);
 
 			if (SONG.song.toLowerCase() == 'tutorial')
 			{
@@ -4007,10 +4001,10 @@ class PlayState extends MusicBeatState
 						dadmirror.dance(idleAlt);
 			}
 		}
-		if(badai != null)
+		if(dad2 != null)
 		{
-			if ((badai.animation.finished || badai.animation.curAnim.name == 'idle') && badai.holdTimer <= 0 && curBeat % dadDanceSnap == 0)
-				badai.dance(idleAlt);
+			if ((dad2.animation.finished || dad2.animation.curAnim.name == 'idle') && dad2.holdTimer <= 0 && curBeat % dadDanceSnap == 0)
+				dad2.dance(idleAlt);
 		}
 		if (swagger != null) {
 			if (swagger.holdTimer <= 0 && curBeat % 1 == 0 && swagger.animation.finished)
@@ -4319,9 +4313,9 @@ class PlayState extends MusicBeatState
 				switch(curBeat)
 				{
 					case 254:
-						badai.visible = true;
+						dad2.visible = true;
 						new FlxTimer().start((Conductor.crochet / 1000) * 0.5, function(tmr:FlxTimer){
-							FlxTween.tween(badai, {x: -300, y: 100}, (Conductor.crochet / 1000) * 1.5, {ease: FlxEase.cubeIn});
+							FlxTween.tween(dad2, {x: -300, y: 100}, (Conductor.crochet / 1000) * 1.5, {ease: FlxEase.cubeIn});
 						});
 						//FlxTween.tween(dad, {x: 1500, y: 1500}, Conductor.crochet / 1000, {ease: FlxEase.cubeIn});
 					case 256:

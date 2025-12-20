@@ -62,7 +62,7 @@ class CharacterSelectState extends MusicBeatState
 	[
 		new CharacterInSelect(['bf', '3d-bf', 'afnfg-boyfriend'], ["Boyfriend", '3D Boyfriend', 'AFNFG Boyfriend']),
 		new CharacterInSelect(['radical'], ['Radical! (And Gamingtastic)']),
-		new CharacterInSelect(['split-dave-3d', 'tunnel-dave', 'og-dave', 'dave-wheels'], ['Disability Dave', 'Decimated Dave', 'Algebra Dave', 'Dave but Awesome']),
+		new CharacterInSelect(['split-dave-3d', 'tunnel-dave', 'og-dave'], ['Disability Dave', 'Decimated Dave', 'Algebra Dave']),
 		new CharacterInSelect(['bambi-piss-3d'], ['Angry 3D Bambi']),
 		new CharacterInSelect(['unfair-junker'], ['Unfair Expunged (Facing Forward)']),
 		new CharacterInSelect(['bandu', 'badai', 'bandu-origin'], ['Bandu', 'Badai', 'Bandu (Origin)']),
@@ -79,7 +79,7 @@ class CharacterSelectState extends MusicBeatState
 		Conductor.changeBPM(110);
 		if(PlayState.SONG.song.toLowerCase() == 'dave-x-bambi-shipping-cute')
 		{
-			characters = [new CharacterInSelect(['dave-good','split-dave-3d', 'tunnel-dave', 'og-dave', 'dave-wheels'], ['Dave (Dave x Bambi)', 'Disability Dave', 'Wireframe Dave', 'Algebra Dave', 'Dave but Awesome'])];
+			characters = [new CharacterInSelect(['dave-good','split-dave-3d', 'tunnel-dave', 'og-dave'], ['Dave (Dave x Bambi)', 'Disability Dave', 'Wireframe Dave', 'Algebra Dave'])];
 		}
 		currentSelectedCharacter = characters[current];
 
