@@ -44,7 +44,6 @@ class MainMenuState extends MusicBeatState
 	public static var engineVers:Array<String> = ['Golden Apple'];
 
 	public static var kadeEngineVer:String = "DAVE";
-	public static var gameVer:String = "RADICAL!";
 
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
@@ -140,7 +139,7 @@ class MainMenuState extends MusicBeatState
 
 		firstStart = false;
 
-		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, gameVer + " - " + daRealEngineVer + " Engine", 12);
+		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, daRealEngineVer + " Engine", 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
