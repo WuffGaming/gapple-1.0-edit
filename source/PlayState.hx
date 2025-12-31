@@ -1175,10 +1175,10 @@ class PlayState extends MusicBeatState
 				add(daveFuckingDies);
 				daveFuckingDies.visible = false;
 			case 'sart-producer':
-				curStage = 'sart';
+				curStage = 'warehouse';
 				defaultCamZoom = 0.6;
 
-				add(new FlxSprite(-1350, -1111).loadGraphic(Paths.image('backgrounds/sart/bg')));
+				add(new FlxSprite(-1350, -1111).loadGraphic(Paths.image('backgrounds/warehouse/bg')));
 			case 'thunderstorm':
 				curStage = 'out';
 				defaultCamZoom = 0.8;
@@ -3076,7 +3076,7 @@ class PlayState extends MusicBeatState
 			case 'bambom':
 				camFollow.y += 100;
 
-			case 'sart-producer':
+			case 'silly-sally':
 				camFollow.x -= 100;
 			case 'dave-wheels':
 				camFollow.y -= 150;
@@ -4639,9 +4639,9 @@ class PlayState extends MusicBeatState
 			case 'RECOVERED_PROJECT_2' | 'RECOVERED_PROJECT_3':
 				dad.y += -320;
 				dad.x += -600;
-			case 'sart-producer':
-				dad.x -= 750;
-				dad.y -= 360;
+			case 'silly-sally':
+				dad.x -= 300;
+				dad.y -= 230;
 			case 'garrett':
 				dad.y += 65;
 			case 'diamond-man':

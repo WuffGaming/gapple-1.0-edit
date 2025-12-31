@@ -130,22 +130,26 @@ class Character extends FlxSprite
 				barColor = FlxColor.fromRGB(49, 176, 209);
 
 				playAnim('idle');
-			case 'sart-producer':
-				frames = Paths.getSparrowAtlas('characters/sart/sart-producer');
+			case 'silly-sally':
+				frames = Paths.getSparrowAtlas('characters/warehouse/sillysally');
 				animation.addByPrefix('idle', 'idle', 24, false);
-				for (anim in ['left', 'down', 'up', 'right']) {
-					animation.addByPrefix('sing${anim.toUpperCase()}', anim, 24, false);
-				}
+				animation.addByPrefix('singUP', 'up', 24, false);
+				animation.addByPrefix('singLEFT', 'left', 24, false);
+				animation.addByPrefix('singRIGHT', 'right', 24, false);
+				animation.addByPrefix('singDOWN', 'down', 24, false);
 
 				addOffset('idle');
-				addOffset('singLEFT');
-				addOffset('singDOWN');
-				addOffset('singUP');
-				addOffset('singRIGHT');
+				addOffset('singLEFT', 71, 196);
+				addOffset('singDOWN', 30, -113);
+				addOffset('singUP', 23, 176);
+				addOffset('singRIGHT', 37, 62);
+
+
+				setGraphicSize(Std.int(width / furiosityScale));
+				updateHitbox();
 
 				antialiasing = false;
-
-				barColor = FlxColor.fromRGB(75, 90, 160);
+				barColor = FlxColor.fromRGB(131, 246, 50);
 
 				playAnim('idle');
 			case 'playrobot':

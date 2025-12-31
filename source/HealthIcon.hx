@@ -36,7 +36,7 @@ class HealthIcon extends FlxSprite
 		'bandu-candy',
 		'bandu-origin',
 		'bandu-scaredy',
-		'sart-producer',
+		'silly-sally',
 		'bambom',
 		'ringi',
 		'bendu',
@@ -83,7 +83,7 @@ class HealthIcon extends FlxSprite
 
 			addIcon('dupers', 46);
 
-			addIcon('sart-producer', 26);
+			addIcon('silly-sally', 26);
 	
 			addIcon('tunnel-bf', 0);
 		
