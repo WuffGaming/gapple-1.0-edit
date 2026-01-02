@@ -235,16 +235,33 @@ class Character extends FlxSprite
 				playAnim('idle');
 			case 'ringi':
 				frames = Paths.getSparrowAtlas('characters/oc/ringi');
-				animation.addByPrefix('idle', 'IDLE', 24, false);
-				for (anim in ['LEFT', 'DOWN', 'UP', 'RIGHT']) {
-					animation.addByPrefix('sing${anim.toUpperCase()}', anim, 24, false);
-				}
+				animation.addByPrefix('idle', 'idle', 24, false);
+				animation.addByPrefix('singUP', 'up', 24, false);
+				animation.addByPrefix('singLEFT', 'left', 24, false);
+				animation.addByPrefix('singRIGHT', 'right', 24, false);
+				animation.addByPrefix('singDOWN', 'down', 24, false);
+
+				animation.addByPrefix('catappear', 'catappear', 24, false);
+
+				animation.addByPrefix('idle-alt', 'altidle', 24, false);
+				animation.addByPrefix('singUP-alt', 'altup', 24, false);
+				animation.addByPrefix('singLEFT-alt', 'altleft', 24, false);
+				animation.addByPrefix('singRIGHT-alt', 'altright', 24, false);
+				animation.addByPrefix('singDOWN-alt', 'altdown', 24, false);
 
 				addOffset('idle');
-				addOffset('singLEFT');
-				addOffset('singDOWN');
-				addOffset('singUP');
-				addOffset('singRIGHT');
+				addOffset('singLEFT', 117, 52);
+				addOffset('singDOWN', -125, -152);
+				addOffset('singUP', -108, 277);
+				addOffset('singRIGHT', -219, -51);
+
+				addOffset('catappear', 23, 55);
+
+				addOffset('idle-alt', 103, 55);
+				addOffset('singLEFT-alt', 61, 73);
+				addOffset('singDOWN-alt', 11, 33);
+				addOffset('singUP-alt', 58, 143);
+				addOffset('singRIGHT-alt', -20, 42);
 
 				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
 				updateHitbox();

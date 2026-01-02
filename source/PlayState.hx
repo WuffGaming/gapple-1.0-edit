@@ -4146,6 +4146,18 @@ class PlayState extends MusicBeatState
 					case 204:
 						FlxTween.tween(thunderBlack, {alpha: 0}, Conductor.stepCrochet / 500);
 				}
+			case 'tantalum':
+				switch(curBeat)
+				{
+					case 220:
+						idleAlt = true;
+						dad.playAnim('catappear', true);
+					case 224:
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+					case 352:
+						idleAlt = false;
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+				}
 			case 'thunderstorm':
 				switch(curBeat)
 				{
@@ -4599,8 +4611,8 @@ class PlayState extends MusicBeatState
 					dad.x -= 145;
 				}
 			case 'ringi':
-				dad.y -= 475;
-				dad.x -= 455;
+				dad.y -= 275;
+				dad.x -= 255;
 			case 'bambom':
 				dad.y -= 375;
 				dad.x -= 500;
