@@ -4149,14 +4149,36 @@ class PlayState extends MusicBeatState
 			case 'tantalum':
 				switch(curBeat)
 				{
+					case 32 | 160 | 288:
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+					case 96:
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 0.9;
+					case 112 | 368:
+						defaultCamZoom = 0.8;
+					case 128 | 384:
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 0.7;
 					case 220:
 						idleAlt = true;
 						dad.playAnim('catappear', true);
+						defaultCamZoom = 1;
 					case 224:
 						FlxG.camera.flash(FlxColor.WHITE, 1);
+						iconP2.animation.play('kattus');
+						defaultCamZoom = 0.7;
 					case 352:
 						idleAlt = false;
+						iconP2.animation.play('ringi');
 						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 0.9;
+					case 416:
+						defaultCamZoom = 1;
+						FlxTween.tween(thunderBlack, {alpha: 0.35}, Conductor.stepCrochet / 500);
+					case 480:
+						defaultCamZoom = 0.6;
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						FlxTween.tween(thunderBlack, {alpha: 0}, Conductor.stepCrochet / 500);
 				}
 			case 'thunderstorm':
 				switch(curBeat)
