@@ -12,37 +12,28 @@ class HealthIcon extends FlxSprite
 
 	public var isPlayer:Bool = false;
 
-	
 	public var noAaChars:Array<String> = [
-		'dave-angey',
-		'dave-annoyed-3d',
-		'bambi-3d',
-		'bf-pixel',
-		'gf-pixel',
-		'bambi-unfair',
-		'bambi-piss-3d',
+		'bambi-disrupt',
+		'expunged',
 		'bandu',
-		'the-two-dunkers',
-		'tunnel-dave',
-		'split-dave-3d',
-		'og-dave',
-		'og-dave-angey',
+		'junkers',
+		'dave-3d',
+		'dave-3d-suit',
 		'garrett',
 		'badai',
-		'3d-bf',
-		'RECOVERED_PROJECT',
-		'RECOVERED_PROJECT_2',
-		'RECOVERED_PROJECT_3',
+		'bf-3d',
+		'bf-3d-old',
+		'recover',
+		'recover-2d',
+		'recover-irreversible',
 		'bandu-candy',
 		'bandu-origin',
-		'bandu-scaredy',
 		'silly-sally',
 		'bambom',
 		'ringi',
+		'ringi-toio',
 		'bendu',
-		'afnfg-boyfriend',
-		'3d-bf-old',
-		'cameo-origin',
+		'cameo',
 	];
 
 	public var charPublic:String = 'bf';
@@ -53,113 +44,44 @@ class HealthIcon extends FlxSprite
 
 		this.isPlayer = isPlayer;
 
-		charPublic = char;
+		changeIcon(char);
 
-		if(char != 'bandu-origin')
-		{
-			loadGraphic(Paths.image('iconGrid'), true, 150, 150);
-	
-			addIcon('face', 58);
-
-			addIcon('ringi', 28);
-
-			addIcon('kattus', 36);
-
-			addIcon('bambom', 30);
-
-			addIcon('bendu', 32);
-	
-			addIcon('bf', 0);
-
-			addIcon('3d-bf', 34);
-
-			addIcon('playrobot', 38);
-
-			addIcon('playrobot-crazy', 38);
-
-			addIcon('diamond-man', 40);
-
-			addIcon('hall-monitor', 42);
-
-			addIcon('bambi-good', 44);
-
-			addIcon('dupers', 46);
-
-			addIcon('silly-sally', 26);
-	
-			addIcon('tunnel-bf', 0);
-		
-			addIcon('bf-old', 2);
-
-			addIcon('3d-bf-old', 54);
-		
-			addIcon('gf', 57, true);
-
-			addIcon('bambi-unfair', 4);
-			
-			addIcon('unfair-junker', 4);
-	
-			addIcon('bambi-piss-3d', 6);
-			
-			addIcon('split-dave-3d', 16);
-	
-			addIcon('garrett', 20);
-	
-			addIcon('badai', 18);
-	
-			addIcon('bandu', 8);
-	
-			addIcon('bandu-candy', 48);
-	
-			addIcon('bandu-origin', 8);
-
-			addIcon('cameo-origin', 60);
-
-			addIcon('bandu-scaredy', 8);
-	
-			addIcon('tunnel-dave', 12);
-	
-			addIcon('og-dave', 14);
-	
-			addIcon('og-dave-angey', 14);
-	
-			addIcon('the-two-dunkers', 10);
-	
-			addIcon('dave-png', 22);
-	
-			addIcon('dave-good', 22);
-			
-			addIcon('RECOVERED_PROJECT', 24);
-
-			addIcon('RECOVERED_PROJECT_2', 50);
-
-			addIcon('RECOVERED_PROJECT_3', 52);
-
-			addIcon('afnfg-boyfriend', 0);
-
-			addIcon('radical', 62);
-	
-			animation.play('face');
-		}
-		else
-		{
-			frames = Paths.getSparrowAtlas('bandu_origin_icon');
-			animation.addByPrefix(char, char, 24, false, isPlayer, false);
-		}
-
-		antialiasing = true;
-
-		animation.play(char);
-
-		if (noAaChars.contains(char))
-		{
-			antialiasing = false;
-		}
 		scrollFactor.set();
 	}
 
 	function addIcon(char:String, startFrame:Int, singleIcon:Bool = false) {
 		animation.add(char, !singleIcon ? [startFrame, startFrame + 1] : [startFrame], 0, false, isPlayer);
+	}
+
+	public function changeIcon(char:String = 'face')
+	{
+		charPublic = char;
+
+		if(char != 'bandu-origin' || char != 'gf')
+		{
+			loadGraphic(Paths.image('icons/' + char), true, 150, 150);
+
+			addIcon(char, 0);
+		}	
+
+		charPublic = char;
+
+		if(char == 'bandu-origin')
+		{
+			frames = Paths.getSparrowAtlas('icons/bandu_origin_icon');
+			animation.addByPrefix(char, char, 24, false, isPlayer, false);
+		}
+		if(char == 'gf')
+		{
+			loadGraphic(Paths.image('icons/' + char), true, 150, 150);
+
+			addIcon(char, 0, true);
+		}
+
+		antialiasing = !noAaChars.contains(char);
+
+		animation.play(char);
+
 	}
 
 	override function update(elapsed:Float)

@@ -17,6 +17,7 @@ class Character extends FlxSprite
 
 	public var isPlayer:Bool = false;
 	public var curCharacter:String = 'bf';
+	public var iconName:String = 'face';
 
 	public var holdTimer:Float = 0;
 	public var furiosityScale:Float = 1.02;
@@ -69,8 +70,8 @@ class Character extends FlxSprite
 				addOffset('hairFall', 0, -9);
 
 				addOffset('scared', -2, -17);
-
-				barColor = FlxColor.fromString('#33de39');
+				iconName = 'gf';
+				barColor = FlxColor.fromString('#B50154');
 
 				playAnim('danceRight');
 			case 'gamingtastic':
@@ -95,7 +96,7 @@ class Character extends FlxSprite
 				addOffset('sad');
 				addOffset('danceLeft');
 				addOffset('danceRight');
-
+				iconName = 'gf';
 				barColor = FlxColor.fromString('#33de39');
 
 				playAnim('danceRight');
@@ -126,7 +127,7 @@ class Character extends FlxSprite
 				nativelyPlayable = flipX = true;
 
 				antialiasing = false;
-
+				iconName = 'bf-3d';
 				barColor = FlxColor.fromRGB(49, 176, 209);
 
 				playAnim('idle');
@@ -149,6 +150,7 @@ class Character extends FlxSprite
 				updateHitbox();
 
 				antialiasing = false;
+				iconName = 'silly-sally';
 				barColor = FlxColor.fromRGB(131, 246, 50);
 
 				playAnim('idle');
@@ -168,7 +170,7 @@ class Character extends FlxSprite
 				addOffset('singRIGHT', -55, -96);
 
 				antialiasing = false;
-
+				iconName = 'playrobot';
 				barColor = FlxColor.fromRGB(162, 150, 188);
 
 				playAnim('idle');
@@ -188,7 +190,7 @@ class Character extends FlxSprite
 				addOffset('singRIGHT', -20, 38);
 
 				antialiasing = false;
-
+				iconName = 'playrobot';
 				barColor = FlxColor.fromRGB(162, 150, 188);
 
 				playAnim('idle');
@@ -208,7 +210,7 @@ class Character extends FlxSprite
 				antialiasing = false;
 				scale.set(1.5, 1.5);
 				updateHitbox();
-
+				iconName = 'green-hall-monitor';
 				barColor = FlxColor.fromRGB(37, 191, 55);
 
 				playAnim('idle');
@@ -227,7 +229,7 @@ class Character extends FlxSprite
 
 				scale.set(1.3, 1.3);
 				updateHitbox();
-
+				iconName = 'diamond-man';
 				antialiasing = false;
 
 				barColor = FlxColor.fromRGB(129, 180, 227);
@@ -265,7 +267,7 @@ class Character extends FlxSprite
 
 				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
 				updateHitbox();
-
+				iconName = 'ringi';
 				antialiasing = false;
 
 				barColor = FlxColor.fromRGB(199, 164, 165);
@@ -290,7 +292,7 @@ class Character extends FlxSprite
 				updateHitbox();
 
 				antialiasing = false;
-
+				iconName = 'bambom';
 				barColor = FlxColor.fromRGB(255, 0, 0);
 
 				playAnim('idle');
@@ -313,7 +315,7 @@ class Character extends FlxSprite
 				antialiasing = false;
 
 				barColor = FlxColor.fromRGB(253, 253, 63);
-
+				iconName = 'bendu';
 				playAnim('idle');
 			case 'dave-png':
 				frames = Paths.getSparrowAtlas('characters/dave/dave-png');
@@ -327,7 +329,7 @@ class Character extends FlxSprite
 				addOffset('singDOWN', 28, -5);
 				addOffset('singUP', -2, 29);
 				addOffset('singRIGHT', 1);
-
+				iconName = 'dave';
 				barColor = FlxColor.fromRGB(15, 95, 255);
 
 				playAnim('idle');
@@ -349,7 +351,7 @@ class Character extends FlxSprite
 				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
 				updateHitbox();
 				antialiasing = false;
-
+				iconName = 'dave-3d';
 				barColor = FlxColor.fromRGB(255, 203, 230);
 		
 				playAnim('idle');
@@ -373,7 +375,7 @@ class Character extends FlxSprite
 				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
 				updateHitbox();
 				antialiasing = false;
-		
+				iconName = 'bandu-origin';
 				barColor = FlxColor.fromRGB(255, 255, 179);
 
 				playAnim('idle');
@@ -399,7 +401,7 @@ class Character extends FlxSprite
 				nativelyPlayable = true;
 
 				flipX = true;
-		
+				iconName = 'cameo';
 				barColor = FlxColor.fromRGB(251, 247, 50);
 
 				playAnim('idle');
@@ -422,7 +424,7 @@ class Character extends FlxSprite
 				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
 				updateHitbox();
 				antialiasing = false;
-
+				iconName = 'recover';
 				barColor = FlxColor.fromRGB(201, 191, 183);
 		
 				playAnim('idle');
@@ -444,7 +446,7 @@ class Character extends FlxSprite
 				setGraphicSize(Std.int(765 * furiosityScale),Std.int(903 * furiosityScale));
 				updateHitbox();
 				antialiasing = false;
-
+				iconName = 'recover-2d';
 				barColor = FlxColor.fromRGB(201, 191, 183);
 		
 				playAnim('idle');
@@ -466,7 +468,7 @@ class Character extends FlxSprite
 				setGraphicSize(Std.int(765 * furiosityScale),Std.int(903 * furiosityScale));
 				updateHitbox();
 				antialiasing = false;
-
+				iconName = 'recover-irreversible';
 				barColor = FlxColor.fromRGB(201, 191, 183);
 		
 				playAnim('idle');
@@ -489,7 +491,7 @@ class Character extends FlxSprite
 				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
 				updateHitbox();
 				antialiasing = false;
-
+				iconName = 'badai';
 				barColor = FlxColor.fromRGB(218, 46, 138);
 		
 				playAnim('idle');
@@ -512,7 +514,7 @@ class Character extends FlxSprite
 				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
 				updateHitbox();
 				antialiasing = false;
-
+				iconName = 'dave-3d-suit';
 				barColor = FlxColor.fromRGB(230, 62, 61);
 		
 				playAnim('idle');
@@ -538,7 +540,7 @@ class Character extends FlxSprite
 				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
 				updateHitbox();
 				antialiasing = false;
-
+				iconName = 'og-dave';
 				barColor = FlxColor.fromRGB(181, 255, 255);
 		
 				playAnim('idle');
@@ -564,7 +566,7 @@ class Character extends FlxSprite
 				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
 				updateHitbox();
 				antialiasing = false;
-
+				iconName = 'og-dave';
 				barColor = FlxColor.fromRGB(181, 255, 255);
 		
 				playAnim('idle');
@@ -594,7 +596,7 @@ class Character extends FlxSprite
 				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
 				updateHitbox();
 				antialiasing = false;
-
+				iconName = 'garrett';
 				barColor = FlxColor.fromRGB(253, 253, 63);
 		
 				playAnim('idle');
@@ -615,7 +617,7 @@ class Character extends FlxSprite
 				addOffset("singDOWN", 107, 111);
 
 				barColor = FlxColor.fromRGB(37, 191, 55);
-
+				iconName = 'bambi-mad';
 				playAnim('idle');
 
 			case 'bambi-piss-3d':
@@ -638,7 +640,7 @@ class Character extends FlxSprite
 				setGraphicSize(Std.int(width / furiosityScale));
 				updateHitbox();
 				antialiasing = false;
-
+				iconName = 'bambi-disrupt';
 				barColor = FlxColor.fromRGB(37, 191, 55);
 		
 				playAnim('idle');
@@ -679,7 +681,7 @@ class Character extends FlxSprite
 
 				setGraphicSize(Std.int(width / furiosityScale));
 				updateHitbox();
-
+				iconName = 'bandu';
 				antialiasing = false;
 
 				barColor = FlxColor.fromRGB(72, 254, 45);
@@ -704,7 +706,7 @@ class Character extends FlxSprite
 				updateHitbox();
 
 				antialiasing = false;
-
+				iconName = 'bandu';
 				barColor = FlxColor.fromRGB(72, 254, 45);
 
 				playAnim('idle');
@@ -735,7 +737,7 @@ class Character extends FlxSprite
 
 				setGraphicSize(Std.int(width / furiosityScale));
 				updateHitbox();
-
+				iconName = 'bandu-sugar';
 				antialiasing = false;
 
 				barColor = FlxColor.fromRGB(72, 254, 45);
@@ -755,7 +757,7 @@ class Character extends FlxSprite
 				addOffset("singRIGHT", -50, 0);
 				addOffset("singLEFT", 20, -7);
 				addOffset("singDOWN", -5, -43);
-
+				iconName = 'bambi';
 				barColor = FlxColor.fromRGB(37, 191, 55);
 
 				playAnim('idle');
@@ -774,7 +776,7 @@ class Character extends FlxSprite
 				addOffset("singRIGHT", -5, -2);
 				addOffset("singLEFT", -29, 2);
 				addOffset("singDOWN", -5, 2);
-
+				iconName = 'dave';
 				barColor = FlxColor.fromRGB(15, 95, 255);
 
 				playAnim('idle');
@@ -798,7 +800,7 @@ class Character extends FlxSprite
 				setGraphicSize(Std.int((width * 1.3) / furiosityScale));
 				updateHitbox();
 				antialiasing = false;
-
+				iconName = 'expunged';
 				barColor = FlxColor.fromRGB(178, 7, 7);
 		
 				playAnim('idle');
@@ -842,7 +844,7 @@ class Character extends FlxSprite
 				playAnim('idle');
 
 				nativelyPlayable = true;
-
+				iconName = 'bf';
 				barColor = FlxColor.fromRGB(49, 176, 209);
 
 				flipX = true;
@@ -875,7 +877,7 @@ class Character extends FlxSprite
 				playAnim('idle');
 
 				nativelyPlayable = true;
-
+				iconName = 'radical';
 				barColor = FlxColor.fromRGB(188, 70, 70);
 
 				flipX = true;
@@ -902,7 +904,7 @@ class Character extends FlxSprite
 				playAnim('idle');
 
 				barColor = FlxColor.fromRGB(49, 176, 209);
-
+				iconName = 'bf';
 				flipX = true;
 
 				nativelyPlayable = true;
@@ -924,7 +926,7 @@ class Character extends FlxSprite
 				addOffset("singDOWN", 1, -56);
 
 				playAnim('idle');
-
+				iconName = 'bf-3d';
 				barColor = FlxColor.fromRGB(49, 176, 209);
 
 				flipX = true;
@@ -948,7 +950,7 @@ class Character extends FlxSprite
 				addOffset("singRIGHT", 13);
 				addOffset("singDOWN");
 				addOffset('turn');
-
+				iconName = 'bf';
 				playAnim('idle');
 
 				barColor = FlxColor.fromRGB(49, 176, 209);

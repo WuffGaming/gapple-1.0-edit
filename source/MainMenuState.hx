@@ -29,7 +29,7 @@ class MainMenuState extends MusicBeatState
 
 	var realMenuItems:Int = 4;
 
-	var optionShit:Array<String> = ['play', 'options', 'credits', 'discord', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'dave x bambi shipping cute', '', '', '', '', '', '', '',  '', '', '', '', '', '', '',  '', '', '', '', '', '', '', 'player'];
+	var optionShit:Array<String> = ['play', 'options', 'credits', 'discord', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'dave x bambi shipping cute'];
 
 	var newGaming:FlxText;
 	var newGaming2:FlxText;
@@ -227,12 +227,6 @@ class MainMenuState extends MusicBeatState
 							var daChoice:String = optionShit[curSelected];
 							switch (daChoice)
 							{
-								case 'story mode':
-									FlxG.switchState(new StoryMenuState());
-									trace("Story Menu Selected");
-								case 'freeplay':
-									FlxG.switchState(new FreeplayState());
-									trace("Freeplay Menu Selected");
 								case 'options':
 									FlxG.switchState(new OptionsMenu());
 								case 'extras':
@@ -241,8 +235,6 @@ class MainMenuState extends MusicBeatState
 									FlxG.switchState(new CreditsMenuState());
 								case 'play':
 									FlxG.switchState(new PlayMenuState());
-								case 'player':
-									FlxG.switchState(new ExtraExtrasMenuState());
 								case 'dave x bambi shipping cute':
 									var poop:String = Highscore.formatSong('dave-x-bambi-shipping-cute', 1);
 

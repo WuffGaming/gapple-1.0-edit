@@ -222,8 +222,6 @@ class PlayMenuState extends MusicBeatState
 							var daChoice:String = optionShit[curSelected];
 							switch (daChoice)
 							{
-								case 'story mode':
-									FlxG.switchState(new StoryMenuState());
 								case 'extras':
 									FlxG.switchState(new ExtraSongState());
 								default:

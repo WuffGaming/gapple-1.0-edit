@@ -13,7 +13,6 @@ import flixel.util.FlxColor;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxStringUtil;
 import lime.utils.Assets;
-import FreeplayState.SongMetadata;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -57,8 +56,8 @@ class ExtraSongState extends MusicBeatState
 		bg.color = 0xFF4965FF;
 		add(bg);
         
-		addWeek(['Sugar-Rush', 'Origin', 'Tantalum', 'Jam', 'Keyboard'], 2, ['bandu-candy', 'bandu-origin', 'ringi', 'bambom', 'bendu']);
-        addWeek(['Thunderstorm', 'Dave-x-Bambi-Shipping-Cute', 'RECOVERED-PROJECT'], 1, ['dave-png', 'dave-good', 'RECOVERED_PROJECT']);
+		addWeek(['Sugar-Rush', 'Origin', 'Tantalum', 'Jam', 'Keyboard'], 2, ['bandu-sugar', 'bandu-origin', 'ringi', 'bambom', 'bendu']);
+        addWeek(['Thunderstorm', 'Dave-x-Bambi-Shipping-Cute', 'RECOVERED-PROJECT'], 1, ['dave', 'dave', 'recover']);
 		addWeek(['Sart-Producer'], 4, ['silly-sally']);
 		addWeek(['Tutorial'], 5, ['gf']);
 
@@ -210,5 +209,21 @@ class ExtraSongState extends MusicBeatState
 			}
 		}
 		FlxTween.color(bg, 0.25, bg.color, songColors[songs[curSelected].week]);
+	}
+}
+
+class SongMetadata
+{
+	public var songName:String = "";
+	public var week:Int = 0;
+	public var songCharacter:String = "";
+	public var blackoutIcon:Bool = false;
+
+	public function new(song:String, week:Int, songCharacter:String, blackoutIcon:Bool)
+	{
+		this.songName = song;
+		this.week = week;
+		this.songCharacter = songCharacter;
+		this.blackoutIcon = blackoutIcon;
 	}
 }

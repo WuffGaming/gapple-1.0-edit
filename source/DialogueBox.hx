@@ -112,20 +112,28 @@ class DialogueBox extends FlxSpriteGroup
 		{
 			case 'algebra':
 				hasDialog = true;
-				box.frames = Paths.getSparrowAtlas('qualitybox');
+				box.frames = Paths.getSparrowAtlas('boxes/qualitybox');
 				box.setGraphicSize(Std.int(box.width / textBoxSizeFix));
 				box.updateHitbox();
 				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
 				box.animation.addByPrefix('normal', 'speech bubble normal', 24, true);
 				box.antialiasing = false;
-			case 'house' | 'insanity' | 'furiosity' | 'polygonized' | 'supernovae' | 'cheating' | 'unfairness' | 'glitch' | 'blocked' | 'corn-theft' | 'maze' | 'splitathon' | 'disruption' | 'applecore' | 'disability' | 'wireframe' | 'duper' | 'recovered-project':
+			case 'duper' | 'recovered-project':
 				hasDialog = true;
-				box.frames = Paths.getSparrowAtlas('speech_bubble_talking');
+				box.frames = Paths.getSparrowAtlas('boxes/speech_bubble_talking');
 				box.setGraphicSize(Std.int(box.width / textBoxSizeFix));
 				box.updateHitbox();
 				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
 				box.animation.addByPrefix('normal', 'speech bubble normal', 24, true);
 				box.antialiasing = true;
+			case 'disruption' | 'applecore' | 'disability' | 'wireframe':
+				hasDialog = true;
+				box.frames = Paths.getSparrowAtlas('boxes/3dbox');
+				box.setGraphicSize(Std.int(box.width / textBoxSizeFix));
+				box.updateHitbox();
+				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
+				box.animation.addByPrefix('normal', 'speech bubble normal', 24, true);
+				box.antialiasing = false;
 		}
 
 		this.dialogueList = dialogueList;

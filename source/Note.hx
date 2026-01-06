@@ -63,6 +63,34 @@ class Note extends FlxSprite
 		x += 50;
 		// MAKE SURE ITS DEFINITELY OFF SCREEN?
 		y -= 2000;
+		// makes sure note is ALWAYS under a strum.
+		if (Type.getClassName(Type.getClass(FlxG.state)).contains("PlayState"))
+			{
+				var state:PlayState = cast(FlxG.state,PlayState);
+				InPlayState = true;
+				if (musthit)
+				{
+					state.playerStrums.forEach(function(spr:FlxSprite)
+						{
+						if (spr.ID == notetolookfor)
+						{
+							x = spr.x;
+							MyStrum = spr;
+						}
+					});
+				}
+				else
+				{
+					state.dadStrums.forEach(function(spr:FlxSprite)
+					{
+						if (spr.ID == notetolookfor)
+						{
+								x = spr.x;
+								MyStrum = spr;
+							}
+						});
+				}
+			}
 		this.strumTime = strumTime + FlxG.save.data.offset;
 
 		if (this.strumTime < 0 )
@@ -175,37 +203,6 @@ class Note extends FlxSprite
 						notetolookfor = 3;
 						x += swagWidth * 3;
 						animation.play('redScroll');
-				}
-		}
-		switch (PlayState.SONG.song.toLowerCase())
-		{
-			case 'cheating' | 'unfairness' | 'applecore':
-				if (Type.getClassName(Type.getClass(FlxG.state)).contains("PlayState"))
-				{
-					var state:PlayState = cast(FlxG.state,PlayState);
-					InPlayState = true;
-					if (musthit)
-					{
-						state.playerStrums.forEach(function(spr:FlxSprite)
-						{
-							if (spr.ID == notetolookfor)
-							{
-								x = spr.x;
-								MyStrum = spr;
-							}
-						});
-					}
-					else
-					{
-						state.dadStrums.forEach(function(spr:FlxSprite)
-						{
-							if (spr.ID == notetolookfor)
-							{
-									x = spr.x;
-									MyStrum = spr;
-								}
-							});
-					}
 				}
 		}
 		if (PlayState.SONG.song.toLowerCase() == 'unfairness' || PlayState.SONG.song.toLowerCase() == 'applecore')

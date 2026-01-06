@@ -101,20 +101,6 @@ class TitleState extends MusicBeatState
 
 		Highscore.load();
 
-		if (FlxG.save.data.weekUnlocked != null)
-		{
-			// FIX LATER!!!
-			// WEEK UNLOCK PROGRESSION!!
-			// StoryMenuState.weekUnlocked = FlxG.save.data.weekUnlocked;
-
-			if (StoryMenuState.weekUnlocked.length < 4)
-				StoryMenuState.weekUnlocked.insert(0, true);
-
-			// QUICK PATCH OOPS!
-			if (!StoryMenuState.weekUnlocked[0])
-				StoryMenuState.weekUnlocked[0] = true;
-		}
-
 		#if FREEPLAY
 		FlxG.switchState(new FreeplayState());
 		#elseif CHARTING
@@ -159,7 +145,7 @@ class TitleState extends MusicBeatState
 		add(bg);
 
 		logoBl = new FlxSprite(-185, 1000);
-		logoBl.frames = Paths.getSparrowAtlas('logoBumpin');
+		logoBl.frames = Paths.getSparrowAtlas('title/logoBumpin');
 		logoBl.antialiasing = true;
 		logoBl.animation.addByIndices('logobumpin', 'logobumpin', [for (i in 0...14) i], '', 24, false);
 		logoBl.animation.play('logobumpin');
@@ -173,7 +159,7 @@ class TitleState extends MusicBeatState
 		logoBl.scale.set(0.85, 0.85);
 
 		titleDude = new FlxSprite(570, -1000);
-		titleDude.frames = Paths.getSparrowAtlas('golden_apple_title_guys');
+		titleDude.frames = Paths.getSparrowAtlas('title/golden_apple_title_guys');
 		titleDude.animation.addByIndices('idle', 'idle', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], '', 24, false);
 		titleDude.antialiasing = false;
 		titleDude.scale.set(0.8, 0.8);
@@ -183,7 +169,7 @@ class TitleState extends MusicBeatState
 		add(logoBl);
 
 		titleText = new FlxSprite(100, FlxG.height * 0.8);
-		titleText.frames = Paths.getSparrowAtlas('titleEnter');
+		titleText.frames = Paths.getSparrowAtlas('title/titleEnter');
 		titleText.animation.addByPrefix('idle', "Press Enter to Begin", 24);
 		titleText.animation.addByPrefix('press', "ENTER PRESSED", 24);
 		titleText.antialiasing = true;
