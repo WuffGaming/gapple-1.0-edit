@@ -57,19 +57,7 @@ class Character extends FlxSprite
 				animation.addByIndices('hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "", 24, false);
 				animation.addByPrefix('scared', 'GF FEAR', 24);
 
-				addOffset('cheer');
-				addOffset('sad', -2, -2);
-				addOffset('danceLeft', 0, -9);
-				addOffset('danceRight', 0, -9);
-
-				addOffset("singUP", 0, 4);
-				addOffset("singRIGHT", 0, -20);
-				addOffset("singLEFT", 0, -19);
-				addOffset("singDOWN", 0, -20);
-				addOffset('hairBlow', 45, -8);
-				addOffset('hairFall', 0, -9);
-
-				addOffset('scared', -2, -17);
+				loadOffsetFile(curCharacter);
 				iconName = 'gf';
 				barColor = FlxColor.fromString('#B50154');
 
@@ -81,8 +69,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('danceLeft', 'idlel', 24, false);
 				animation.addByPrefix('danceRight', 'idler', 24, false);
 
-				addOffset('danceLeft');
-				addOffset('danceRight', -63, 5);
+				loadOffsetFile(curCharacter);
 
 				barColor = FlxColor.fromString('#33de39');
 
@@ -93,9 +80,7 @@ class Character extends FlxSprite
 				animation.addByIndices('danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
 				animation.addByIndices('danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
 
-				addOffset('sad');
-				addOffset('danceLeft');
-				addOffset('danceRight');
+				loadOffsetFile(curCharacter);
 				iconName = 'gf';
 				barColor = FlxColor.fromString('#33de39');
 
@@ -416,11 +401,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singDOWN', 'down', 24, false);
 				animation.addByPrefix('singLEFT', 'left', 24, false);
 		
-				addOffset('idle');
-				addOffset("singUP");
-				addOffset("singRIGHT");
-				addOffset("singLEFT");
-				addOffset("singDOWN");
+				loadOffsetFile(curCharacter);
 				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
 				updateHitbox();
 				antialiasing = false;
@@ -438,11 +419,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singDOWN', 'DOWN', 24, false);
 				animation.addByPrefix('singLEFT', 'LEFT', 24, false);
 		
-				addOffset('idle');
-				addOffset("singUP");
-				addOffset("singRIGHT");
-				addOffset("singLEFT");
-				addOffset("singDOWN");
+				loadOffsetFile(curCharacter);
 				setGraphicSize(Std.int(765 * furiosityScale),Std.int(903 * furiosityScale));
 				updateHitbox();
 				antialiasing = false;
@@ -460,11 +437,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singDOWN', 'DOWN', 24, false);
 				animation.addByPrefix('singLEFT', 'LEFT', 24, false);
 		
-				addOffset('idle');
-				addOffset("singUP");
-				addOffset("singRIGHT");
-				addOffset("singLEFT");
-				addOffset("singDOWN");
+				loadOffsetFile(curCharacter);
 				setGraphicSize(Std.int(765 * furiosityScale),Std.int(903 * furiosityScale));
 				updateHitbox();
 				antialiasing = false;
@@ -483,11 +456,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singDOWN', 'DOWN', 24, false);
 				animation.addByPrefix('singLEFT', 'LEFT', 24, false);
 		
-				addOffset('idle');
-				addOffset("singUP");
-				addOffset("singRIGHT");
-				addOffset("singLEFT");
-				addOffset("singDOWN");
+				loadOffsetFile(curCharacter);
 				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
 				updateHitbox();
 				antialiasing = false;
@@ -506,11 +475,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singDOWN', 'DOWN', 24, false);
 				animation.addByPrefix('singLEFT', 'LEFT', 24, false);
 		
-				addOffset('idle');
-				addOffset("singUP");
-				addOffset("singRIGHT");
-				addOffset("singLEFT");
-				addOffset("singDOWN");
+				loadOffsetFile(curCharacter);
 				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
 				updateHitbox();
 				antialiasing = false;
@@ -530,12 +495,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singLEFT', 'LEFT', 24, false);
 				animation.addByPrefix('stand', 'STAND', 24, false);
 		
-				addOffset('idle');
-				addOffset("singUP");
-				addOffset("singRIGHT");
-				addOffset("singLEFT");
-				addOffset("singDOWN", -82, -24);
-				addOffset("stand", -87, -29);
+				loadOffsetFile(curCharacter);
 
 				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
 				updateHitbox();
@@ -556,12 +516,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singLEFT', 'LEFT', 24, false);
 				animation.addByPrefix('stand', 'STAND', 24, false);
 		
-				addOffset('idle');
-				addOffset("singUP");
-				addOffset("singRIGHT");
-				addOffset("singLEFT");
-				addOffset("singDOWN");
-				addOffset("stand", -156, -45);
+				loadOffsetFile(curCharacter);
 
 				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
 				updateHitbox();
@@ -583,13 +538,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('stand', 'STAND', 24, false);
 				animation.addByPrefix('scared', 'SHOCKED', 24, false);
 		
-				addOffset('idle');
-				addOffset("singUP");
-				addOffset("singRIGHT", -45, 3);
-				addOffset("singLEFT");
-				addOffset("singDOWN", -48, -46);
-				addOffset("stand", 20);
-				addOffset("scared");
+				loadOffsetFile(curCharacter);
 
 				furiosityScale = 1.3;
 
@@ -610,11 +559,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singLEFT', 'left', 24, false);
 				animation.addByPrefix('singRIGHT', 'right', 24, false);
 
-				addOffset('idle');
-				addOffset("singUP", 116, 95);
-				addOffset("singRIGHT", 37, -4);
-				addOffset("singLEFT", -5, -1);
-				addOffset("singDOWN", 107, 111);
+				loadOffsetFile(curCharacter);
 
 				barColor = FlxColor.fromRGB(37, 191, 55);
 				iconName = 'bambi-mad';
@@ -630,11 +575,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singLEFT', 'left', 24, false);
 				animation.addByPrefix('singRIGHT', 'right', 24, false);
 		
-				addOffset('idle');
-				addOffset("singUP", 138, 76);
-				addOffset("singRIGHT", 9, -11);
-				addOffset("singLEFT", 333, -2);
-				addOffset("singDOWN", -71, -24);
+				loadOffsetFile(curCharacter);
 				globaloffset[0] = 60;
 				globaloffset[1] = 450; //this is the y
 				setGraphicSize(Std.int(width / furiosityScale));
@@ -662,19 +603,7 @@ class Character extends FlxSprite
 
 				animation.addByIndices('NOOMYPHONES', 'phones fall', [0, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 17], '', 24, false);
 				
-				addOffset('idle');
-				addOffset("singUP", 0, 80);
-				addOffset("singRIGHT", 140, -80);
-				addOffset("singLEFT", 200);
-				addOffset("singDOWN", 0, -30);
-				
-				addOffset('NOOMYPHONES');
-
-				addOffset('idle-alt');
-				addOffset("singUP-alt", 0, 100);
-				addOffset("singRIGHT-alt", 30);
-				addOffset("singLEFT-alt", -20, -38);
-				addOffset("singDOWN-alt");
+				loadOffsetFile(curCharacter);
 
 				globaloffset[0] = 150;
 				globaloffset[1] = 450;
@@ -696,11 +625,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singDOWN', 'down', 24, false);
 				animation.addByPrefix('singLEFT', 'left', 24, false);
 				
-				addOffset('idle');
-				addOffset("singUP");
-				addOffset("singRIGHT");
-				addOffset("singLEFT", -69, 0);
-				addOffset("singDOWN", -83, 0);
+				loadOffsetFile(curCharacter);
 
 				setGraphicSize(Std.int(width / furiosityScale));
 				updateHitbox();
@@ -724,16 +649,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singDOWN-alt', 'ALT-DOWN', 24, false);
 				animation.addByPrefix('singLEFT-alt', 'ALT-LEFT', 24, false);
 
-				addOffset('danceLeft');
-				addOffset('danceRight');
-				addOffset("singUP");
-				addOffset("singRIGHT", 120);
-				addOffset("singLEFT", -63);
-				addOffset("singDOWN");
-				addOffset("singUP-alt");
-				addOffset("singRIGHT-alt");
-				addOffset("singLEFT-alt");
-				addOffset("singDOWN-alt");
+				loadOffsetFile(curCharacter);
 
 				setGraphicSize(Std.int(width / furiosityScale));
 				updateHitbox();
@@ -752,11 +668,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singLEFT', 'left', 24, false);
 				animation.addByPrefix('singRIGHT', 'right', 24, false);
 
-				addOffset('idle');
-				addOffset("singUP", 54, 3);
-				addOffset("singRIGHT", -50, 0);
-				addOffset("singLEFT", 20, -7);
-				addOffset("singDOWN", -5, -43);
+				loadOffsetFile(curCharacter);
 				iconName = 'bambi';
 				barColor = FlxColor.fromRGB(37, 191, 55);
 
@@ -771,11 +683,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singDOWN', 'Down', 24, false);
 				animation.addByPrefix('singLEFT', 'Left', 24, false);
 	
-				addOffset('idle');
-				addOffset("singUP", -18, 12);
-				addOffset("singRIGHT", -5, -2);
-				addOffset("singLEFT", -29, 2);
-				addOffset("singDOWN", -5, 2);
+				loadOffsetFile(curCharacter);
 				iconName = 'dave';
 				barColor = FlxColor.fromRGB(15, 95, 255);
 
@@ -826,20 +734,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('scared', 'BF idle shaking', 24);
 				animation.addByPrefix('hit', 'BF hit', 24, false);
 
-				addOffset('idle', -5);
-				addOffset("singUP", -29, 27);
-				addOffset("singRIGHT", -38, -7);
-				addOffset("singLEFT", 12, -6);
-				addOffset("singDOWN", -10, -50);
-				addOffset("singUPmiss", -29, 27);
-				addOffset("singRIGHTmiss", -30, 21);
-				addOffset("singLEFTmiss", 12, 24);
-				addOffset("singDOWNmiss", -11, -19);
-				addOffset("hey", 7, 4);
-				addOffset('firstDeath', 37, 11);
-				addOffset('deathLoop', 37, 5);
-				addOffset('deathConfirm', 37, 69);
-				addOffset('scared', -4);
+				loadOffsetFile(curCharacter);
 
 				playAnim('idle');
 
@@ -863,16 +758,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singDOWNmiss', 'MISS down', 24, false);
 				animation.addByPrefix('hey', 'hey', 24, false);
 
-				addOffset('idle');
-				addOffset("singUP", -22, 101);
-				addOffset("singRIGHT", -12, 20);
-				addOffset("singLEFT", 71, 6);
-				addOffset("singDOWN", 14, 2);
-				addOffset("singUPmiss", -29, 27);
-				addOffset("singRIGHTmiss", -30, 21);
-				addOffset("singLEFTmiss", 12, 24);
-				addOffset("singDOWNmiss", -11, -19);
-				addOffset("hey", -19, 13);
+				loadOffsetFile(curCharacter);
 
 				playAnim('idle');
 
@@ -1093,6 +979,18 @@ class Character extends FlxSprite
 			{
 				danced = !danced;
 			}
+		}
+	}
+
+	function loadOffsetFile(character:String)
+	{
+		var offsetStuffs:Array<String> = CoolUtil.coolTextFile(Paths.offsetFile(character));
+		
+		for (offsetText in offsetStuffs)
+		{
+			var offsetInfo:Array<String> = offsetText.split(' ');
+
+			addOffset(offsetInfo[0], Std.parseFloat(offsetInfo[1]), Std.parseFloat(offsetInfo[2]));
 		}
 	}
 

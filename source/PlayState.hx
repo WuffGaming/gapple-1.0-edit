@@ -76,6 +76,8 @@ class PlayState extends MusicBeatState
 	public static var bads:Int = 0;
 	public static var goods:Int = 0;
 	public static var sicks:Int = 0;
+	var farmsky:FlxSprite;
+	var thirdimension:FlxSprite;
 
 	public var camBeatSnap:Int = 4;
 	public var danceBeatSnap:Int = 2;
@@ -903,11 +905,25 @@ class PlayState extends MusicBeatState
 			case 'duper':
 				defaultCamZoom = 0.9;
 	
-				var bg:FlxSprite = new FlxSprite(-700, 0).loadGraphic(Paths.image('backgrounds/farm/sky'));
-				bg.antialiasing = true;
-				bg.scrollFactor.set(0.9, 0.9);
-				bg.active = false;
-				sprites.add(bg);
+				farmsky = new FlxSprite(-700, 0).loadGraphic(Paths.image('backgrounds/farm/sky'));
+				farmsky.antialiasing = true;
+				farmsky.scrollFactor.set(0.9, 0.9);
+				farmsky.active = false;
+				sprites.add(farmsky);
+
+				/*
+				thirdimension = new FlxSprite(-600, -200).loadGraphic(Paths.image('backgrounds/farm/3d'));
+				thirdimension.active = false;
+				thirdimension.antialiasing = false;			
+				thirdimension.scrollFactor.set(0.1, 0.1);
+				var thirdhs:Shaders.GlitchEffect = new Shaders.GlitchEffect();
+				thirdhs.waveAmplitude = 0.1;
+				thirdhs.waveFrequency = 1;
+				thirdhs.waveSpeed = 2;
+				thirdimension.shader = thirdhs.shader;
+				sprites.add(thirdimension);
+				add(thirdimension);
+				*/
 	
 				var hills:FlxSprite = new FlxSprite(-250, 200).loadGraphic(Paths.image('backgrounds/farm/orangey hills'));
 				hills.antialiasing = true;
@@ -946,7 +962,7 @@ class PlayState extends MusicBeatState
 				sign.active = false;
 				sprites.add(sign);
 				
-				add(bg);
+				add(farmsky);
 				add(hills);
 				add(farm);
 				add(foreground);
@@ -1021,7 +1037,7 @@ class PlayState extends MusicBeatState
 					pizza.ID = i;
 					pizza.visible = false;
 					pizza.antialiasing = false;
-					wow2.push([pizza.x, pizza.y, FlxG.random.int(400, 1200), FlxG.random.int(500, 700), i]);
+					arrowcoordinat.push([pizza.x, pizza.y, FlxG.random.int(400, 1200), FlxG.random.int(500, 700), i]);
 					gasw2.push(FlxG.random.int(800, 1200));
 					what.add(pizza);
 				}
@@ -1045,26 +1061,22 @@ class PlayState extends MusicBeatState
 				davePiss.animation.addByPrefix('d', 'GRR', 24, false);
 				davePiss.animation.play('idle');
 
-				garrettJunk = new FlxSprite(237, 59).loadGraphic(bgImg('bitch'));
+				garrettJunk = new FlxSprite(237, 59).loadGraphic(bgImg('garrett'));
 				garrettJunk.y += 45;
 
-				monitorJunk = new FlxSprite(960, 61).loadGraphic(bgImg('rubyIsAngryRN'));
+				monitorJunk = new FlxSprite(960, 61).loadGraphic(bgImg('monitor'));
 				monitorJunk.x += 275;
 				monitorJunk.y += 75;
 
-				diamondJunk = new FlxSprite(645, -16).loadGraphic(bgImg('lanceyIsGoingToMakeAFakeLeakAndPostItInGeneral'));
+				diamondJunk = new FlxSprite(645, -16).loadGraphic(bgImg('diamond'));
 				diamondJunk.x += 75;
 
-				robotJunk = new FlxSprite(-160, 225).loadGraphic(bgImg('myInternetJustWentOut'));
+				robotJunk = new FlxSprite(-160, 225).loadGraphic(bgImg('robot'));
 				robotJunk.x -= 250;
 				robotJunk.y += 75;
 
 				for (i in [diamondJunk, garrettJunk, daveJunk, davePiss, monitorJunk, robotJunk]) {
-					//i.offset.set(i.getMidpoint().x - bg.getMidpoint().x, i.getMidpoint().y - bg.getMidpoint().y);
 					i.scale.set(1.35, 1.35);
-					//i.updateHitbox();
-					//i.x += (i.getMidpoint().x - bg.getMidpoint().x) * 0.35;
-					//i.y += (i.getMidpoint().y - bg.getMidpoint().y) * 0.35;
 					i.visible = false;
 					i.antialiasing = false;
 					sprites.add(i);
@@ -1959,12 +1971,12 @@ class PlayState extends MusicBeatState
 	private var noteJunksPlayer:Array<Float> = [0, 0, 0, 0];
 	private var noteJunksDad:Array<Float> = [0, 0, 0, 0];
 	private var what:FlxTypedGroup<FlxSprite>;
-	private var wow2:Array<Array<Float>> = [];
+	private var arrowcoordinat:Array<Array<Float>> = [];
 	private var gasw2:Array<Float> = [];
 	private var poiping:Bool = true;
 	private var canPoip:Bool = true;
-	private var lanceyLovesWow2:Array<Bool> = [false, false];
-	private var whatDidRubyJustSay:Int = 0;
+	private var TheDefinedAppleCoreArray:Array<Bool> = [false, false];
+	private var ThisIntegerThatIDontKnowWhatDoes:Int = 0;
 
 	override public function update(elapsed:Float)
 	{
@@ -2030,19 +2042,19 @@ class PlayState extends MusicBeatState
 			if (poiping) {
 				what.forEach(function(spr:FlxSprite){
 					spr.x += Math.abs(Math.sin(elapsed)) * gasw2[spr.ID];
-					if (spr.x > 3000 && !lanceyLovesWow2[spr.ID]) {
-						lanceyLovesWow2[spr.ID] = true;
+					if (spr.x > 3000 && !TheDefinedAppleCoreArray[spr.ID]) {
+						TheDefinedAppleCoreArray[spr.ID] = true;
 						trace('whattttt ${spr.ID}');
-						whatDidRubyJustSay++;
+						ThisIntegerThatIDontKnowWhatDoes++;
 					}
 				});
-				if (whatDidRubyJustSay >= 2) poiping = false;
+				if (ThisIntegerThatIDontKnowWhatDoes >= 2) poiping = false;
 			}
 			else if (canPoip) {
 				trace("ON TO THE POIPIGN!!!");
 				canPoip = false;
-				lanceyLovesWow2 = [false, false];
-				whatDidRubyJustSay = 0;
+				TheDefinedAppleCoreArray = [false, false];
+				ThisIntegerThatIDontKnowWhatDoes = 0;
 				new FlxTimer().start(FlxG.random.float(3, 6.3), function(tmr:FlxTimer){
 					what.forEach(function(spr:FlxSprite){
 						spr.visible = true;
@@ -2058,7 +2070,7 @@ class PlayState extends MusicBeatState
 			}
 
 			what.forEach(function(spr:FlxSprite){
-				var daCoords = wow2[spr.ID];
+				var daCoords = arrowcoordinat[spr.ID];
 
 				daCoords[4] == 1 ? 
 				spr.y = Math.cos(elapsedtime + spr.ID) * daCoords[3] + daCoords[1]: 
@@ -2426,7 +2438,7 @@ class PlayState extends MusicBeatState
 
 		if (FlxG.keys.justPressed.NINE && iconP1.charPublic != 'bandu-origin')
 		{
-			if (iconP1.animation.curAnim.name == boyfriendOldIcon)
+			if (iconP1.charPublic == boyfriendOldIcon)
 			{
 				iconP1.changeIcon(boyfriend.iconName);
 			}
@@ -4403,8 +4415,10 @@ class PlayState extends MusicBeatState
 					case 256:
 						FlxG.camera.flash(FlxColor.WHITE, 1);
 						defaultCamZoom = 0.75;
+						farmsky = new FlxSprite(-600, -200).loadGraphic(Paths.image('backgrounds/farm/3d'));
 						creditsWatermark.text = "Screw You!";
 					case 320:
+						farmsky = new FlxSprite(-700, 0).loadGraphic(Paths.image('backgrounds/farm/sky'));
 						FlxG.camera.flash(FlxColor.WHITE, 1);
 						defaultCamZoom = 0.9;
 					case 384:
@@ -4435,6 +4449,7 @@ class PlayState extends MusicBeatState
 						FlxTween.tween(thunderBlack, {alpha: 0.6}, Conductor.stepCrochet / 500);
 						defaultCamZoom = 1.2;
 					case 640:
+						farmsky = new FlxSprite(-600, -200).loadGraphic(Paths.image('backgrounds/farm/3d'));
 						thunderBlack.alpha = 0;
 						FlxG.camera.flash(FlxColor.WHITE, 1);
 						defaultCamZoom = 1;
@@ -4619,9 +4634,9 @@ class PlayState extends MusicBeatState
 			case 'bambi-angey':
 				dad.y += 450;
 				dad.x += 100;
-			case 'RECOVERED_PROJECT':
+			case 'RECOVERED_PROJECT' | 'RECOVERED_PROJECT_2':
 				dad.setPosition(-307, 10);
-			case 'RECOVERED_PROJECT_2' | 'RECOVERED_PROJECT_3':
+			case 'RECOVERED_PROJECT_3':
 				dad.setPosition(-307, 10);
 				dad.y -= 400;
 				dad.x -= 125;

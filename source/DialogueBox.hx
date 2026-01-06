@@ -266,7 +266,7 @@ class DialogueBox extends FlxSpriteGroup
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/daveDialogue'), 0.9)];
 			case 'olddave':
 				swagDialogue.sounds = [FlxG.sound.load(Paths.soundRandom('dialogue/retroDialogue', 1, 3), 0.6)];
-			case 'recover':
+			case 'recover' | 'recoverweep':
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/RECOVER'), 0.9)];
 			case 'bambi' | 'bambimad' | '3dbambi':
 				swagDialogue.sounds = [FlxG.sound.load(Paths.soundRandom('dialogue/bambDialogue', 1, 3), 0.6)];
@@ -395,7 +395,7 @@ class DialogueBox extends FlxSpriteGroup
 			}
 			switch (curCharacter)
 			{
-				case 'dave' | '3ddave' | 'wiredave' | 'bambi' | 'bambimad' | '3dbambi' | 'olddave' | 'bandu' | 'recover' | 'expunged' | 'none':
+				case 'dave' | '3ddave' | 'wiredave' | 'bambi' | 'bambimad' | '3dbambi' | 'olddave' | 'bandu' | 'recover' | 'recoverweep' | 'expunged' | 'none':
 					portraitLeft.setPosition(220, 220);
 				case 'bf' | 'bfconfuse' | 'gf' | 'gfcasual' | 'gfconfuse' | 'gfwhat' | 'radical': //create boyfriend, genderbent boyfriend, and gay boyfriend
 					portraitRight.setPosition(570, 220);
@@ -485,6 +485,13 @@ class DialogueBox extends FlxSpriteGroup
 				{
 					default:
 						portrait.portraitPath = 'dialogue/RECOVERED_PORT';
+						portrait.portraitPrefix = 'recovered';
+				}
+			case 'recoverweep':
+				switch (PlayState.SONG.song.toLowerCase())
+				{
+					default:
+						portrait.portraitPath = 'dialogue/RECOVERED_PORT_WEEP';
 						portrait.portraitPrefix = 'recovered';
 				}
 			case 'bambi':

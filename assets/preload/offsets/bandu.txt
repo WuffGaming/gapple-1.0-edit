@@ -1,0 +1,11 @@
+idle 0 0
+singUP 0 80
+singRIGHT 140 -80
+singLEFT 200 0
+singDOWN 0 -30
+NOOMYPHONES 0 0
+idle-alt 0 0
+singUP-alt 0 100
+singRIGHT-alt 30 0
+singLEFT-alt -20 -38
+singDOWN-alt 0 0
