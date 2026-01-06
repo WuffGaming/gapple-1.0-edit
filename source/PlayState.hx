@@ -3317,7 +3317,10 @@ class PlayState extends MusicBeatState
 				}
 			});
 
-
+			if(formoverride == "radical")
+				{
+					ratingstype = 'radical';
+				}
 			rating.loadGraphic(Paths.image(ratingFolder + '/' + ratingstype + '/' + daRating));
 			rating.screenCenter();
 			rating.y -= 50;

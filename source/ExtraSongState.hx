@@ -48,6 +48,10 @@ class ExtraSongState extends MusicBeatState
 		if (!FlxG.sound.music.playing)
 		{
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
+			if (FlxG.keys.justPressed.SPACE)
+			{
+				FlxG.sound.music.stop();
+			}
 		}
 
         #if desktop DiscordClient.changePresence("In the Extra Songs Menu", null); #end
@@ -133,7 +137,7 @@ class ExtraSongState extends MusicBeatState
         if (controls.BACK)
             FlxG.switchState(new PlayMenuState());
 
-        if (controls.ACCEPT)
+        if (FlxG.keys.pressed.ENTER)
 		{
             switch (songs[curSelected].songName.toLowerCase()) {
                 case 'unknown':
@@ -184,9 +188,11 @@ class ExtraSongState extends MusicBeatState
 
 		#if PRELOAD_ALL
 		if(songs[curSelected].songName.toLowerCase() != 'unknown')
-			FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
+			if (FlxG.keys.justPressed.SPACE)
+			{
+				FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
+			}
 		#end
-
 		var bullShit:Int = 0;
 
         for (i in 0...iconArray.length)
