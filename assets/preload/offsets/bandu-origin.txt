@@ -1,0 +1,6 @@
+idle 0 0
+singUP 69 -30
+singRIGHT 10 -36
+singLEFT -90 -10
+singDOWN 80 100
+cutscene 0 -10

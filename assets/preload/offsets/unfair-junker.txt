@@ -1,0 +1,6 @@
+idle 0 0
+singUP 157 67
+singRIGHT 225 4
+singLEFT 222 84
+singDOWN 113 -104
+inhale 71 -36
