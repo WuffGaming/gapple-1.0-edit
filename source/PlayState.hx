@@ -572,6 +572,10 @@ class PlayState extends MusicBeatState
 			gf.visible = false;
 		}
 
+		if(curStage == 'warehouse' && formoverride == "radical")
+			boyfriend.y -= 120;
+			gf.y -= 120;
+
 		if(curStage == 'origin')
 		{
 			dad.x -= 35;
