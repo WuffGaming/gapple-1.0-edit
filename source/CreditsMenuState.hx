@@ -99,7 +99,7 @@ class CreditsMenuState extends MusicBeatState
             new Social('youtube', 'https://www.youtube.com/watch?v=xsS9MRJSwJo')
          ]
       ),
-      new Person("Aadsta", CreditsType.Dev, "Made Duper",
+      new Person("Aadsta", CreditsType.Dev, "Made Duper and Blitz",
          [
             new Social('youtube', 'https://www.youtube.com/watch?v=dTk5Z203Uxc'),
          ]
