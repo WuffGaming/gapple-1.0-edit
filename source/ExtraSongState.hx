@@ -61,7 +61,7 @@ class ExtraSongState extends MusicBeatState
 		add(bg);
         
 		addSongList(['Sugar-Rush', 'Origin', 'Tantalum', 'Jam', 'Keyboard'], 2, ['bandu-sugar', 'bandu-origin', 'ringi', 'bambom', 'bendu']);
-        addSongList(['Thunderstorm', 'Dave-x-Bambi-Shipping-Cute', 'RECOVERED-PROJECT'], 1, ['dave', 'dave', 'recover']);
+        addSongList(['Blitz', 'Thunderstorm', 'Dave-x-Bambi-Shipping-Cute', 'RECOVERED-PROJECT'], 1, ['dave-3d', 'dave', 'dave', 'recover']);
 		addSongList(['Sart-Producer'], 4, ['silly-sally']);
 		addSongList(['Tutorial'], 5, ['gf']);
 

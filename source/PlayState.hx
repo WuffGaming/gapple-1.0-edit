@@ -399,12 +399,17 @@ class PlayState extends MusicBeatState
 				dialogue = CoolUtil.coolTextFile(Paths.txt('algebra/algebraDialogue'));
 			case 'duper':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('duper/duperDialogue'));
+			case 'blitz':
+				dialogue = CoolUtil.coolTextFile(Paths.txt('blitz/blitzDialogue'));
 			case 'recovered-project':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('recovered-project/NULLDialogue'));
 				if(formoverride == "radical")
 				{
 					dialogue = CoolUtil.coolTextFile(Paths.txt('recovered-project/RadicalNULLDialogue'));
 				}
+			default:
+				dialogue = CoolUtil.coolTextFile(Paths.txt('recovered-project/NULLDialogue'));
+				// wow failgafe
 		}
 
 		backgroundSprites = createBackgroundSprites(SONG.song.toLowerCase());
@@ -867,7 +872,7 @@ class PlayState extends MusicBeatState
 		{
 			switch (curSong.toLowerCase())
 			{
-				case 'disruption' | 'applecore' | 'disability' | 'wireframe' | 'duper' | 'recovered-project':
+				case 'disruption' | 'applecore' | 'disability' | 'wireframe' | 'duper' | 'recovered-project' | 'blitz':
 					schoolIntro(doof);
 				case 'algebra':
 					baldiIntro(doof);
@@ -4421,6 +4426,67 @@ class PlayState extends MusicBeatState
 					case 208 | 256 | 372 | 392:
 						gfSpeed = 1;
 				}
+			case 'blitz':
+				switch(curBeat) {
+					case 60:
+						FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
+						defaultCamZoom = 1.2;
+					case 64: // dave and bg turn 3d
+						thunderBlack.alpha = 0;
+						swapDad('split-dave-3d');
+						defaultCamZoom = 0.8;
+					case 128:
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 0.9;
+					case 188:
+						FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
+						defaultCamZoom = 1.1;
+					case 192: // dave and bg turn 2d, dave switches to insanity sprites.
+						thunderBlack.alpha = 0;
+						swapDad('dave-good');
+						defaultCamZoom = 1;
+					case 256: // dave and bg turn 3d
+						swapDad('split-dave-3d');
+						defaultCamZoom = 0.85;
+					case 312:
+						defaultCamZoom = FlxMath.lerp(0.85, 0.6, 2.2);
+						// todo: make this way slower!!
+						// gd numer
+					case 316:
+						FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
+						defaultCamZoom = 1.1;
+					case 320: // dave and bg turn 2d
+						thunderBlack.alpha = 0;
+						swapDad('dave-good');
+						defaultCamZoom = 0.8;
+					case 336:
+						defaultCamZoom = 1;
+					case 352:
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 0.9;
+					case 384: // dave and bg turn 3d
+						thunderBlack.alpha = 0;
+						swapDad('split-dave-3d');
+						defaultCamZoom = 1;
+					case 448: // dave and bg turn 2d
+						swapDad('dave-good');
+						defaultCamZoom = 1.1;
+					case 464:
+						defaultCamZoom = 1;
+					case 480: // dave and bg turn 3d
+						swapDad('split-dave-3d');
+						defaultCamZoom = 0.8;
+					case 512: // dave and bg turn 2d for the fimal time..
+						FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
+						swapDad('dave-good'); // keep normie house dave btw... he must be average
+						defaultCamZoom = 1.2;
+					case 544:
+						thunderBlack.alpha = 0;
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 1.1;
+					case 576:
+						thunderBlack.alpha = 1;
+				}
 			case 'duper':
 				switch(curBeat) {
 					case 256:
@@ -4560,7 +4626,7 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-	function swapDad(char:String, x:Float = 100, y:Float = 100, flash:Bool = true)
+	function swapDad(char:String, flash:Bool = true, x:Float = 100, y:Float = 100)
 	{
 		if(dad != null)
 			remove(dad);

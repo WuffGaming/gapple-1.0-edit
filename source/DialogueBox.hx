@@ -22,6 +22,7 @@ class DialogueBox extends FlxSpriteGroup
 	var box:FlxSprite;
 
 	var blackScreen:FlxSprite;
+	var blitzObject:FlxSprite;
 
 	var curCharacter:String = '';
 	var curMod:String = '';
@@ -37,7 +38,8 @@ class DialogueBox extends FlxSpriteGroup
 	public var finishThing:Void->Void;
 
 	public var noAa:Array<String> = ["ui/dialogue/dave_furiosity", "ui/dialogue/3d_bamb", "ui/dialogue/unfairnessPortrait", 'ui/dialogue/3d_bambi_disruption_portrait', 
-	'ui/dialogue/bandu_portrait', 'ui/dialogue/3d_splitathon_dave_port', 'ui/dialogue/3d_dave_wireframe_portrait', 'ui/dialogue/3d_dave_og_portrait', 'dialogue/EXPUNGED'];
+	'ui/dialogue/bandu_portrait', 'ui/dialogue/3d_splitathon_dave_port', 'ui/dialogue/3d_dave_wireframe_portrait', 'ui/dialogue/3d_dave_og_portrait', 'dialogue/EXPUNGED'
+, 'ui/dialogue/RECOVERED_PORT', 'ui/dialogue/RECOVERED_PORT_WEEP'];
 
 	var portraitLeft:FlxSprite;
 	var portraitRight:FlxSprite;
@@ -61,16 +63,10 @@ class DialogueBox extends FlxSpriteGroup
 		if (FlxG.save.data.freeplayCuts) {
 			switch (PlayState.SONG.song.toLowerCase())
 			{
-				case 'senpai':
-					FlxG.sound.playMusic(Paths.music('Lunchbox'), 0);
-					FlxG.sound.music.fadeIn(1, 0, 0.8);
-				case 'thorns':
-					FlxG.sound.playMusic(Paths.music('LunchboxScary'), 0);
-					FlxG.sound.music.fadeIn(1, 0, 0.8);
-				case 'house' | 'insanity' | 'splitathon' | 'disability' | 'applecore':
+				case 'blitz' | 'disability' | 'applecore':
 					FlxG.sound.playMusic(Paths.music('DaveDialogue'), 0);
 					FlxG.sound.music.fadeIn(1, 0, 0.8);
-				case 'furiosity' | 'polygonized' | 'cheating' | 'unfairness' | 'disruption' | 'wireframe' | 'duper' | 'recovered-project':
+				case 'disruption' | 'wireframe' | 'duper' | 'recovered-project':
 					FlxG.sound.playMusic(Paths.music('scaryAmbience'), 0);
 					FlxG.sound.music.fadeIn(1, 0, 0.8);
 			}
@@ -106,6 +102,11 @@ class DialogueBox extends FlxSpriteGroup
 		blackScreen.screenCenter();
 		blackScreen.alpha = 0;
 		add(blackScreen);
+
+		blitzObject = new FlxSprite(0, 0).loadGraphic(Paths.image('backgrounds/house/blitzshow'));
+		blitzObject.screenCenter();
+		blitzObject.alpha = 0;
+		add(blitzObject);
 		
 		var hasDialog = false;
 		switch (PlayState.SONG.song.toLowerCase())
@@ -118,7 +119,7 @@ class DialogueBox extends FlxSpriteGroup
 				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
 				box.animation.addByPrefix('normal', 'speech bubble normal', 24, true);
 				box.antialiasing = false;
-			case 'duper' | 'recovered-project':
+			case 'duper' | 'recovered-project' | 'blitz':
 				hasDialog = true;
 				box.frames = Paths.getSparrowAtlas('ui/boxes/speech_bubble_talking');
 				box.setGraphicSize(Std.int(box.width / textBoxSizeFix));
@@ -149,7 +150,7 @@ class DialogueBox extends FlxSpriteGroup
 		switch (PlayState.SONG.song.toLowerCase())
 		{
 				
-			case 'house' | 'insanity' | 'furiosity' | 'polygonized' | 'disability' | 'wireframe':
+			case 'house' | 'insanity' | 'furiosity' | 'polygonized' | 'disability' | 'wireframe' | 'blitz':
 				portraitLeftCharacter = 'dave';
 
 			case 'algebra':
@@ -225,6 +226,17 @@ class DialogueBox extends FlxSpriteGroup
 				dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", 32);
 				dropText.font = 'Comic Sans MS Bold';
 				dropText.color = FlxColor.GREEN;
+				add(dropText);
+		
+				swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
+				swagDialogue.font = 'Comic Sans MS Bold';
+				swagDialogue.color = 0xFF000000;
+				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText'), 0.6)];
+				add(swagDialogue);
+			case 'blitz':
+				dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", 32);
+				dropText.font = 'Comic Sans MS Bold';
+				dropText.color = FlxColor.BLUE;
 				add(dropText);
 		
 				swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
@@ -429,6 +441,10 @@ class DialogueBox extends FlxSpriteGroup
 				FlxTween.tween(blackScreen, {alpha:1}, 0.25);
 			case 'off_black':
 				FlxTween.tween(blackScreen, {alpha:0}, 0.25);
+			case 'showblitz':
+				FlxTween.tween(blitzObject, {alpha:1}, 0.25);
+			case 'noblitz':
+				FlxTween.tween(blitzObject, {alpha:0}, 0.25);
 			case 'algebrah':
 				blackScreen.alpha = 0;
 				FlxG.sound.playMusic(Paths.music('Algebrah'), 0.7);
