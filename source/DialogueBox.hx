@@ -36,8 +36,8 @@ class DialogueBox extends FlxSpriteGroup
 
 	public var finishThing:Void->Void;
 
-	public var noAa:Array<String> = ["dialogue/dave_furiosity", "dialogue/3d_bamb", "dialogue/unfairnessPortrait", 'dialogue/3d_bambi_disruption_portrait', 'dialogue/bandu_portrait', 'dialogue/3d_splitathon_dave_port', 'dialogue/3d_dave_wireframe_portrait', 'dialogue/3d_dave_og_portrait', 
-'dialogue/EXPUNGED'];
+	public var noAa:Array<String> = ["ui/dialogue/dave_furiosity", "ui/dialogue/3d_bamb", "ui/dialogue/unfairnessPortrait", 'ui/dialogue/3d_bambi_disruption_portrait', 
+	'ui/dialogue/bandu_portrait', 'ui/dialogue/3d_splitathon_dave_port', 'ui/dialogue/3d_dave_wireframe_portrait', 'ui/dialogue/3d_dave_og_portrait', 'dialogue/EXPUNGED'];
 
 	var portraitLeft:FlxSprite;
 	var portraitRight:FlxSprite;
@@ -112,7 +112,7 @@ class DialogueBox extends FlxSpriteGroup
 		{
 			case 'algebra':
 				hasDialog = true;
-				box.frames = Paths.getSparrowAtlas('boxes/qualitybox');
+				box.frames = Paths.getSparrowAtlas('ui/boxes/qualitybox');
 				box.setGraphicSize(Std.int(box.width / textBoxSizeFix));
 				box.updateHitbox();
 				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
@@ -120,7 +120,7 @@ class DialogueBox extends FlxSpriteGroup
 				box.antialiasing = false;
 			case 'duper' | 'recovered-project':
 				hasDialog = true;
-				box.frames = Paths.getSparrowAtlas('boxes/speech_bubble_talking');
+				box.frames = Paths.getSparrowAtlas('ui/boxes/speech_bubble_talking');
 				box.setGraphicSize(Std.int(box.width / textBoxSizeFix));
 				box.updateHitbox();
 				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
@@ -128,7 +128,7 @@ class DialogueBox extends FlxSpriteGroup
 				box.antialiasing = true;
 			case 'disruption' | 'applecore' | 'disability' | 'wireframe':
 				hasDialog = true;
-				box.frames = Paths.getSparrowAtlas('boxes/3dbox');
+				box.frames = Paths.getSparrowAtlas('ui/boxes/3dbox');
 				box.setGraphicSize(Std.int(box.width / textBoxSizeFix));
 				box.updateHitbox();
 				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
@@ -449,91 +449,91 @@ class DialogueBox extends FlxSpriteGroup
 				switch (PlayState.SONG.song.toLowerCase())
 				{
 					default:
-						portrait.portraitPath = 'dialogue/none';
+						portrait.portraitPath = 'ui/dialogue/none';
 						portrait.portraitPrefix = 'dave house portrait';
 				}
 			case 'dave':
 				switch (PlayState.SONG.song.toLowerCase())
 				{
 					default:
-						portrait.portraitPath = 'dialogue/dave_house';
+						portrait.portraitPath = 'ui/dialogue/dave_house';
 						portrait.portraitPrefix = 'dave house portrait';
 				}
 			case '3ddave':
 				switch (PlayState.SONG.song.toLowerCase())
 				{
 					default:
-						portrait.portraitPath = 'dialogue/3d_splitathon_dave_port';
+						portrait.portraitPath = 'ui/dialogue/3d_splitathon_dave_port';
 						portrait.portraitPrefix = 'dave 3d splitathon portrait';
 				}
 			case 'wiredave':
 				switch (PlayState.SONG.song.toLowerCase())
 				{
 					default:
-						portrait.portraitPath = 'dialogue/3d_dave_wireframe_portrait';
+						portrait.portraitPath = 'ui/dialogue/3d_dave_wireframe_portrait';
 						portrait.portraitPrefix = 'dave 3d wireframe portrait';
 				}
 			case 'olddave':
 				switch (PlayState.SONG.song.toLowerCase())
 				{
 					default:
-						portrait.portraitPath = 'dialogue/3d_dave_og_portrait';
+						portrait.portraitPath = 'ui/dialogue/3d_dave_og_portrait';
 						portrait.portraitPrefix = 'dave 3d algebra portrait';
 				}
 			case 'recover':
 				switch (PlayState.SONG.song.toLowerCase())
 				{
 					default:
-						portrait.portraitPath = 'dialogue/RECOVERED_PORT';
+						portrait.portraitPath = 'ui/dialogue/RECOVERED_PORT';
 						portrait.portraitPrefix = 'recovered';
 				}
 			case 'recoverweep':
 				switch (PlayState.SONG.song.toLowerCase())
 				{
 					default:
-						portrait.portraitPath = 'dialogue/RECOVERED_PORT_WEEP';
+						portrait.portraitPath = 'ui/dialogue/RECOVERED_PORT_WEEP';
 						portrait.portraitPrefix = 'recovered';
 				}
 			case 'bambi':
 				switch (PlayState.SONG.song.toLowerCase())
 				{
 					default:
-						portrait.portraitPath = 'dialogue/bambi_corntheft';
+						portrait.portraitPath = 'ui/dialogue/bambi_corntheft';
 						portrait.portraitPrefix = 'bambi corntheft portrait';
 				}
 			case 'bambimad':
 				switch (PlayState.SONG.song.toLowerCase())
 				{
 					default:
-						portrait.portraitPath = 'dialogue/bambi_blocked';
+						portrait.portraitPath = 'ui/dialogue/bambi_blocked';
 						portrait.portraitPrefix = 'bambi blocked portrait';
 				}
 			case '3dbambi':
 				switch (PlayState.SONG.song.toLowerCase())
 				{
 					default:
-						portrait.portraitPath = 'dialogue/3d_bambi_disruption_portrait';
+						portrait.portraitPath = 'ui/dialogue/3d_bambi_disruption_portrait';
 						portrait.portraitPrefix = '3d bambi disruption portrait';
 				}
 			case 'bandu':
 				switch (PlayState.SONG.song.toLowerCase())
 				{
 					default:
-						portrait.portraitPath = 'dialogue/bandu_portrait';
+						portrait.portraitPath = 'ui/dialogue/bandu_portrait';
 						portrait.portraitPrefix = 'bandu portrait';
 				}
 			case 'expunged':
 				switch (PlayState.SONG.song.toLowerCase())
 				{
 					default:
-						portrait.portraitPath = 'dialogue/EXPUNGED';
+						portrait.portraitPath = 'ui/dialogue/EXPUNGED';
 						portrait.portraitPrefix = 'EXPUNGED';
 				}
 			case 'bf':
 				switch (PlayState.SONG.song.toLowerCase())
 				{
 					default:
-						portrait.portraitPath = 'dialogue/bf_insanity_splitathon';
+						portrait.portraitPath = 'ui/dialogue/bf_insanity_splitathon';
 						portrait.portraitPrefix = 'bf insanity & splitathon portrait';
 				}
 				portrait.left = false;
@@ -541,7 +541,7 @@ class DialogueBox extends FlxSpriteGroup
 				switch (PlayState.SONG.song.toLowerCase())
 				{
 					default:
-						portrait.portraitPath = 'dialogue/bf_furiosity_corntheft';
+						portrait.portraitPath = 'ui/dialogue/bf_furiosity_corntheft';
 						portrait.portraitPrefix = 'bf furiosity & corntheft portrait';
 				}
 				portrait.left = false;
@@ -549,7 +549,7 @@ class DialogueBox extends FlxSpriteGroup
 				switch (PlayState.SONG.song.toLowerCase())
 				{
 					default:
-						portrait.portraitPath = 'dialogue/gf_splitathon';
+						portrait.portraitPath = 'ui/dialogue/gf_splitathon';
 						portrait.portraitPrefix = 'gf splitathon portrait';
 				}
 				portrait.left = false;
@@ -557,7 +557,7 @@ class DialogueBox extends FlxSpriteGroup
 				switch (PlayState.SONG.song.toLowerCase())
 				{
 					default:
-						portrait.portraitPath = 'dialogue/gf_blocked';
+						portrait.portraitPath = 'ui/dialogue/gf_blocked';
 						portrait.portraitPrefix = 'gf blocked portrait';
 				}
 				portrait.left = false;
@@ -565,7 +565,7 @@ class DialogueBox extends FlxSpriteGroup
 				switch (PlayState.SONG.song.toLowerCase())
 				{
 					default:
-						portrait.portraitPath = 'dialogue/gf_corntheft';
+						portrait.portraitPath = 'ui/dialogue/gf_corntheft';
 						portrait.portraitPrefix = 'gf corntheft portrait';
 				}
 				portrait.left = false;
@@ -573,18 +573,18 @@ class DialogueBox extends FlxSpriteGroup
 				switch (PlayState.SONG.song.toLowerCase())
 				{
 					default:
-						portrait.portraitPath = 'dialogue/gf_maze';
+						portrait.portraitPath = 'ui/dialogue/gf_maze';
 						portrait.portraitPrefix = 'gf maze portrait';
 				}
 				portrait.left = false;
 			case 'tristan':
-				portrait.portraitPath = 'dialogue/tristanPortrait';
+				portrait.portraitPath = 'ui/dialogue/tristanPortrait';
 				portrait.portraitPrefix = 'tristan portrait';
 			case 'radical':
 				switch (PlayState.SONG.song.toLowerCase())
 				{
 					default:
-						portrait.portraitPath = 'dialogue/radical';
+						portrait.portraitPath = 'ui/dialogue/radical';
 						portrait.portraitPrefix = 'radical';
 				}
 				portrait.left = false;

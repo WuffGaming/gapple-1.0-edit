@@ -53,13 +53,13 @@ class PlayMenuState extends MusicBeatState
 	var camFollow:FlxObject;
 	public static var bgPaths:Array<String> = 
 	[
-		'backgrounds/SUSSUS AMOGUS',
-		'backgrounds/SwagnotrllyTheMod',
-		'backgrounds/Olyantwo',
-		'backgrounds/morie',
-		'backgrounds/mantis',
-		'backgrounds/mamakotomi',
-		'backgrounds/T5mpler'
+		'ui/backgrounds/SUSSUS AMOGUS',
+		'ui/backgrounds/SwagnotrllyTheMod',
+		'ui/backgrounds/Olyantwo',
+		'ui/backgrounds/morie',
+		'ui/backgrounds/mantis',
+		'ui/backgrounds/mamakotomi',
+		'ui/backgrounds/T5mpler'
 	];
 
 	override function create()
@@ -87,7 +87,7 @@ class PlayMenuState extends MusicBeatState
 
 		daRealEngineVer = engineVers[FlxG.random.int(0, 0)];
 		
-		bg = new FlxSprite(-80).loadGraphic(Paths.image('menu/${optionShit[0]}'));
+		bg = new FlxSprite(-80).loadGraphic(Paths.image('ui/songbackgrounds/${optionShit[0]}'));
 		bg.scrollFactor.set();
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
 		bg.updateHitbox();
@@ -120,7 +120,7 @@ class PlayMenuState extends MusicBeatState
 		for (i in 0...optionShit.length)
 		{
 			var menuItem:FlxSprite = new FlxSprite(0, FlxG.height * 1.6);
-			var tex = Paths.getSparrowAtlas('menuassets/' + optionShit[i]);
+			var tex = Paths.getSparrowAtlas('ui/menuassets/' + optionShit[i]);
 			menuItem.frames = tex;
 			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
 			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
@@ -194,7 +194,7 @@ class PlayMenuState extends MusicBeatState
 			{
 				selectedSomethin = true;
 
-				magenta.loadGraphic(Paths.image('menu/${optionShit[curSelected]}'));
+				magenta.loadGraphic(Paths.image('ui/songbackgrounds/${optionShit[curSelected]}'));
 				magenta.setGraphicSize(1280);
 				magenta.updateHitbox();
 				magenta.screenCenter();
@@ -289,7 +289,7 @@ class PlayMenuState extends MusicBeatState
 		intendedScore = Highscore.getScore(optionShit[curSelected], 1);
 		#end
 
-		bg.loadGraphic(Paths.image('menu/${optionShit[curSelected]}'));
+		bg.loadGraphic(Paths.image('ui/songbackgrounds/${optionShit[curSelected]}'));
 		bg.setGraphicSize(1280);
 		bg.updateHitbox();
 		bg.screenCenter();

@@ -36,7 +36,7 @@ class OptionsMenu extends MusicBeatState
 	var versionShit:FlxText;
 	override function create()
 	{
-		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image("backgrounds/SUSSUS AMOGUS"));
+		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image("ui/backgrounds/SUSSUS AMOGUS"));
 
 		menuBG.color = 0xFFea71fd;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));

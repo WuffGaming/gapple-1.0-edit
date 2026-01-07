@@ -37,7 +37,7 @@ i have to put this here just in case you think of doing so
 */
 class CreditsMenuState extends MusicBeatState
 {
-	var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('backgrounds/SUSSUS AMOGUS'));
+	var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('ui/backgrounds/SUSSUS AMOGUS'));
    var selectedFormat:FlxText;
    var defaultFormat:FlxText;
    var curNameSelected:Int = 0;
@@ -472,7 +472,7 @@ class CreditsMenuState extends MusicBeatState
       for (i in 0...selectedPerson.socialMedia.length)
       {
          var social:Social = selectedPerson.socialMedia[i];
-         var socialGraphic:FlxSprite = new FlxSprite(0, credits.y + 100 + (i * 100)).loadGraphic(Paths.image('credits/' + social.socialMediaName));
+         var socialGraphic:FlxSprite = new FlxSprite(0, credits.y + 100 + (i * 100)).loadGraphic(Paths.image('ui/credits/' + social.socialMediaName));
          var discordText:FlxText = null;
          socialGraphic.updateHitbox();
          socialGraphic.screenCenter(X);

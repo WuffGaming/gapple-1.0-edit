@@ -37,7 +37,6 @@ class TitleState extends MusicBeatState
 	var credGroup:FlxGroup;
 	var credTextShit:Alphabet;
 	var textGroup:FlxGroup;
-	var ngSpr:FlxSprite;
 
 	var curWacky:Array<String> = [];
 
@@ -70,12 +69,6 @@ class TitleState extends MusicBeatState
 		for (song in preloadSongs) {
 			FlxG.sound.cache(Paths.inst(song));
 			FlxG.sound.cache(Paths.voices(song));
-		}
-
-		fun = FlxG.random.int(0, 999);
-		if(fun == 1)
-		{
-			LoadingState.loadAndSwitchState(new SusState());
 		}
 
 		PlayerSettings.init();
@@ -145,7 +138,7 @@ class TitleState extends MusicBeatState
 		add(bg);
 
 		logoBl = new FlxSprite(-185, 1000);
-		logoBl.frames = Paths.getSparrowAtlas('title/logoBumpin');
+		logoBl.frames = Paths.getSparrowAtlas('ui/title/logoBumpin');
 		logoBl.antialiasing = true;
 		logoBl.animation.addByIndices('logobumpin', 'logobumpin', [for (i in 0...14) i], '', 24, false);
 		logoBl.animation.play('logobumpin');
@@ -159,7 +152,7 @@ class TitleState extends MusicBeatState
 		logoBl.scale.set(0.85, 0.85);
 
 		titleDude = new FlxSprite(570, -1000);
-		titleDude.frames = Paths.getSparrowAtlas('title/golden_apple_title_guys');
+		titleDude.frames = Paths.getSparrowAtlas('ui/title/golden_apple_title_guys');
 		titleDude.animation.addByIndices('idle', 'idle', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], '', 24, false);
 		titleDude.antialiasing = false;
 		titleDude.scale.set(0.8, 0.8);
@@ -169,7 +162,7 @@ class TitleState extends MusicBeatState
 		add(logoBl);
 
 		titleText = new FlxSprite(100, FlxG.height * 0.8);
-		titleText.frames = Paths.getSparrowAtlas('title/titleEnter');
+		titleText.frames = Paths.getSparrowAtlas('ui/title/titleEnter');
 		titleText.animation.addByPrefix('idle', "Press Enter to Begin", 24);
 		titleText.animation.addByPrefix('press', "ENTER PRESSED", 24);
 		titleText.antialiasing = true;
@@ -190,14 +183,6 @@ class TitleState extends MusicBeatState
 		// credTextShit.alignment = CENTER;
 
 		credTextShit.visible = false;
-
-		ngSpr = new FlxSprite(0, FlxG.height * 0.52).loadGraphic(Paths.image('newgrounds_logo'));
-		add(ngSpr);
-		ngSpr.visible = false;
-		ngSpr.setGraphicSize(Std.int(ngSpr.width * 0.8));
-		ngSpr.updateHitbox();
-		ngSpr.screenCenter(X);
-		ngSpr.antialiasing = true;
 
 		FlxTween.tween(credTextShit, {y: credTextShit.y + 20}, 2.9, {ease: FlxEase.quadInOut, type: PINGPONG});
 
@@ -379,7 +364,6 @@ class TitleState extends MusicBeatState
 				addMoreText('and you, for playing our mod!');
 			case 8:
 				deleteCoolText();
-				ngSpr.visible = false;
 			case 9:
 				createCoolText([curWacky[0]]);
 			case 10:
@@ -405,8 +389,6 @@ class TitleState extends MusicBeatState
 	{
 		if (!skippedIntro)
 		{
-			remove(ngSpr);
-
 			FlxG.camera.flash(FlxColor.WHITE, 4);
 			remove(credGroup);
 			FlxTween.tween(titleDude, {y: -25}, 1, {ease: FlxEase.expoInOut});

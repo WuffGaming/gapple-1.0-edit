@@ -23,7 +23,7 @@ class ExtraSongState extends MusicBeatState
 
     var songs:Array<SongMetadata> = [];
 
-    var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('backgrounds/SUSSUS AMOGUS'));
+    var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('ui/backgrounds/SUSSUS AMOGUS'));
     var curSelected:Int = 0;
 
     private var iconArray:Array<HealthIcon> = [];
@@ -60,10 +60,10 @@ class ExtraSongState extends MusicBeatState
 		bg.color = 0xFF4965FF;
 		add(bg);
         
-		addWeek(['Sugar-Rush', 'Origin', 'Tantalum', 'Jam', 'Keyboard'], 2, ['bandu-sugar', 'bandu-origin', 'ringi', 'bambom', 'bendu']);
-        addWeek(['Thunderstorm', 'Dave-x-Bambi-Shipping-Cute', 'RECOVERED-PROJECT'], 1, ['dave', 'dave', 'recover']);
-		addWeek(['Sart-Producer'], 4, ['silly-sally']);
-		addWeek(['Tutorial'], 5, ['gf']);
+		addSongList(['Sugar-Rush', 'Origin', 'Tantalum', 'Jam', 'Keyboard'], 2, ['bandu-sugar', 'bandu-origin', 'ringi', 'bambom', 'bendu']);
+        addSongList(['Thunderstorm', 'Dave-x-Bambi-Shipping-Cute', 'RECOVERED-PROJECT'], 1, ['dave', 'dave', 'recover']);
+		addSongList(['Sart-Producer'], 4, ['silly-sally']);
+		addSongList(['Tutorial'], 5, ['gf']);
 
         grpSongs = new FlxTypedGroup<Alphabet>();
 		add(grpSongs);
@@ -96,7 +96,7 @@ class ExtraSongState extends MusicBeatState
         super.create();
     }
 
-    public function addWeek(songs:Array<String>, weekNum:Int, ?songCharacters:Array<String>)
+    public function addSongList(songs:Array<String>, weekNum:Int, ?songCharacters:Array<String>)
 	{
 		if (songCharacters == null)
 			songCharacters = ['bf'];
@@ -186,13 +186,16 @@ class ExtraSongState extends MusicBeatState
                 swagText.visible = false;
         }
 
+		if (FlxG.keys.justPressed.SPACE)
+		{
 		#if PRELOAD_ALL
 		if(songs[curSelected].songName.toLowerCase() != 'unknown')
-			if (FlxG.keys.justPressed.SPACE)
-			{
+			
+			
 				FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
-			}
+			
 		#end
+		}
 		var bullShit:Int = 0;
 
         for (i in 0...iconArray.length)

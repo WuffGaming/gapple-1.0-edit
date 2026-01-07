@@ -59,7 +59,7 @@ class HealthIcon extends FlxSprite
 
 		if(char != 'bandu-origin' || char != 'gf')
 		{
-			loadGraphic(Paths.image('icons/' + char), true, 150, 150);
+			loadGraphic(Paths.image('ui/icons/' + char), true, 150, 150);
 
 			addIcon(char, 0);
 		}	
@@ -68,12 +68,12 @@ class HealthIcon extends FlxSprite
 
 		if(char == 'bandu-origin')
 		{
-			frames = Paths.getSparrowAtlas('icons/bandu_origin_icon');
+			frames = Paths.getSparrowAtlas('ui/icons/bandu_origin_icon');
 			animation.addByPrefix(char, char, 24, false, isPlayer, false);
 		}
 		if(char == 'gf')
 		{
-			loadGraphic(Paths.image('icons/' + char), true, 150, 150);
+			loadGraphic(Paths.image('ui/icons/' + char), true, 150, 150);
 
 			addIcon(char, 0, true);
 		}

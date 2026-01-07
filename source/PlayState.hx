@@ -289,6 +289,8 @@ class PlayState extends MusicBeatState
 
 	var thunderBlack:FlxSprite;
 
+	var curbar:String = 'healthBar';
+
 	override public function create()
 	{
 		theFunne = FlxG.save.data.newInput;
@@ -708,12 +710,12 @@ class PlayState extends MusicBeatState
 
 		FlxG.fixedTimestep = false;
 
-		healthBarBG = new FlxSprite(0, FlxG.height * 0.9).loadGraphic(Paths.image('bar/healthBar'));
+		healthBarBG = new FlxSprite(0, FlxG.height * 0.9).loadGraphic(Paths.image('ui/bar/' + curbar));
 		if (FlxG.save.data.downscroll)
 			healthBarBG.y = 50;
 		if(SONG.song.toLowerCase() == 'algebra')
 		{
-			healthBarBG.loadGraphic(Paths.image('bar/retroBar'));
+			curbar = 'retroBar';
 		}
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
@@ -729,7 +731,7 @@ class PlayState extends MusicBeatState
 		}
 		add(healthBar);
 
-		healthBarThing = new FlxSprite(0, FlxG.height * 0.9).loadGraphic(Paths.image('bar/healthBarThing'));
+		healthBarThing = new FlxSprite(0, FlxG.height * 0.9).loadGraphic(Paths.image('ui/bar/healthBarThing'));
 		if (FlxG.save.data.downscroll)
 			healthBarThing.y = 50;
 		if(SONG.song.toLowerCase() == 'algebra')
@@ -911,19 +913,19 @@ class PlayState extends MusicBeatState
 				farmsky.active = false;
 				sprites.add(farmsky);
 
-				/*
+
 				thirdimension = new FlxSprite(-600, -200).loadGraphic(Paths.image('backgrounds/farm/3d'));
-				thirdimension.active = false;
+				thirdimension.active = thirdimension.visible = false;
 				thirdimension.antialiasing = false;			
 				thirdimension.scrollFactor.set(0.1, 0.1);
 				var thirdhs:Shaders.GlitchEffect = new Shaders.GlitchEffect();
 				thirdhs.waveAmplitude = 0.1;
-				thirdhs.waveFrequency = 1;
+				thirdhs.waveFrequency = 2;
 				thirdhs.waveSpeed = 2;
 				thirdimension.shader = thirdhs.shader;
+				curbg = thirdimension;
 				sprites.add(thirdimension);
-				add(thirdimension);
-				*/
+
 	
 				var hills:FlxSprite = new FlxSprite(-250, 200).loadGraphic(Paths.image('backgrounds/farm/orangey hills'));
 				hills.antialiasing = true;
@@ -963,6 +965,7 @@ class PlayState extends MusicBeatState
 				sprites.add(sign);
 				
 				add(farmsky);
+				add(thirdimension);
 				add(hills);
 				add(farm);
 				add(foreground);
@@ -1362,7 +1365,7 @@ class PlayState extends MusicBeatState
 			}
 
 			var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
-			introAssets.set('default', ['ready', "set", "go"]);
+			introAssets.set('default', ['ui/ready', "ui/set", "ui/go"]);
 
 			var introAlts:Array<String> = introAssets.get('default');
 			var altSuffix:String = "";
@@ -1622,7 +1625,7 @@ class PlayState extends MusicBeatState
 
 			if (Note.CharactersWith3D.contains(dad.curCharacter) && player == 0 || Note.CharactersWith3D.contains(boyfriend.curCharacter) && player == 1)
 			{
-				babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets_3D');
+				babyArrow.frames = Paths.getSparrowAtlas('ui/notes/NOTE_assets_3D');
 				babyArrow.animation.addByPrefix('green', 'arrowUP');
 				babyArrow.animation.addByPrefix('blue', 'arrowDOWN');
 				babyArrow.animation.addByPrefix('purple', 'arrowLEFT');
@@ -1659,7 +1662,7 @@ class PlayState extends MusicBeatState
 				switch (curStage)
 				{
 					default:
-						babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets');
+						babyArrow.frames = Paths.getSparrowAtlas('ui/notes/NOTE_assets');
 						babyArrow.animation.addByPrefix('green', 'arrowUP');
 						babyArrow.animation.addByPrefix('blue', 'arrowDOWN');
 						babyArrow.animation.addByPrefix('purple', 'arrowLEFT');
@@ -1731,7 +1734,7 @@ class PlayState extends MusicBeatState
 				// FlxG.log.add(i);
 				var babyArrow:Strum = new Strum(0, altStrumLine.y);
 
-				babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets_3D');
+				babyArrow.frames = Paths.getSparrowAtlas('ui/notes/NOTE_assets_3D');
 				babyArrow.animation.addByPrefix('green', 'arrowUP');
 				babyArrow.animation.addByPrefix('blue', 'arrowDOWN');
 				babyArrow.animation.addByPrefix('purple', 'arrowLEFT');
@@ -3064,7 +3067,7 @@ class PlayState extends MusicBeatState
 				camFollow.x -= 100;
 			case 'dave-wheels':
 				camFollow.y -= 150;
-			case 'RECOVERED_PROJECT_2' | 'RECOVERED_PROJECT_3': // shoulda just taken this from 1.1 from the start lmao
+			case 'RECOVERED_PROJECT_3': // shoulda just taken this from 1.1 from the start lmao
 				camFollow.y += 400;
 				camFollow.x += 125;
 			case 'hall-monitor':
@@ -3237,7 +3240,7 @@ class PlayState extends MusicBeatState
 		coolText.screenCenter();
 		coolText.x = FlxG.width * 0.55;
 		coolText.y -= 350;
-		var ratingFolder:String = 'ratings';
+		var ratingFolder:String = 'ui/ratings';
 		var rating:FlxSprite = new FlxSprite();
 		var score:Int = 350;
 
@@ -4305,7 +4308,8 @@ class PlayState extends MusicBeatState
 					case 532:
 						defaultCamZoom = 0.85;
 						FlxG.camera.flash(FlxColor.WHITE, 1);
-						creditsWatermark.text = "CORRUPTED FILE";
+						curbar = 'corruptedBar';
+						creditsWatermark.text = "CORRUPTED-FILE";
 						kadeEngineWatermark.y -= 200000;
 						theFunne = false;
 				}
@@ -4418,10 +4422,10 @@ class PlayState extends MusicBeatState
 					case 256:
 						FlxG.camera.flash(FlxColor.WHITE, 1);
 						defaultCamZoom = 0.75;
-						farmsky = new FlxSprite(-600, -200).loadGraphic(Paths.image('backgrounds/farm/3d'));
+						thirdimension.active = thirdimension.visible = true;
 						creditsWatermark.text = "Screw You!";
 					case 320:
-						farmsky = new FlxSprite(-700, 0).loadGraphic(Paths.image('backgrounds/farm/sky'));
+						thirdimension.active = thirdimension.visible = false;
 						FlxG.camera.flash(FlxColor.WHITE, 1);
 						defaultCamZoom = 0.9;
 					case 384:
@@ -4452,7 +4456,7 @@ class PlayState extends MusicBeatState
 						FlxTween.tween(thunderBlack, {alpha: 0.6}, Conductor.stepCrochet / 500);
 						defaultCamZoom = 1.2;
 					case 640:
-						farmsky = new FlxSprite(-600, -200).loadGraphic(Paths.image('backgrounds/farm/3d'));
+						thirdimension.active = thirdimension.visible = true;
 						thunderBlack.alpha = 0;
 						FlxG.camera.flash(FlxColor.WHITE, 1);
 						defaultCamZoom = 1;
