@@ -421,40 +421,34 @@ class PlayState extends MusicBeatState
 				bgSprite.alpha = 0;
 			}
 		}
-		var gfVersion:String = 'gf';
 
 		screenshader.waveAmplitude = 1;
 		screenshader.waveFrequency = 2;
 		screenshader.waveSpeed = 1;
 		screenshader.shader.uTime.value[0] = new flixel.math.FlxRandom().float(-100000, 100000);
-		var charoffsetx:Float = 0;
-		var charoffsety:Float = 0;
-		if (SONG.song.toLowerCase() == 'sugar-rush') gfVersion = 'gf-only';
-		if(formoverride == "radical") 	gfVersion = 'gamingtastic'; // why the FUCK is this the thing that works? idk. FUCK YOU
+		var gfx:Float = 0;
+		var gfy:Float = 0;
 		if(formoverride == "radical")
 		{
-			charoffsety = 265;
+			gfy = 265;
 		}
 		else if (SONG.song.toLowerCase() == 'sugar-rush' && formoverride == "radical") // hotboy
 		{
-			charoffsety = 0;
+			gfy = 0;
 		}
-		gf = new Character(400 + charoffsetx, 130 + charoffsety, gfVersion);
+		else if (SONG.song.toLowerCase() == 'sugar-rush' && formoverride != "radical")
+		{
+			gfy = 70;
+		}	
+		gf = new Character(400 + gfx, 130 + gfy, SONG.gf);
+		if(formoverride == "radical") 	SONG.gf = 'gamingtastic'; // why the FUCK is this the thing that works? idk. FUCK YOU
 		gf.scrollFactor.set(0.95, 0.95);
+		gf.visible = SONG.gf_visible;
 
 		if (!(formoverride == "bf" || formoverride == "none" || formoverride == "bf-pixel" || formoverride == "bf-christmas" || formoverride == "radical") && SONG.song != "Tutorial")
 		{
 			gf.visible = false;
-			charoffsety = 0;
-		}
-		else if (FlxG.save.data.tristanProgress == "pending play" && isStoryMode)
-		{
-			gf.visible = false;
-		}
-
-		if(SONG.song.toLowerCase() == 'algebra' || SONG.song.toLowerCase() == 'origin')
-		{
-			gf.visible = false;
+			gfy = 0;
 		}
 
 		standersGroup = new FlxTypedGroup<FlxSprite>();
@@ -574,7 +568,6 @@ class PlayState extends MusicBeatState
 			dad.y -= 100;
 			boyfriend.x -= 150;
 			boyfriend.y -= 150;
-			gf.visible = false;
 		}
 
 		if(curStage == 'warehouse' && formoverride == "radical")
@@ -619,9 +612,6 @@ class PlayState extends MusicBeatState
 		{
 			boyfriend.y += 20;
 		}
-
-		if (SONG.song.toLowerCase() == 'dave-x-bambi-shipping-cute') gf.visible = false;
-		if (curStage == 'house') gf.visible = false;
 
 		if (swagger != null) add(swagger);
 
@@ -4450,6 +4440,7 @@ class PlayState extends MusicBeatState
 						defaultCamZoom = 0.85;
 					case 312:
 						defaultCamZoom = FlxMath.lerp(0.85, 0.6, 2.2);
+						//FlxTween.tween(FlxG.camera, {zoom: 0.6}, 2.2, {ease: FlxEase.elasticInOut});
 						// todo: make this way slower!!
 						// gd numer
 					case 316:

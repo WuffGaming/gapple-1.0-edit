@@ -2,7 +2,8 @@
 	"song": {
 		"player1": "bf",
 		"events": [],
-		"gfVersion": "gf",
+		"gf":"gf",
+		"gf_visible":true,
 		"notes": [
 			{
 				"sectionBeats": 4,

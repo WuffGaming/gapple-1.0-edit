@@ -3,6 +3,7 @@
 		"player1": "cameo-origin",
 		"events": [],
 		"gfVersion": "gf",
+		"gf_visible":false,
 		"notes": [
 			{
 				"sectionBeats": 4,

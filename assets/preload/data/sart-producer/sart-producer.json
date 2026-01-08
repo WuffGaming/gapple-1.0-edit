@@ -3,6 +3,8 @@
 		"player1": "bf",
 		"sectionLengths": [],
 		"player2": "silly-sally",
+		"gf_visible":true,
+		"gf":"gf",
 		"notes": [
 			{
 				"typeOfSection": 0,

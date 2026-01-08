@@ -86,6 +86,7 @@ class ChartingState extends MusicBeatState
 	var vocals:FlxSound;
 
 	var leftIcon:HealthIcon;
+	var midIcon:HealthIcon;
 	var rightIcon:HealthIcon;
 
 	var oneSectionSong:Bool = false;
@@ -111,29 +112,36 @@ class ChartingState extends MusicBeatState
 		else
 		{
 			_song = {
-				song: 'Tutorial',
-				notes: [],
+				song: 'Disability',
 				bpm: 150,
 				needsVoices: true,
+				gf_visible: true,
 				player1: 'bf',
-				player2: 'gf',
+				player2: 'dave',
+				gf: 'gf',
 				speed: 1,
-				validScore: false
+				validScore: false,
+				notes: []
 			};
 		}
 		
 		leftIcon = new HealthIcon(_song.player1);
+		midIcon = new HealthIcon(_song.gf);
 		rightIcon = new HealthIcon(_song.player2);
 		leftIcon.scrollFactor.set(1, 1);
+		midIcon.scrollFactor.set(1, 1);
 		rightIcon.scrollFactor.set(1, 1);
 
 		leftIcon.setGraphicSize(0, 45);
+		midIcon.setGraphicSize(0, 45);
 		rightIcon.setGraphicSize(0, 45);
 
 		add(leftIcon);
+		add(midIcon);
 		add(rightIcon);
 
 		leftIcon.setPosition(0, -100);
+		midIcon.setPosition(gridBG.width / 1, -200);
 		rightIcon.setPosition(gridBG.width / 2, -100);
 
 
@@ -190,9 +198,8 @@ class ChartingState extends MusicBeatState
 		var UI_songTitle = new FlxUIInputText(10, 10, 70, _song.song, 8);
 		typingShit = UI_songTitle;
 
-		var check_voices = new FlxUICheckBox(10, 25, null, null, "Has voice track", 100);
+		var check_voices = new FlxUICheckBox(10, 30, null, null, "Has voice track", 100);
 		check_voices.checked = _song.needsVoices;
-		// _song.needsVoices = check_voices.checked;
 		check_voices.callback = function()
 		{
 			_song.needsVoices = check_voices.checked;
@@ -211,6 +218,14 @@ class ChartingState extends MusicBeatState
 			FlxG.sound.music.volume = vol;
 		};
 
+		var gf_visible = new FlxUICheckBox(140, 200, null, null, "Toggle GF Visibility", 100);
+		gf_visible.checked = true;
+		gf_visible.callback = function()
+		{
+			_song.gf_visible = gf_visible.checked;
+		};
+
+
 		var saveButton:FlxButton = new FlxButton(110, 8, "Save", function()
 		{
 			saveLevel();
@@ -223,10 +238,8 @@ class ChartingState extends MusicBeatState
 
 		var reloadSongJson:FlxButton = new FlxButton(reloadSong.x, saveButton.y + 30, "Reload JSON", function()
 		{
-			if (_song.song.toLowerCase() == 'screwed') {
-				PlayState.SONG = Song.loadFromJson("disruption", "disruption"); // you dun deez'd up
-				FlxG.save.data.disruptionFound = true;
-				FlxG.switchState(new PlayState());
+			if (typingShit.text == null) {
+				typingShit.text == 'Disability';
 			}
 			else
 				loadJson(_song.song.toLowerCase());
@@ -259,6 +272,14 @@ class ChartingState extends MusicBeatState
 		player2DropDown.selectedLabel = _song.player2;
 		player2DropDown.dropDirection = FlxUIDropDownMenuDropDirection.Down;
 
+		var gfDropDown = new FlxUIDropDownMenu(10, 130, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
+		{
+			_song.gf = characters[Std.parseInt(character)];
+		});
+
+		gfDropDown.selectedLabel = _song.gf;
+		gfDropDown.dropDirection = FlxUIDropDownMenuDropDirection.Down;
+
 		var oneSectionSongCheckbox = new FlxUICheckBox(10, 400, null, null, "1 Section Song", 100);
 		oneSectionSongCheckbox.checked = false;
 		oneSectionSongCheckbox.callback = function()
@@ -272,6 +293,7 @@ class ChartingState extends MusicBeatState
 
 		tab_group_song.add(check_voices);
 		tab_group_song.add(check_mute_inst);
+		tab_group_song.add(gf_visible);
 		tab_group_song.add(saveButton);
 		tab_group_song.add(reloadSong);
 		tab_group_song.add(reloadSongJson);
@@ -280,6 +302,7 @@ class ChartingState extends MusicBeatState
 		tab_group_song.add(stepperSpeed);
 		tab_group_song.add(player1DropDown);
 		tab_group_song.add(player2DropDown);
+		tab_group_song.add(gfDropDown);
 		tab_group_song.add(oneSectionSongCheckbox);
 
 		UI_box.addGroup(tab_group_song);
@@ -331,7 +354,6 @@ class ChartingState extends MusicBeatState
 		check_mustHitSection = new FlxUICheckBox(10, 30, null, null, "Must hit section", 100);
 		check_mustHitSection.name = 'check_mustHit';
 		check_mustHitSection.checked = true;
-		// _song.needsVoices = check_mustHit.checked;
 
 		check_altAnim = new FlxUICheckBox(10, 400, null, null, "Alt Animation", 100);
 		check_altAnim.name = 'check_altAnim';
@@ -1127,14 +1149,15 @@ class ChartingState extends MusicBeatState
 
 	function loadJson(song:String):Void
 	{
-		if (song.toLowerCase() == 'recovered-project' || song.toLowerCase() == 'dave-x-bambi-shipping-cute' || song.toLowerCase() == 'cheating' || song.toLowerCase() == 'disruption')
+		if (song.toLowerCase() == 'recovered-project' || song.toLowerCase() == 'dave-x-bambi-shipping-cute')
 		{
 			FlxG.switchState(new VideoState('assets/videos/fortnite/fortniteballs.webm', new CrasherState())); //YOU THINK YOU ARE SO CLEVER DON'T YOU? HAHA FUCK YOU
 		}
-		/*else if (song.toLowerCase() == 'unfairness')
+		if (song.toLowerCase() == null)
 		{
-			FlxG.switchState(new YouCheatedSomeoneIsComing()); //YOU THINK YOU ARE SO CLEVER DON'T YOU? HAHA FUCK YOU
-		}*/
+			PlayState.SONG = Song.loadFromJson("Disability", "disability");
+			FlxG.resetState();
+		}
 		PlayState.SONG = Song.loadFromJson(song.toLowerCase(), song.toLowerCase());
 		FlxG.resetState();
 	}

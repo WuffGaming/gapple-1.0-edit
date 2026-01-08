@@ -2,6 +2,7 @@
 	"song": {
 		"sectionLengths": [],
 		"player1": "bf",
+		"gf_visible":true,
 		"notes": [
 			{
 				"sectionNotes": [
@@ -6518,7 +6519,7 @@
 			}
 		],
 		"player2": "dave-png",
-		"player3": "gf",
+		"gf":"gf",
 		"mania": 0,
 		"song": "Thunderstorm",
 		"validScore": true,

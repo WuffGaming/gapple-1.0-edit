@@ -1,7 +1,8 @@
 {
 	"song": {
 		"player1": "bf",
-		"gfVersion": "gf",
+		"gf": "gf",
+		"gf_visible":true,
 		"notes": [
 			{
 				"sectionBeats": 4,
@@ -9858,10 +9859,8 @@
 			}
 		],
 		"player2": "dupers",
-		"splashSkin": "noteSplashes",
 		"song": "Duper",
 		"needsVoices": true,
-		"arrowSkin": "",
 		"stage": "corn",
 		"validScore": true,
 		"bpm": 200,

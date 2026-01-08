@@ -77,26 +77,9 @@ class DialogueBox extends FlxSpriteGroup
 		bgFade.alpha = 0;
 		add(bgFade);
 
-		if(PlayState.SONG.song.toLowerCase()=='senpai' || PlayState.SONG.song.toLowerCase()=='roses' || PlayState.SONG.song.toLowerCase()=='thorns')
-		{
-			new FlxTimer().start(0.83, function(tmr:FlxTimer)
-				{
-					bgFade.alpha += (1 / 5) * 0.7;
-					if (bgFade.alpha > 0.7)
-						bgFade.alpha = 0.7;
-				}, 5);
-		}
-		else
-		{
-			FlxTween.tween(bgFade, {alpha: 0.7}, 4.15);
-		}
-		switch (PlayState.SONG.song.toLowerCase())
-		{
-			case 'senpai' | 'roses' | 'thorns':
-				box = new FlxSprite(-20, 45);
-			default:
-				box = new FlxSprite(-20, 400);
-		}
+		FlxTween.tween(bgFade, {alpha: 0.7}, 4.15);
+
+		box = new FlxSprite(-20, 400);
 
 		blackScreen = new FlxSprite(0, 0).makeGraphic(5000, 5000, FlxColor.BLACK);
 		blackScreen.screenCenter();
@@ -119,14 +102,6 @@ class DialogueBox extends FlxSpriteGroup
 				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
 				box.animation.addByPrefix('normal', 'speech bubble normal', 24, true);
 				box.antialiasing = false;
-			case 'duper' | 'recovered-project' | 'blitz':
-				hasDialog = true;
-				box.frames = Paths.getSparrowAtlas('ui/boxes/speech_bubble_talking');
-				box.setGraphicSize(Std.int(box.width / textBoxSizeFix));
-				box.updateHitbox();
-				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
-				box.animation.addByPrefix('normal', 'speech bubble normal', 24, true);
-				box.antialiasing = true;
 			case 'disruption' | 'applecore' | 'disability' | 'wireframe':
 				hasDialog = true;
 				box.frames = Paths.getSparrowAtlas('ui/boxes/3dbox');
@@ -135,6 +110,14 @@ class DialogueBox extends FlxSpriteGroup
 				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
 				box.animation.addByPrefix('normal', 'speech bubble normal', 24, true);
 				box.antialiasing = false;
+			default:
+				hasDialog = true;
+				box.frames = Paths.getSparrowAtlas('ui/boxes/speech_bubble_talking');
+				box.setGraphicSize(Std.int(box.width / textBoxSizeFix));
+				box.updateHitbox();
+				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
+				box.animation.addByPrefix('normal', 'speech bubble normal', 24, true);
+				box.antialiasing = true;
 		}
 
 		this.dialogueList = dialogueList;
@@ -149,21 +132,16 @@ class DialogueBox extends FlxSpriteGroup
 
 		switch (PlayState.SONG.song.toLowerCase())
 		{
-				
-			case 'house' | 'insanity' | 'furiosity' | 'polygonized' | 'disability' | 'wireframe' | 'blitz':
-				portraitLeftCharacter = 'dave';
-
 			case 'algebra':
 				portraitLeftCharacter = 'olddave';
-
 			case 'recovered-project':
 				portraitLeftCharacter = 'recover';
-				
 			case 'blocked' | 'corn-theft' | 'maze' | 'supernovae' | 'glitch' | 'splitathon' | 'cheating' | 'unfairness' | 'disruption' | 'duper':
 				portraitLeftCharacter = 'bambi';
-
 			case 'applecore':
 				portraitLeftCharacter = 'bandu';
+			default:
+				portraitLeftCharacter = 'dave';
 		}
 
 		var leftPortrait:Portrait = getPortrait(portraitLeftCharacter);
@@ -182,22 +160,9 @@ class DialogueBox extends FlxSpriteGroup
 		
 		portraitRight.visible = false;
 
-		switch (PlayState.SONG.song.toLowerCase())
-		{
-			case 'senpai' | 'roses' | 'thorns':
-				portraitLeft.setPosition(-20, 70);
-				portraitLeft.setGraphicSize(Std.int(portraitLeft.width * PlayState.daPixelZoom * 0.9));
-				portraitRight.antialiasing = false;
-				portraitLeft.visible = false;
-
-				portraitRight.setPosition(320, 200);
-				portraitRight.visible = true;
-				portraitLeft.antialiasing = false;
-
-			default:
-				portraitLeft.setPosition(276.95, 170);
-				portraitLeft.visible = true;
-		}
+		portraitLeft.setPosition(276.95, 170);
+		portraitLeft.visible = true;
+		
 		add(portraitLeft);
 		add(portraitRight);
 
@@ -327,26 +292,12 @@ class DialogueBox extends FlxSpriteGroup
 						
 					FlxG.sound.music.fadeOut(2.2, 0);
 
-					switch (PlayState.SONG.song.toLowerCase())
-					{
-						case 'senpai' | 'thorns' | 'roses':
-							new FlxTimer().start(0.2, function(tmr:FlxTimer)
-								{
-									box.alpha -= 1 / 5;
-									bgFade.alpha -= 1 / 5 * 0.7;
-									portraitLeft.visible = false;
-									portraitRight.visible = false;
-									swagDialogue.alpha -= 1 / 5;
-									dropText.alpha = swagDialogue.alpha;
-								},5);
-							default:
-								FlxTween.tween(box, {alpha: 0}, 1.2);
-								FlxTween.tween(bgFade, {alpha: 0}, 1.2);
-								FlxTween.tween(portraitLeft, {alpha: 0}, 1.2);
-								FlxTween.tween(portraitRight, {alpha: 0}, 1.2);
-								FlxTween.tween(swagDialogue, {alpha: 0}, 1.2);
-								FlxTween.tween(dropText, {alpha: 0}, 1.2);
-					}
+					FlxTween.tween(box, {alpha: 0}, 1.2);
+					FlxTween.tween(bgFade, {alpha: 0}, 1.2);
+					FlxTween.tween(portraitLeft, {alpha: 0}, 1.2);
+					FlxTween.tween(portraitRight, {alpha: 0}, 1.2);
+					FlxTween.tween(swagDialogue, {alpha: 0}, 1.2);
+					FlxTween.tween(dropText, {alpha: 0}, 1.2);
 
 					new FlxTimer().start(1.2, function(tmr:FlxTimer)
 					{
@@ -604,6 +555,9 @@ class DialogueBox extends FlxSpriteGroup
 						portrait.portraitPrefix = 'radical';
 				}
 				portrait.left = false;
+			default:
+				portrait.portraitPath = 'ui/dialogue/dave_house';
+				portrait.portraitPrefix = 'dave house portrait';
 		}
 		return portrait;
 	}

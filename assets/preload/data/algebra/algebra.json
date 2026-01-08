@@ -1,7 +1,8 @@
 {
 	"song": {
 		"player1": "3d-bf",
-		"gfVersion": "gf",
+		"gf": "gf",
+		"gf_visible":false,
 		"notes": [
 			{
 				"sectionNotes": [],
