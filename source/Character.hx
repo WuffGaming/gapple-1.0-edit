@@ -789,11 +789,11 @@ class Character extends FlxSprite
 				holdTimer += elapsed;
 			}
 
-			var dadVar:Float = 4;
+			var daveVar:Float = 4;
 
-			if (curCharacter == 'dad')
-				dadVar = 6.1;
-			if (holdTimer >= Conductor.stepCrochet * dadVar * 0.001)
+			if (curCharacter == 'opponent')
+				daveVar = 6.1;
+			if (holdTimer >= Conductor.stepCrochet * daveVar * 0.001)
 			{
 				dance(POOP);
 				holdTimer = 0;

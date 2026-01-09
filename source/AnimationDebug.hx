@@ -22,10 +22,10 @@ class AnimationDebug extends MusicBeatState
 	var animList:Array<String> = [];
 	var curAnim:Int = 0;
 	var isDad:Bool = true;
-	var daAnim:String = 'spooky';
+	var daAnim:String = 'gf';
 	var camFollow:FlxObject;
 
-	public function new(daAnim:String = 'spooky')
+	public function new(daAnim:String = 'gf')
 	{
 		super();
 		this.daAnim = daAnim;

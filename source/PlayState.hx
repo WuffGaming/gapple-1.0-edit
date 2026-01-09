@@ -81,7 +81,7 @@ class PlayState extends MusicBeatState
 
 	public var camBeatSnap:Int = 4;
 	public var danceBeatSnap:Int = 2;
-	public var dadDanceSnap:Int = 2;
+	public var OpponentDanceSnap:Int = 2;
 
 	public var camMoveAllowed:Bool = true;
 
@@ -140,9 +140,9 @@ class PlayState extends MusicBeatState
 
 	private var vocals:FlxSound;
 
-	private var dad:Character;
-	private var dadmirror:Character;
-	private var dad2:Character;
+	private var opponent:Character;
+	private var opponentmirror:Character;
+	private var opponent2:Character;
 	private var swagger:Character;
 	private var gf:Character;
 	private var boyfriend:Boyfriend;
@@ -428,9 +428,11 @@ class PlayState extends MusicBeatState
 		screenshader.shader.uTime.value[0] = new flixel.math.FlxRandom().float(-100000, 100000);
 		var gfx:Float = 0;
 		var gfy:Float = 0;
+		var gfVersion = SONG.gf;
 		if(formoverride == "radical")
 		{
 			gfy = 265;
+			gfVersion = 'gamingtastic';
 		}
 		else if (SONG.song.toLowerCase() == 'sugar-rush' && formoverride == "radical") // hotboy
 		{
@@ -440,8 +442,7 @@ class PlayState extends MusicBeatState
 		{
 			gfy = 70;
 		}	
-		gf = new Character(400 + gfx, 130 + gfy, SONG.gf);
-		if(formoverride == "radical") 	SONG.gf = 'gamingtastic'; // why the FUCK is this the thing that works? idk. FUCK YOU
+		gf = new Character(400 + gfx, 130 + gfy, gfVersion);
 		gf.scrollFactor.set(0.95, 0.95);
 		gf.visible = SONG.gf_visible;
 
@@ -461,28 +462,28 @@ class PlayState extends MusicBeatState
 				algebraStander('playrobot-scary', playRobotStand, 750, 100, false, true);
 		}
 
-		dad = new Character(100, 100, SONG.player2);
+		opponent = new Character(100, 100, SONG.player2);
 		if(SONG.song.toLowerCase() == 'wireframe')
 		{
-			dad2 = new Character(-1250, -1250, 'badai');
+			opponent2 = new Character(-1250, -1250, 'badai');
 		}
 		switch (SONG.song.toLowerCase())
 		{
 			case 'applecore' | 'sugar-rush':
-				dadmirror = new Character(dad.x, dad.y, dad.curCharacter);
+				opponentmirror = new Character(opponent.x, opponent.y, opponent.curCharacter);
 			default:
-				dadmirror = new Character(100, 100, "dave-angey");
+				opponentmirror = new Character(100, 100, "dave-angey");
 			
 		}
 
-		var camPos:FlxPoint = new FlxPoint(dad.getGraphicMidpoint().x, dad.getGraphicMidpoint().y);
+		var camPos:FlxPoint = new FlxPoint(opponent.getGraphicMidpoint().x, opponent.getGraphicMidpoint().y);
 
 		repositionDad();
 
-		dadmirror.y += 0;
-		dadmirror.x += 150;
+		opponentmirror.y += 0;
+		opponentmirror.x += 150;
 
-		dadmirror.visible = false;
+		opponentmirror.visible = false;
 
 		if (formoverride == "none" || formoverride == "bf")
 		{
@@ -516,7 +517,7 @@ class PlayState extends MusicBeatState
 				boyfriend.x += 300;
 				boyfriend.y += 10;
 				gf.x += 70;
-				dad.x -= 100;
+				opponent.x -= 100;
 			case 'sugar':
 				if(formoverride == "radical")
 				{
@@ -530,14 +531,14 @@ class PlayState extends MusicBeatState
 
 		if(darkLevels.contains(curStage) && SONG.song.toLowerCase() != "polygonized")
 		{
-			dad.color = nightColor;
+			opponent.color = nightColor;
 			gf.color = nightColor;
 			boyfriend.color = nightColor;
 		}
 
 		if(sunsetLevels.contains(curStage))
 		{
-			dad.color = sunsetColor;
+			opponent.color = sunsetColor;
 			gf.color = sunsetColor;
 			boyfriend.color = sunsetColor;
 		}
@@ -545,27 +546,27 @@ class PlayState extends MusicBeatState
 		add(gf);
 
 		if (SONG.song.toLowerCase() != 'wireframe' && SONG.song.toLowerCase() != 'origin')
-			add(dad);
+			add(opponent);
 		add(boyfriend);
-		add(dadmirror);
+		add(opponentmirror);
 		if (SONG.song.toLowerCase() == 'wireframe' || SONG.song.toLowerCase() == 'origin') {
-			add(dad);
+			add(opponent);
 			if(SONG.song.toLowerCase() == 'wireframe')
-				dad.scale.set(dad.scale.x + 0.36, dad.scale.y + 0.36);
-				dad.x += 65;
-				dad.y += 175;
+				opponent.scale.set(opponent.scale.x + 0.36, opponent.scale.y + 0.36);
+				opponent.x += 65;
+				opponent.y += 175;
 				boyfriend.y -= 190;
 		}
-		if(dad2 != null)
+		if(opponent2 != null)
 		{
-			add(dad2);
-			dad2.visible = false;
+			add(opponent2);
+			opponent2.visible = false;
 		}
 
 		if(curStage == 'redTunnel')
 		{
-			dad.x -= 150;
-			dad.y -= 100;
+			opponent.x -= 150;
+			opponent.y -= 100;
 			boyfriend.x -= 150;
 			boyfriend.y -= 150;
 		}
@@ -576,36 +577,36 @@ class PlayState extends MusicBeatState
 
 		if(curStage == 'origin')
 		{
-			dad.x -= 35;
+			opponent.x -= 35;
 			boyfriend.y += 150;
 		}
 
 
 
-		if(dad.curCharacter == 'bandu-origin')
+		if(opponent.curCharacter == 'bandu-origin')
 		{
-			dad.x -= 250;
-			dad.y -= 350;
+			opponent.x -= 250;
+			opponent.y -= 350;
 		}
 
-		if(dad.curCharacter == 'split-dave-3d')
+		if(opponent.curCharacter == 'split-dave-3d')
 		{
-			dad.x -= 160;
+			opponent.x -= 160;
 		}
 
-		if(dad.curCharacter == 'cameo-origin')
+		if(opponent.curCharacter == 'cameo-origin')
 		{
-			dad.x -= 60;
-			dad.y -= 120;
+			opponent.x -= 60;
+			opponent.y -= 120;
 		}
 
-		if(dad.curCharacter == 'dupers')
+		if(opponent.curCharacter == 'dupers')
 		{
-			dad.x -= -30;
-			dad.y -= -460;
+			opponent.x -= -30;
+			opponent.y -= -460;
 		}
 
-		dadChar = dad.curCharacter;
+		dadChar = opponent.curCharacter;
 		bfChar = boyfriend.curCharacter;
 
 		if(bfChar == '3d-bf')
@@ -622,7 +623,7 @@ class PlayState extends MusicBeatState
 
 		if(dadChar == 'bandu-candy' || dadChar == 'bambi-piss-3d')
 		{
-			dadDanceSnap = 1;
+			OpponentDanceSnap = 1;
 		}
 
 		if(bfChar == 'bandu-candy' || bfChar == 'bambi-piss-3d')
@@ -723,7 +724,7 @@ class PlayState extends MusicBeatState
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
 			'health', 0, 2);
 		healthBar.scrollFactor.set();
-		healthBar.createFilledBar(dad.barColor, boyfriend.barColor);
+		healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
 		if(SONG.song.toLowerCase() == 'algebra')
 		{
 			healthBar.createFilledBar(0xFFFF0000, 0xFF66FF33);
@@ -805,17 +806,17 @@ class PlayState extends MusicBeatState
 		switch (curSong.toLowerCase())
 		{
 			case 'wireframe':
-				preload('bambi/badai');
+				preload('characters/bandu/badai');
 			case 'algebra':
-				preload('dave/HALL_MONITOR');
-				preload('dave/diamondMan');
-				preload('dave/playrobot');
-				preload('dave/ohshit');
-				preload('dave/garrett_algebra');
-				preload('dave/og_dave_angey');
+				preload('characters/algebra/HALL_MONITOR');
+				preload('characters/algebra/diamondMan');
+				preload('characters/algebra/playrobot');
+				preload('characters/algebra/ohshit');
+				preload('characters/algebra/garrett_algebra');
+				preload('characters/algebra/og_dave_angey');
 			case 'recovered-project':
-				preload('dave/recovered_project_2');
-				preload('dave/recovered_project_3');
+				preload('characters/recover/recovered_project_2');
+				preload('characters/recover/recovered_project_3');
 		}
 
 		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width / 2 - 150, healthBarBG.y + 40, FlxG.width, "", 20);
@@ -839,7 +840,7 @@ class PlayState extends MusicBeatState
 		iconP1.y = healthBar.y - (iconP1.height / 2);
 		add(iconP1);
 
-		iconP2 = new HealthIcon(dad.iconName, false);
+		iconP2 = new HealthIcon(opponent.iconName, false);
 		iconP2.y = healthBar.y - (iconP2.height / 2);
 		add(iconP2);
 
@@ -1222,7 +1223,7 @@ class PlayState extends MusicBeatState
 
 	function schoolIntro(?dialogueBox:DialogueBox, isStart:Bool = true):Void
 	{
-		snapCamFollowToPos(boyfriend.getGraphicMidpoint().x - 200, dad.getGraphicMidpoint().y - 10);
+		snapCamFollowToPos(boyfriend.getGraphicMidpoint().x - 200, opponent.getGraphicMidpoint().y - 10);
 		var black:FlxSprite = new FlxSprite(0, 0).makeGraphic(FlxG.width * 5, FlxG.height * 5, FlxColor.BLACK);
 		black.screenCenter();
 		black.scrollFactor.set();
@@ -1253,7 +1254,7 @@ class PlayState extends MusicBeatState
 
 	function baldiIntro(?dialogueBox:DialogueBox, isStart:Bool = true):Void
 	{
-		snapCamFollowToPos(boyfriend.getGraphicMidpoint().x - 200, dad.getGraphicMidpoint().y - 10);
+		snapCamFollowToPos(boyfriend.getGraphicMidpoint().x - 200, opponent.getGraphicMidpoint().y - 10);
 		var black:FlxSprite = new FlxSprite(0, 0).makeGraphic(FlxG.width * 5, FlxG.height * 5, FlxColor.BLACK);
 		black.screenCenter();
 		black.scrollFactor.set();
@@ -1286,32 +1287,32 @@ class PlayState extends MusicBeatState
 	{
 		inCutscene = true;
 		camHUD.visible = false;
-		dad.alpha = 0;
-		dad.canDance = false;
+		opponent.alpha = 0;
+		opponent.canDance = false;
 		focusOnDadGlobal = false;
 		focusOnChar(boyfriend);
 		new FlxTimer().start(1.35, function(cockAndBalls:FlxTimer) // this code is either atrocious or VERY weird
 			{
 				focusOnDadGlobal = true;
-				focusOnChar(dad);
+				focusOnChar(opponent);
 				new FlxTimer().start(0.5, function(ballsInJaws:FlxTimer)
 				{
-					dad.alpha = 1;
-					dad.playAnim('cutscene');
+					opponent.alpha = 1;
+					opponent.playAnim('cutscene');
 					FlxG.sound.play(Paths.sound('origin_intro'));
 					new FlxTimer().start(1.5, function(deezCandies:FlxTimer)
 					{
 						FlxG.sound.play(Paths.sound('origin_bandu_talk'));
-						dad.playAnim('singUP');
+						opponent.playAnim('singUP');
 						new FlxTimer().start(1.5, function(penisCockDick:FlxTimer)
 						{
-							dad.canDance = true;
+							opponent.canDance = true;
 							focusOnDadGlobal = false;
 							focusOnChar(boyfriend);
 							new FlxTimer().start(1.5, function(buttAssAnusGluteus:FlxTimer)
 							{
 								focusOnDadGlobal = true;
-								focusOnChar(dad);
+								focusOnChar(opponent);
 								startCountdown();
 							});
 						});
@@ -1330,7 +1331,7 @@ class PlayState extends MusicBeatState
 		camHUD.visible = true;
 
 		boyfriend.canDance = true;
-		dad.canDance = true;
+		opponent.canDance = true;
 		gf.canDance = true;
 
 		generateStaticArrows(0);
@@ -1351,16 +1352,16 @@ class PlayState extends MusicBeatState
 
 		startTimer = new FlxTimer().start(Conductor.crochet / (1000 * startSpeed), function(tmr:FlxTimer)
 		{
-			dad.dance();
+			opponent.dance();
 			gf.dance();
 			boyfriend.dance();
 
-			if (dad.curCharacter == 'bandu' || dad.curCharacter == 'bandu-candy') {
+			if (opponent.curCharacter == 'bandu' || opponent.curCharacter == 'bandu-candy') {
 				// SO THEIR ANIMATIONS DONT START OFF-SYNCED
-				dad.playAnim('singUP');
-				dadmirror.playAnim('singUP');
-				dad.dance();
-				dadmirror.dance();
+				opponent.playAnim('singUP');
+				opponentmirror.playAnim('singUP');
+				opponent.dance();
+				opponentmirror.dance();
 			}
 
 			var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
@@ -1622,7 +1623,7 @@ class PlayState extends MusicBeatState
 			// FlxG.log.add(i);
 			var babyArrow:Strum = new Strum(0, strumLine.y);
 
-			if (Note.CharactersWith3D.contains(dad.curCharacter) && player == 0 || Note.CharactersWith3D.contains(boyfriend.curCharacter) && player == 1)
+			if (Note.CharactersWith3D.contains(opponent.curCharacter) && player == 0 || Note.CharactersWith3D.contains(boyfriend.curCharacter) && player == 1)
 			{
 				babyArrow.frames = Paths.getSparrowAtlas('ui/notes/NOTE_assets_3D');
 				babyArrow.animation.addByPrefix('green', 'arrowUP');
@@ -1987,7 +1988,7 @@ class PlayState extends MusicBeatState
 		{
 			boyfriend.playAnim('sing' + notestuffs[FlxG.random.int(0,3)]);
 		}
-		dadChar = dad.curCharacter;
+		dadChar = opponent.curCharacter;
 		bfChar = boyfriend.curCharacter;
 		if(redTunnel != null)
 		{
@@ -1996,7 +1997,7 @@ class PlayState extends MusicBeatState
 		banduJunk += elapsed * 2.5;
 		if(badaiTime)
 		{
-			dad.angle += elapsed * 50;
+			opponent.angle += elapsed * 50;
 		}
 		if (curbg != null)
 		{
@@ -2084,7 +2085,7 @@ class PlayState extends MusicBeatState
 
 				spr.scale.set(dontLookAtAmongUs - 0.15, dontLookAtAmongUs - 0.15);
 
-				if (dad.POOP) spr.angle += (Math.sin(elapsed * 2) * 0.5 + 0.5) * spr.ID == 1 ? 0.65 : -0.65;
+				if (opponent.POOP) spr.angle += (Math.sin(elapsed * 2) * 0.5 + 0.5) * spr.ID == 1 ? 0.65 : -0.65;
 			});
 
 			playerStrums.forEach(function(spr:Strum){
@@ -2190,26 +2191,26 @@ class PlayState extends MusicBeatState
 		}
 
 		//welcome to 3d sinning avenue
-		if(funnyFloatyBoys.contains(dad.curCharacter.toLowerCase()) && canFloat && orbit)
+		if(funnyFloatyBoys.contains(opponent.curCharacter.toLowerCase()) && canFloat && orbit)
 		{
-			switch(dad.curCharacter) 
+			switch(opponent.curCharacter) 
 			{
 				case 'bandu-candy':
-					dad.x += Math.sin(elapsedtime * 50) / 9;
+					opponent.x += Math.sin(elapsedtime * 50) / 9;
 				case 'bandu':
-					dad.x = boyfriend.getMidpoint().x + Math.sin(banduJunk) * 500 - (dad.width / 2);
-					dad.y += (Math.sin(elapsedtime) * 0.2);
-					dadmirror.setPosition(dad.x, dad.y);
+					opponent.x = boyfriend.getMidpoint().x + Math.sin(banduJunk) * 500 - (opponent.width / 2);
+					opponent.y += (Math.sin(elapsedtime) * 0.2);
+					opponentmirror.setPosition(opponent.x, opponent.y);
 
 					/*
 					var deezScale =	(
 						!dadFront ?
 						Math.sqrt(
-					boyfriend.getMidpoint().distanceTo(dad.getMidpoint()) / 500 * 0.5):
+					boyfriend.getMidpoint().distanceTo(opponent.getMidpoint()) / 500 * 0.5):
 					Math.sqrt(
-					(500 - boyfriend.getMidpoint().distanceTo(dad.getMidpoint())) / 500 * 0.5 + 0.5));
-					dad.scale.set(deezScale, deezScale);
-					dadmirror.scale.set(deezScale, deezScale);
+					(500 - boyfriend.getMidpoint().distanceTo(opponent.getMidpoint())) / 500 * 0.5 + 0.5));
+					opponent.scale.set(deezScale, deezScale);
+					opponentmirror.scale.set(deezScale, deezScale);
 					*/
 
 					if ((Math.sin(banduJunk) >= 0.95 || Math.sin(banduJunk) <= -0.95) && !hasJunked){
@@ -2218,45 +2219,45 @@ class PlayState extends MusicBeatState
 					}
 					if (hasJunked && !(Math.sin(banduJunk) >= 0.95 || Math.sin(banduJunk) <= -0.95)) hasJunked = false;
 
-					dadmirror.visible = dadFront;
-					dad.visible = !dadFront;
+					opponentmirror.visible = dadFront;
+					opponent.visible = !dadFront;
 				case 'badai':
-					dad.angle += elapsed * 10;
-					dad.y += (Math.sin(elapsedtime) * 0.6);
+					opponent.angle += elapsed * 10;
+					opponent.y += (Math.sin(elapsedtime) * 0.6);
 				case 'little-bandu':
-					dad.angle += elapsed * 2;
-					dad.y += (Math.sin(elapsedtime) * 0.65);
-					dad.x = -125 + Math.sin(elapsedtime) * 425;
+					opponent.angle += elapsed * 2;
+					opponent.y += (Math.sin(elapsedtime) * 0.65);
+					opponent.x = -125 + Math.sin(elapsedtime) * 425;
 				case 'ringi':
-					dad.y += (Math.sin(elapsedtime) * 0.6);
-					dad.x += (Math.sin(elapsedtime) * 0.6);
+					opponent.y += (Math.sin(elapsedtime) * 0.6);
+					opponent.x += (Math.sin(elapsedtime) * 0.6);
 				case 'bambom':
-					dad.y += (Math.sin(elapsedtime) * 0.75);
-					dad.x = -700 + Math.sin(elapsedtime) * 425;
+					opponent.y += (Math.sin(elapsedtime) * 0.75);
+					opponent.x = -700 + Math.sin(elapsedtime) * 425;
 				case 'tunnel-dave':
-					dad.y -= (Math.sin(elapsedtime) * 0.6);
+					opponent.y -= (Math.sin(elapsedtime) * 0.6);
 				default:
-					dad.y += (Math.sin(elapsedtime) * 0.6);
+					opponent.y += (Math.sin(elapsedtime) * 0.6);
 			}
 		}
-		if(dad2 != null)
+		if(opponent2 != null)
 		{
-			switch(dad2.curCharacter) 
+			switch(opponent2.curCharacter) 
 			{
 				case 'bandu':
-					dad2.x = boyfriend.getMidpoint().x + Math.sin(banduJunk) * 500 - (dad.width / 2);
-					dad2.y += (Math.sin(elapsedtime) * 0.2);
-					dadmirror.setPosition(dad.x, dad.y);
+					opponent2.x = boyfriend.getMidpoint().x + Math.sin(banduJunk) * 500 - (opponent.width / 2);
+					opponent2.y += (Math.sin(elapsedtime) * 0.2);
+					opponentmirror.setPosition(opponent.x, opponent.y);
 
 					/*
 					var deezScale =	(
 						!dadFront ?
 						Math.sqrt(
-					boyfriend.getMidpoint().distanceTo(dad.getMidpoint()) / 500 * 0.5):
+					boyfriend.getMidpoint().distanceTo(opponent.getMidpoint()) / 500 * 0.5):
 					Math.sqrt(
-					(500 - boyfriend.getMidpoint().distanceTo(dad.getMidpoint())) / 500 * 0.5 + 0.5));
-					dad.scale.set(deezScale, deezScale);
-					dadmirror.scale.set(deezScale, deezScale);
+					(500 - boyfriend.getMidpoint().distanceTo(opponent.getMidpoint())) / 500 * 0.5 + 0.5));
+					opponent.scale.set(deezScale, deezScale);
+					opponentmirror.scale.set(deezScale, deezScale);
 					*/
 
 					if ((Math.sin(banduJunk) >= 0.95 || Math.sin(banduJunk) <= -0.95) && !hasJunked){
@@ -2265,14 +2266,14 @@ class PlayState extends MusicBeatState
 					}
 					if (hasJunked && !(Math.sin(banduJunk) >= 0.95 || Math.sin(banduJunk) <= -0.95)) hasJunked = false;
 
-					dadmirror.visible = dadFront;
-					dad2.visible = !dadFront;
+					opponentmirror.visible = dadFront;
+					opponent2.visible = !dadFront;
 				case 'badai':
-					dad2.angle = Math.sin(elapsedtime) * 15;
-					dad2.x += Math.sin(elapsedtime) * 0.6;
-					dad2.y += (Math.sin(elapsedtime) * 0.6);
+					opponent2.angle = Math.sin(elapsedtime) * 15;
+					opponent2.x += Math.sin(elapsedtime) * 0.6;
+					opponent2.y += (Math.sin(elapsedtime) * 0.6);
 				default:
-					dad2.y += (Math.sin(elapsedtime) * 0.6);
+					opponent2.y += (Math.sin(elapsedtime) * 0.6);
 			}
 		}
 		if (littleIdiot != null) {
@@ -2302,9 +2303,9 @@ class PlayState extends MusicBeatState
 					boyfriend.y += (Math.sin(elapsedtime) * 0.6);
 			}
 		}
-		/*if(funnyFloatyBoys.contains(dadmirror.curCharacter.toLowerCase()))
+		/*if(funnyFloatyBoys.contains(opponentmirror.curCharacter.toLowerCase()))
 		{
-			dadmirror.y += (Math.sin(elapsedtime) * 0.6);
+			opponentmirror.y += (Math.sin(elapsedtime) * 0.6);
 		}*/
 		if(funnyFloatyBoys.contains(gf.curCharacter.toLowerCase()) && canFloat)
 		{
@@ -2534,7 +2535,7 @@ class PlayState extends MusicBeatState
 		{
 			PlayState.characteroverride = 'none';
 			PlayState.formoverride = 'none';
-			FlxG.switchState(new AnimationDebug(dad.curCharacter));
+			FlxG.switchState(new AnimationDebug(opponent.curCharacter));
 		}
 		if (FlxG.keys.justPressed.TWO)
 		{
@@ -2674,7 +2675,6 @@ class PlayState extends MusicBeatState
 						default:
 							PlayState.characteroverride = 'none';
 							PlayState.formoverride = 'none';
-							FlxG.switchState(new EndingState('rtxx_ending', 'badEnding'));
 					}
 				}
 				else
@@ -2836,7 +2836,7 @@ class PlayState extends MusicBeatState
 					//'LEFT', 'DOWN', 'UP', 'RIGHT'
 					var fuckingDumbassBullshitFuckYou:String;
 					fuckingDumbassBullshitFuckYou = notestuffs[Math.round(Math.abs(daNote.noteData)) % 4];
-					if(dad.nativelyPlayable)
+					if(opponent.nativelyPlayable)
 					{
 						switch(notestuffs[Math.round(Math.abs(daNote.noteData)) % 4])
 						{
@@ -2846,23 +2846,23 @@ class PlayState extends MusicBeatState
 								fuckingDumbassBullshitFuckYou = 'LEFT';
 						}
 					}
-					if(shakingChars.contains(dad.curCharacter))
+					if(shakingChars.contains(opponent.curCharacter))
 					{
 						FlxG.camera.shake(0.0075, 0.1);
 						camHUD.shake(0.0045, 0.1);
 					}
-					(SONG.song.toLowerCase() == 'applecore' && !SONG.notes[Math.floor(curStep / 16)].altAnim && !wtfThing && dad.POOP) ? { // hi
+					(SONG.song.toLowerCase() == 'applecore' && !SONG.notes[Math.floor(curStep / 16)].altAnim && !wtfThing && opponent.POOP) ? { // hi
 						if (littleIdiot != null) littleIdiot.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true); 
 						littleIdiot.holdTimer = 0;}: {
 							if(badaiTime)
 							{
-								dad2.holdTimer = 0;
-								dad2.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true);
+								opponent2.holdTimer = 0;
+								opponent2.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true);
 							}
-							dad.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true);
-							dadmirror.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true);
-							dad.holdTimer = 0;
-							dadmirror.holdTimer = 0;
+							opponent.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true);
+							opponentmirror.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true);
+							opponent.holdTimer = 0;
+							opponentmirror.holdTimer = 0;
 						}
 
 					if (SONG.song.toLowerCase() != 'senpai' && SONG.song.toLowerCase() != 'roses' && SONG.song.toLowerCase() != 'thorns')
@@ -3018,7 +3018,7 @@ class PlayState extends MusicBeatState
 		}
 		if (focusondad)
 		{
-			focusOnChar(badaiTime ? dad2 : dad);
+			focusOnChar(badaiTime ? opponent2 : opponent);
 
 			if (SONG.song.toLowerCase() == 'tutorial')
 			{
@@ -3824,7 +3824,7 @@ class PlayState extends MusicBeatState
 						fuckingDumbassBullshitFuckYou = 'LEFT';
 				}
 			}
-			if(shakingChars.contains(dad.curCharacter))
+			if(shakingChars.contains(opponent.curCharacter))
 			{
 				FlxG.camera.shake(0.0075, 0.1);
 				camHUD.shake(0.0045, 0.1);
@@ -3865,9 +3865,9 @@ class PlayState extends MusicBeatState
 			resyncVocals();
 		}
 
-		if (dad.curCharacter == 'spooky' && curStep % 4 == 2)
+		if (opponent.curCharacter == 'spooky' && curStep % 4 == 2)
 		{
-			// dad.dance();
+			// opponent.dance();
 		}
 
 		#if desktop
@@ -3952,44 +3952,44 @@ class PlayState extends MusicBeatState
 			// Conductor.changeBPM(SONG.bpm);
 		}
 		/*
-		if (dad.curCharacter == 'bandu')  {
-			krunkity = dadmirror.animation.finished && dad.animation.finished;
+		if (opponent.curCharacter == 'bandu')  {
+			krunkity = opponentmirror.animation.finished && opponent.animation.finished;
 		}*/
-		if (dad.animation.finished)
+		if (opponent.animation.finished)
 		{
 			switch (SONG.song.toLowerCase())
 			{
 				case 'tutorial':
-					dad.dance(idleAlt);
-					dadmirror.dance(idleAlt);
+					opponent.dance(idleAlt);
+					opponentmirror.dance(idleAlt);
 				case 'disruption':
-					if (curBeat % gfSpeed == 0 && dad.holdTimer <= 0) {
-						dad.dance(idleAlt);
-						dadmirror.dance(idleAlt);
+					if (curBeat % gfSpeed == 0 && opponent.holdTimer <= 0) {
+						opponent.dance(idleAlt);
+						opponentmirror.dance(idleAlt);
 					}
 				case 'applecore':
-					if (dad.holdTimer <= 0 && curBeat % dadDanceSnap == 0)
-						!wtfThing ? dad.dance(dad.POOP) : dad.playAnim('idle-alt', true); // i hate everything
-					if (dadmirror.holdTimer <= 0 && curBeat % dadDanceSnap == 0)
-						!wtfThing ? dadmirror.dance(dad.POOP) : dadmirror.playAnim('idle-alt', true); // sutpid
+					if (opponent.holdTimer <= 0 && curBeat % OpponentDanceSnap == 0)
+						!wtfThing ? opponent.dance(opponent.POOP) : opponent.playAnim('idle-alt', true); // i hate everything
+					if (opponentmirror.holdTimer <= 0 && curBeat % OpponentDanceSnap == 0)
+						!wtfThing ? opponentmirror.dance(opponent.POOP) : opponentmirror.playAnim('idle-alt', true); // sutpid
 				default:
-					if (dad.holdTimer <= 0 && curBeat % dadDanceSnap == 0)
-						dad.dance(idleAlt);
-					if (dadmirror.holdTimer <= 0 && curBeat % dadDanceSnap == 0)
-						dadmirror.dance(idleAlt);
+					if (opponent.holdTimer <= 0 && curBeat % OpponentDanceSnap == 0)
+						opponent.dance(idleAlt);
+					if (opponentmirror.holdTimer <= 0 && curBeat % OpponentDanceSnap == 0)
+						opponentmirror.dance(idleAlt);
 			}
 		}
-		if(dad2 != null)
+		if(opponent2 != null)
 		{
-			if ((dad2.animation.finished || dad2.animation.curAnim.name == 'idle') && dad2.holdTimer <= 0 && curBeat % dadDanceSnap == 0)
-				dad2.dance(idleAlt);
+			if ((opponent2.animation.finished || opponent2.animation.curAnim.name == 'idle') && opponent2.holdTimer <= 0 && curBeat % OpponentDanceSnap == 0)
+				opponent2.dance(idleAlt);
 		}
 		if (swagger != null) {
 			if (swagger.holdTimer <= 0 && curBeat % 1 == 0 && swagger.animation.finished)
 				swagger.dance();
 		}
 		if (littleIdiot != null) {
-			if (littleIdiot.animation.finished && littleIdiot.holdTimer <= 0 && curBeat % dadDanceSnap == 0) littleIdiot.dance();
+			if (littleIdiot.animation.finished && littleIdiot.holdTimer <= 0 && curBeat % OpponentDanceSnap == 0) littleIdiot.dance();
 		}
 
 		// FlxG.log.add('change bpm' + SONG.notes[Std.int(curStep / 16)].changeBPM);
@@ -4010,13 +4010,13 @@ class PlayState extends MusicBeatState
 						swagSpeed = SONG.speed - 0.5;
 						//GARRETT TURN 1!!
 						swapDad('garrett');
-						iconP2.changeIcon(dad.iconName);
+						iconP2.changeIcon(opponent.iconName);
 						algebraStander('og-dave', daveStand, 250, 100);
 						daveJunk.visible = true;
 					case 416: // 
 						//HAPPY DAVE TURN 2!!
 						swapDad('og-dave');
-						iconP2.changeIcon(dad.iconName);
+						iconP2.changeIcon(opponent.iconName);
 						daveJunk.visible = false;
 						garrettJunk.visible = true;
 						swagSpeed = SONG.speed - 0.3;
@@ -4035,7 +4035,7 @@ class PlayState extends MusicBeatState
 							member.destroy();
 						}
 						algebraStander('og-dave-angey', daveStand, 250, 100);
-						iconP2.changeIcon(dad.iconName);
+						iconP2.changeIcon(opponent.iconName);
 					case 552:
 						//ANGEY DAVE TURN 1!!
 						swapDad('og-dave-angey');
@@ -4045,11 +4045,10 @@ class PlayState extends MusicBeatState
 						{
 							member.destroy();
 						}
-						algebraStander('garrett', garrettStand, 500, 225, true);
-						iconP2.changeIcon(dad.iconName);
+						algebraStander('garrett', garrettStand, 500, 225);
+						iconP2.changeIcon(opponent.iconName);
 					case 696:
-						//HALL MONITOR TURN
-						//UNCOMMENT THIS WHEN HALL MONITOR SPRITES ARE DONE AND IN
+						// GREENY GUY TURN
 						swapDad('hall-monitor');
 						davePiss.visible = true;
 						diamondJunk.visible = true;
@@ -4058,9 +4057,9 @@ class PlayState extends MusicBeatState
 						{
 							member.destroy();
 						}
-						algebraStander('garrett', garrettStand, 500, 225, true);
+						algebraStander('garrett', garrettStand, 500, 225);
 						algebraStander('og-dave-angey', daveStand, 250, 100);
-						iconP2.changeIcon(dad.iconName);
+						iconP2.changeIcon(opponent.iconName);
 					case 1344:
 						//DIAMOND MAN TURN
 						swapDad('diamond-man');
@@ -4071,16 +4070,15 @@ class PlayState extends MusicBeatState
 						{
 							member.destroy();
 						}
-						algebraStander('garrett', garrettStand, 500, 225, true);
-						//UNCOMMENT THIS WHEN HALL MONITOR SPRITES ARE DONE AND IN
+						algebraStander('garrett', garrettStand, 500, 225);
 						algebraStander('hall-monitor', hallMonitorStand, 0, 100);
 						algebraStander('og-dave-angey', daveStand, 250, 100);
-						iconP2.changeIcon(dad.iconName);
+						iconP2.changeIcon(opponent.iconName);
 					case 1696:
 						//PLAYROBOT TURN
 						swapDad('playrobot');
 						swagSpeed = 1.6;
-						iconP2.changeIcon(dad.iconName);
+						iconP2.changeIcon(opponent.iconName);
 					case 1852:
 						FlxTween.tween(davePiss, {x: davePiss.x - 250}, 0.5, {ease:FlxEase.quadOut});
 						davePiss.animation.play('d');
@@ -4088,7 +4086,7 @@ class PlayState extends MusicBeatState
 						//SCARY PLAYROBOT TURN
 						swapDad('playrobot-crazy');
 						swagSpeed = SONG.speed;
-						iconP2.changeIcon(dad.iconName);
+						iconP2.changeIcon(opponent.iconName);
 					case 1996:
 						//ANGEY DAVE TURN 2!!
 						swapDad('og-dave-angey');
@@ -4099,10 +4097,10 @@ class PlayState extends MusicBeatState
 							member.destroy();
 						}
 						algebraStander('playrobot-scary', playRobotStand, 750, 100, false, true);
-						algebraStander('garrett', garrettStand, 500, 225, true);
+						algebraStander('garrett', garrettStand, 500, 225);
 						//UNCOMMENT THIS WHEN HALL MONITOR SPRITES ARE DONE AND IN
 						algebraStander('hall-monitor', hallMonitorStand, 0, 100);
-						iconP2.changeIcon(dad.iconName);
+						iconP2.changeIcon(opponent.iconName);
 					case 2140:
 						swagSpeed = SONG.speed + 0.9;
 					
@@ -4130,7 +4128,7 @@ class PlayState extends MusicBeatState
 						defaultCamZoom = 0.7;
 					case 220:
 						idleAlt = true;
-						dad.playAnim('catappear', true);
+						opponent.playAnim('catappear', true);
 						defaultCamZoom = 1;
 					case 224:
 						FlxG.camera.flash(FlxColor.WHITE, 1);
@@ -4176,10 +4174,10 @@ class PlayState extends MusicBeatState
 						
 						iconRPC = 'icon_the_two_dunkers';
 						iconP2.changeIcon('junkers');
-						dad.playAnim('NOOMYPHONES', true);
-						dadmirror.playAnim('NOOMYPHONES', true);
-						dad.POOP = true; // WORK WORK WOKR< WOKRMKIEPATNOLIKSEHGO:"IKSJRHDLG"H
-						dadmirror.POOP = true; // :))))))))))
+						opponent.playAnim('NOOMYPHONES', true);
+						opponentmirror.playAnim('NOOMYPHONES', true);
+						opponent.POOP = true; // WORK WORK WOKR< WOKRMKIEPATNOLIKSEHGO:"IKSJRHDLG"H
+						opponentmirror.POOP = true; // :))))))))))
 						poopStrums.visible = true; // ??????
 						new FlxTimer().start(3.5, function(deez:FlxTimer){
 							swagThings.forEach(function(spr:FlxSprite){
@@ -4233,8 +4231,8 @@ class PlayState extends MusicBeatState
 							iconP2.changeIcon('expunged');
 							healthBar.createFilledBar(littleIdiot.barColor, boyfriend.barColor);
 							orbit = false;
-							dad.visible = dadmirror.visible = swagger.visible = false;
-							var derez = new FlxSprite(dad.getMidpoint().x, dad.getMidpoint().y).loadGraphic(Paths.image('backgrounds/applecore/monkey_guy'));
+							opponent.visible = opponentmirror.visible = swagger.visible = false;
+							var derez = new FlxSprite(opponent.getMidpoint().x, opponent.getMidpoint().y).loadGraphic(Paths.image('backgrounds/applecore/monkey_guy'));
 							derez.setPosition(derez.x - derez.width / 2, derez.y - derez.height / 2);
 							derez.antialiasing = false;
 							add(derez);
@@ -4317,21 +4315,21 @@ class PlayState extends MusicBeatState
 				switch(curBeat)
 				{
 					case 254:
-						dad2.visible = true;
+						opponent2.visible = true;
 						new FlxTimer().start((Conductor.crochet / 1000) * 0.5, function(tmr:FlxTimer){
-							FlxTween.tween(dad2, {x: -300, y: 100}, (Conductor.crochet / 1000) * 1.5, {ease: FlxEase.cubeIn});
+							FlxTween.tween(opponent2, {x: -300, y: 100}, (Conductor.crochet / 1000) * 1.5, {ease: FlxEase.cubeIn});
 						});
-						//FlxTween.tween(dad, {x: 1500, y: 1500}, Conductor.crochet / 1000, {ease: FlxEase.cubeIn});
+						//FlxTween.tween(opponent, {x: 1500, y: 1500}, Conductor.crochet / 1000, {ease: FlxEase.cubeIn});
 					case 256:
 						creditsWatermark.text = 'Screw you!';
 						kadeEngineWatermark.y -= 20;
-						dad.visible = false;
-						var baldiBasic:FlxSprite = new FlxSprite(dad.x, dad.y);
+						opponent.visible = false;
+						var baldiBasic:FlxSprite = new FlxSprite(opponent.x, opponent.y);
 						baldiBasic.frames = daveFuckingDies.frames;
 						baldiBasic.animation.addByPrefix('HI', 'IDLE', 24, false);
 						baldiBasic.animation.play("HI");
-						baldiBasic.x = dad.getMidpoint().x - baldiBasic.width / 2;
-						baldiBasic.y = dad.getMidpoint().y - baldiBasic.height / 2;
+						baldiBasic.x = opponent.getMidpoint().x - baldiBasic.width / 2;
+						baldiBasic.y = opponent.getMidpoint().y - baldiBasic.height / 2;
 						add(baldiBasic);
 						FlxTween.tween(baldiBasic, {x: baldiBasic.x + 100, y: baldiBasic.y + 500}, 0.15, {ease:FlxEase.cubeOut, onComplete: function(twn:FlxTween){
 							baldiBasic.kill();
@@ -4340,10 +4338,10 @@ class PlayState extends MusicBeatState
 						}});
 						//this transition was lazy and dumb lets do it better
 						FlxG.camera.flash(FlxColor.WHITE, 1);/*
-						remove(dad);
+						remove(opponent);
 						//badai time
-						dad = new Character(-300, 100, 'badai', false);
-						add(dad);
+						opponent = new Character(-300, 100, 'badai', false);
+						add(opponent);
 						daveFuckingDies.visible = true;*/
 						camMoveAllowed = false;
 						badaiTime = true;
@@ -4380,14 +4378,14 @@ class PlayState extends MusicBeatState
 						FlxTween.tween(thunderBlack, {alpha: 0.7}, Conductor.stepCrochet / 500);
 						swapDad('little-bandu');
 						iconP2.changeIcon('bandu');
-						healthBar.createFilledBar(dad.barColor, boyfriend.barColor);
+						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
 					case 386:
 						FlxG.camera.flash(FlxColor.WHITE, 1);
 						defaultCamZoom = 0.9;
 						thunderBlack.alpha = 0;
 						swapDad('bendu');
 						iconP2.changeIcon('bendu');
-						healthBar.createFilledBar(dad.barColor, boyfriend.barColor);
+						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
 				}
 			case 'jam':
 				switch(curBeat)
@@ -4598,9 +4596,9 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (curBeat % 8 == 7 && SONG.song == 'Tutorial' && dad.curCharacter == 'gf') // fixed your stupid fucking code ninjamuffin this is literally the easiest shit to fix like come on seriously why are you so dumb
+		if (curBeat % 8 == 7 && SONG.song == 'Tutorial' && opponent.curCharacter == 'gf') // fixed your stupid fucking code ninjamuffin this is literally the easiest shit to fix like come on seriously why are you so dumb
 		{
-			dad.playAnim('cheer', true);
+			opponent.playAnim('cheer', true);
 			boyfriend.playAnim('hey', true);
 		}
 	}
@@ -4619,113 +4617,113 @@ class PlayState extends MusicBeatState
 
 	function swapDad(char:String, flash:Bool = true, x:Float = 100, y:Float = 100)
 	{
-		if(dad != null)
-			remove(dad);
-			trace('remove dad');
-		dad = new Character(x, y, char, false);
-		trace('set dad');
+		if(opponent != null)
+			remove(opponent);
+			trace('remove opponent');
+		opponent = new Character(x, y, char, false);
+		trace('set opponent');
 		repositionDad();
-		trace('repositioned dad');
-		add(dad);
-		trace('added dad');
+		trace('repositioned opponent');
+		add(opponent);
+		trace('added opponent');
 		if(flash)
 			FlxG.camera.flash(FlxColor.WHITE, 1, null, true);
 			trace('flashed');
 	}
 
 	function repositionDad() {
-		switch (dad.curCharacter)
+		switch (opponent.curCharacter)
 		{
 			case 'gf':
-				dad.setPosition(gf.x, gf.y);
+				opponent.setPosition(gf.x, gf.y);
 				gf.visible = false;
 				if (isStoryMode)
 				{
 					tweenCamIn();
 				}
 			case "tristan" | 'tristan-beta':
-				dad.y += 325;
-				dad.x += 100;
+				opponent.y += 325;
+				opponent.x += 100;
 			case 'dave' | 'dave-annoyed' | 'dave-splitathon':
 				{
-					dad.y += 160;
-					dad.x += 250;
+					opponent.y += 160;
+					opponent.x += 250;
 				}
 			case 'dave-old':
 				{
-					dad.y += 270;
-					dad.x += 150;
+					opponent.y += 270;
+					opponent.x += 150;
 				}
 			case 'dave-angey' | 'dave-annoyed-3d' | 'dave-3d-standing-bruh-what':
 				{
-					dad.y += 0;
-					dad.x += 150;
+					opponent.y += 0;
+					opponent.x += 150;
 				}
 			case 'bambi-3d' | 'bambi-piss-3d':
 				{
-					dad.y -= 250;
-					dad.x -= 145;
+					opponent.y -= 250;
+					opponent.x -= 145;
 				}
 			case 'ringi':
-				dad.y -= 275;
-				dad.x -= 255;
+				opponent.y -= 275;
+				opponent.x -= 255;
 			case 'bambom':
-				dad.y -= 375;
-				dad.x -= 500;
+				opponent.y -= 375;
+				opponent.x -= 500;
 			case 'bendu':
-				dad.y += 50;
-				dad.x += 10;
+				opponent.y += 50;
+				opponent.x += 10;
 			case 'bambi-unfair':
 				{
-					dad.y += 100;
+					opponent.y += 100;
 				}
 			case 'bambi' | 'bambi-old' | 'bambi-bevel' | 'what-lmao' | 'bambi-good':
 				{
-					dad.y += 400;
+					opponent.y += 400;
 				}
 			case 'bambi-new' | 'bambi-farmer-beta':
 				{
-					dad.y += 450;
-					dad.x += 200;
+					opponent.y += 450;
+					opponent.x += 200;
 				}
 			case 'dave-wheels':
-				dad.x += 100;
-				dad.y += 300;
+				opponent.x += 100;
+				opponent.y += 300;
 			case 'bambi-splitathon':
 				{
-					dad.x += 175;
-					dad.y += 400;
+					opponent.x += 175;
+					opponent.y += 400;
 				}
 			case 'dave-png':
-				dad.x += 81;
-				dad.y += 108;
+				opponent.x += 81;
+				opponent.y += 108;
 			case 'bambi-angey':
-				dad.y += 450;
-				dad.x += 100;
+				opponent.y += 450;
+				opponent.x += 100;
 			case 'RECOVERED_PROJECT' | 'RECOVERED_PROJECT_2':
-				dad.setPosition(-307, 10);
+				opponent.setPosition(-307, 10);
 			case 'RECOVERED_PROJECT_3':
-				dad.setPosition(-307, 10);
-				dad.y -= 400;
-				dad.x -= 125;
+				opponent.setPosition(-307, 10);
+				opponent.y -= 400;
+				opponent.x -= 125;
 			case 'silly-sally':
-				dad.x -= 300;
-				dad.y -= 230;
+				opponent.x -= 300;
+				opponent.y -= 230;
 			case 'garrett':
-				dad.y += 65;
+				opponent.y += 65;
 			case 'diamond-man':
-				dad.y += 25;
+				opponent.y += 25;
 			case 'og-dave' | 'og-dave-angey':
-				dad.x -= 190;
+				opponent.x -= 190;
 			case 'hall-monitor':
-				dad.x += 45;
-				dad.y += 185;
+				opponent.x += 45;
+				opponent.y += 185;
 			case 'playrobot':
-				dad.y += 265;
-				dad.x += 150;
+				opponent.y += 265;
+				opponent.x += 150;
 			case 'playrobot-crazy':
-				dad.y += 365;
-				dad.x += 165;
+				opponent.y += 365;
+				opponent.x += 165;
 		}
 	}
 	

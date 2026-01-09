@@ -141,7 +141,7 @@ class ChartingState extends MusicBeatState
 		add(rightIcon);
 
 		leftIcon.setPosition(0, -100);
-		midIcon.setPosition(gridBG.width / 1, -200);
+		midIcon.setPosition(gridBG.width / 3, -120);
 		rightIcon.setPosition(gridBG.width / 2, -100);
 
 
@@ -913,11 +913,13 @@ class ChartingState extends MusicBeatState
 		if (check_mustHitSection.checked)
 		{
 			leftIcon.animation.play('bf');
-			rightIcon.animation.play('dad');
+			midIcon.animation.play('gf');
+			rightIcon.animation.play('dave');
 		}
 		else
 		{
-			leftIcon.animation.play('dad');
+			leftIcon.animation.play('dave');
+			midIcon.animation.play('gf');
 			rightIcon.animation.play('bf');
 		}
 	}
@@ -1153,13 +1155,16 @@ class ChartingState extends MusicBeatState
 		{
 			FlxG.switchState(new VideoState('assets/videos/fortnite/fortniteballs.webm', new CrasherState())); //YOU THINK YOU ARE SO CLEVER DON'T YOU? HAHA FUCK YOU
 		}
-		if (song.toLowerCase() == null)
+		if (PlayState.SONG == null)
 		{
 			PlayState.SONG = Song.loadFromJson("Disability", "disability");
 			FlxG.resetState();
 		}
-		PlayState.SONG = Song.loadFromJson(song.toLowerCase(), song.toLowerCase());
-		FlxG.resetState();
+		else
+		{
+			PlayState.SONG = Song.loadFromJson(song.toLowerCase(), song.toLowerCase());
+			FlxG.resetState();
+		}
 	}
 
 	function loadAutosave():Void
