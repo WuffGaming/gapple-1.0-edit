@@ -39,7 +39,7 @@ class DialogueBox extends FlxSpriteGroup
 
 	public var noAa:Array<String> = ["ui/dialogue/dave_furiosity", "ui/dialogue/3d_bamb", "ui/dialogue/unfairnessPortrait", 'ui/dialogue/3d_bambi_disruption_portrait', 
 	'ui/dialogue/bandu_portrait', 'ui/dialogue/3d_splitathon_dave_port', 'ui/dialogue/3d_dave_wireframe_portrait', 'ui/dialogue/3d_dave_og_portrait', 'dialogue/EXPUNGED'
-, 'ui/dialogue/RECOVERED_PORT', 'ui/dialogue/RECOVERED_PORT_WEEP'];
+, 'ui/dialogue/RECOVERED_PORT', 'ui/dialogue/RECOVERED_PORT_WEEP', 'ui/dialogue/bf_algebra'];
 
 	var portraitLeft:FlxSprite;
 	var portraitRight:FlxSprite;
@@ -69,6 +69,8 @@ class DialogueBox extends FlxSpriteGroup
 				case 'disruption' | 'wireframe' | 'duper' | 'recovered-project':
 					FlxG.sound.playMusic(Paths.music('scaryAmbience'), 0);
 					FlxG.sound.music.fadeIn(1, 0, 0.8);
+				case 'algebra':
+					FlxG.sound.playMusic(Paths.music('Algebrah'), 0.7);
 			}
 		}
 
@@ -249,7 +251,7 @@ class DialogueBox extends FlxSpriteGroup
 				swagDialogue.sounds = [FlxG.sound.load(Paths.soundRandom('dialogue/bambDialogue', 1, 3), 0.6)];
 			case 'bandu':
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/banduDialogue'), 0.9)];
-			case 'bf' | 'bfconfuse' | 'radical':
+			case 'bf' | 'bfconfuse' | '3dbf' | 'radical':
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/bfDialogue'), 0.6)];		
 			case 'gf' | 'gfcasual' | 'gfconfuse' | 'gfwhat':
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/gfDialogue'), 0.6)];
@@ -360,7 +362,7 @@ class DialogueBox extends FlxSpriteGroup
 			{
 				case 'dave' | '3ddave' | 'wiredave' | 'bambi' | 'bambimad' | '3dbambi' | 'olddave' | 'bandu' | 'recover' | 'recoverweep' | 'expunged' | 'none':
 					portraitLeft.setPosition(220, 220);
-				case 'bf' | 'bfconfuse' | 'gf' | 'gfcasual' | 'gfconfuse' | 'gfwhat' | 'radical': //create boyfriend, genderbent boyfriend, and gay boyfriend
+				case 'bf' | 'bfconfuse' | '3dbf' | 'gf' | 'gfcasual' | 'gfconfuse' | 'gfwhat' | 'radical': //create boyfriend, genderbent boyfriend, and gay boyfriend
 					portraitRight.setPosition(570, 220);
 			}
 			box.flipX = portraitLeft.visible;
@@ -396,9 +398,6 @@ class DialogueBox extends FlxSpriteGroup
 				FlxTween.tween(blitzObject, {alpha:1}, 0.25);
 			case 'noblitz':
 				FlxTween.tween(blitzObject, {alpha:0}, 0.25);
-			case 'algebrah':
-				blackScreen.alpha = 0;
-				FlxG.sound.playMusic(Paths.music('Algebrah'), 0.7);
 			case 'droptext_green':
 				dropText.color = FlxColor.GREEN;
 			case 'droptext_white':
@@ -510,6 +509,14 @@ class DialogueBox extends FlxSpriteGroup
 					default:
 						portrait.portraitPath = 'ui/dialogue/bf_furiosity_corntheft';
 						portrait.portraitPrefix = 'bf furiosity & corntheft portrait';
+				}
+				portrait.left = false;
+			case '3dbf':
+				switch (PlayState.SONG.song.toLowerCase())
+				{
+					default:
+						portrait.portraitPath = 'ui/dialogue/bf_algebra';
+						portrait.portraitPrefix = 'bf insanity & splitathon portrait';
 				}
 				portrait.left = false;
 			case 'gf':

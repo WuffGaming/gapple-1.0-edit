@@ -1,6 +1,6 @@
 OK OK so theres many things to do with Dialogue.
 
-There are currently 18 characters.
+There are currently 20 characters.
 
 :dave:Hi!
 :3ddave:Wait
@@ -14,14 +14,16 @@ There are currently 18 characters.
 :gfcasual:Anyways..
 :gfconfuse:uhh
 :gfwhat:what
+:3dbf:Ba Bee-dee Do ba!
 :expunged:FUCK OFF!!!
 :bandu:Buddy boy, that's quite a rude thing to say!
 :olddave:I don't expect this class to succeed in anything..
 :none:Nothing
 :recover:Hi!
+:recoverweep:Words I don't know the meaning of start tomorrow
 :radical:Hello.
 
-There are currently 10 events that can happen in dialogue. This includes:
+There are currently 11 events that can happen in dialogue. This includes:
 
 setfont_code:none:You can't see my text!
 setfont_normal:none:You can see my text!
@@ -29,10 +31,11 @@ black:none:Instant black.
 no_black:none:Instant no more black.
 to_black:none:Transition into darkness.
 off_black:none:Transition out of darkness.
-algebrah:olddave:Turn on the Algebra music! Also removes the black if it's visible.
 droptext_green:bambi:I'm green now!
 droptext_blue:dave:I'm blue now!
 droptext_white:gfcasual:White people tomorrow morning
+showblitz:3ddave:Shows the Blitz cutscene image! Wow!
+:noblitz:3ddave:No longer!
 
 Only one event can happen at a time.
 
