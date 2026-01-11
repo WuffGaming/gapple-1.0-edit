@@ -286,6 +286,26 @@ class Character extends FlxSprite
 		
 				playAnim('idle');
 
+			case 'insane-dave-3d':
+				// DAVE SHITE ANIMATION LOADING CODE
+				tex = Paths.getSparrowAtlas('characters/dave/insane_dave_3d');
+				frames = tex;
+				animation.addByPrefix('idle', 'idle', 24, false);
+				animation.addByPrefix('singUP', 'up', 24, false);
+				animation.addByPrefix('singRIGHT', 'right', 24, false);
+				animation.addByPrefix('singDOWN', 'down', 24, false);
+				animation.addByPrefix('singLEFT', 'left', 24, false);
+		
+				loadOffsetFile(curCharacter);
+				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
+				updateHitbox();
+				antialiasing = false;
+				iconName = 'dave-3d';
+				barColor = FlxColor.fromRGB(255, 203, 230);
+		
+				playAnim('idle');
+
+
 			case 'bandu-origin':
 				tex = Paths.getSparrowAtlas('characters/bandu/bandu_origin');
 				frames = tex;
@@ -596,7 +616,7 @@ class Character extends FlxSprite
 
 				playAnim('danceLeft');
 			case 'bambi-good':
-				// PLACEHOLDER! !  ! !
+				// ships my cute
 				frames = Paths.getSparrowAtlas('characters/bambi/PLACEHOLDER_BAMBI');
 				animation.addByPrefix('idle', 'Idle', 24, false);
 				animation.addByPrefix('singDOWN', 'down', 24, false);
@@ -610,7 +630,7 @@ class Character extends FlxSprite
 
 				playAnim('idle');
 			case 'dave-good':
-				// allso uh placeholder
+				// not a placeholder
 				tex = Paths.getSparrowAtlas('characters/dave/PLACEHOLDER_DAVE');
 				frames = tex;
 				animation.addByPrefix('idle', 'idleDance', 24, false);
@@ -623,6 +643,37 @@ class Character extends FlxSprite
 				iconName = 'dave';
 				barColor = FlxColor.fromRGB(15, 95, 255);
 
+				playAnim('idle');
+
+			case 'dave':
+				// maybe a placeholder
+				tex = Paths.getSparrowAtlas('characters/dave/PLACEHOLDER_DAVE');
+				frames = tex;
+				animation.addByPrefix('idle', 'idleDance', 24, false);
+				animation.addByPrefix('singUP', 'Up', 24, false);
+				animation.addByPrefix('singRIGHT', 'Right', 24, false);
+				animation.addByPrefix('singDOWN', 'Down', 24, false);
+				animation.addByPrefix('singLEFT', 'Left', 24, false);
+	
+				loadOffsetFile(curCharacter);
+				iconName = 'dave';
+				barColor = FlxColor.fromRGB(15, 95, 255);
+
+				playAnim('idle');
+
+
+			case 'dave-insane':
+				// ji
+				tex = Paths.getSparrowAtlas('characters/dave/INSANE_DAVE');
+				frames = tex;
+				animation.addByPrefix('idle', 'Idle', 24, false);
+				animation.addByPrefix('singUP', 'Up', 24, false);
+				animation.addByPrefix('singRIGHT', 'Right', 24, false);
+				animation.addByPrefix('singDOWN', 'Down', 24, false);
+				animation.addByPrefix('singLEFT', 'Left', 24, false);
+	
+				loadOffsetFile(curCharacter);
+	
 				playAnim('idle');
 			case 'unfair-junker':
 				frames = Paths.getSparrowAtlas('characters/bambi/NEWER UNFAIR GUY');

@@ -120,7 +120,7 @@ class PlayState extends MusicBeatState
 
 	var focusOnDadGlobal:Bool = true;
 
-	var funnyFloatyBoys:Array<String> = ['dave-angey', 'bambi-3d', 'dave-annoyed-3d', 'dave-3d-standing-bruh-what', 'bambi-unfair', 'bambi-piss-3d', 'bandu', 'unfair-junker', 'split-dave-3d', 'badai', 'tunnel-dave', 'tunnel-bf', 'tunnel-bf-flipped', 'bandu-candy', 'bandu-origin', 'ringi', 'bambom', 'bendu', 'little-bandu'];
+	var funnyFloatyBoys:Array<String> = ['dave-angey', 'bambi-3d', 'dave-annoyed-3d', 'dave-3d-standing-bruh-what', 'bambi-unfair', 'bambi-piss-3d', 'bandu', 'unfair-junker', 'split-dave-3d', 'insane-dave-3d', 'badai', 'tunnel-dave', 'tunnel-bf', 'tunnel-bf-flipped', 'bandu-candy', 'bandu-origin', 'ringi', 'bambom', 'bendu', 'little-bandu'];
 
 	var storyDifficultyText:String = "";
 	var iconRPC:String = "";
@@ -4264,20 +4264,24 @@ class PlayState extends MusicBeatState
 				switch (curBeat) {
 					case 1:
 						FlxTween.tween(thunderBlack, {alpha: 0}, Conductor.stepCrochet / 500);
+						camZoomIntensity = 0;
 					case 16:
 						FlxG.camera.flash(FlxColor.WHITE, 1);
 						defaultCamZoom = 0.85;
 					case 80:
 						FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
 						defaultCamZoom = 1.3;
+						camZoomIntensity = 1;
 					case 112:
 						thunderBlack.alpha = 0;
 						FlxG.camera.flash(FlxColor.WHITE, 1);
 						defaultCamZoom = 0.85;
 					case 208:
+						camZoomIntensity = 0;
 						FlxTween.tween(thunderBlack, {alpha: 0.7}, Conductor.stepCrochet / 500);
 						defaultCamZoom = 1;
 					case 256:
+						camZoomIntensity = 1;
 						thunderBlack.alpha = 0;
 						swapDad('RECOVERED_PROJECT_2');
 						defaultCamZoom = 0.85;
@@ -4295,6 +4299,7 @@ class PlayState extends MusicBeatState
 						FlxTween.tween(thunderBlack, {alpha: 0}, Conductor.stepCrochet / 500);
 						defaultCamZoom = 0.85;
 					case 480:
+						camZoomIntensity = 0;
 						defaultCamZoom = 1.1;
 						gf.visible = false;
 						thunderBlack.alpha = 1;
@@ -4303,6 +4308,7 @@ class PlayState extends MusicBeatState
 						FlxTween.tween(thunderBlack, {alpha: 0}, 1);
 						iconP2.changeIcon('recover-irreversible');
 					case 532:
+						camZoomIntensity = 1;
 						defaultCamZoom = 0.85;
 						FlxG.camera.flash(FlxColor.WHITE, 1);
 						curbar = 'corruptedBar';
@@ -4421,7 +4427,9 @@ class PlayState extends MusicBeatState
 						defaultCamZoom = 1.2;
 					case 64: // dave and bg turn 3d
 						thunderBlack.alpha = 0;
-						swapDad('split-dave-3d');
+						swapDad('insane-dave-3d');
+						iconP2.changeIcon(opponent.iconName);
+						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
 						defaultCamZoom = 0.8;
 					case 128:
 						FlxG.camera.flash(FlxColor.WHITE, 1);
@@ -4431,13 +4439,17 @@ class PlayState extends MusicBeatState
 						defaultCamZoom = 1.1;
 					case 192: // dave and bg turn 2d, dave switches to insanity sprites.
 						thunderBlack.alpha = 0;
-						swapDad('dave-good');
+						swapDad('dave-insane');
+						iconP2.changeIcon(opponent.iconName);
+						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
 						defaultCamZoom = 1;
 					case 256: // dave and bg turn 3d
-						swapDad('split-dave-3d');
+						swapDad('insane-dave-3d');
+						iconP2.changeIcon(opponent.iconName);
+						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
 						defaultCamZoom = 0.85;
 					case 312:
-						defaultCamZoom = FlxMath.lerp(0.85, 0.6, 2.2);
+						defaultCamZoom = 0.6;
 						//FlxTween.tween(FlxG.camera, {zoom: 0.6}, 2.2, {ease: FlxEase.elasticInOut});
 						// todo: make this way slower!!
 						// gd numer
@@ -4446,7 +4458,9 @@ class PlayState extends MusicBeatState
 						defaultCamZoom = 1.1;
 					case 320: // dave and bg turn 2d
 						thunderBlack.alpha = 0;
-						swapDad('dave-good');
+						swapDad('dave-insane');
+						iconP2.changeIcon(opponent.iconName);
+						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
 						defaultCamZoom = 0.8;
 					case 336:
 						defaultCamZoom = 1;
@@ -4455,19 +4469,27 @@ class PlayState extends MusicBeatState
 						defaultCamZoom = 0.9;
 					case 384: // dave and bg turn 3d
 						thunderBlack.alpha = 0;
-						swapDad('split-dave-3d');
+						swapDad('insane-dave-3d');
+						iconP2.changeIcon(opponent.iconName);
+						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
 						defaultCamZoom = 1;
 					case 448: // dave and bg turn 2d
-						swapDad('dave-good');
+						swapDad('dave-insaned');
+						iconP2.changeIcon(opponent.iconName);
+						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
 						defaultCamZoom = 1.1;
 					case 464:
 						defaultCamZoom = 1;
 					case 480: // dave and bg turn 3d
-						swapDad('split-dave-3d');
+						swapDad('insane-dave-3d');
+						iconP2.changeIcon(opponent.iconName);
+						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
 						defaultCamZoom = 0.8;
 					case 512: // dave and bg turn 2d for the fimal time..
 						FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
-						swapDad('dave-good'); // keep normie house dave btw... he must be average
+						swapDad('dave'); // keep normie house dave btw... he must be average
+						iconP2.changeIcon(opponent.iconName);
+						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
 						defaultCamZoom = 1.2;
 					case 544:
 						thunderBlack.alpha = 0;
@@ -4641,29 +4663,9 @@ class PlayState extends MusicBeatState
 				{
 					tweenCamIn();
 				}
-			case "tristan" | 'tristan-beta':
+			case "tristan":
 				opponent.y += 325;
 				opponent.x += 100;
-			case 'dave' | 'dave-annoyed' | 'dave-splitathon':
-				{
-					opponent.y += 160;
-					opponent.x += 250;
-				}
-			case 'dave-old':
-				{
-					opponent.y += 270;
-					opponent.x += 150;
-				}
-			case 'dave-angey' | 'dave-annoyed-3d' | 'dave-3d-standing-bruh-what':
-				{
-					opponent.y += 0;
-					opponent.x += 150;
-				}
-			case 'bambi-3d' | 'bambi-piss-3d':
-				{
-					opponent.y -= 250;
-					opponent.x -= 145;
-				}
 			case 'ringi':
 				opponent.y -= 275;
 				opponent.x -= 255;
@@ -4673,26 +4675,10 @@ class PlayState extends MusicBeatState
 			case 'bendu':
 				opponent.y += 50;
 				opponent.x += 10;
-			case 'bambi-unfair':
+			case 'dave' | 'dave-insane':
 				{
-					opponent.y += 100;
-				}
-			case 'bambi' | 'bambi-old' | 'bambi-bevel' | 'what-lmao' | 'bambi-good':
-				{
-					opponent.y += 400;
-				}
-			case 'bambi-new' | 'bambi-farmer-beta':
-				{
-					opponent.y += 450;
-					opponent.x += 200;
-				}
-			case 'dave-wheels':
-				opponent.x += 100;
-				opponent.y += 300;
-			case 'bambi-splitathon':
-				{
-					opponent.x += 175;
-					opponent.y += 400;
+					opponent.y += 160;
+					opponent.x += 250;
 				}
 			case 'dave-png':
 				opponent.x += 81;
