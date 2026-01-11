@@ -673,7 +673,8 @@ class Character extends FlxSprite
 				animation.addByPrefix('singLEFT', 'Left', 24, false);
 	
 				loadOffsetFile(curCharacter);
-	
+				iconName = 'dave';
+				barColor = FlxColor.fromRGB(15, 95, 255);
 				playAnim('idle');
 			case 'unfair-junker':
 				frames = Paths.getSparrowAtlas('characters/bambi/NEWER UNFAIR GUY');

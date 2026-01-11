@@ -77,6 +77,7 @@ class PlayState extends MusicBeatState
 	public static var goods:Int = 0;
 	public static var sicks:Int = 0;
 	var farmsky:FlxSprite;
+	var threedeez:FlxSprite;
 	var thirdimension:FlxSprite;
 
 	public var camBeatSnap:Int = 4;
@@ -518,6 +519,8 @@ class PlayState extends MusicBeatState
 				boyfriend.y += 10;
 				gf.x += 70;
 				opponent.x -= 100;
+			case 'basement':
+				boyfriend.x += 125;
 			case 'sugar':
 				if(formoverride == "radical")
 				{
@@ -903,6 +906,22 @@ class PlayState extends MusicBeatState
 				swag.antialiasing = false;
 
 				add(swag);
+
+			case 'blitz':
+				defaultCamZoom = 0.9;
+				curStage = 'basement';
+
+				var twodeez:FlxSprite = new FlxSprite(-1982, -707).loadGraphic(Paths.image('backgrounds/house/basement-2d'));
+				twodeez.updateHitbox();
+				sprites.add(twodeez);
+				threedeez = new FlxSprite(twodeez.x, twodeez.y).loadGraphic(Paths.image('backgrounds/house/basement-3d'));
+				threedeez.active = threedeez.visible = false;
+				threedeez.updateHitbox();
+				threedeez.antialiasing = false;
+				sprites.add(threedeez);
+
+				add(twodeez);
+				add(threedeez);
 
 			case 'duper':
 				defaultCamZoom = 0.9;
@@ -2224,6 +2243,9 @@ class PlayState extends MusicBeatState
 				case 'badai':
 					opponent.angle += elapsed * 10;
 					opponent.y += (Math.sin(elapsedtime) * 0.6);
+				case 'insane-dave-3d':
+					opponent.y += (Math.sin(elapsedtime) * 0.6);
+					opponent.x += (Math.cos(elapsedtime) * 0.55);
 				case 'little-bandu':
 					opponent.angle += elapsed * 2;
 					opponent.y += (Math.sin(elapsedtime) * 0.65);
@@ -4431,6 +4453,7 @@ class PlayState extends MusicBeatState
 						iconP2.changeIcon(opponent.iconName);
 						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
 						defaultCamZoom = 0.8;
+						threedeez.active = threedeez.visible = true;
 					case 128:
 						FlxG.camera.flash(FlxColor.WHITE, 1);
 						defaultCamZoom = 0.9;
@@ -4443,11 +4466,13 @@ class PlayState extends MusicBeatState
 						iconP2.changeIcon(opponent.iconName);
 						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
 						defaultCamZoom = 1;
+						threedeez.active = threedeez.visible = false;
 					case 256: // dave and bg turn 3d
 						swapDad('insane-dave-3d');
 						iconP2.changeIcon(opponent.iconName);
 						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
 						defaultCamZoom = 0.85;
+						threedeez.active = threedeez.visible = true;
 					case 312:
 						defaultCamZoom = 0.6;
 						//FlxTween.tween(FlxG.camera, {zoom: 0.6}, 2.2, {ease: FlxEase.elasticInOut});
@@ -4462,6 +4487,7 @@ class PlayState extends MusicBeatState
 						iconP2.changeIcon(opponent.iconName);
 						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
 						defaultCamZoom = 0.8;
+						threedeez.active = threedeez.visible = false;
 					case 336:
 						defaultCamZoom = 1;
 					case 352:
@@ -4473,11 +4499,13 @@ class PlayState extends MusicBeatState
 						iconP2.changeIcon(opponent.iconName);
 						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
 						defaultCamZoom = 1;
+						threedeez.active = threedeez.visible = true;
 					case 448: // dave and bg turn 2d
-						swapDad('dave-insaned');
+						swapDad('dave-insane');
 						iconP2.changeIcon(opponent.iconName);
 						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
 						defaultCamZoom = 1.1;
+						threedeez.active = threedeez.visible = false;
 					case 464:
 						defaultCamZoom = 1;
 					case 480: // dave and bg turn 3d
@@ -4485,12 +4513,14 @@ class PlayState extends MusicBeatState
 						iconP2.changeIcon(opponent.iconName);
 						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
 						defaultCamZoom = 0.8;
+						threedeez.active = threedeez.visible = true;
 					case 512: // dave and bg turn 2d for the fimal time..
 						FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
 						swapDad('dave'); // keep normie house dave btw... he must be average
 						iconP2.changeIcon(opponent.iconName);
 						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
 						defaultCamZoom = 1.2;
+						threedeez.active = threedeez.visible = false;
 					case 544:
 						thunderBlack.alpha = 0;
 						FlxG.camera.flash(FlxColor.WHITE, 1);
@@ -4676,10 +4706,11 @@ class PlayState extends MusicBeatState
 				opponent.y += 50;
 				opponent.x += 10;
 			case 'dave' | 'dave-insane':
-				{
-					opponent.y += 160;
-					opponent.x += 250;
-				}
+				opponent.y += 160;
+				opponent.x -= 50;
+			case 'insane-dave-3d':
+				opponent.y -= 40;
+				opponent.x -= 350;
 			case 'dave-png':
 				opponent.x += 81;
 				opponent.y += 108;
