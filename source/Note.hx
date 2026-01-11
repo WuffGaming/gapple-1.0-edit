@@ -44,9 +44,9 @@ class Note extends FlxSprite
 
 	private var InPlayState:Bool = false;
 
-	public static var CharactersWith3D:Array<String> = ["dave-angey", "bambi-3d", 'dave-annoyed-3d', 'dave-3d-standing-bruh-what', 'bambi-unfair', 'bambi-piss-3d', 'bandu', 'tunnel-dave', 'badai', 'unfair-junker', 'og-dave', 'split-dave-3d', 'garrett', 
-	'og-dave-angey', '3d-bf', 'bandu-candy', 'silly-sally', 'ringi', 'bambom', 'bendu', 'diamond-man', 'bandu-origin', 'RECOVERED_PROJECT', 'RECOVERED_PROJECT_2', 'RECOVERED_PROJECT_3', 'hall-monitor', 'playrobot', 'playrobot-crazy', 
-	'cameo-origin', 'little-bandu'];
+	public static var CharactersWith3D:Array<String> = ['bambi-piss-3d', 'bandu', 'tunnel-dave', 'badai', 'unfair-junker', 'og-dave', 'split-dave-3d', 'garrett', 'og-dave-angey', '3d-bf', 'bandu-candy', 'silly-sally', 
+	'ringi', 'bambom', 'bendu', 'diamond-man', 'bandu-origin', 'RECOVERED_PROJECT', 'RECOVERED_PROJECT_2', 'RECOVERED_PROJECT_3', 'hall-monitor', 'playrobot', 'playrobot-crazy', 
+	'cameo-origin', 'little-bandu', 'insane-dave-3d'];
 
 	public var rating:String = "shit";
 
@@ -120,7 +120,7 @@ class Note extends FlxSprite
 
 				setGraphicSize(Std.int(width * 0.7));
 				updateHitbox();
-				antialiasing = true;
+				antialiasing = false;
 		}
 		else
 		{
@@ -205,7 +205,7 @@ class Note extends FlxSprite
 						animation.play('redScroll');
 				}
 		}
-		if (PlayState.SONG.song.toLowerCase() == 'unfairness' || PlayState.SONG.song.toLowerCase() == 'applecore')
+		if (PlayState.SONG.song.toLowerCase() == 'applecore')
 		{
 			var rng:FlxRandom = new FlxRandom();
 			if (rng.int(0,120) == 1)
@@ -270,6 +270,90 @@ class Note extends FlxSprite
 				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.8 * PlayState.SONG.speed;
 				prevNote.updateHitbox();
 				// prevNote.setGraphicSize();
+			}
+		}
+	}
+
+	public function swapType()
+	{
+
+		var cachedCurrentAnimation = animation.curAnim.name;
+
+		animation.destroyAnimations();
+
+		if (((CharactersWith3D.contains(PlayState.dadChar) || CharactersWith3D.contains(PlayState.bfChar)) && ((this.strumTime / 50) % 20 > 10)))
+		{
+			frames = Paths.getSparrowAtlas('ui/notes/NOTE_assets_3D');
+
+			animation.addByPrefix('greenScroll', 'green0');
+			animation.addByPrefix('redScroll', 'red0');
+			animation.addByPrefix('blueScroll', 'blue0');
+			animation.addByPrefix('purpleScroll', 'purple0');
+
+			animation.addByPrefix('purpleholdend', 'pruple end hold');
+			animation.addByPrefix('greenholdend', 'green hold end');
+			animation.addByPrefix('redholdend', 'red hold end');
+			animation.addByPrefix('blueholdend', 'blue hold end');
+
+			animation.addByPrefix('purplehold', 'purple hold piece');
+			animation.addByPrefix('greenhold', 'green hold piece');
+			animation.addByPrefix('redhold', 'red hold piece');
+			animation.addByPrefix('bluehold', 'blue hold piece');
+
+			setGraphicSize(Std.int(width * 0.7));
+			updateHitbox();
+			antialiasing = false;
+		}
+		else
+		{
+			frames = Paths.getSparrowAtlas('ui/notes/NOTE_assets');
+
+			animation.addByPrefix('greenScroll', 'green0');
+			animation.addByPrefix('redScroll', 'red0');
+			animation.addByPrefix('blueScroll', 'blue0');
+			animation.addByPrefix('purpleScroll', 'purple0');
+
+			animation.addByPrefix('purpleholdend', 'pruple end hold');
+			animation.addByPrefix('greenholdend', 'green hold end');
+			animation.addByPrefix('redholdend', 'red hold end');
+			animation.addByPrefix('blueholdend', 'blue hold end');
+
+			animation.addByPrefix('purplehold', 'purple hold piece');
+			animation.addByPrefix('greenhold', 'green hold piece');
+			animation.addByPrefix('redhold', 'red hold piece');
+			animation.addByPrefix('bluehold', 'blue hold piece');
+
+			setGraphicSize(Std.int(width * 0.7));
+			updateHitbox();
+			antialiasing = true;
+		}
+		
+
+		animation.play(cachedCurrentAnimation, true);
+
+		
+		if (isSustainNote && prevNote != null)
+		{
+			alpha = 0.6;
+
+			updateHitbox();
+
+			if (prevNote.isSustainNote)
+			{
+				switch (prevNote.noteData)
+				{
+					case 0:
+						prevNote.animation.play('purplehold');
+					case 1:
+						prevNote.animation.play('bluehold');
+					case 2:
+						prevNote.animation.play('greenhold');
+					case 3:
+						prevNote.animation.play('redhold');
+				}
+
+				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.8 * PlayState.SONG.speed;
+				prevNote.updateHitbox();
 			}
 		}
 	}

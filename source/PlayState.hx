@@ -97,6 +97,8 @@ class PlayState extends MusicBeatState
 
 	var songLength:Float = 0;
 
+	var note:Note;
+
 	public var darkLevels:Array<String> = ['bambiFarmNight', 'daveHouse_night', 'unfairness', 'disabled'];
 	public var sunsetLevels:Array<String> = ['bambiFarmSunset', 'daveHouse_Sunset'];
 
@@ -1635,11 +1637,10 @@ class PlayState extends MusicBeatState
 
 	var arrowJunks:Array<Array<Float>> = [];
 
-	private function generateStaticArrows(player:Int):Void
+	function generateStaticArrows(player:Int, animated:Bool = true, is3d:Bool = false):Void
 	{
 		for (i in 0...4)
 		{
-			// FlxG.log.add(i);
 			var babyArrow:Strum = new Strum(0, strumLine.y);
 
 			if (Note.CharactersWith3D.contains(opponent.curCharacter) && player == 0 || Note.CharactersWith3D.contains(boyfriend.curCharacter) && player == 1)
@@ -1718,12 +1719,13 @@ class PlayState extends MusicBeatState
 			babyArrow.updateHitbox();
 			babyArrow.scrollFactor.set();
 
-			babyArrow.y -= 10;
-			babyArrow.alpha = 0;
-			FlxTween.tween(babyArrow, {y: babyArrow.y + 10, alpha: 1}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i)});
-
+			if(animated)
+			{
+				babyArrow.y -= 10;
+				babyArrow.alpha = 0;
+				FlxTween.tween(babyArrow, {y: babyArrow.y + 10, alpha: 1}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * i)});
+			}
 			babyArrow.ID = i;
-
 			if (player == 1)
 			{
 				playerStrums.add(babyArrow);
@@ -1805,9 +1807,6 @@ class PlayState extends MusicBeatState
 			}
 
 			add(poopStrums);
-			/*poopStrums.forEach(function(spr:FlxSprite){
-				spr.alpha = 0;
-			});*/
 
 			add(altNotes);
 		}
@@ -3249,6 +3248,26 @@ class PlayState extends MusicBeatState
 				LoadingState.loadAndSwitchState(new PlayState());
 		}
 	}
+	// taken from 1.2 source code which this specific snippet was taken from sonic.exe apparantly and also i dont wanna deal with this shit anymore
+	function removeStatics()
+	{
+		playerStrums.forEach(function(todel:Strum)
+			{
+				playerStrums.remove(todel);
+				todel.destroy();
+			});
+		dadStrums.forEach(function(todel:Strum)
+		{
+			dadStrums.remove(todel);
+			todel.destroy();
+		});
+		strumLineNotes.forEach(function(todel:Strum)
+		{
+			strumLineNotes.remove(todel);
+			todel.destroy();
+		});
+	}
+
 	private function popUpScore(strumtime:Float, notedata:Int):Void
 	{
 		var noteDiff:Float = Math.abs(strumtime - Conductor.songPosition);
@@ -4454,6 +4473,17 @@ class PlayState extends MusicBeatState
 						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
 						defaultCamZoom = 0.8;
 						threedeez.active = threedeez.visible = true;
+						removeStatics();
+						generateStaticArrows(0, false);
+						generateStaticArrows(1, false);
+						for(note in notes.members)
+							{
+								note.swapType();
+							}
+								for(note in unspawnNotes)
+							{
+								note.swapType();
+							}
 					case 128:
 						FlxG.camera.flash(FlxColor.WHITE, 1);
 						defaultCamZoom = 0.9;
@@ -4467,17 +4497,36 @@ class PlayState extends MusicBeatState
 						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
 						defaultCamZoom = 1;
 						threedeez.active = threedeez.visible = false;
+						removeStatics();
+						generateStaticArrows(0, false);
+						generateStaticArrows(1, false);
+						for(note in notes.members)
+							{
+								note.swapType();
+							}
+								for(note in unspawnNotes)
+							{
+								note.swapType();
+							}
 					case 256: // dave and bg turn 3d
 						swapDad('insane-dave-3d');
 						iconP2.changeIcon(opponent.iconName);
 						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
 						defaultCamZoom = 0.85;
 						threedeez.active = threedeez.visible = true;
+						removeStatics();
+						generateStaticArrows(0, false);
+						generateStaticArrows(1, false);
+						for(note in notes.members)
+							{
+								note.swapType();
+							}
+								for(note in unspawnNotes)
+							{
+								note.swapType();
+							}
 					case 312:
 						defaultCamZoom = 0.6;
-						//FlxTween.tween(FlxG.camera, {zoom: 0.6}, 2.2, {ease: FlxEase.elasticInOut});
-						// todo: make this way slower!!
-						// gd numer
 					case 316:
 						FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
 						defaultCamZoom = 1.1;
@@ -4488,6 +4537,17 @@ class PlayState extends MusicBeatState
 						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
 						defaultCamZoom = 0.8;
 						threedeez.active = threedeez.visible = false;
+						removeStatics();
+						generateStaticArrows(0, false);
+						generateStaticArrows(1, false);
+						for(note in notes.members)
+							{
+								note.swapType();
+							}
+								for(note in unspawnNotes)
+							{
+								note.swapType();
+							}
 					case 336:
 						defaultCamZoom = 1;
 					case 352:
@@ -4500,12 +4560,34 @@ class PlayState extends MusicBeatState
 						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
 						defaultCamZoom = 1;
 						threedeez.active = threedeez.visible = true;
+						removeStatics();
+						generateStaticArrows(0, false);
+						generateStaticArrows(1, false);
+						for(note in notes.members)
+							{
+								note.swapType();
+							}
+								for(note in unspawnNotes)
+							{
+								note.swapType();
+							}
 					case 448: // dave and bg turn 2d
 						swapDad('dave-insane');
 						iconP2.changeIcon(opponent.iconName);
 						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
 						defaultCamZoom = 1.1;
 						threedeez.active = threedeez.visible = false;
+						removeStatics();
+						generateStaticArrows(0, false);
+						generateStaticArrows(1, false);
+						for(note in notes.members)
+							{
+								note.swapType();
+							}
+								for(note in unspawnNotes)
+							{
+								note.swapType();
+							}
 					case 464:
 						defaultCamZoom = 1;
 					case 480: // dave and bg turn 3d
@@ -4514,6 +4596,17 @@ class PlayState extends MusicBeatState
 						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
 						defaultCamZoom = 0.8;
 						threedeez.active = threedeez.visible = true;
+						removeStatics();
+						generateStaticArrows(0, false);
+						generateStaticArrows(1, false);
+						for(note in notes.members)
+							{
+								note.swapType();
+							}
+								for(note in unspawnNotes)
+							{
+								note.swapType();
+							}
 					case 512: // dave and bg turn 2d for the fimal time..
 						FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
 						swapDad('dave'); // keep normie house dave btw... he must be average
@@ -4521,6 +4614,17 @@ class PlayState extends MusicBeatState
 						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
 						defaultCamZoom = 1.2;
 						threedeez.active = threedeez.visible = false;
+						removeStatics();
+						generateStaticArrows(0, false);
+						generateStaticArrows(1, false);
+						for(note in notes.members)
+							{
+								note.swapType();
+							}
+								for(note in unspawnNotes)
+							{
+								note.swapType();
+							}
 					case 544:
 						thunderBlack.alpha = 0;
 						FlxG.camera.flash(FlxColor.WHITE, 1);
