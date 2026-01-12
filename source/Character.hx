@@ -678,12 +678,14 @@ class Character extends FlxSprite
 				playAnim('idle');
 			case 'unfair-junker':
 				frames = Paths.getSparrowAtlas('characters/bambi/NEWER UNFAIR GUY');
-				animation.addByPrefix('idle', 'idle', 24, false);
-				animation.addByIndices('singUP', 'up', [0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2], '', 24, false);
-				animation.addByIndices('singRIGHT', 'right', [0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2], '', 24, false);
-				animation.addByIndices('singDOWN', 'down', [0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2], '', 24, false);
-				animation.addByIndices('singLEFT', 'left', [0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2], '', 24, false);
-				animation.addByIndices('inhale', 'inhaler', [0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 0, 1, 2, 1, 2, 1, 2, 1, 0, 0], '', 24, false);
+				animation.addByPrefix('danceLeft', 'danceLeft', 24, false);
+				animation.addByPrefix('danceRight', 'danceRight', 24, false);
+				animation.addByPrefix('singUP', 'up', 24, false);
+				animation.addByPrefix('singLEFT', 'left', 24, false);
+				animation.addByPrefix('singRIGHT', 'right', 24, false);
+				animation.addByPrefix('singDOWN', 'down', 24, false);
+				animation.addByPrefix('inhale', 'inhale', 24, false);
+
 
 				loadOffsetFile(curCharacter);
 				globaloffset[0] = 150 * 1.3;
@@ -694,10 +696,10 @@ class Character extends FlxSprite
 				iconName = 'expunged';
 				barColor = FlxColor.fromRGB(178, 7, 7);
 		
-				playAnim('idle');
+				playAnim('danceLeft');
 				
 			case 'bf':
-				var tex = Paths.getSparrowAtlas('characters/main/BOYFRIEND');
+				var tex = Paths.getSparrowAtlas('characters/main/Boyfriend_Main');
 				frames = tex;
 				animation.addByPrefix('idle', 'BF idle dance', 24, false);
 				animation.addByPrefix('singUP', 'BF NOTE UP0', 24, false);
@@ -710,12 +712,6 @@ class Character extends FlxSprite
 				animation.addByPrefix('singDOWNmiss', 'BF NOTE DOWN MISS', 24, false);
 				animation.addByPrefix('hey', 'BF HEY', 24, false);
 
-				animation.addByPrefix('firstDeath', "BF dies", 24, false);
-				animation.addByPrefix('deathLoop', "BF Dead Loop", 24, true);
-				animation.addByPrefix('deathConfirm', "BF Dead confirm", 24, false);
-				animation.addByPrefix('dodge', "boyfriend dodge", 24, false);
-				animation.addByPrefix('scared', 'BF idle shaking', 24);
-				animation.addByPrefix('hit', 'BF hit', 24, false);
 
 				loadOffsetFile(curCharacter);
 
@@ -726,6 +722,25 @@ class Character extends FlxSprite
 				barColor = FlxColor.fromRGB(49, 176, 209);
 
 				flipX = true;
+
+			case 'bf-dead':
+				var tex = Paths.getSparrowAtlas('characters/main/Boyfriend_Dead');
+				frames = tex;
+
+				animation.addByPrefix('firstDeath', "BF dies", 24, false);
+				animation.addByPrefix('deathLoop', "BF Dead Loop", 24, true);
+				animation.addByPrefix('deathConfirm', "BF Dead confirm", 24, false);
+
+				loadOffsetFile(curCharacter);
+
+				playAnim('firstDeath');
+
+				nativelyPlayable = true;
+				iconName = 'bf';
+				barColor = FlxColor.fromRGB(49, 176, 209);
+
+				flipX = true;
+
 
 			case 'radical':
 				var tex = Paths.getSparrowAtlas('characters/radical/radical');
@@ -874,7 +889,7 @@ class Character extends FlxSprite
 			var poopInPants:String = alt ? '-alt' : '';
 			switch (curCharacter)
 			{
-				case 'gf' | 'gf-christmas' | 'gf-pixel' | 'bandu-candy' | 'gf-only' | 'gamingtastic':
+				case 'gf' | 'gf-christmas' | 'gf-pixel' | 'bandu-candy' | 'gf-only' | 'gamingtastic' | 'unfair-junker':
 					if (!animation.curAnim.name.startsWith('hair'))
 					{
 						danced = !danced;

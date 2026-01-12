@@ -1,6 +1,7 @@
-idle 0 0
-singUP 157 67
-singRIGHT 225 4
-singLEFT 222 84
-singDOWN 113 -104
-inhale 71 -36
+danceLeft 0 0
+danceRight -4 -2
+singUP 69 106
+singRIGHT -64 -39
+singLEFT 158 5
+singDOWN 201 -47
+inhale 165 -6

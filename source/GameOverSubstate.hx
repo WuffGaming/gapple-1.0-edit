@@ -24,7 +24,7 @@ class GameOverSubstate extends MusicBeatSubstate
 			case 'bf-pixel':
 				stageSuffix = '-pixel';
 			default:
-				daBf = 'bf-death';
+				daBf = 'bf-dead';
 		}
 		if (char == "bf-pixel")
 		{
@@ -36,7 +36,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		}
 		if (char == "bf-car")
 		{
-			char = "bf-death";
+			char = "bf-dead";
 		}
 
 		super();
@@ -46,7 +46,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		bf = new Boyfriend(x, y, char);
 		if(bf.animation.getByName('firstDeath') == null)
 		{
-			bf = new Boyfriend(x, y, "bf");
+			bf = new Boyfriend(x, y, "bf-dead");
 		}
 		add(bf);
 

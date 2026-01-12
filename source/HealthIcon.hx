@@ -26,7 +26,7 @@ class HealthIcon extends FlxSprite
 		'recover',
 		'recover-2d',
 		'recover-irreversible',
-		'bandu-candy',
+		'bandu-sugar',
 		'bandu-origin',
 		'silly-sally',
 		'bambom',
@@ -34,6 +34,8 @@ class HealthIcon extends FlxSprite
 		'ringi-toio',
 		'bendu',
 		'cameo',
+		'og-dave',
+		'garrett',
 	];
 
 	public var charPublic:String = 'bf';
@@ -57,26 +59,24 @@ class HealthIcon extends FlxSprite
 	{
 		charPublic = char;
 
-		if(char != 'bandu-origin' || char != 'gf')
-		{
-			loadGraphic(Paths.image('ui/icons/' + char), true, 150, 150);
-
-			addIcon(char, 0);
-		}	
-
-		charPublic = char;
-
 		if(char == 'bandu-origin')
 		{
 			frames = Paths.getSparrowAtlas('ui/icons/bandu_origin_icon');
 			animation.addByPrefix(char, char, 24, false, isPlayer, false);
 		}
+		else
 		if(char == 'gf')
 		{
 			loadGraphic(Paths.image('ui/icons/' + char), true, 150, 150);
 
 			addIcon(char, 0, true);
 		}
+		else
+		{
+			loadGraphic(Paths.image('ui/icons/' + char), true, 150, 150);
+
+			addIcon(char, 0);
+		}	
 
 		antialiasing = !noAaChars.contains(char);
 

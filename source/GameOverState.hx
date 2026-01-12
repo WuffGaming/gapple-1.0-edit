@@ -12,7 +12,7 @@ class GameOverState extends FlxTransitionableState
 {
 	var bfX:Float = 0;
 	var bfY:Float = 0;
-	var charr:String = "bf";
+	var charr:String = "bf-dead";
 
 	public function new(x:Float, y:Float, char:String)
 	{
