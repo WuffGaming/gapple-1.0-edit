@@ -4520,7 +4520,8 @@ class PlayState extends MusicBeatState
 						generateStaticArrows(0, false);
 						generateStaticArrows(1, false);
 					case 312:
-						FlxTween.tween(FlxG.camera, {zoom: 0.5}, 0.5, {ease: FlxEase.circOut});
+						FlxTween.tween(FlxG.camera, {zoom: 0.5}, 0.8, {ease: FlxEase.circOut});
+						defaultCamZoom = 0.5;
 					case 316:
 						FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
 						defaultCamZoom = 1.1;
