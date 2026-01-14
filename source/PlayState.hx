@@ -293,6 +293,7 @@ class PlayState extends MusicBeatState
 	var thunderBlack:FlxSprite;
 
 	var curbar:String = 'healthBar';
+	var curThing:String = 'healthBarThing';
 
 	override public function create()
 	{
@@ -715,13 +716,15 @@ class PlayState extends MusicBeatState
 
 		FlxG.fixedTimestep = false;
 
-		healthBarBG = new FlxSprite(0, FlxG.height * 0.9).loadGraphic(Paths.image('ui/bar/' + curbar));
-		if (FlxG.save.data.downscroll)
-			healthBarBG.y = 50;
 		if(SONG.song.toLowerCase() == 'algebra')
 		{
 			curbar = 'retroBar';
+			curThing = 'healthBarBaldi';
 		}
+		healthBarBG = new FlxSprite(0, FlxG.height * 0.9).loadGraphic(Paths.image('ui/bar/' + curbar));
+		if (FlxG.save.data.downscroll)
+			healthBarBG.y = 50;
+		
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
 		add(healthBarBG);
@@ -735,14 +738,11 @@ class PlayState extends MusicBeatState
 			healthBar.createFilledBar(0xFFFF0000, 0xFF66FF33);
 		}
 		add(healthBar);
-
-		healthBarThing = new FlxSprite(0, FlxG.height * 0.9).loadGraphic(Paths.image('ui/bar/healthBarThing'));
+		
+		healthBarThing = new FlxSprite(0, FlxG.height * 0.9).loadGraphic(Paths.image('ui/bar/' + curThing));
 		if (FlxG.save.data.downscroll)
 			healthBarThing.y = 50;
-		if(SONG.song.toLowerCase() == 'algebra')
-		{
-			healthBarThing.y = 5000000;
-		}
+		
 		healthBarThing.screenCenter(X);
 		healthBarThing.scrollFactor.set();
 		add(healthBarThing);
@@ -824,8 +824,14 @@ class PlayState extends MusicBeatState
 				preload('characters/recover/recovered_project_3');
 		}
 
+
 		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width / 2 - 150, healthBarBG.y + 40, FlxG.width, "", 20);
-		scoreTxt.setFormat(Paths.font("comic.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		if(SONG.song.toLowerCase() == 'algebra') {
+			scoreTxt.setFormat(Paths.font("comic.ttf"), 20, FlxColor.WHITE, CENTER);
+		}
+		else {
+			scoreTxt.setFormat(Paths.font("comic.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		}
 		scoreTxt.scrollFactor.set();
 		scoreTxt.borderSize = 1.5;
 		scoreTxt.screenCenter(X);
@@ -1080,7 +1086,7 @@ class PlayState extends MusicBeatState
 
 				daveJunk = new FlxSprite(424, 122).loadGraphic(bgImg('dave'));
 				davePiss = new FlxSprite(427, 94);
-				davePiss.frames = Paths.getSparrowAtlas('dave/bgJunkers/davePiss');
+				davePiss.frames = Paths.getSparrowAtlas('backgrounds/algebra/bgJunkers/davePiss');
 				davePiss.animation.addByIndices('idle', 'GRR', [0], '', 0, false);
 				davePiss.animation.addByPrefix('d', 'GRR', 24, false);
 				davePiss.animation.play('idle');
@@ -1371,6 +1377,15 @@ class PlayState extends MusicBeatState
 
 		var swagCounter:Int = 0;
 
+		if(formoverride == "radical")
+			{
+				ratingstype = 'radical';
+			}
+		if(SONG.song.toLowerCase() == 'algebra')
+			{
+				ratingstype = 'baldi';
+			}
+
 		startTimer = new FlxTimer().start(Conductor.crochet / (1000 * startSpeed), function(tmr:FlxTimer)
 		{
 			opponent.dance();
@@ -1386,7 +1401,7 @@ class PlayState extends MusicBeatState
 			}
 
 			var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
-			introAssets.set('default', ['ui/ready', "ui/set", "ui/go"]);
+			introAssets.set('default', ['ui/ratings/' + ratingstype + '/ready', 'ui/ratings/' + ratingstype + '/set', 'ui/ratings/' + ratingstype + '/go']);
 
 			var introAlts:Array<String> = introAssets.get('default');
 			var altSuffix:String = "";
@@ -1642,10 +1657,16 @@ class PlayState extends MusicBeatState
 		for (i in 0...4)
 		{
 			var babyArrow:Strum = new Strum(0, strumLine.y);
-
+			var dumb3dpath:String = 'ui/notes/NOTE_assets_3D';
 			if (Note.CharactersWith3D.contains(opponent.curCharacter) && player == 0 || Note.CharactersWith3D.contains(boyfriend.curCharacter) && player == 1)
 			{
-				babyArrow.frames = Paths.getSparrowAtlas('ui/notes/NOTE_assets_3D');
+				switch (curStage) {
+					case 'algebra':
+						dumb3dpath = 'ui/notes/NOTE_assets_baldi';
+					default:
+						dumb3dpath = 'ui/notes/NOTE_assets_3D';
+				}
+				babyArrow.frames = Paths.getSparrowAtlas(dumb3dpath);
 				babyArrow.animation.addByPrefix('green', 'arrowUP');
 				babyArrow.animation.addByPrefix('blue', 'arrowDOWN');
 				babyArrow.animation.addByPrefix('purple', 'arrowLEFT');
@@ -2484,7 +2505,7 @@ class PlayState extends MusicBeatState
 		}
 		else
 		{
-		scoreTxt.text = "Score:" + songScore + " | Misses:" + misses + " | Accuracy:" + truncateFloat(accuracy, 2) + "% | " + generateRanking();
+		scoreTxt.text = "Score: " + songScore + " | Misses: " + misses + " | Accuracy: " + truncateFloat(accuracy, 2) + "% | " + generateRanking();
 		}
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
 		{
@@ -3359,11 +3380,6 @@ class PlayState extends MusicBeatState
 					scoreTxtTween = null;
 				}
 			});
-
-			if(formoverride == "radical")
-				{
-					ratingstype = 'radical';
-				}
 			rating.loadGraphic(Paths.image(ratingFolder + '/' + ratingstype + '/' + daRating));
 			rating.screenCenter();
 			rating.y -= 50;
@@ -4476,14 +4492,6 @@ class PlayState extends MusicBeatState
 						removeStatics();
 						generateStaticArrows(0, false);
 						generateStaticArrows(1, false);
-						for(note in notes.members)
-							{
-								note.swapType();
-							}
-								for(note in unspawnNotes)
-							{
-								note.swapType();
-							}
 					case 128:
 						FlxG.camera.flash(FlxColor.WHITE, 1);
 						defaultCamZoom = 0.9;
@@ -4500,14 +4508,6 @@ class PlayState extends MusicBeatState
 						removeStatics();
 						generateStaticArrows(0, false);
 						generateStaticArrows(1, false);
-						for(note in notes.members)
-							{
-								note.swapType();
-							}
-								for(note in unspawnNotes)
-							{
-								note.swapType();
-							}
 					case 256: // dave and bg turn 3d
 						swapDad('insane-dave-3d');
 						iconP2.changeIcon(opponent.iconName);
@@ -4517,16 +4517,8 @@ class PlayState extends MusicBeatState
 						removeStatics();
 						generateStaticArrows(0, false);
 						generateStaticArrows(1, false);
-						for(note in notes.members)
-							{
-								note.swapType();
-							}
-								for(note in unspawnNotes)
-							{
-								note.swapType();
-							}
 					case 312:
-						defaultCamZoom = 0.6;
+						FlxTween.tween(FlxG.camera, {zoom: 0.5}, 0.5, {ease: FlxEase.circOut});
 					case 316:
 						FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
 						defaultCamZoom = 1.1;
@@ -4540,14 +4532,6 @@ class PlayState extends MusicBeatState
 						removeStatics();
 						generateStaticArrows(0, false);
 						generateStaticArrows(1, false);
-						for(note in notes.members)
-							{
-								note.swapType();
-							}
-								for(note in unspawnNotes)
-							{
-								note.swapType();
-							}
 					case 336:
 						defaultCamZoom = 1;
 					case 352:
@@ -4563,15 +4547,8 @@ class PlayState extends MusicBeatState
 						removeStatics();
 						generateStaticArrows(0, false);
 						generateStaticArrows(1, false);
-						for(note in notes.members)
-							{
-								note.swapType();
-							}
-								for(note in unspawnNotes)
-							{
-								note.swapType();
-							}
 					case 448: // dave and bg turn 2d
+						camZoomIntensity = 3;
 						swapDad('dave-insane');
 						iconP2.changeIcon(opponent.iconName);
 						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
@@ -4580,17 +4557,10 @@ class PlayState extends MusicBeatState
 						removeStatics();
 						generateStaticArrows(0, false);
 						generateStaticArrows(1, false);
-						for(note in notes.members)
-							{
-								note.swapType();
-							}
-								for(note in unspawnNotes)
-							{
-								note.swapType();
-							}
 					case 464:
 						defaultCamZoom = 1;
 					case 480: // dave and bg turn 3d
+						camZoomIntensity = 1;
 						swapDad('insane-dave-3d');
 						iconP2.changeIcon(opponent.iconName);
 						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
@@ -4599,14 +4569,6 @@ class PlayState extends MusicBeatState
 						removeStatics();
 						generateStaticArrows(0, false);
 						generateStaticArrows(1, false);
-						for(note in notes.members)
-							{
-								note.swapType();
-							}
-								for(note in unspawnNotes)
-							{
-								note.swapType();
-							}
 					case 512: // dave and bg turn 2d for the fimal time..
 						FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
 						swapDad('dave'); // keep normie house dave btw... he must be average
@@ -4617,14 +4579,6 @@ class PlayState extends MusicBeatState
 						removeStatics();
 						generateStaticArrows(0, false);
 						generateStaticArrows(1, false);
-						for(note in notes.members)
-							{
-								note.swapType();
-							}
-								for(note in unspawnNotes)
-							{
-								note.swapType();
-							}
 					case 544:
 						thunderBlack.alpha = 0;
 						FlxG.camera.flash(FlxColor.WHITE, 1);
@@ -4771,14 +4725,17 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-	function swapDad(char:String, flash:Bool = true, x:Float = 100, y:Float = 100)
+	function swapDad(char:String, flash:Bool = true, x:Float = 100, y:Float = 100, reposition:Bool = true)
 	{
 		if(opponent != null)
 			remove(opponent);
 			trace('remove opponent');
 		opponent = new Character(x, y, char, false);
 		trace('set opponent');
-		repositionDad();
+		if(reposition)
+		{
+			repositionDad();
+		}
 		trace('repositioned opponent');
 		add(opponent);
 		trace('added opponent');
