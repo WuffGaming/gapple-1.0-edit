@@ -4107,6 +4107,7 @@ class PlayState extends MusicBeatState
 					case 696:
 						// GREENY GUY TURN
 						swapDad('hall-monitor');
+						UsingNewCam = true;
 						davePiss.visible = true;
 						diamondJunk.visible = true;
 						swagSpeed = 2;
@@ -4119,6 +4120,7 @@ class PlayState extends MusicBeatState
 						iconP2.changeIcon(opponent.iconName);
 					case 1344:
 						//DIAMOND MAN TURN
+						UsingNewCam = false;
 						swapDad('diamond-man');
 						monitorJunk.visible = true;
 						diamondJunk.visible = false;

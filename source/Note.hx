@@ -53,6 +53,9 @@ class Note extends FlxSprite
 
 	var SONG:SwagSong;
 
+	var dumbasspath:String = 'ui/notes/NOTE_assets';
+	var dumb3dpath:String = 'ui/notes/NOTE_assets_3D';
+
 	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?musthit:Bool = true, noteStyle:String = "2D") //had to add a new variable to this because FNF dumb
 	{
 		super();
@@ -100,12 +103,8 @@ class Note extends FlxSprite
 			this.strumTime = 0;
 
 		this.noteData = noteData;
-		var dumb3dpath:String = 'ui/notes/NOTE_assets_3D';
 
-		if (((CharactersWith3D.contains(PlayState.dadChar) && !musthit)
-		|| (CharactersWith3D.contains(PlayState.bfChar) && musthit))
-		|| ((CharactersWith3D.contains(PlayState.SONG.player2)
-		|| CharactersWith3D.contains(PlayState.SONG.player1)) && ((this.strumTime / 50) % 20 > 10)))
+		if (((CharactersWith3D.contains(PlayState.dadChar) && !musthit) || (CharactersWith3D.contains(PlayState.bfChar) && musthit)) || ((CharactersWith3D.contains(PlayState.SONG.player2) || CharactersWith3D.contains(PlayState.SONG.player1)) && ((this.strumTime / 50) % 20 > 10)))
 		{
 				switch (PlayState.curStage)
 				{
@@ -135,32 +134,9 @@ class Note extends FlxSprite
 				updateHitbox();
 				antialiasing = false;
 		}
-		else if (SONG.song.toLowerCase() == "algebra") // makes me gemmy "no idea what that means please clarify"
-		{
-				frames = Paths.getSparrowAtlas('ui/notes/NOTE_assets_baldi');
-
-				animation.addByPrefix('greenScroll', 'green0');
-				animation.addByPrefix('redScroll', 'red0');
-				animation.addByPrefix('blueScroll', 'blue0');
-				animation.addByPrefix('purpleScroll', 'purple0');
-
-				animation.addByPrefix('purpleholdend', 'pruple end hold');
-				animation.addByPrefix('greenholdend', 'green hold end');
-				animation.addByPrefix('redholdend', 'red hold end');
-				animation.addByPrefix('blueholdend', 'blue hold end');
-
-				animation.addByPrefix('purplehold', 'purple hold piece');
-				animation.addByPrefix('greenhold', 'green hold piece');
-				animation.addByPrefix('redhold', 'red hold piece');
-				animation.addByPrefix('bluehold', 'blue hold piece');
-
-				setGraphicSize(Std.int(width * 0.7));
-				updateHitbox();
-				antialiasing = false;
-		}
 		else
 		{
-				var dumbasspath:String = 'ui/notes/NOTE_assets';
+				
 
 				    switch(noteStyle)
 				    {
@@ -316,7 +292,7 @@ class Note extends FlxSprite
 
 		if (((CharactersWith3D.contains(PlayState.dadChar) || CharactersWith3D.contains(PlayState.bfChar)) && ((this.strumTime / 50) % 20 > 10)))
 		{
-			frames = Paths.getSparrowAtlas('ui/notes/NOTE_assets_3D');
+			frames = Paths.getSparrowAtlas(dumb3dpath);
 
 			animation.addByPrefix('greenScroll', 'green0');
 			animation.addByPrefix('redScroll', 'red0');
