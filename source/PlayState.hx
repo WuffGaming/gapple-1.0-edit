@@ -438,6 +438,10 @@ class PlayState extends MusicBeatState
 			gfy = 265;
 			gfVersion = 'gamingtastic';
 		}
+		else if(formoverride == "3d-bf")
+		{
+			gfVersion = '3d-gf';
+		}
 		else if (SONG.song.toLowerCase() == 'sugar-rush' && formoverride == "radical") // hotboy
 		{
 			gfy = 0;
@@ -450,7 +454,7 @@ class PlayState extends MusicBeatState
 		gf.scrollFactor.set(0.95, 0.95);
 		gf.visible = SONG.gf_visible;
 
-		if (!(formoverride == "bf" || formoverride == "none" || formoverride == "bf-pixel" || formoverride == "bf-christmas" || formoverride == "radical") && SONG.song != "Tutorial")
+		if (!(formoverride == "bf" || formoverride == "none" || formoverride == "bf-pixel" || formoverride == "bf-christmas" || formoverride == "radical" || formoverride == "3d-bf") && SONG.song != "Tutorial")
 		{
 			gf.visible = false;
 			gfy = 0;
@@ -498,6 +502,8 @@ class PlayState extends MusicBeatState
 			boyfriend = new Boyfriend(770, 450, formoverride);
 		}
 
+
+		// Boyfriend Form Positions
 		switch (boyfriend.curCharacter)
 		{
 			case 'dave-good':
@@ -516,6 +522,8 @@ class PlayState extends MusicBeatState
 				boyfriend.x += 40;
 		}
 
+
+		// Stage Positions
 		switch (curStage) {
 			case 'out':
 				boyfriend.x += 300;
@@ -533,6 +541,9 @@ class PlayState extends MusicBeatState
 				{
 					gf.setPosition(811, 200);
 				}
+			case 'algebra':
+				boyfriend.y += 80;
+				// fucker
 		}
 
 		if(darkLevels.contains(curStage) && SONG.song.toLowerCase() != "polygonized")
@@ -617,7 +628,7 @@ class PlayState extends MusicBeatState
 
 		if(bfChar == '3d-bf')
 		{
-			boyfriend.y += 20;
+			boyfriend.y -= 60;
 		}
 
 		if (swagger != null) add(swagger);

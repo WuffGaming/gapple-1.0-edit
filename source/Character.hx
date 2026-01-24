@@ -109,6 +109,18 @@ class Character extends FlxSprite
 				barColor = FlxColor.fromRGB(49, 176, 209);
 
 				playAnim('idle');
+			case '3d-gf':
+				frames = Paths.getSparrowAtlas('characters/main/3D_GF');
+				animation.addByPrefix('danceLeft', 'danceLeft', 24, false);
+				animation.addByPrefix('danceRight', 'danceRight', 24, false);
+
+				loadOffsetFile(curCharacter);
+
+				antialiasing = false;
+				iconName = 'gf';
+				barColor = FlxColor.fromString('#33de39');
+
+				playAnim('danceRight');
 			case 'silly-sally':
 				frames = Paths.getSparrowAtlas('characters/warehouse/sillysally');
 				animation.addByPrefix('idle', 'idle', 24, false);
@@ -889,7 +901,7 @@ class Character extends FlxSprite
 			var poopInPants:String = alt ? '-alt' : '';
 			switch (curCharacter)
 			{
-				case 'gf' | 'gf-christmas' | 'gf-pixel' | 'bandu-candy' | 'gf-only' | 'gamingtastic' | 'unfair-junker':
+				case 'gf' | 'gf-christmas' | 'gf-pixel' | 'bandu-candy' | 'gf-only' | 'gamingtastic' | 'unfair-junker' | '3d-gf':
 					if (!animation.curAnim.name.startsWith('hair'))
 					{
 						danced = !danced;
