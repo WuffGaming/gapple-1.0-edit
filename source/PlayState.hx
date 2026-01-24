@@ -142,6 +142,7 @@ class PlayState extends MusicBeatState
 	var boyfriendOldIcon:String = 'bf-old';
 
 	private var vocals:FlxSound;
+	var healthLerp:Float = 1;
 
 	private var opponent:Character;
 	private var opponentmirror:Character;
@@ -740,8 +741,7 @@ class PlayState extends MusicBeatState
 		healthBarBG.scrollFactor.set();
 		add(healthBarBG);
 
-		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
-			'health', 0, 2);
+		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this, 'healthLerp', 0, 2);
 		healthBar.scrollFactor.set();
 		healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
 		if(SONG.song.toLowerCase() == 'algebra')
@@ -2057,6 +2057,8 @@ class PlayState extends MusicBeatState
 				shad.uTime.value[0] += elapsed;
 			}
 		}
+
+		updateHealthBar();
 
 		//dvd screensaver lookin ass
 		if(daveFuckingDies != null && redTunnel != null && !daveFuckingDies.inCutscene)
@@ -4861,6 +4863,11 @@ class PlayState extends MusicBeatState
 	function bgImg(Path:String) {
 		return Paths.image('backgrounds/algebra/bgJunkers/$Path');
 	}
+
+	function updateHealthBar():Void
+  	{
+      healthLerp = FlxMath.lerp(healthLerp, health, 0.15);
+    }
 
 	public function preload(graphic:String) //preload assets
 	{
