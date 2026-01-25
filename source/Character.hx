@@ -232,14 +232,14 @@ class Character extends FlxSprite
 				playAnim('idle');
 			case 'bambom':
 				frames = Paths.getSparrowAtlas('characters/oc/bambom');
-				animation.addByPrefix('idle', 'IDLE', 24, false);
-				for (anim in ['LEFT', 'DOWN', 'UP', 'RIGHT']) {
+				animation.addByPrefix('idle', 'idle', 24, false);
+				for (anim in ['left', 'down', 'up', 'right']) {
 					animation.addByPrefix('sing${anim.toUpperCase()}', anim, 24, false);
 				}
 
 				loadOffsetFile(curCharacter);
 
-				furiosityScale = 0.75;
+				//furiosityScale = 0.75;
 
 				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
 				updateHitbox();

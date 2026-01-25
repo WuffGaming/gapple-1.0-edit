@@ -2287,8 +2287,8 @@ class PlayState extends MusicBeatState
 					opponent.y += (Math.sin(elapsedtime) * 0.6);
 					opponent.x += (Math.sin(elapsedtime) * 0.6);
 				case 'bambom':
-					opponent.y += (Math.sin(elapsedtime) * 0.75);
-					opponent.x = -700 + Math.sin(elapsedtime) * 425;
+					opponent.y += (Math.sin(elapsedtime) * 0.5);
+					opponent.x += (Math.cos(elapsedtime) * 0.5);
 				case 'tunnel-dave':
 					opponent.y -= (Math.sin(elapsedtime) * 0.6);
 				default:
@@ -4776,9 +4776,6 @@ class PlayState extends MusicBeatState
 			case 'ringi':
 				opponent.y -= 275;
 				opponent.x -= 255;
-			case 'bambom':
-				opponent.y -= 375;
-				opponent.x -= 500;
 			case 'bendu':
 				opponent.y += 50;
 				opponent.x += 10;
