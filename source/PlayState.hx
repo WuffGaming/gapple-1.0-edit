@@ -817,7 +817,6 @@ class PlayState extends MusicBeatState
 		creditsWatermark.scrollFactor.set();
 		creditsWatermark.borderSize = 1.25;
 		add(creditsWatermark);
-		creditsWatermark.cameras = [camHUD];
 
 		switch (curSong.toLowerCase())
 		{
@@ -876,6 +875,7 @@ class PlayState extends MusicBeatState
 		iconP2.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
 		kadeEngineWatermark.cameras = [camHUD];
+		creditsWatermark.cameras = [camHUD];
 		timeTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
 
@@ -2512,13 +2512,14 @@ class PlayState extends MusicBeatState
 		super.update(elapsed);
 
 
+		var commaSeparated:Bool = true;
 		if (SONG.song.toLowerCase() == 'algebra')
 		{
-		scoreTxt.text = "Score:" + songScore;
+		scoreTxt.text = "Score:" + FlxStringUtil.formatMoney(songScore, false, commaSeparated);
 		}
 		else
 		{
-		scoreTxt.text = "Score: " + songScore + " | Misses: " + misses + " | Accuracy: " + truncateFloat(accuracy, 2) + "% | " + generateRanking();
+		scoreTxt.text = "Score: " + FlxStringUtil.formatMoney(songScore, false, commaSeparated) + " | Misses: " + misses + " | Accuracy: " + truncateFloat(accuracy, 2) + "% | " + generateRanking();
 		}
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
 		{
