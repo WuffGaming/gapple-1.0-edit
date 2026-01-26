@@ -3935,11 +3935,6 @@ class PlayState extends MusicBeatState
 			resyncVocals();
 		}
 
-		if (opponent.curCharacter == 'spooky' && curStep % 4 == 2)
-		{
-			// opponent.dance();
-		}
-
 		#if desktop
 		DiscordClient.changePresence(SONG.song,
 			"Acc: "
@@ -4082,10 +4077,12 @@ class PlayState extends MusicBeatState
 						swapDad('garrett');
 						iconP2.changeIcon(opponent.iconName);
 						algebraStander('og-dave', daveStand, 250, 100);
+						health = 1;
 						daveJunk.visible = true;
 					case 416: // 
 						//HAPPY DAVE TURN 2!!
 						swapDad('og-dave');
+						health = 1;
 						iconP2.changeIcon(opponent.iconName);
 						daveJunk.visible = false;
 						garrettJunk.visible = true;
@@ -4098,6 +4095,7 @@ class PlayState extends MusicBeatState
 					case 536:
 						//GARRETT TURN 2
 						swapDad('garrett');
+						health = 1;
 						davePiss.visible = true;
 						garrettJunk.visible = false;
 						for(member in standersGroup.members)
@@ -4109,6 +4107,7 @@ class PlayState extends MusicBeatState
 					case 552:
 						//ANGEY DAVE TURN 1!!
 						swapDad('og-dave-angey');
+						health = 0.79;
 						davePiss.visible = false;
 						garrettJunk.visible = true;
 						for(member in standersGroup.members)
@@ -4120,6 +4119,7 @@ class PlayState extends MusicBeatState
 					case 696:
 						// GREENY GUY TURN
 						swapDad('hall-monitor');
+						health = 1;
 						UsingNewCam = true;
 						davePiss.visible = true;
 						diamondJunk.visible = true;
@@ -4135,6 +4135,7 @@ class PlayState extends MusicBeatState
 						//DIAMOND MAN TURN
 						UsingNewCam = false;
 						swapDad('diamond-man');
+						health = 1;
 						monitorJunk.visible = true;
 						diamondJunk.visible = false;
 						swagSpeed = SONG.speed;
@@ -4149,6 +4150,7 @@ class PlayState extends MusicBeatState
 					case 1696:
 						//PLAYROBOT TURN
 						swapDad('playrobot');
+						health = 1;
 						swagSpeed = 1.6;
 						iconP2.changeIcon(opponent.iconName);
 					case 1852:
@@ -4157,11 +4159,13 @@ class PlayState extends MusicBeatState
 					case 1856:
 						//SCARY PLAYROBOT TURN
 						swapDad('playrobot-crazy');
+						health = 1;
 						swagSpeed = SONG.speed;
 						iconP2.changeIcon(opponent.iconName);
 					case 1996:
 						//ANGEY DAVE TURN 2!!
 						swapDad('og-dave-angey');
+						health = 1;
 						robotJunk.visible = true;
 						davePiss.visible = false;
 						for(member in standersGroup.members)
