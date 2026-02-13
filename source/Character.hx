@@ -25,6 +25,7 @@ class Character extends FlxSprite
 
 	public var nativelyPlayable:Bool = false;
 	public var barColor:FlxColor;
+	public var bopDance:Bool = false;
 
 	public var globaloffset:Array<Float> = [0,0];
 
@@ -61,6 +62,7 @@ class Character extends FlxSprite
 
 				iconName = 'gf';
 				barColor = FlxColor.fromString('#B50154');
+				bopDance = true;
 
 				playAnim('danceRight');
 			case 'gamingtastic':
@@ -74,6 +76,7 @@ class Character extends FlxSprite
 				// offsets for radical and gamingtastic were stolen from 1.5... sorry!
 
 				barColor = FlxColor.fromString('#33de39');
+				bopDance = true;
 
 				playAnim('danceRight');
 			case 'gf-only':
@@ -85,6 +88,7 @@ class Character extends FlxSprite
 				loadOffsetFile(curCharacter);
 				iconName = 'gf';
 				barColor = FlxColor.fromString('#33de39');
+				bopDance = true;
 
 				playAnim('danceRight');
 			case '3d-bf':
@@ -119,6 +123,7 @@ class Character extends FlxSprite
 				antialiasing = false;
 				iconName = 'gf';
 				barColor = FlxColor.fromString('#33de39');
+				bopDance = true;
 
 				playAnim('danceRight');
 			case 'silly-sally':
@@ -623,6 +628,7 @@ class Character extends FlxSprite
 				updateHitbox();
 				iconName = 'bandu-sugar';
 				antialiasing = false;
+				bopDance = true;
 
 				barColor = FlxColor.fromRGB(72, 254, 45);
 
@@ -707,6 +713,7 @@ class Character extends FlxSprite
 				antialiasing = false;
 				iconName = 'expunged';
 				barColor = FlxColor.fromRGB(178, 7, 7);
+				bopDance = true;
 		
 				playAnim('danceLeft');
 				
@@ -899,9 +906,8 @@ class Character extends FlxSprite
 		if (!debugMode && canDance)
 		{
 			var poopInPants:String = alt ? '-alt' : '';
-			switch (curCharacter)
-			{
-				case 'gf' | 'gf-christmas' | 'gf-pixel' | 'bandu-candy' | 'gf-only' | 'gamingtastic' | 'unfair-junker' | '3d-gf':
+				if (bopDance)
+				{
 					if (!animation.curAnim.name.startsWith('hair'))
 					{
 						danced = !danced;
@@ -911,9 +917,9 @@ class Character extends FlxSprite
 						else
 							playAnim('danceLeft' + poopInPants, true);
 					}
-				default:
+				}
+				else
 					playAnim('idle' + poopInPants, true);
-			}
 		}
 	}
 

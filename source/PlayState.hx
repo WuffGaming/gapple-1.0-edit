@@ -439,23 +439,19 @@ class PlayState extends MusicBeatState
 			gfy = 265;
 			gfVersion = 'gamingtastic';
 		}
-		else if(formoverride == "3d-bf")
-		{
-			gfVersion = '3d-gf';
-		}
 		else if (SONG.song.toLowerCase() == 'sugar-rush' && formoverride == "radical") // hotboy
 		{
 			gfy = 0;
 		}
-		else if (SONG.song.toLowerCase() == 'sugar-rush' && formoverride != "radical")
+		else if(formoverride == "3d-bf")
 		{
-			gfy = 70;
-		}	
+			gfVersion = '3d-gf';
+		}
 		gf = new Character(400 + gfx, 130 + gfy, gfVersion);
 		gf.scrollFactor.set(0.95, 0.95);
 		gf.visible = SONG.gf_visible;
 
-		if (!(formoverride == "bf" || formoverride == "none" || formoverride == "bf-pixel" || formoverride == "bf-christmas" || formoverride == "radical" || formoverride == "3d-bf") && SONG.song != "Tutorial")
+		if (!(formoverride == "bf" || formoverride == "none" || formoverride == "bf-pixel" || formoverride == "bf-christmas" || formoverride == "radical") && SONG.song != "Tutorial")
 		{
 			gf.visible = false;
 			gfy = 0;
@@ -540,7 +536,7 @@ class PlayState extends MusicBeatState
 				}
 				else if(formoverride == "bf")
 				{
-					gf.setPosition(811, 200);
+					gf.setPosition(751, 300);
 				}
 			case 'algebra':
 				boyfriend.y += 80;
@@ -1603,8 +1599,7 @@ class PlayState extends MusicBeatState
 				{
 					oldNote = unspawnNotes[Std.int(unspawnNotes.length - 1)];
 
-					var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + Conductor.stepCrochet, daNoteData, oldNote, true,
-						gottaHitNote);
+					var sustainNote:Note = new Note(daStrumTime + (Conductor.stepCrochet * susNote) + Conductor.stepCrochet, daNoteData, oldNote, true, gottaHitNote);
 					sustainNote.scrollFactor.set();
 					unspawnNotes.push(sustainNote);
 
@@ -2030,7 +2025,7 @@ class PlayState extends MusicBeatState
 	private var canPoip:Bool = true;
 	private var TheDefinedAppleCoreArray:Array<Bool> = [false, false];
 	private var ThisIntegerThatIDontKnowWhatDoes:Int = 0;
-
+	
 	override public function update(elapsed:Float)
 	{
 		elapsedtime += elapsed;
@@ -2872,10 +2867,6 @@ class PlayState extends MusicBeatState
 							if (SONG.song.toLowerCase() != "cheating")
 							{
 								altAnim = '-alt';
-								if(SONG.song.toLowerCase() == 'sugar-rush')
-								{
-									//idleAlt = true;
-								}
 							}
 							else
 							{
@@ -3248,9 +3239,6 @@ class PlayState extends MusicBeatState
 
 	var endingSong:Bool = false;
 
-	var timeShown = 0;
- 	var currentTimingShown:FlxText = null;
-
 	function nextSong()
 	{
 		var difficulty:String = "";
@@ -3401,34 +3389,6 @@ class PlayState extends MusicBeatState
 			rating.acceleration.y = 550;
 			rating.velocity.y -= FlxG.random.int(140, 175);
 			rating.velocity.x -= FlxG.random.int(0, 10);
-
- 			var msTiming = truncateFloat(noteDiff, 0);
- 
- 			if (currentTimingShown != null)
- 				remove(currentTimingShown);
- 
- 			currentTimingShown = new FlxText(0,0,0,"0ms");
- 			timeShown = 0;
- 			switch(daRating)
- 			{
- 				case 'shit' | 'bad':
- 					currentTimingShown.color = FlxColor.RED;
- 				case 'good':
- 					currentTimingShown.color = FlxColor.GREEN;
- 				case 'sick':
- 					currentTimingShown.color = FlxColor.CYAN;
- 			}
- 			currentTimingShown.borderStyle = OUTLINE;
- 			currentTimingShown.borderSize = 1.4;
- 			currentTimingShown.borderColor = FlxColor.BLACK;
- 			currentTimingShown.text = msTiming + "ms";
- 			currentTimingShown.font = Paths.font("comic.ttf");
- 			currentTimingShown.size = 30;
- 
- 			if (currentTimingShown.alpha != 1)
- 				currentTimingShown.alpha = 1;
- 
- 			add(currentTimingShown);
  			
 			var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(ratingFolder + '/' + ratingstype + '/' + 'combo'));
 			comboSpr.screenCenter();
@@ -3437,18 +3397,7 @@ class PlayState extends MusicBeatState
 			comboSpr.acceleration.y = 600;
 			comboSpr.velocity.y -= 150;
 
- 			currentTimingShown.screenCenter();
- 			currentTimingShown.x = comboSpr.x + 100;
-			currentTimingShown.y = rating.y + 100;
- 			currentTimingShown.acceleration.y = 600;
- 			currentTimingShown.velocity.y -= 150;
-			if(SONG.song.toLowerCase() == 'algebra')
-			{
-				currentTimingShown.y += 2000;
-			}
-
 			comboSpr.velocity.x += FlxG.random.int(1, 10);
-			currentTimingShown.velocity.x += comboSpr.velocity.x;
 			add(rating);
 
 			if (!curStage.startsWith('school'))
@@ -3464,7 +3413,6 @@ class PlayState extends MusicBeatState
 				comboSpr.setGraphicSize(Std.int(comboSpr.width * daPixelZoom * 0.7));
 			}
 
-			currentTimingShown.updateHitbox();
 			comboSpr.updateHitbox();
 			rating.updateHitbox();
 
@@ -3527,12 +3475,6 @@ class PlayState extends MusicBeatState
 
 			FlxTween.tween(rating, {alpha: 0}, 0.2, {
 				startDelay: Conductor.crochet * 0.001,
- 				onUpdate: function(tween:FlxTween)
- 				{
-					if (currentTimingShown != null)
- 						currentTimingShown.alpha -= 0.02;
- 					timeShown++;
- 				}
 			});
 
 			FlxTween.tween(comboSpr, {alpha: 0}, 0.2, {
@@ -3540,13 +3482,6 @@ class PlayState extends MusicBeatState
 				{
 					coolText.destroy();
 					comboSpr.destroy();
-
-					if (currentTimingShown != null && timeShown >= 100)
- 					{
- 						remove(currentTimingShown);
- 						currentTimingShown = null;
- 					}
-
 					rating.destroy();
 				},
 				startDelay: Conductor.crochet * 0.001
@@ -3565,6 +3500,8 @@ class PlayState extends MusicBeatState
 	var downHold:Bool = false;
 	var rightHold:Bool = false;
 	var leftHold:Bool = false;
+
+	
 
 	private function keyShit():Void
 	{
@@ -3865,7 +3802,7 @@ class PlayState extends MusicBeatState
 				totalNotesHit += 1;
 
 			if (note.isSustainNote)
-				health += 0.004;
+				health += 0.01;
 			else
 				health += 0.023;
 
