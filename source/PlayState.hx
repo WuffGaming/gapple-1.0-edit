@@ -143,6 +143,7 @@ class PlayState extends MusicBeatState
 
 	private var vocals:FlxSound;
 	var healthLerp:Float = 1;
+	var scoreLerp:Float = 1;
 
 	private var opponent:Character;
 	private var opponentmirror:Character;
@@ -192,6 +193,7 @@ class PlayState extends MusicBeatState
 
 	private var gfSpeed:Int = 1;
 	private var health:Float = 1;
+	private var scoreMult:Float = 1;
 	private var combo:Int = 0;
 
 	public static var misses:Int = 0;
@@ -215,8 +217,6 @@ class PlayState extends MusicBeatState
 	private var shakeCam:Bool = false;
 	private var startingSong:Bool = false;
 
-	public var TwentySixKey:Bool = false;
-
 	public static var amogus:Int = 0;
 
 	public var cameraSpeed:Float = 1;
@@ -238,7 +238,10 @@ class PlayState extends MusicBeatState
 	var wiggleShit:WiggleEffect = new WiggleEffect();
 
 	var talking:Bool = true;
-	var songScore:Int = 0;
+	var songScore:Int = 0; // controls actual score
+	var score:Float = 0; // controls score earned per rating
+	var scoreMultiplier:Float = 3.251; // controls how much score is multiplied (combo / scoreMultiplier)
+	var sustainScore:Float = 11; // controls score earned while holding on sustain. Gives the illusion of randomness while being predetermined.
 	var scoreTxt:FlxText;
 	var ratingstype:String = "normal";
 
@@ -308,9 +311,6 @@ class PlayState extends MusicBeatState
 		shits = 0;
 		goods = 0;
 		misses = 0;
-
-		// Making difficulty text for Discord Rich Presence.
-		storyDifficultyText = CoolUtil.difficultyString();
 
 		// To avoid having duplicate images in Discord assets
 		switch (SONG.player2)
@@ -727,22 +727,28 @@ class PlayState extends MusicBeatState
 		if(SONG.song.toLowerCase() == 'algebra')
 		{
 			curbar = 'retroBar';
-			curThing = 'healthBarBaldi';
 		}
 		healthBarBG = new FlxSprite(0, FlxG.height * 0.9).loadGraphic(Paths.image('ui/bar/' + curbar));
 		if (FlxG.save.data.downscroll)
 			healthBarBG.y = 50;
-		
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
 		add(healthBarBG);
-
-		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this, 'healthLerp', 0, 2);
-		healthBar.scrollFactor.set();
-		healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
-		if(SONG.song.toLowerCase() == 'algebra')
+		switch (curbar)
 		{
-			healthBar.createFilledBar(0xFFFF0000, 0xFF66FF33);
+			case 'retroBar':
+				healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this, 'health', 0, 2);
+				healthBar.scrollFactor.set();
+				if(SONG.song.toLowerCase() == 'algebra')
+				{
+					healthBar.createFilledBar(0xFFFF0000, 0xFF66FF33);
+				}
+				curThing = 'healthBarBaldi';
+			default:
+				healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this, 'healthLerp', 0, 2);
+				healthBar.scrollFactor.set();
+				healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
+				curThing = 'healthBarThing';
 		}
 		add(healthBar);
 		
@@ -782,13 +788,6 @@ class PlayState extends MusicBeatState
 			default:
 				credits = '';
 		}
-		var randomThingy:Int = FlxG.random.int(0, 0);
-		var engineName:String = 'stupid';
-		switch(randomThingy)
-	    {
-			case 0:
-				engineName = '';
-		}
 		var creditsText:Bool = credits != '';
 		var textYPos:Float = healthBarBG.y + 50;
 		if (creditsText)
@@ -796,9 +795,7 @@ class PlayState extends MusicBeatState
 			textYPos = healthBarBG.y + 30;
 		}
 		// Add Kade Engine watermark
-		kadeEngineWatermark = new FlxText(4, textYPos, 0,
-		SONG.song
-		+ "" + engineName + "", 16);
+		kadeEngineWatermark = new FlxText(4, textYPos, 0, CoolUtil.formatString(SONG.song), 16);
 		kadeEngineWatermark.setFormat(Paths.font("comic.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		kadeEngineWatermark.scrollFactor.set();
 		kadeEngineWatermark.borderSize = 1.25;
@@ -2053,7 +2050,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		updateHealthBar();
+		updateHud();
 
 		//dvd screensaver lookin ass
 		if(daveFuckingDies != null && redTunnel != null && !daveFuckingDies.inCutscene)
@@ -2510,11 +2507,11 @@ class PlayState extends MusicBeatState
 		var commaSeparated:Bool = true;
 		if (SONG.song.toLowerCase() == 'algebra')
 		{
-		scoreTxt.text = "Score:" + FlxStringUtil.formatMoney(songScore, false, commaSeparated);
+		scoreTxt.text = "Score:" + songScore;
 		}
 		else
 		{
-		scoreTxt.text = "Score: " + FlxStringUtil.formatMoney(songScore, false, commaSeparated) + " | Misses: " + misses + " | Accuracy: " + truncateFloat(accuracy, 2) + "% | " + generateRanking();
+		scoreTxt.text = "Score: " + FlxStringUtil.formatMoney(scoreLerp, false, commaSeparated) + " | Misses: " + misses + " | Accuracy: " + truncateFloat(accuracy, 2) + "% | " + generateRanking();
 		}
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
 		{
@@ -3291,7 +3288,7 @@ class PlayState extends MusicBeatState
 		});
 	}
 
-	private function popUpScore(strumtime:Float, notedata:Int):Void
+	function popUpScore(strumtime:Float, notedata:Int):Void
 	{
 		var noteDiff:Float = Math.abs(strumtime - Conductor.songPosition);
 		// boyfriend.playAnim('hey');
@@ -3305,15 +3302,24 @@ class PlayState extends MusicBeatState
 		coolText.y -= 350;
 		var ratingFolder:String = 'ui/ratings';
 		var rating:FlxSprite = new FlxSprite();
-		var score:Int = 350;
 
 		var daRating:String = "sick";
+
+		/**
+			MY REALLY COOL NEW SCORING ALGORITHM:
+
+			multiply score by combo being divided by scoreMultiplier, then subtract that by misses
+
+
+			please rate it 10/10
+		**/
 
 		if (noteDiff > Conductor.safeZoneOffset * 2)
 		{
 			daRating = 'shit';
 			totalNotesHit -= 2;
-			score = -3000;
+			score = -100 - misses;
+			sustainScore = 0;
 			ss = false;
 			shits++;
 		}
@@ -3321,14 +3327,16 @@ class PlayState extends MusicBeatState
 		{
 			daRating = 'shit';
 			totalNotesHit -= 2;
-			score = -3000;
+			score = -100 - misses;
+			sustainScore = 0;
 			ss = false;
 			shits++;
 		}
 		else if (noteDiff > Conductor.safeZoneOffset * 0.45)
 		{
 			daRating = 'bad';
-			score = -1000;
+			score = 50 + (combo / scoreMultiplier) - misses;
+			sustainScore = 5;
 			totalNotesHit += 0.2;
 			ss = false;
 			bads++;
@@ -3337,12 +3345,14 @@ class PlayState extends MusicBeatState
 		{
 			daRating = 'good';
 			totalNotesHit += 0.65;
-			score = 200;
+			score = 200 + (combo / scoreMultiplier) - misses;
+			sustainScore = 7;
 			ss = false;
 			goods++;
 		}
 		if (daRating == 'sick')
 		{
+			score = 350 + (combo / scoreMultiplier) - misses;
 			totalNotesHit += 1;
 			sicks++;
 		}
@@ -3360,7 +3370,7 @@ class PlayState extends MusicBeatState
 
 		if (daRating != 'shit' || daRating != 'bad')
 		{
-			songScore += score;
+			songScore += Std.int(score);
 
 			/* if (combo > 60)
 					daRating = 'sick';
@@ -3686,14 +3696,11 @@ class PlayState extends MusicBeatState
 			{
 				gf.playAnim('sad');
 			}
+			songScore -= 350 + Std.int(combo / 5); // penalize for losing combo
 			combo = 0;
 			misses++;
 
-			songScore -= 10;
-
 			FlxG.sound.play(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
-			// FlxG.sound.play(Paths.sound('missnote1'), 1, false);
-			// FlxG.log.add('played imss note');
 			if (boyfriend.animation.getByName("singLEFTmiss") != null)
 			{
 				//'LEFT', 'DOWN', 'UP', 'RIGHT'
@@ -3802,9 +3809,14 @@ class PlayState extends MusicBeatState
 				totalNotesHit += 1;
 
 			if (note.isSustainNote)
+			{
 				health += 0.01;
+				songScore += Std.int(sustainScore);
+			}
 			else
+			{
 				health += 0.023;
+			}
 
 			if (darkLevels.contains(curStage) && SONG.song.toLowerCase() != "polygonized")
 			{
@@ -4326,7 +4338,7 @@ class PlayState extends MusicBeatState
 						defaultCamZoom = 0.85;
 						FlxG.camera.flash(FlxColor.WHITE, 1);
 						curbar = 'corruptedBar';
-						creditsWatermark.text = "CORRUPTED-FILE";
+						creditsWatermark.text = "CORRUPTED FILE";
 						kadeEngineWatermark.y -= 200000;
 						theFunne = false;
 				}
@@ -4803,9 +4815,10 @@ class PlayState extends MusicBeatState
 		return Paths.image('backgrounds/algebra/bgJunkers/$Path');
 	}
 
-	function updateHealthBar():Void
+	function updateHud():Void
   	{
       healthLerp = FlxMath.lerp(healthLerp, health, 0.15);
+	  scoreLerp = FlxMath.lerp(scoreLerp, songScore, 0.15);
     }
 
 	public function preload(graphic:String) //preload assets
