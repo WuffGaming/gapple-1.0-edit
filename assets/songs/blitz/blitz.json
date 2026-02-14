@@ -8308,7 +8308,7 @@
 		"player3": null,
 		"splashSkin": "noteSplashes",
 		"song": "Blitz",
-		"stage": "stage",
+		"curStage": "basement",
 		"validScore": true,
 		"arrowSkin": "",
 		"needsVoices": true,

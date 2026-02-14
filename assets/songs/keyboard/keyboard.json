@@ -5806,7 +5806,7 @@
 		"song": "Keyboard",
 		"needsVoices": true,
 		"validScore": true,
-		"stage": "stage",
+		"curStage": "3dbg",
 		"bpm": 160,
 		"speed": 2.9
 	}

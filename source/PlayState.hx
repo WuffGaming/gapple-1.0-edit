@@ -338,8 +338,6 @@ class PlayState extends MusicBeatState
 		// String for when the game is paused
 		detailsPausedText = "Paused - " + detailsText;
 
-		curStage = "";
-
 		// Updating Discord Rich Presence.
 		#if desktop
 		DiscordClient.changePresence(SONG.song,
@@ -417,15 +415,8 @@ class PlayState extends MusicBeatState
 				// wow failgafe
 		}
 
-		backgroundSprites = createBackgroundSprites(SONG.song.toLowerCase());
-		if (SONG.song.toLowerCase() == 'polygonized' || SONG.song.toLowerCase() == 'furiosity')
-		{
-			normalDaveBG = createBackgroundSprites('glitch');
-			for (bgSprite in normalDaveBG)
-			{
-				bgSprite.alpha = 0;
-			}
-		}
+		curStage = SONG.curStage;
+		backgroundSprites = createBackgroundSprites(curStage);
 
 		screenshader.waveAmplitude = 1;
 		screenshader.waveFrequency = 2;
@@ -674,7 +665,7 @@ class PlayState extends MusicBeatState
 		timeTxt.borderSize = 2;
 		timeTxt.visible = showTime;
 		if(FlxG.save.data.downscroll) timeTxt.y = FlxG.height - 44;
-		if(SONG.song.toLowerCase() == 'algebra')
+		if(curStage == 'algebra')
 		{
 			timeTxt.y = 5000000;
 		}
@@ -724,7 +715,7 @@ class PlayState extends MusicBeatState
 
 		FlxG.fixedTimestep = false;
 
-		if(SONG.song.toLowerCase() == 'algebra')
+		if(curStage == 'algebra')
 		{
 			curbar = 'retroBar';
 		}
@@ -739,10 +730,7 @@ class PlayState extends MusicBeatState
 			case 'retroBar':
 				healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this, 'health', 0, 2);
 				healthBar.scrollFactor.set();
-				if(SONG.song.toLowerCase() == 'algebra')
-				{
-					healthBar.createFilledBar(0xFFFF0000, 0xFF66FF33);
-				}
+				healthBar.createFilledBar(0xFFFF0000, 0xFF66FF33);
 				curThing = 'healthBarBaldi';
 			default:
 				healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this, 'healthLerp', 0, 2);
@@ -799,7 +787,7 @@ class PlayState extends MusicBeatState
 		kadeEngineWatermark.setFormat(Paths.font("comic.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		kadeEngineWatermark.scrollFactor.set();
 		kadeEngineWatermark.borderSize = 1.25;
-		if(SONG.song.toLowerCase() == 'algebra')
+		if(curStage == 'algebra')
 		{
 			kadeEngineWatermark.y = 5000000;
 		}
@@ -829,7 +817,7 @@ class PlayState extends MusicBeatState
 
 
 		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width / 2 - 150, healthBarBG.y + 40, FlxG.width, "", 20);
-		if(SONG.song.toLowerCase() == 'algebra') {
+		if(curStage == 'algebra') {
 			scoreTxt.setFormat(Paths.font("comic.ttf"), 20, FlxColor.WHITE, CENTER);
 		}
 		else {
@@ -838,7 +826,7 @@ class PlayState extends MusicBeatState
 		scoreTxt.scrollFactor.set();
 		scoreTxt.borderSize = 1.5;
 		scoreTxt.screenCenter(X);
-		if(SONG.song.toLowerCase() == 'algebra')
+		if(curStage == 'algebra')
 		{
 			scoreTxt.x = 135;
 			scoreTxt.y -= 10;
@@ -901,15 +889,14 @@ class PlayState extends MusicBeatState
 
 		super.create();
 	}
-	function createBackgroundSprites(song:String):FlxTypedGroup<FlxSprite>
+	function createBackgroundSprites(stage:String):FlxTypedGroup<FlxSprite>
 	{
 		var sprites:FlxTypedGroup<FlxSprite> = new FlxTypedGroup<FlxSprite>();
-		switch (song)
+		switch (curStage)
 		{
-			case 'sugar-rush':
+			case 'sugar':
 				camBeatSnap = 1;
 				defaultCamZoom = 0.85;
-				curStage = 'sugar';
 
 				var swag:FlxSprite = new FlxSprite(120, -35).loadGraphic(Paths.image('backgrounds/3dbg/pissing_too'));
 				swag.x -= 250;
@@ -919,9 +906,8 @@ class PlayState extends MusicBeatState
 
 				add(swag);
 
-			case 'blitz':
+			case 'basement':
 				defaultCamZoom = 0.9;
-				curStage = 'basement';
 
 				var twodeez:FlxSprite = new FlxSprite(-1982, -707).loadGraphic(Paths.image('backgrounds/house/basement-2d'));
 				twodeez.updateHitbox();
@@ -935,7 +921,7 @@ class PlayState extends MusicBeatState
 				add(twodeez);
 				add(threedeez);
 
-			case 'duper':
+			case 'farm':
 				defaultCamZoom = 0.9;
 	
 				farmsky = new FlxSprite(-700, 0).loadGraphic(Paths.image('backgrounds/farm/sky'));
@@ -1005,17 +991,15 @@ class PlayState extends MusicBeatState
 				add(fence);
 				add(sign);
 				
-			case 'recovered-project':
+			case 'recover':
 				defaultCamZoom = 1.4;
-				curStage = 'recover';
 				var yea = new FlxSprite(-641, -222).loadGraphic(Paths.image('backgrounds/RECOVER_assets/q'));
 				yea.setGraphicSize(2478);
 				yea.updateHitbox();
 				sprites.add(yea);
 				add(yea);
-			case 'applecore':
+			case 'POOP':
 				defaultCamZoom = 0.5;
-				curStage = 'POOP';
 				swagger = new Character(-300, 100 - 900 - 400, 'bambi-piss-3d');
 				altSong = Song.loadFromJson('alt-notes', 'applecore');
 
@@ -1077,7 +1061,6 @@ class PlayState extends MusicBeatState
 				}
 
 			case 'algebra':
-				curStage = 'algebra';
 				defaultCamZoom = 0.85;
 				swagSpeed = 1.6;
 				var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('backgrounds/algebra/algebraBg'));
@@ -1118,48 +1101,33 @@ class PlayState extends MusicBeatState
 				}
 				
 
-			case 'polygonized' | 'furiosity' | 'cheating' | 'unfairness' | 'disruption' | 'disability' | 'origin' | 'tantalum' | 'jam' | 'keyboard':
+			case '3dbg':
 				defaultCamZoom = 0.9;
-				var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('backgrounds/3dbg/redsky'));
+				var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('backgrounds/3dbg/disabled'));
 				bg.active = true;				
 				bg.scrollFactor.set(0.1, 0.1);
 	
-				switch (SONG.song.toLowerCase())
+				switch (SONG.song.toLowerCase()) // TODO: MOVE TO SEPARATE STAGES!!
 				{
-					case 'cheating':
-						bg.loadGraphic(Paths.image('backgrounds/3dbg/cheater'));
-						curStage = 'cheating';
 					case 'disruption':
 						gfSpeed = 2;
 						bg.loadGraphic(Paths.image('backgrounds/3dbg/disruptor'));
-						curStage = 'disrupt';
-					case 'unfairness':
-						bg.loadGraphic(Paths.image('backgrounds/3dbg/scarybg'));
-						curStage = 'unfairness';
-					case 'disability':
-						bg.loadGraphic(Paths.image('backgrounds/3dbg/disabled'));
-						curStage = 'disabled';
 					case 'origin':
 						bg.loadGraphic(Paths.image('backgrounds/3dbg/heaven'));
-						curStage = 'origin';
 					case 'tantalum':
 						defaultCamZoom = 0.7;
 						bg.loadGraphic(Paths.image('backgrounds/3dbg/metal'));
 						bg.y -= 235;
-						curStage = 'tantalum';
 					case 'jam':
 						defaultCamZoom = 0.69;
 						bg.loadGraphic(Paths.image('backgrounds/3dbg/strawberries'));
 						bg.scrollFactor.set(0, 0);
 						bg.y -= 200;
 						bg.x -= 100;
-						curStage = 'jam';
 					case 'keyboard':
 						bg.loadGraphic(Paths.image('backgrounds/3dbg/keyboard'));
-						curStage = 'keyboard';
 					default:
-						bg.loadGraphic(Paths.image('backgrounds/3dbg/redsky'));
-						curStage = 'daveEvilHouse';
+						bg.loadGraphic(Paths.image('backgrounds/3dbg/disabled'));
 				}
 				
 				sprites.add(bg);
@@ -1180,9 +1148,8 @@ class PlayState extends MusicBeatState
 				testshader.waveSpeed = 2;
 				bg.shader = testshader.shader;
 				curbg = bg;
-			case 'wireframe':
+			case 'redTunnel':
 				defaultCamZoom = 0.67;
-				curStage = 'redTunnel';
 				var stupidFuckingRedBg = new FlxSprite().makeGraphic(9999, 9999, FlxColor.fromRGB(42, 0, 0)).screenCenter();
 				add(stupidFuckingRedBg);
 				redTunnel = new FlxSprite(-1000, -700).loadGraphic(Paths.image('backgrounds/3dbg/redTunnel'));
@@ -1195,13 +1162,11 @@ class PlayState extends MusicBeatState
 				daveFuckingDies.y = 1500;
 				add(daveFuckingDies);
 				daveFuckingDies.visible = false;
-			case 'sart-producer':
-				curStage = 'warehouse';
+			case 'warehouse':
 				defaultCamZoom = 0.6;
 
 				add(new FlxSprite(-1350, -1111).loadGraphic(Paths.image('backgrounds/warehouse/bg')));
-			case 'thunderstorm':
-				curStage = 'out';
+			case 'out':
 				defaultCamZoom = 0.8;
 
 				var sky:ShaggyModMoment = new ShaggyModMoment('backgrounds/thunda/sky', -1204, -456, 0.15, 1, 0);
@@ -1220,7 +1185,6 @@ class PlayState extends MusicBeatState
 				add(ground);
 			default:
 				defaultCamZoom = 0.9;
-				curStage = 'stage';
 				var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('backgrounds/shared/stageback'));
 				bg.antialiasing = true;
 				bg.scrollFactor.set(0.9, 0.9);
@@ -1385,7 +1349,7 @@ class PlayState extends MusicBeatState
 			{
 				ratingstype = 'radical';
 			}
-		if(SONG.song.toLowerCase() == 'algebra')
+		if(curStage == 'algebra')
 			{
 				ratingstype = 'baldi';
 			}
@@ -2498,6 +2462,11 @@ class PlayState extends MusicBeatState
 			}
 		}
 		var lerpVal:Float = CoolUtil.boundTo(elapsed * 2.4 * cameraSpeed, 0, 1);
+		if (curStage == 'algebra')
+		{
+			cameraSpeed = 5;
+			camZoomIntensity = 0;
+		}
 		if(!inCutscene && camMoveAllowed)
 			camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
 
@@ -2505,7 +2474,7 @@ class PlayState extends MusicBeatState
 
 
 		var commaSeparated:Bool = true;
-		if (SONG.song.toLowerCase() == 'algebra')
+		if (curStage == 'algebra')
 		{
 		scoreTxt.text = "Score:" + songScore;
 		}

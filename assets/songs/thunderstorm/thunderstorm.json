@@ -3,6 +3,7 @@
 		"sectionLengths": [],
 		"player1": "bf",
 		"gf_visible":true,
+		"curStage":"out",
 		"notes": [
 			{
 				"sectionNotes": [

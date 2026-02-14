@@ -4928,7 +4928,7 @@
 		"song": "Origin",
 		"needsVoices": true,
 		"validScore": true,
-		"stage": "stage",
+		"curStage": "3dbg",
 		"bpm": 133,
 		"speed": 2.8
 	}

@@ -3472,7 +3472,7 @@
 		"needsVoices": true,
 		"sections": 0,
 		"validScore": true,
-		"stage": "sart",
+		"curStage": "warehouse",
 		"bpm": 140,
 		"speed": 2.6
 	}

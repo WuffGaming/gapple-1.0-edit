@@ -4182,7 +4182,7 @@
 		"song": "Jam",
 		"needsVoices": true,
 		"validScore": true,
-		"stage": "stage",
+		"curStage": "3dbg",
 		"bpm": 134,
 		"speed": 2.8
 	}

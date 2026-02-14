@@ -119,6 +119,7 @@ class ChartingState extends MusicBeatState
 				player1: 'bf',
 				player2: 'dave',
 				gf: 'gf',
+				curStage: '3dbg',
 				speed: 1,
 				validScore: false,
 				notes: []
@@ -219,7 +220,7 @@ class ChartingState extends MusicBeatState
 		};
 
 		var gf_visible = new FlxUICheckBox(140, 200, null, null, "Toggle GF Visibility", 100);
-		gf_visible.checked = true;
+		gf_visible.checked = _song.gf_visible; // bufg fix
 		gf_visible.callback = function()
 		{
 			_song.gf_visible = gf_visible.checked;
@@ -256,6 +257,7 @@ class ChartingState extends MusicBeatState
 		stepperBPM.name = 'song_bpm';
 
 		var characters:Array<String> = CoolUtil.coolTextFile(Paths.txt('characterList'));
+		var stages:Array<String> = CoolUtil.coolTextFile(Paths.txt('stageList'));
 
 		var player1DropDown = new FlxUIDropDownMenu(10, 100, FlxUIDropDownMenu.makeStrIdLabelArray(characters, true), function(character:String)
 		{
@@ -280,6 +282,14 @@ class ChartingState extends MusicBeatState
 		gfDropDown.selectedLabel = _song.gf;
 		gfDropDown.dropDirection = FlxUIDropDownMenuDropDirection.Down;
 
+		var stageDropDown = new FlxUIDropDownMenu(140, 130, FlxUIDropDownMenu.makeStrIdLabelArray(stages, true), function(stage:String)
+		{
+			_song.curStage = stages[Std.parseInt(stage)];
+		});
+
+		stageDropDown.selectedLabel = _song.curStage;
+		stageDropDown.dropDirection = FlxUIDropDownMenuDropDirection.Down;
+
 		var oneSectionSongCheckbox = new FlxUICheckBox(10, 400, null, null, "1 Section Song", 100);
 		oneSectionSongCheckbox.checked = false;
 		oneSectionSongCheckbox.callback = function()
@@ -303,6 +313,7 @@ class ChartingState extends MusicBeatState
 		tab_group_song.add(player1DropDown);
 		tab_group_song.add(player2DropDown);
 		tab_group_song.add(gfDropDown);
+		tab_group_song.add(stageDropDown);
 		tab_group_song.add(oneSectionSongCheckbox);
 
 		UI_box.addGroup(tab_group_song);

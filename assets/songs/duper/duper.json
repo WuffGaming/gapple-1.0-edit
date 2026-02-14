@@ -9861,7 +9861,7 @@
 		"player2": "dupers",
 		"song": "Duper",
 		"needsVoices": true,
-		"stage": "corn",
+		"curStage": "farm",
 		"validScore": true,
 		"bpm": 200,
 		"speed": 2.9
