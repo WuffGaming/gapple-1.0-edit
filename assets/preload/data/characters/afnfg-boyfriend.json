@@ -1,0 +1,49 @@
+{
+    "animations": [
+        {
+            "animName": "idle",
+            "anim": "idl",
+            "fps": 60,
+            "loop": false
+        },
+        {
+            "animName": "singUP",
+            "anim": "up",
+            "fps": 24,
+            "loop": false
+
+        },
+        {
+            "animName": "singLEFT",
+            "anim": "left",
+            "fps": 24,
+            "loop": false
+
+        },
+        {
+            "animName": "singRIGHT",
+            "anim": "right",
+            "fps": 24,
+            "loop": false
+        },
+        {
+            "animName": "singDOWN",
+            "anim": "down",
+            "fps": 24,
+            "loop": false
+        },
+        {
+    ],
+    "barcolor": {
+        "red": 49,
+        "green": 176,
+        "blue": 209
+    },
+    "antialiasing": false,
+    "characterImage": "characters/other/afnfg_boyfriend",
+    "icon": "bf-3d",
+    "nativelyPlayable": true,
+    "flipX": true,
+    "updateHitbox": false,
+    "bopDance": false,
+}

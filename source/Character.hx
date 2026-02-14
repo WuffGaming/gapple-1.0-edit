@@ -1,13 +1,46 @@
 package;
 
-import flixel.addons.effects.chainable.FlxEffectSprite;
+import sys.FileSystem;
+import sys.io.File;
+import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.animation.FlxBaseAnimation;
 import flixel.graphics.frames.FlxAtlasFrames;
+import haxe.Json;
+import haxe.format.JsonParser;
 
 using StringTools;
+
+typedef CharacterFile =
+{
+	var animations:Array<Anim>;
+	var barcolor:RGB;
+    var	antialiasing:Bool;
+	var characterImage:String;
+    var icon:String;
+	var flipX:Bool;
+	var updateHitbox:Bool;
+	var setGraphicSize:String;
+	var nativelyPlayable:Bool;
+	var bopDance:Bool;
+}
+
+typedef Anim = 
+{
+	var animName:String;
+	var anim:String;
+	var fps:Int;
+	var loop:Bool;
+}
+
+typedef RGB = 
+{
+	var red:Int;
+	var green:Int;
+	var blue:Int;
+}
 
 class Character extends FlxSprite
 {
@@ -27,6 +60,9 @@ class Character extends FlxSprite
 	public var barColor:FlxColor;
 	public var bopDance:Bool = false;
 
+	public var rawJsonCustom:String;
+	public var charJson:CharacterFile;
+
 	public var globaloffset:Array<Float> = [0,0];
 
 	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:Bool = false)
@@ -39,6 +75,7 @@ class Character extends FlxSprite
 
 		var tex:FlxAtlasFrames;
 		antialiasing = true;
+		barColor = FlxColor.fromRGB(255, 255, 255);
 
 		switch (curCharacter)
 		{
@@ -807,6 +844,7 @@ class Character extends FlxSprite
 
 				nativelyPlayable = true;
 				
+			/**
 			case 'afnfg-boyfriend':
 				var tex = Paths.getSparrowAtlas('characters/other/afnfg_boyfriend');
 				frames = tex;
@@ -826,6 +864,7 @@ class Character extends FlxSprite
 				flipX = true;
 
 				nativelyPlayable = true;
+			**/
 			//tunnel-bf-flipped cuz im STUPID
 			case 'tunnel-bf-flipped':
 				var tex = Paths.getSparrowAtlas('characters/dave/tunnel_bf');
@@ -845,7 +884,39 @@ class Character extends FlxSprite
 				barColor = FlxColor.fromRGB(49, 176, 209);
 
 				nativelyPlayable = true;
-		}
+			default:
+				// THANX DAVE AND BAMBI MODDABLE BY CamLikesKirby I USED IT AS A REFERENCE FOR A LOT OF THIS!!
+				var customPath:String = '';
+				if (FileSystem.exists('data/characters/${curCharacter}.json'))
+				{
+					customPath = 'data/characters/${curCharacter}.json';
+					rawJsonCustom = File.getContent(customPath);
+			    	charJson = cast Json.parse(rawJsonCustom);
+
+					if (charJson.characterImage != null) {
+						tex = Paths.getCustomSparrowAtlas(charJson.characterImage);
+
+					frames = tex;
+
+					for (i in charJson.animations) {
+						animation.addByPrefix(i.animName, i.anim, i.fps, i.loop);
+					}
+
+					barColor = FlxColor.fromRGB(charJson.barcolor.red, charJson.barcolor.green, charJson.barcolor.blue);
+					bopDance = charJson.bopDance;
+					loadOffsetFile(curCharacter);
+					iconName = charJson.icon;
+					nativelyPlayable = charJson.nativelyPlayable;
+					flipX = charJson.flipX;
+					antialiasing = charJson.antialiasing;
+
+					if (charJson.setGraphicSize != null)
+						setGraphicSize(Std.parseInt(charJson.setGraphicSize));
+					if (charJson.updateHitbox)
+						updateHitbox;
+					playAnim(charJson.bopDance ? 'danceRight' : 'idle');
+				}
+			}
 		dance();
 
 		if(isPlayer)
@@ -853,7 +924,7 @@ class Character extends FlxSprite
 			flipX = !flipX;
 		}
 	}
-
+}
 	public var POOP:Bool = false; // https://cdn.discordapp.com/attachments/902006463654936587/906412566534848542/video0-14.mov
 
 	override function update(elapsed:Float)
@@ -877,8 +948,6 @@ class Character extends FlxSprite
 
 			var daveVar:Float = 4;
 
-			if (curCharacter == 'opponent')
-				daveVar = 6.1;
 			if (holdTimer >= Conductor.stepCrochet * daveVar * 0.001)
 			{
 				dance(POOP);
@@ -886,10 +955,8 @@ class Character extends FlxSprite
 			}
 		}
 
-		switch (curCharacter)
-		{
-			case 'gf':
-				if (animation.curAnim.name == 'hairFall' && animation.curAnim.finished)
+		if (bopDance){
+			if (animation.curAnim.name == 'hairFall' && animation.curAnim.finished)
 					playAnim('danceRight');
 		}
 

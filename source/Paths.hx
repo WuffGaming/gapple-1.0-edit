@@ -1,9 +1,13 @@
 package;
 
+import sys.FileSystem; 
+import sys.io.File;
+import flixel.graphics.FlxGraphic;
 import flixel.FlxG;
 import flixel.graphics.frames.FlxAtlasFrames;
 import openfl.utils.AssetType;
 import openfl.utils.Assets as OpenFlAssets;
+import openfl.display.BitmapData;
 
 class Paths
 {
@@ -120,9 +124,30 @@ class Paths
 		return getPath('data/offsets/' + character + '.txt', TEXT, library); // library is useless here but idc
 	}
 
+	inline static public function customImage(key:String)
+			{
+				if (FileSystem.exists('${key}.png')) {
+				return (FlxGraphic.fromBitmapData(BitmapData.fromFile('${key}.png')));
+				} else {
+				trace('bro that doesn\'t exist ' + '${key}.png');
+				return (FlxGraphic.fromBitmapData(BitmapData.fromFile('assets/shared/images/blank.png')));
+				}
+			}
+	inline static public function customFile(file:String)
+		{
+			   var defaultReturnPath = File.getContent(file);
+
+				return defaultReturnPath;
+		}
+
 	inline static public function getSparrowAtlas(key:String, ?library:String)
 	{
 		return FlxAtlasFrames.fromSparrow(image(key, library), file('images/$key.xml', library));
+	}
+
+	inline static public function getCustomSparrowAtlas(key:String)
+	{
+		return FlxAtlasFrames.fromSparrow(customImage(key), customFile('$key.xml'));	
 	}
 
 	inline static public function getPackerAtlas(key:String, ?library:String)
