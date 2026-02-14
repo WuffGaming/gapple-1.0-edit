@@ -851,12 +851,12 @@ class PlayState extends MusicBeatState
 			iconP1IsPlayer = false;
 		}
 		iconP1 = new HealthIcon(boyfriend.iconName, iconP1IsPlayer);
-		iconP1.y = healthBar.y - (iconP1.height / 2);
 		add(iconP1);
 
 		iconP2 = new HealthIcon(opponent.iconName, false);
-		iconP2.y = healthBar.y - (iconP2.height / 2);
 		add(iconP2);
+
+		updateIcons();
 
 		thunderBlack.cameras = [camHUD];
 		strumLineNotes.cameras = [camHUD];
@@ -4200,6 +4200,7 @@ class PlayState extends MusicBeatState
 						
 						iconRPC = 'icon_the_two_dunkers';
 						iconP2.changeIcon('junkers');
+						updateIcons();
 						opponent.playAnim('NOOMYPHONES', true);
 						opponentmirror.playAnim('NOOMYPHONES', true);
 						opponent.POOP = true; // WORK WORK WOKR< WOKRMKIEPATNOLIKSEHGO:"IKSJRHDLG"H
@@ -4255,6 +4256,7 @@ class PlayState extends MusicBeatState
 					case 667:
 						FlxTween.tween(littleIdiot, {"scale.x": littleIdiot.scale.x + 2.1, "scale.y": littleIdiot.scale.y + 2.1}, 1.35, {ease: FlxEase.cubeInOut, onComplete: function(twn:FlxTween){
 							iconP2.changeIcon('expunged');
+							updateIcons();
 							healthBar.createFilledBar(littleIdiot.barColor, boyfriend.barColor);
 							orbit = false;
 							opponent.visible = opponentmirror.visible = swagger.visible = false;
@@ -4815,11 +4817,21 @@ class PlayState extends MusicBeatState
 		return Paths.image('backgrounds/algebra/bgJunkers/$Path');
 	}
 
-	function updateHud():Void
+	function updateHud():Void // updates hud stuff
   	{
-      healthLerp = FlxMath.lerp(healthLerp, health, 0.15);
-	  scoreLerp = FlxMath.lerp(scoreLerp, songScore, 0.15);
+    	healthLerp = FlxMath.lerp(healthLerp, health, 0.15);
+		scoreLerp = FlxMath.lerp(scoreLerp, songScore, 0.15);
     }
+	function updateIcons() // we don't want this to be running all the time to preserve the icon bounce. only run when icon size changes!
+	{
+		iconP1.y = healthBar.y - (iconP1.height / 2);
+		if (opponent.iconName == 'junkers')
+			iconP2.y = healthBar.y - (iconP2.height / 3);
+		else if (opponent.iconName == 'expunged')
+			iconP2.y = healthBar.y - (iconP2.height / 2) - 50;
+		else
+			iconP2.y = healthBar.y - (iconP2.height / 2);
+	}
 
 	public function preload(graphic:String) //preload assets
 	{

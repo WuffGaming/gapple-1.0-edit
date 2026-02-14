@@ -76,6 +76,12 @@ class HealthIcon extends FlxSprite
 
 			addIcon(char, 0);
 		}
+		else if(char == 'expunged')
+		{
+			loadGraphic(Paths.image('ui/icons/' + char), true, 300, 300);
+
+			addIcon(char, 0);
+		}
 		else
 		{
 			loadGraphic(Paths.image('ui/icons/' + char), true, 150, 150);
@@ -96,6 +102,6 @@ class HealthIcon extends FlxSprite
 		offset.set(Std.int(FlxMath.bound(width - 150,0)),Std.int(FlxMath.bound(height - 150,0)));
 
 		if (sprTracker != null)
-			setPosition(sprTracker.x + sprTracker.width + 10, sprTracker.y - 30);
+				setPosition(sprTracker.x + sprTracker.width + 10, sprTracker.y - 30);
 	}
 }
