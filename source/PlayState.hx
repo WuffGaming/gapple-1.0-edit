@@ -393,27 +393,27 @@ class PlayState extends MusicBeatState
 		switch (SONG.song.toLowerCase())
 		{
 			case 'disruption':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('disruption/disruptDialogue'));
+				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/disruptDialogue'));
 			case 'applecore':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('applecore/coreDialogue'));
+				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/coreDialogue'));
 			case 'disability':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('disability/disableDialogue'));
+				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/disableDialogue'));
 			case 'wireframe':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('wireframe/wireDialogue'));
+				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/wireDialogue'));
 			case 'algebra':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('algebra/algebraDialogue'));
+				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/algebraDialogue'));
 			case 'duper':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('duper/duperDialogue'));
+				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/duperDialogue'));
 			case 'blitz':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('blitz/blitzDialogue'));
+				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/blitzDialogue'));
 			case 'recovered-project':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('recovered-project/NULLDialogue'));
+				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/NULLDialogue'));
 				if(formoverride == "radical")
 				{
-					dialogue = CoolUtil.coolTextFile(Paths.txt('recovered-project/RadicalNULLDialogue'));
+					dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/RadicalNULLDialogue'));
 				}
 			default:
-				dialogue = CoolUtil.coolTextFile(Paths.txt('recovered-project/NULLDialogue'));
+				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/NULLDialogue'));
 				// wow failgafe
 		}
 
@@ -3165,7 +3165,7 @@ class PlayState extends MusicBeatState
 						vocals.volume = 0;
 						generatedMusic = false; // stop the game from trying to generate anymore music and to just cease attempting to play the music in general
 						boyfriend.stunned = true;
-						var doof:DialogueBox = new DialogueBox(false, CoolUtil.coolTextFile(Paths.txt('applecore/coreDialogueEnd')));
+						var doof:DialogueBox = new DialogueBox(false, CoolUtil.coolTextFile(Paths.txt('dialogue/coreDialogueEnd')));
 						doof.scrollFactor.set();
 						doof.finishThing = function()
 						{
@@ -3213,7 +3213,7 @@ class PlayState extends MusicBeatState
 						vocals.volume = 0;
 						generatedMusic = false; // stop the game from trying to generate anymore music and to just cease attempting to play the music in general
 						boyfriend.stunned = true;
-						var doof:DialogueBox = new DialogueBox(false, CoolUtil.coolTextFile(Paths.txt('applecore/coreDialogueEnd')));
+						var doof:DialogueBox = new DialogueBox(false, CoolUtil.coolTextFile(Paths.txt('dialogue/coreDialogueEnd')));
 						doof.scrollFactor.set();
 						doof.finishThing = ughWhyDoesThisHaveToFuckingExist;
 						doof.cameras = [camDialogue];

@@ -95,6 +95,11 @@ class Paths
 		return 'songs:assets/songs/${song.toLowerCase()}/Inst.$SOUND_EXT';
 	}
 
+	inline static public function chart(song:String)
+	{
+		return 'songs:assets/songs/$song.json';
+	}
+
 	inline static public function externmusic(song:String)
 	{
 		return 'songs:assets/songs/extern/${song.toLowerCase()}.$SOUND_EXT';
@@ -110,9 +115,9 @@ class Paths
 		return 'assets/fonts/$key';
 	}
 	
-	static public function offsetFile(character:String):String
+	static public function offsetFile(character:String, ?library:String):String
 	{
-		return getPath('offsets/' + character + '.txt', TEXT, 'preload');
+		return getPath('data/offsets/' + character + '.txt', TEXT, library); // library is useless here but idc
 	}
 
 	inline static public function getSparrowAtlas(key:String, ?library:String)

@@ -64,12 +64,17 @@ class HealthIcon extends FlxSprite
 			frames = Paths.getSparrowAtlas('ui/icons/bandu_origin_icon');
 			animation.addByPrefix(char, char, 24, false, isPlayer, false);
 		}
-		else
-		if(char == 'gf')
+		else if(char == 'gf')
 		{
 			loadGraphic(Paths.image('ui/icons/' + char), true, 150, 150);
 
 			addIcon(char, 0, true);
+		}
+		else if(char == 'junkers')
+		{
+			loadGraphic(Paths.image('ui/icons/' + char), true, 200, 200);
+
+			addIcon(char, 0);
 		}
 		else
 		{
