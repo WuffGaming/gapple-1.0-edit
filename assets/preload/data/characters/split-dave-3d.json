@@ -1,20 +1,18 @@
 {
-  "name": "AFNFG Boyfriend",
-  "asset": "characters/other/afnfg_boyfriend",
+  "name": "3D Dave (Splitathon)",
+  "asset": "characters/dave/split_dave_3d",
   "barColor": [
-    	49,
-    	176,
-    	209
+    	255,
+    	203,
+    	230
     ],
   "antialiasing": false,
-  "icon": "bf-3d",
-  "nativelyPlayable": true,
-  "flipX": true,
+  "icon": "dave-3d",
+  "scale": "(width * furiosityScale), (height * furiosityScale)",
   "animations": [
     {
       "name": "idle",
-      "prefix": "idl",
-      "frameRate": "60"
+      "prefix": "idle"
     },
     {
       "name": "singRIGHT",

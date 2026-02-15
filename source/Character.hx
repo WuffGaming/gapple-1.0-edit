@@ -81,7 +81,7 @@ class Character extends FlxSprite
 
 	public var globaloffset:Array<Float> = [0,0];
 
-	public var barColorArray:Array<Int> = [255, 0, 0];
+	public var barColorArray:Array<Int> = [0, 0, 0];
 
 
 	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:Bool = false)
@@ -340,45 +340,6 @@ class Character extends FlxSprite
 				barColor = FlxColor.fromRGB(15, 95, 255);
 
 				playAnim('idle');
-			case 'split-dave-3d':
-				// DAVE SHITE ANIMATION LOADING CODE
-				tex = Paths.getSparrowAtlas('characters/dave/split_dave_3d');
-				frames = tex;
-				animation.addByPrefix('idle', 'idle', 24, false);
-				animation.addByPrefix('singUP', 'up', 24, false);
-				animation.addByPrefix('singRIGHT', 'right', 24, false);
-				animation.addByPrefix('singDOWN', 'down', 24, false);
-				animation.addByPrefix('singLEFT', 'left', 24, false);
-		
-				loadOffsetFile(curCharacter);
-				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
-				updateHitbox();
-				antialiasing = false;
-				iconName = 'dave-3d';
-				barColor = FlxColor.fromRGB(255, 203, 230);
-		
-				playAnim('idle');
-
-			case 'insane-dave-3d':
-				// DAVE SHITE ANIMATION LOADING CODE
-				tex = Paths.getSparrowAtlas('characters/dave/insane_dave_3d');
-				frames = tex;
-				animation.addByPrefix('idle', 'idle', 24, false);
-				animation.addByPrefix('singUP', 'up', 24, false);
-				animation.addByPrefix('singRIGHT', 'right', 24, false);
-				animation.addByPrefix('singDOWN', 'down', 24, false);
-				animation.addByPrefix('singLEFT', 'left', 24, false);
-		
-				loadOffsetFile(curCharacter);
-				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
-				updateHitbox();
-				antialiasing = false;
-				iconName = 'dave-3d';
-				barColor = FlxColor.fromRGB(255, 203, 230);
-		
-				playAnim('idle');
-
-
 			case 'bandu-origin':
 				tex = Paths.getSparrowAtlas('characters/bandu/bandu_origin');
 				frames = tex;
@@ -862,28 +823,6 @@ class Character extends FlxSprite
 				flipX = true;
 
 				nativelyPlayable = true;
-				
-			/**
-			case 'afnfg-boyfriend':
-				var tex = Paths.getSparrowAtlas('characters/other/afnfg_boyfriend');
-				frames = tex;
-
-				animation.addByPrefix('idle', 'idl', 60, false);
-				animation.addByPrefix('singUP', 'up', 24, false);
-				animation.addByPrefix('singLEFT', 'left', 24, false);
-				animation.addByPrefix('singRIGHT', 'right', 24, false);
-				animation.addByPrefix('singDOWN', 'down', 24, false);
-
-				loadOffsetFile(curCharacter);
-
-				playAnim('idle');
-				iconName = 'bf-3d';
-				barColor = FlxColor.fromRGB(49, 176, 209);
-
-				flipX = true;
-
-				nativelyPlayable = true;
-			**/
 			//tunnel-bf-flipped cuz im STUPID
 			case 'tunnel-bf-flipped':
 				var tex = Paths.getSparrowAtlas('characters/dave/tunnel_bf');
@@ -1049,8 +988,8 @@ class Character extends FlxSprite
 
 		var data:CharacterData = cast jsonData;
 
-		if(data.barColor != null && data.barColor.length > 2)
-			barColorArray = data.barColor;
+		barColorArray = (data.barColor != null && data.barColor.length > 2) ? data.barColor : [161, 161, 161];
+		trace(barColorArray, barColorArray[0], barColorArray[1], barColorArray[2], '1');
 
 		var tex:FlxAtlasFrames = Paths.getSparrowAtlas(data.asset, 'preload');
 		frames = tex;
@@ -1078,7 +1017,9 @@ class Character extends FlxSprite
 		flipX = data.flipX == null ? false : data.flipX;
 		iconName = data.icon;
 		setGraphicSize(Std.parseInt(data.scale));
+		updateHitbox();
 		barColor = FlxColor.fromRGB(barColorArray[0], barColorArray[1], barColorArray[2]);
+		trace(barColorArray, barColorArray[0], barColorArray[1], barColorArray[2], '2');
 
 		playAnim(data.bopDance ? 'danceRight' : 'idle');
 	}
