@@ -3,6 +3,8 @@ package;
 import flixel.FlxSprite;
 import flixel.math.FlxMath;
 
+using StringTools;
+
 class HealthIcon extends FlxSprite
 {
 	/**
@@ -64,7 +66,7 @@ class HealthIcon extends FlxSprite
 			frames = Paths.getSparrowAtlas('ui/icons/bandu_origin_icon');
 			animation.addByPrefix(char, char, 24, false, isPlayer, false);
 		}
-		else if(char == 'gf')
+		else if(char == 'gf' || char.endsWith('-single'))
 		{
 			loadGraphic(Paths.image('ui/icons/' + char), true, 150, 150);
 
@@ -89,7 +91,10 @@ class HealthIcon extends FlxSprite
 			addIcon(char, 0);
 		}	
 
-		antialiasing = !noAaChars.contains(char);
+		if (charPublic.endsWith('-3d') || charPublic.endsWith('-pixel')) // allows for json chars to have aliased icons
+			antialiasing = false;
+		else
+			antialiasing = !noAaChars.contains(char);
 
 		animation.play(char);
 

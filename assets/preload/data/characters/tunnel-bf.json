@@ -1,0 +1,43 @@
+{
+  "name": "Boyfriend (Tunnel)",
+  "asset": "characters/dave/tunnel_bf",
+  "barColor": [
+    	49,
+    	176,
+    	209
+    ],
+  "globalOffset": [0, 0],
+  "gameOffset": [0, -350],
+  "camOffset": [0, 0],
+  "antialiasing": true,
+  "icon": "bf",
+  "nativelyPlayable": true,
+  "flipX": true,
+  "float": "default",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "IDLE"
+    },
+    {
+      "name": "singUP",
+      "prefix": "UP"
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "LEFT"
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "RIGHT"
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "DOWN"
+    },
+    {
+      "name": "turn",
+      "prefix": "TURN"
+    }
+  ]
+}

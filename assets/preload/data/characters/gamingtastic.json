@@ -1,0 +1,24 @@
+{
+  "name": "Gamingtastic",
+  "asset": "characters/radical/newgaming",
+  "barColor": [
+    	51,
+    	222,
+    	57
+    ],
+  "globalOffset": [0, 0],
+  "gameOffset": [0, 265],
+  "camOffset": [0, 0],
+  "antialiasing": true,
+  "bopDance": true,
+  "animations": [
+    {
+      "name": "danceLeft",
+      "prefix": "idlel"
+    },
+    {
+      "name": "danceRight",
+      "prefix": "idler"
+    }
+  ]
+}

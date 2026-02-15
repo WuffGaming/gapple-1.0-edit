@@ -38,6 +38,8 @@ typedef CharacterData =
 
 	var scale:String;
 
+	var float:String;
+
 	var icon:String;
 
 	var animations:Array<AnimationData>;
@@ -85,6 +87,7 @@ class Character extends FlxSprite
 	public var globaloffset:Array<Float> = [0,0];
 	public var gameOffset:Array<Float> = [0,0];
 	public var camOffset:Array<Float> = [0,0];
+	public var floater:String = 'false';
 
 	public var barColorArray:Array<Int> = [0, 0, 0];
 
@@ -103,90 +106,6 @@ class Character extends FlxSprite
 
 		switch (curCharacter)
 		{
-			case 'gf':
-				// GIRLFRIEND CODE
-				tex = Paths.getSparrowAtlas('characters/main/GF_assets');
-				frames = tex;
-				animation.addByPrefix('cheer', 'GF Cheer', 24, false);
-				animation.addByPrefix('singLEFT', 'GF left note', 24, false);
-				animation.addByPrefix('singRIGHT', 'GF Right Note', 24, false);
-				animation.addByPrefix('singUP', 'GF Up Note', 24, false);
-				animation.addByPrefix('singDOWN', 'GF Down Note', 24, false);
-				animation.addByIndices('sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "", 24, false);
-				animation.addByIndices('danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-				animation.addByIndices('danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
-				animation.addByIndices('hairBlow', "GF Dancing Beat Hair blowing", [0, 1, 2, 3], "", 24);
-				animation.addByIndices('hairFall', "GF Dancing Beat Hair Landing", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], "", 24, false);
-				animation.addByPrefix('scared', 'GF FEAR', 24);
-
-				loadOffsetFile(curCharacter);
-
-				iconName = 'gf';
-				barColor = FlxColor.fromString('#B50154');
-				bopDance = true;
-
-				playAnim('danceRight');
-			case 'gamingtastic':
-				// GAMINGTASTIC CODE
-				tex = Paths.getSparrowAtlas('characters/radical/newgaming');
-				frames = tex;
-				animation.addByPrefix('danceLeft', 'idlel', 24, false);
-				animation.addByPrefix('danceRight', 'idler', 24, false);
-
-				loadOffsetFile(curCharacter);
-				// offsets for radical and gamingtastic were stolen from 1.5... sorry!
-
-				barColor = FlxColor.fromString('#33de39');
-				bopDance = true;
-
-				playAnim('danceRight');
-			case 'gf-only':
-				frames = Paths.getSparrowAtlas('characters/main/GF_ONLY');
-				animation.addByIndices('sad', 'gf sad', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "", 24, false);
-				animation.addByIndices('danceLeft', 'GF Dancing Beat', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-				animation.addByIndices('danceRight', 'GF Dancing Beat', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
-
-				loadOffsetFile(curCharacter);
-				iconName = 'gf';
-				barColor = FlxColor.fromString('#33de39');
-				bopDance = true;
-
-				playAnim('danceRight');
-			case '3d-bf':
-				frames = Paths.getSparrowAtlas('characters/main/3D_BF');
-				animation.addByPrefix('idle', 'idle', 24, false);
-				animation.addByPrefix('singUP', 'up', 24, false);
-				animation.addByPrefix('singLEFT', 'left', 24, false);
-				animation.addByPrefix('singRIGHT', 'right', 24, false);
-				animation.addByPrefix('singDOWN', 'down', 24, false);
-				animation.addByPrefix('singUPmiss', 'missedup', 24, false);
-				animation.addByPrefix('singLEFTmiss', 'missedleft', 24, false);
-				animation.addByPrefix('singRIGHTmiss', 'missedright', 24, false);
-				animation.addByPrefix('singDOWNmiss', 'misseddown', 24, false);
-				animation.addByPrefix('hey', 'BF HEY', 24, false);
-
-				loadOffsetFile(curCharacter);
-
-				nativelyPlayable = flipX = true;
-
-				antialiasing = false;
-				iconName = 'bf-3d';
-				barColor = FlxColor.fromRGB(49, 176, 209);
-
-				playAnim('idle');
-			case '3d-gf':
-				frames = Paths.getSparrowAtlas('characters/main/3D_GF');
-				animation.addByPrefix('danceLeft', 'danceLeft', 24, false);
-				animation.addByPrefix('danceRight', 'danceRight', 24, false);
-
-				loadOffsetFile(curCharacter);
-
-				antialiasing = false;
-				iconName = 'gf';
-				barColor = FlxColor.fromString('#33de39');
-				bopDance = true;
-
-				playAnim('danceRight');
 			case 'silly-sally':
 				frames = Paths.getSparrowAtlas('characters/warehouse/sillysally');
 				animation.addByPrefix('idle', 'idle', 24, false);
@@ -716,137 +635,6 @@ class Character extends FlxSprite
 				iconName = 'dave';
 				barColor = FlxColor.fromRGB(15, 95, 255);
 				playAnim('idle');
-			case 'unfair-junker':
-				frames = Paths.getSparrowAtlas('characters/bambi/NEWER UNFAIR GUY');
-				animation.addByPrefix('danceLeft', 'danceLeft', 24, false);
-				animation.addByPrefix('danceRight', 'danceRight', 24, false);
-				animation.addByPrefix('singUP', 'up', 24, false);
-				animation.addByPrefix('singLEFT', 'left', 24, false);
-				animation.addByPrefix('singRIGHT', 'right', 24, false);
-				animation.addByPrefix('singDOWN', 'down', 24, false);
-				animation.addByPrefix('inhale', 'inhale', 24, false);
-
-
-				loadOffsetFile(curCharacter);
-				globaloffset[0] = 150 * 1.3;
-				globaloffset[1] = 450 * 1.3; //this is the y
-				setGraphicSize(Std.int((width * 1.3) / furiosityScale));
-				updateHitbox();
-				antialiasing = false;
-				iconName = 'expunged';
-				barColor = FlxColor.fromRGB(178, 7, 7);
-				bopDance = true;
-		
-				playAnim('danceLeft');
-				
-			case 'bf':
-				var tex = Paths.getSparrowAtlas('characters/main/Boyfriend_Main');
-				frames = tex;
-				animation.addByPrefix('idle', 'BF idle dance', 24, false);
-				animation.addByPrefix('singUP', 'BF NOTE UP0', 24, false);
-				animation.addByPrefix('singLEFT', 'BF NOTE LEFT0', 24, false);
-				animation.addByPrefix('singRIGHT', 'BF NOTE RIGHT0', 24, false);
-				animation.addByPrefix('singDOWN', 'BF NOTE DOWN0', 24, false);
-				animation.addByPrefix('singUPmiss', 'BF NOTE UP MISS', 24, false);
-				animation.addByPrefix('singLEFTmiss', 'BF NOTE LEFT MISS', 24, false);
-				animation.addByPrefix('singRIGHTmiss', 'BF NOTE RIGHT MISS', 24, false);
-				animation.addByPrefix('singDOWNmiss', 'BF NOTE DOWN MISS', 24, false);
-				animation.addByPrefix('hey', 'BF HEY', 24, false);
-
-
-				loadOffsetFile(curCharacter);
-
-				playAnim('idle');
-
-				nativelyPlayable = true;
-				iconName = 'bf';
-				barColor = FlxColor.fromRGB(49, 176, 209);
-
-				flipX = true;
-
-			case 'bf-dead':
-				var tex = Paths.getSparrowAtlas('characters/main/Boyfriend_Dead');
-				frames = tex;
-
-				animation.addByPrefix('firstDeath', "BF dies", 24, false);
-				animation.addByPrefix('deathLoop', "BF Dead Loop", 24, true);
-				animation.addByPrefix('deathConfirm', "BF Dead confirm", 24, false);
-
-				loadOffsetFile(curCharacter);
-
-				playAnim('firstDeath');
-
-				nativelyPlayable = true;
-				iconName = 'bf';
-				barColor = FlxColor.fromRGB(49, 176, 209);
-
-				flipX = true;
-
-
-			case 'radical':
-				var tex = Paths.getSparrowAtlas('characters/radical/radical');
-				frames = tex;
-				animation.addByPrefix('idle', 'idle', 24, false);
-				animation.addByPrefix('singUP', 'up', 24, false);
-				animation.addByPrefix('singLEFT', 'left', 24, false);
-				animation.addByPrefix('singRIGHT', 'right', 24, false);
-				animation.addByPrefix('singDOWN', 'down', 24, false);
-				animation.addByPrefix('singUPmiss', 'MISS up', 24, false);
-				animation.addByPrefix('singLEFTmiss', 'MISS left', 24, false);
-				animation.addByPrefix('singRIGHTmiss', 'MISS right', 24, false);
-				animation.addByPrefix('singDOWNmiss', 'MISS down', 24, false);
-				animation.addByPrefix('hey', 'hey', 24, false);
-
-				loadOffsetFile(curCharacter);
-
-				playAnim('idle');
-
-				nativelyPlayable = true;
-				iconName = 'radical';
-				barColor = FlxColor.fromRGB(188, 70, 70);
-
-				flipX = true;
-
-
-			case 'tunnel-bf':
-				var tex = Paths.getSparrowAtlas('characters/dave/tunnel_bf');
-				frames = tex;
-
-				animation.addByPrefix('idle', 'IDLE', 24, false);
-				animation.addByPrefix('singUP', 'UP', 24, false);
-				animation.addByPrefix('singLEFT', 'LEFT', 24, false);
-				animation.addByPrefix('singRIGHT', 'RIGHT', 24, false);
-				animation.addByPrefix('singDOWN', 'DOWN', 24, false);
-				animation.addByPrefix('turn', 'TURN', 24, false);
-
-				loadOffsetFile(curCharacter);
-
-				playAnim('idle');
-
-				barColor = FlxColor.fromRGB(49, 176, 209);
-				iconName = 'bf';
-				flipX = true;
-
-				nativelyPlayable = true;
-			//tunnel-bf-flipped cuz im STUPID
-			case 'tunnel-bf-flipped':
-				var tex = Paths.getSparrowAtlas('characters/dave/tunnel_bf');
-				frames = tex;
-
-				animation.addByPrefix('idle', 'IDLE', 24, false);
-				animation.addByPrefix('singUP', 'UP', 24, false);
-				animation.addByPrefix('singRIGHT', 'LEFT', 24, false);
-				animation.addByPrefix('singLEFT', 'RIGHT', 24, false);
-				animation.addByPrefix('singDOWN', 'DOWN', 24, false);
-				animation.addByPrefix('turn', 'TURN', 24, false);
-
-				loadOffsetFile(curCharacter + '-flipped');
-				iconName = 'bf';
-				playAnim('idle');
-
-				barColor = FlxColor.fromRGB(49, 176, 209);
-
-				nativelyPlayable = true;
 			default:
 				parseDataFile();
 			}
@@ -1007,10 +795,12 @@ class Character extends FlxSprite
 				if (anim.frameIndices != null)
 				{
 					animation.addByIndices(anim.name, anim.prefix, anim.frameIndices, "", frameRate, looped);
+					trace(animation);
 				}
 				else
 				{
 					animation.addByPrefix(anim.name, anim.prefix, frameRate, looped);
+					trace(animation);
 				}
 
 				loadOffsetFile(curCharacter);
@@ -1020,6 +810,7 @@ class Character extends FlxSprite
 		antialiasing = data.antialiasing == null ? true : data.antialiasing;
 		nativelyPlayable = data.nativelyPlayable == null ? false : data.nativelyPlayable;
 		flipX = data.flipX == null ? false : data.flipX;
+		floater = data.float == null ? 'false' : data.float; // add easy
 		iconName = data.icon;
 		setGraphicSize(Std.parseInt(data.scale));
 		updateHitbox();
@@ -1027,7 +818,6 @@ class Character extends FlxSprite
 		gameOffset = data.gameOffset;
 		camOffset = data.camOffset;
 		barColor = FlxColor.fromRGB(barColorArray[0], barColorArray[1], barColorArray[2]);
-		trace(barColorArray, barColorArray[0], barColorArray[1], barColorArray[2], '2');
 
 		playAnim(data.bopDance ? 'danceRight' : 'idle');
 	}

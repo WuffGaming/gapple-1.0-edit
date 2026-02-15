@@ -1,0 +1,63 @@
+{
+  "name": "Boyfriend",
+  "asset": "characters/main/Boyfriend_Main",
+  "barColor": [
+    	49,
+    	176,
+    	209
+    ],
+  "globalOffset": [0, 0],
+  "gameOffset": [0, 0],
+  "camOffset": [0, 0],
+  "antialiasing": true,
+  "icon": "bf",
+  "nativelyPlayable": true,
+  "flipX": true,
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "BF idle dance"
+    },
+    {
+      "name": "singUP",
+      "prefix": "BF NOTE UP0"
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "BF NOTE LEFT0"
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "BF NOTE RIGHT0"
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "BF NOTE DOWN0"
+    },
+    {
+      "name": "singUPmiss",
+      "prefix": "BF NOTE UP MISS"
+    },
+    {
+      "name": "singLEFTmiss",
+      "prefix": "BF NOTE LEFT MISS"
+    },
+    {
+      "name": "singRIGHTmiss",
+      "prefix": "BF NOTE RIGHT MISS"
+    },
+    {
+      "name": "singDOWNmiss",
+      "prefix": "BF NOTE DOWN MISS"
+    },
+    {
+      "name": "hey",
+      "prefix": "BF HEY"
+    },
+    {
+      "name": "scared",
+      "prefix": "BF idle shaking",
+      "looped": true
+    }  
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "name": "3D Boyfriend",
+  "asset": "characters/main/3D_BF",
+  "barColor": [
+    	49,
+    	176,
+    	209
+    ],
+  "globalOffset": [0, 0],
+  "gameOffset": [0, -60],
+  "camOffset": [0, 0],
+  "antialiasing": false,
+  "icon": "bf-3d",
+  "nativelyPlayable": true,
+  "flipX": true,
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "idle"
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "right"
+    },
+    {
+      "name": "singUP",
+      "prefix": "up"
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "down"
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "left"
+    },
+    {
+      "name": "singRIGHTmiss",
+      "prefix": "missedright"
+    },
+    {
+      "name": "singUPmiss",
+      "prefix": "missedup"
+    },
+    {
+      "name": "singDOWNmiss",
+      "prefix": "misseddown"
+    },
+    {
+      "name": "singLEFTmiss",
+      "prefix": "missedleft"
+    },
+    {
+      "name": "hey",
+      "prefix": "BF HEY"
+    }
+  ]
+}

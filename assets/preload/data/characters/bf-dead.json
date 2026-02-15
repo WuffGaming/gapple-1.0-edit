@@ -1,0 +1,30 @@
+{
+  "name": "Boyfriend (Dead)",
+  "asset": "characters/main/Boyfriend_Dead",
+  "barColor": [
+    	49,
+    	176,
+    	209
+    ],
+  "globalOffset": [0, 0],
+  "gameOffset": [0, 0],
+  "camOffset": [0, 0],
+  "antialiasing": true,
+  "icon": "bf",
+  "nativelyPlayable": true,
+  "flipX": true,
+  "animations": [
+    {
+      "name": "firstDeath",
+      "prefix": "BF dies"
+    },
+    {
+      "name": "deathLoop",
+      "prefix": "BF Dead Loop"
+    },
+    {
+      "name": "deathConfirm",
+      "prefix": "BF Dead confirm"
+    }
+  ]
+}

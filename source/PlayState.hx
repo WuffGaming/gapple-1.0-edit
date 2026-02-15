@@ -123,7 +123,7 @@ class PlayState extends MusicBeatState
 
 	var focusOnDadGlobal:Bool = true;
 
-	var funnyFloatyBoys:Array<String> = ['bambi-piss-3d', 'bandu', 'unfair-junker', 'split-dave-3d', 'insane-dave-3d', 'badai', 'tunnel-dave', 'tunnel-bf', 'tunnel-bf-flipped', 'bandu-candy', 'bandu-origin', 'ringi', 'bambom', 'bendu', 'little-bandu'];
+	var funnyFloatyBoys:Array<String> = ['bambi-piss-3d', 'bandu', 'unfair-junker', 'badai', 'tunnel-dave', 'bandu-candy', 'bandu-origin', 'ringi', 'bambom', 'bendu', 'little-bandu'];
 
 	var storyDifficultyText:String = "";
 	var iconRPC:String = "";
@@ -425,30 +425,29 @@ class PlayState extends MusicBeatState
 		screenshader.waveFrequency = 2;
 		screenshader.waveSpeed = 1;
 		screenshader.shader.uTime.value[0] = new flixel.math.FlxRandom().float(-100000, 100000);
-		var gfx:Float = 0;
-		var gfy:Float = 0;
 		var gfVersion = SONG.gf;
 		if(formoverride == "radical")
 		{
-			gfy = 265;
 			gfVersion = 'gamingtastic';
-		}
-		else if (SONG.song.toLowerCase() == 'sugar-rush' && formoverride == "radical") // hotboy
-		{
-			gfy = 0;
 		}
 		else if(formoverride == "3d-bf")
 		{
 			gfVersion = '3d-gf';
 		}
-		gf = new Character(400 + gfx, 130 + gfy, gfVersion);
+		gf = new Character(400, 130, gfVersion);
 		gf.scrollFactor.set(0.95, 0.95);
 		gf.visible = SONG.gf_visible;
+		gf.x += gf.gameOffset[0];
+		gf.y += gf.gameOffset[1];
 
 		if (!(formoverride == "bf" || formoverride == "none" || formoverride == "bf-pixel" || formoverride == "bf-christmas" || formoverride == "radical") && SONG.song != "Tutorial")
 		{
 			gf.visible = false;
-			gfy = 0;
+			gf.y = 130;
+		}
+		else if (SONG.song.toLowerCase() == 'sugar-rush' && formoverride == "radical") // hotboy
+		{
+			gf.y = 130;
 		}
 
 		standersGroup = new FlxTypedGroup<FlxSprite>();
@@ -499,18 +498,19 @@ class PlayState extends MusicBeatState
 		{
 			case 'dave-good':
 				boyfriend.y = 100 + 160;
-			case 'tunnel-bf':
-				boyfriend.y = 100;
 			case '3d-bf':
 				boyfriendOldIcon = '3d-bf-old';
+				boyfriend.x += boyfriend.gameOffset[0];
+				boyfriend.y += boyfriend.gameOffset[1];
 			case 'bambi-piss-3d':
 				boyfriend.y = 100 + 350;
 			case 'bambi-unfair':
 				boyfriend.y = 100 + 575;
 			case 'bambi-good':
 				boyfriend.y = 100 + 450;
-			case 'radical':
-				boyfriend.x += 40;
+			default:
+				boyfriend.x += boyfriend.gameOffset[0];
+				boyfriend.y += boyfriend.gameOffset[1];
 		}
 
 
@@ -611,11 +611,6 @@ class PlayState extends MusicBeatState
 
 		dadChar = opponent.curCharacter;
 		bfChar = boyfriend.curCharacter;
-
-		if(bfChar == '3d-bf')
-		{
-			boyfriend.y -= 60;
-		}
 
 		if (swagger != null) add(swagger);
 
@@ -2198,7 +2193,7 @@ class PlayState extends MusicBeatState
 		}
 
 		//welcome to 3d sinning avenue
-		if(funnyFloatyBoys.contains(opponent.curCharacter.toLowerCase()) && canFloat && orbit)
+		if(funnyFloatyBoys.contains(opponent.curCharacter.toLowerCase()) && canFloat && orbit || opponent.floater != 'false')
 		{
 			switch(opponent.curCharacter) 
 			{
@@ -2231,9 +2226,6 @@ class PlayState extends MusicBeatState
 				case 'badai':
 					opponent.angle += elapsed * 10;
 					opponent.y += (Math.sin(elapsedtime) * 0.6);
-				case 'insane-dave-3d':
-					opponent.y += (Math.sin(elapsedtime) * 0.6);
-					opponent.x += (Math.cos(elapsedtime) * 0.55);
 				case 'little-bandu':
 					opponent.angle += elapsed * 2;
 					opponent.y += (Math.sin(elapsedtime) * 0.65);
@@ -2249,14 +2241,13 @@ class PlayState extends MusicBeatState
 				default:
 					opponent.y += (Math.sin(elapsedtime) * 0.6);
 			}
-		}
-		if(opponent2 != null)
-		{
-			switch(opponent2.curCharacter) 
+			switch(opponent.floater)
 			{
-				case 'bandu':
-					opponent2.x = boyfriend.getMidpoint().x + Math.sin(banduJunk) * 500 - (opponent.width / 2);
-					opponent2.y += (Math.sin(elapsedtime) * 0.2);
+				case 'rush':
+					opponent.x += Math.sin(elapsedtime * 50) / 9;
+				case 'orbit':
+					opponent.x = boyfriend.getMidpoint().x + Math.sin(banduJunk) * 500 - (opponent.width / 2);
+					opponent.y += (Math.sin(elapsedtime) * 0.2);
 					opponentmirror.setPosition(opponent.x, opponent.y);
 
 					/*
@@ -2277,11 +2268,88 @@ class PlayState extends MusicBeatState
 					if (hasJunked && !(Math.sin(banduJunk) >= 0.95 || Math.sin(banduJunk) <= -0.95)) hasJunked = false;
 
 					opponentmirror.visible = dadFront;
+					opponent.visible = !dadFront;
+				case 'badai':
+					opponent.angle += elapsed * 10;
+					opponent.y += (Math.sin(elapsedtime) * 0.6);
+				case 'blitz':
+					opponent.y += (Math.sin(elapsedtime) * 0.6);
+					opponent.x += (Math.cos(elapsedtime) * 0.55);
+				case 'badai-slow':
+					opponent.angle += elapsed * 2;
+					opponent.y += (Math.sin(elapsedtime) * 0.65);
+					opponent.x = -125 + Math.sin(elapsedtime) * 425;
+				case 'angled':
+					opponent.y += (Math.sin(elapsedtime) * 0.6);
+					opponent.x += (Math.sin(elapsedtime) * 0.6);
+				case 'circle':
+					opponent.y += (Math.sin(elapsedtime) * 0.5);
+					opponent.x += (Math.cos(elapsedtime) * 0.5);
+				case 'wire':
+					opponent.y -= (Math.sin(elapsedtime) * 0.6);
+				default:
+					opponent.y += (Math.sin(elapsedtime) * 0.6);
+			}
+		}
+		if(opponent2 != null)
+		{
+			switch(opponent2.curCharacter) 
+			{
+				case 'bandu':
+					opponent2.x = boyfriend.getMidpoint().x + Math.sin(banduJunk) * 500 - (opponent.width / 2);
+					opponent2.y += (Math.sin(elapsedtime) * 0.2);
+					opponentmirror.setPosition(opponent.x, opponent.y);
+
+					if ((Math.sin(banduJunk) >= 0.95 || Math.sin(banduJunk) <= -0.95) && !hasJunked){
+						dadFront = !dadFront;
+						hasJunked = true;
+					}
+					if (hasJunked && !(Math.sin(banduJunk) >= 0.95 || Math.sin(banduJunk) <= -0.95)) hasJunked = false;
+
+					opponentmirror.visible = dadFront;
 					opponent2.visible = !dadFront;
 				case 'badai':
 					opponent2.angle = Math.sin(elapsedtime) * 15;
 					opponent2.x += Math.sin(elapsedtime) * 0.6;
 					opponent2.y += (Math.sin(elapsedtime) * 0.6);
+				default:
+					opponent2.y += (Math.sin(elapsedtime) * 0.6);
+			}
+			switch(opponent2.floater)
+			{
+				case 'rush':
+					opponent2.x += Math.sin(elapsedtime * 50) / 9;
+				case 'orbit':
+					opponent2.x = boyfriend.getMidpoint().x + Math.sin(banduJunk) * 500 - (opponent.width / 2);
+					opponent2.y += (Math.sin(elapsedtime) * 0.2);
+					opponentmirror.setPosition(opponent.x, opponent.y);
+
+					if ((Math.sin(banduJunk) >= 0.95 || Math.sin(banduJunk) <= -0.95) && !hasJunked){
+						dadFront = !dadFront;
+						hasJunked = true;
+					}
+					if (hasJunked && !(Math.sin(banduJunk) >= 0.95 || Math.sin(banduJunk) <= -0.95)) hasJunked = false;
+
+					opponentmirror.visible = dadFront;
+					opponent2.visible = !dadFront;
+				case 'badai':
+					opponent2.angle += elapsed * 10;
+					opponent2.y += (Math.sin(elapsedtime) * 0.6);
+				case 'blitz':
+					opponent2.y += (Math.sin(elapsedtime) * 0.6);
+					opponent2.x += (Math.cos(elapsedtime) * 0.55);
+				case 'badai-slow':
+					opponent2.angle += elapsed * 2;
+					opponent2.y += (Math.sin(elapsedtime) * 0.65);
+					opponent2.x = -125 + Math.sin(elapsedtime) * 425;
+				case 'angled':
+					opponent2.y += (Math.sin(elapsedtime) * 0.6);
+					opponent2.x += (Math.sin(elapsedtime) * 0.6);
+				case 'circle':
+					opponent2.y += (Math.sin(elapsedtime) * 0.5);
+					opponent2.x += (Math.cos(elapsedtime) * 0.5);
+				case 'wire':
+					opponent2.y -= (Math.sin(elapsedtime) * 0.6);
 				default:
 					opponent2.y += (Math.sin(elapsedtime) * 0.6);
 			}
@@ -2312,11 +2380,32 @@ class PlayState extends MusicBeatState
 				default:
 					boyfriend.y += (Math.sin(elapsedtime) * 0.6);
 			}
+			switch(boyfriend.floater)
+			{
+				case 'rush':
+					boyfriend.x += Math.sin(elapsedtime * 50) / 9;
+				case 'badai':
+					boyfriend.angle += elapsed * 10;
+					boyfriend.y += (Math.sin(elapsedtime) * 0.6);
+				case 'blitz':
+					boyfriend.y += (Math.sin(elapsedtime) * 0.6);
+					boyfriend.x += (Math.cos(elapsedtime) * 0.55);
+				case 'badai-slow':
+					boyfriend.angle += elapsed * 2;
+					boyfriend.y += (Math.sin(elapsedtime) * 0.65);
+					boyfriend.x = -125 + Math.sin(elapsedtime) * 425;
+				case 'angled':
+					boyfriend.y += (Math.sin(elapsedtime) * 0.6);
+					boyfriend.x += (Math.sin(elapsedtime) * 0.6);
+				case 'circle':
+					boyfriend.y += (Math.sin(elapsedtime) * 0.5);
+					boyfriend.x += (Math.cos(elapsedtime) * 0.5);
+				case 'wire':
+					boyfriend.y -= (Math.sin(elapsedtime) * 0.6);
+				default:
+					boyfriend.y += (Math.sin(elapsedtime) * 0.6);
+			}
 		}
-		/*if(funnyFloatyBoys.contains(opponentmirror.curCharacter.toLowerCase()))
-		{
-			opponentmirror.y += (Math.sin(elapsedtime) * 0.6);
-		}*/
 		if(funnyFloatyBoys.contains(gf.curCharacter.toLowerCase()) && canFloat)
 		{
 			gf.y += (Math.sin(elapsedtime) * 0.6);
@@ -4707,9 +4796,6 @@ class PlayState extends MusicBeatState
 			case 'dave' | 'dave-insane':
 				opponent.y += 160;
 				opponent.x -= 50;
-			case 'insane-dave-3d':
-				opponent.y -= 40;
-				opponent.x -= 350;
 			case 'dave-png':
 				opponent.x += 81;
 				opponent.y += 108;

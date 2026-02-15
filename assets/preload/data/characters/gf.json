@@ -1,0 +1,57 @@
+{
+  "name": "Girlfriend",
+  "asset": "characters/main/GF_assets",
+  "barColor": [
+    	181,
+    	1,
+    	84
+    ],
+  "globalOffset": [0, 0],
+  "gameOffset": [0, 0],
+  "camOffset": [0, 0],
+  "antialiasing": true,
+  "icon": "gf",
+  "bopDance": true,
+  "animations": [
+    {
+      "name": "singLEFT",
+      "prefix": "GF left note"
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "GF Right Note"
+    },
+    {
+      "name": "singUP",
+      "prefix": "GF Up Note"
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "GF Down Note"
+    },
+    {
+      "name": "danceLeft",
+      "prefix": "GF Dancing Beat",
+      "frameIndices": [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+    },
+    {
+      "name": "danceRight",
+      "prefix": "GF Dancing Beat",
+      "frameIndices": [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]
+    },
+    {
+      "name": "cheer",
+      "prefix": "GF Cheer"
+    },
+    {
+      "name": "sad",
+      "prefix": "gf sad",
+      "frameIndices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    },
+    {
+      "name": "scared",
+      "prefix": "GF FEAR",
+      "looped": true
+    }
+  ]
+}
