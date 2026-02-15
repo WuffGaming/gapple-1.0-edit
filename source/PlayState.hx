@@ -365,7 +365,7 @@ class PlayState extends MusicBeatState
 		persistentDraw = true;
 
 		if (SONG == null)
-			SONG = Song.loadFromJson('tutorial');
+			SONG = Song.loadFromJson('Disability');
 
 		Conductor.mapBPMChanges(SONG);
 		Conductor.changeBPM(SONG.bpm);
@@ -411,8 +411,11 @@ class PlayState extends MusicBeatState
 					dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/RadicalNULLDialogue'));
 				}
 			default:
-				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/NULLDialogue'));
-				// wow failgafe
+				if (dialogue != null)
+					dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/' + SONG.song.toLowerCase() + 'Dialogue'));
+				else
+					dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/NULLDialogue'));
+
 		}
 
 		curStage = SONG.curStage;
@@ -592,11 +595,6 @@ class PlayState extends MusicBeatState
 		{
 			opponent.x -= 250;
 			opponent.y -= 350;
-		}
-
-		if(opponent.curCharacter == 'split-dave-3d')
-		{
-			opponent.x -= 160;
 		}
 
 		if(opponent.curCharacter == 'cameo-origin')
@@ -866,14 +864,15 @@ class PlayState extends MusicBeatState
 		{
 			switch (curSong.toLowerCase())
 			{
-				case 'disruption' | 'applecore' | 'disability' | 'wireframe' | 'duper' | 'recovered-project' | 'blitz':
-					schoolIntro(doof);
 				case 'algebra':
 					baldiIntro(doof);
 				case 'origin':
 					originCutscene();
 				default:
-					startCountdown();
+					if (dialogue != null) // this was pretty easy actually
+						schoolIntro(doof);
+					else
+						startCountdown();
 			}
 		}
 		else
@@ -3077,8 +3076,6 @@ class PlayState extends MusicBeatState
 
 			case 'silly-sally':
 				camFollow.x -= 100;
-			case 'dave-wheels':
-				camFollow.y -= 150;
 			case 'RECOVERED_PROJECT_3': // shoulda just taken this from 1.1 from the start lmao
 				camFollow.y += 400;
 				camFollow.x += 125;
@@ -3091,6 +3088,9 @@ class PlayState extends MusicBeatState
 			case 'playrobot-crazy':
 				camFollow.x -= 160;
 				camFollow.y -= 10;
+			default:
+				camFollow.x += char.camOffset[0];
+				camFollow.y += char.camOffset[1];
 		}
 	}
 
@@ -4740,6 +4740,9 @@ class PlayState extends MusicBeatState
 			case 'playrobot-crazy':
 				opponent.y += 365;
 				opponent.x += 165;
+			default:
+				opponent.x += opponent.gameOffset[0];
+				opponent.y += opponent.gameOffset[1];
 		}
 	}
 	

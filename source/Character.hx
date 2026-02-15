@@ -24,6 +24,9 @@ typedef CharacterData =
 	 * The color of this character's health bar.
 	 */
 	var barColor:Array<Int>;
+	var globalOffset:Array<Float>;
+	var gameOffset:Array<Float>;
+	var camOffset:Array<Float>;
 
 	var ?bopDance:Bool;
 
@@ -80,6 +83,8 @@ class Character extends FlxSprite
 	public var bopDance:Bool = false;
 
 	public var globaloffset:Array<Float> = [0,0];
+	public var gameOffset:Array<Float> = [0,0];
+	public var camOffset:Array<Float> = [0,0];
 
 	public var barColorArray:Array<Int> = [0, 0, 0];
 
@@ -1018,6 +1023,9 @@ class Character extends FlxSprite
 		iconName = data.icon;
 		setGraphicSize(Std.parseInt(data.scale));
 		updateHitbox();
+		globaloffset = data.globalOffset; // mostly dependency for tha cores
+		gameOffset = data.gameOffset;
+		camOffset = data.camOffset;
 		barColor = FlxColor.fromRGB(barColorArray[0], barColorArray[1], barColorArray[2]);
 		trace(barColorArray, barColorArray[0], barColorArray[1], barColorArray[2], '2');
 
