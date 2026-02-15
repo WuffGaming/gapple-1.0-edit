@@ -313,10 +313,22 @@ class Character extends FlxSprite
 		floater = data.float == null ? 'false' : data.float; // add easy
 		iconName = data.icon;
 		furiosityScale = data.furiosityScale;
-		if (data.scaleSize)
-			scale.set(Std.parseInt(data.scale));
-		else
-			setGraphicSize(Std.parseInt(data.scale));
+		switch (curCharacter) // TODO: make scaling work for the life of me
+		{
+			case 'hall-monitor':
+					scale.set(1.5, 1.5);
+			case 'diamond-man':
+					scale.set(1.3, 1.3);
+			case 'garrett':
+					furiosityScale = 1.3;
+					setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
+			default:
+				if (data.scaleSize)
+					scale.set(Std.parseInt(data.scale));
+				else
+					setGraphicSize(Std.parseInt(data.scale));
+		}
+		
 		trace(data.scale);
 		updateHitbox();
 		globaloffset = data.globalOffset; // mostly dependency for tha cores

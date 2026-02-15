@@ -12,7 +12,7 @@
   "antialiasing": false,
   "icon": "garrett",
   "furiosityScale": 1.3,
-  "scale": "Std.int(width * furiosityScale),Std.int(height * furiosityScale)",
+  "scale": "598 * furiosityScale, 682 * furiosityScale",
   "animations": [
     {
       "name": "idle",

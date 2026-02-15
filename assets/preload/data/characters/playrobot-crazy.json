@@ -8,13 +8,13 @@
     ],
   "globalOffset": [0, 0],
   "gameOffset": [165, 365],
-  "camOffset": [-160, -10],
+  "camOffset": [-160, -20],
   "antialiasing": false,
   "icon": "playrobot",
   "animations": [
     {
       "name": "idle",
-      "prefix": "Idle"
+      "prefix": "Idle",
       "looped": true
     },
     {
