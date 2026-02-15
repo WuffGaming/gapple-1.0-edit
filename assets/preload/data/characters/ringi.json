@@ -1,0 +1,62 @@
+{
+  "name": "Ringi",
+  "asset": "characters/oc/ringi",
+  "barColor": [
+    	199,
+    	164,
+    	165
+    ],
+  "globalOffset": [0, 0],
+  "gameOffset": [-275, -255],
+  "camOffset": [0, 0],
+  "float": "angled",
+  "antialiasing": false,
+  "icon": "ringi",
+  "scale": "(width * furiosityScale), (height * furiosityScale)",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "idle"
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "right"
+    },
+    {
+      "name": "singUP",
+      "prefix": "up"
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "down"
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "left"
+    },
+    {
+      "name": "catappear",
+      "prefix": "catappear"
+    },
+    {
+      "name": "idle-alt",
+      "prefix": "altidle"
+    },
+    {
+      "name": "singRIGHT-alt",
+      "prefix": "altright"
+    },
+    {
+      "name": "singUP-alt",
+      "prefix": "altup"
+    },
+    {
+      "name": "singDOWN-alt",
+      "prefix": "altdown"
+    },
+    {
+      "name": "singLEFT-alt",
+      "prefix": "altleft"
+    }
+  ]
+}

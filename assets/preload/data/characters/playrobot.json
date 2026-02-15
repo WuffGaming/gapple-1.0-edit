@@ -1,0 +1,37 @@
+{
+  "name": "Playrobot (DFAC)",
+  "asset": "characters/algebra/playrobot",
+  "barColor": [
+    	162,
+    	150,
+    	188
+    ],
+  "globalOffset": [0, 0],
+  "gameOffset": [150, 265],
+  "camOffset": [-160, -100],
+  "antialiasing": false,
+  "icon": "playrobot",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "Idle"
+      "looped": true
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "Right"
+    },
+    {
+      "name": "singUP",
+      "prefix": "Up"
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "Down"
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "Left"
+    }
+  ]
+}

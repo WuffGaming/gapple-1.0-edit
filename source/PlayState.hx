@@ -123,7 +123,7 @@ class PlayState extends MusicBeatState
 
 	var focusOnDadGlobal:Bool = true;
 
-	var funnyFloatyBoys:Array<String> = ['bambi-piss-3d', 'bandu', 'unfair-junker', 'badai', 'bandu-candy', 'ringi', 'bambom', 'bendu'];
+	var funnyFloatyBoys:Array<String> = ['unfair-junker'];
 
 	var storyDifficultyText:String = "";
 	var iconRPC:String = "";
@@ -497,8 +497,6 @@ class PlayState extends MusicBeatState
 				boyfriendOldIcon = '3d-bf-old';
 				boyfriend.x += boyfriend.gameOffset[0];
 				boyfriend.y += boyfriend.gameOffset[1];
-			case 'bambi-piss-3d':
-				boyfriend.y = 100 + 350;
 			default:
 				boyfriend.x += boyfriend.gameOffset[0];
 				boyfriend.y += boyfriend.gameOffset[1];
@@ -957,6 +955,7 @@ class PlayState extends MusicBeatState
 				
 			case 'recover':
 				defaultCamZoom = 1.4;
+				opponent.setPosition(-307, 10);
 				var yea = new FlxSprite(-641, -222).loadGraphic(Paths.image('backgrounds/RECOVER_assets/q'));
 				yea.setGraphicSize(2478);
 				yea.updateHitbox();
@@ -2163,48 +2162,8 @@ class PlayState extends MusicBeatState
 		}
 
 		//welcome to 3d sinning avenue
-		if(funnyFloatyBoys.contains(opponent.curCharacter.toLowerCase()) && canFloat && orbit || opponent.floater != 'false')
+		if(funnyFloatyBoys.contains(opponent.curCharacter.toLowerCase()) && canFloat && orbit || opponent.floater != 'false' && canFloat && orbit)
 		{
-			switch(opponent.curCharacter) 
-			{
-				case 'bandu-candy':
-					opponent.x += Math.sin(elapsedtime * 50) / 9;
-				case 'bandu':
-					opponent.x = boyfriend.getMidpoint().x + Math.sin(banduJunk) * 500 - (opponent.width / 2);
-					opponent.y += (Math.sin(elapsedtime) * 0.2);
-					opponentmirror.setPosition(opponent.x, opponent.y);
-
-					/*
-					var deezScale =	(
-						!dadFront ?
-						Math.sqrt(
-					boyfriend.getMidpoint().distanceTo(opponent.getMidpoint()) / 500 * 0.5):
-					Math.sqrt(
-					(500 - boyfriend.getMidpoint().distanceTo(opponent.getMidpoint())) / 500 * 0.5 + 0.5));
-					opponent.scale.set(deezScale, deezScale);
-					opponentmirror.scale.set(deezScale, deezScale);
-					*/
-
-					if ((Math.sin(banduJunk) >= 0.95 || Math.sin(banduJunk) <= -0.95) && !hasJunked){
-						dadFront = !dadFront;
-						hasJunked = true;
-					}
-					if (hasJunked && !(Math.sin(banduJunk) >= 0.95 || Math.sin(banduJunk) <= -0.95)) hasJunked = false;
-
-					opponentmirror.visible = dadFront;
-					opponent.visible = !dadFront;
-				case 'badai':
-					opponent.angle += elapsed * 10;
-					opponent.y += (Math.sin(elapsedtime) * 0.6);
-				case 'ringi':
-					opponent.y += (Math.sin(elapsedtime) * 0.6);
-					opponent.x += (Math.sin(elapsedtime) * 0.6);
-				case 'bambom':
-					opponent.y += (Math.sin(elapsedtime) * 0.5);
-					opponent.x += (Math.cos(elapsedtime) * 0.5);
-				default:
-					opponent.y += (Math.sin(elapsedtime) * 0.6);
-			}
 			switch(opponent.floater)
 			{
 				case 'rush':
@@ -2214,17 +2173,6 @@ class PlayState extends MusicBeatState
 					opponent.y += (Math.sin(elapsedtime) * 0.2);
 					opponentmirror.setPosition(opponent.x, opponent.y);
 
-					/*
-					var deezScale =	(
-						!dadFront ?
-						Math.sqrt(
-					boyfriend.getMidpoint().distanceTo(opponent.getMidpoint()) / 500 * 0.5):
-					Math.sqrt(
-					(500 - boyfriend.getMidpoint().distanceTo(opponent.getMidpoint())) / 500 * 0.5 + 0.5));
-					opponent.scale.set(deezScale, deezScale);
-					opponentmirror.scale.set(deezScale, deezScale);
-					*/
-
 					if ((Math.sin(banduJunk) >= 0.95 || Math.sin(banduJunk) <= -0.95) && !hasJunked){
 						dadFront = !dadFront;
 						hasJunked = true;
@@ -2233,9 +2181,6 @@ class PlayState extends MusicBeatState
 
 					opponentmirror.visible = dadFront;
 					opponent.visible = !dadFront;
-				case 'badai':
-					opponent.angle += elapsed * 10;
-					opponent.y += (Math.sin(elapsedtime) * 0.6);
 				case 'blitz':
 					opponent.y += (Math.sin(elapsedtime) * 0.6);
 					opponent.x += (Math.cos(elapsedtime) * 0.55);
@@ -2257,28 +2202,6 @@ class PlayState extends MusicBeatState
 		}
 		if(opponent2 != null)
 		{
-			switch(opponent2.curCharacter) 
-			{
-				case 'bandu':
-					opponent2.x = boyfriend.getMidpoint().x + Math.sin(banduJunk) * 500 - (opponent.width / 2);
-					opponent2.y += (Math.sin(elapsedtime) * 0.2);
-					opponentmirror.setPosition(opponent.x, opponent.y);
-
-					if ((Math.sin(banduJunk) >= 0.95 || Math.sin(banduJunk) <= -0.95) && !hasJunked){
-						dadFront = !dadFront;
-						hasJunked = true;
-					}
-					if (hasJunked && !(Math.sin(banduJunk) >= 0.95 || Math.sin(banduJunk) <= -0.95)) hasJunked = false;
-
-					opponentmirror.visible = dadFront;
-					opponent2.visible = !dadFront;
-				case 'badai':
-					opponent2.angle = Math.sin(elapsedtime) * 15;
-					opponent2.x += Math.sin(elapsedtime) * 0.6;
-					opponent2.y += (Math.sin(elapsedtime) * 0.6);
-				case 'default':
-					opponent2.y += (Math.sin(elapsedtime) * 0.6);
-			}
 			switch(opponent2.floater)
 			{
 				case 'rush':
@@ -2333,17 +2256,6 @@ class PlayState extends MusicBeatState
 		}
 		if(funnyFloatyBoys.contains(boyfriend.curCharacter.toLowerCase()) && canFloat)
 		{
-			switch(boyfriend.curCharacter)
-			{
-				case 'ringi':
-					boyfriend.y += (Math.sin(elapsedtime) * 0.6);
-					boyfriend.x += (Math.sin(elapsedtime) * 0.6);
-				case 'bambom':
-					boyfriend.y += (Math.sin(elapsedtime) * 0.75);
-					boyfriend.x = 200 + Math.sin(elapsedtime) * 425;
-				default:
-					boyfriend.y += (Math.sin(elapsedtime) * 0.6);
-			}
 			switch(boyfriend.floater)
 			{
 				case 'rush':
@@ -3121,20 +3033,6 @@ class PlayState extends MusicBeatState
 					camFollow.set(swagger.getMidpoint().x + 150, swagger.getMidpoint().y - 100);
 			} :
 				camFollow.set(boyfriend.getMidpoint().x - 100, boyfriend.getMidpoint().y - 100);
-			case 'bandu-candy':
-				camFollow.set(char.getMidpoint().x + 175, char.getMidpoint().y - 85);
-
-			case 'bambom':
-				camFollow.y += 100;
-			case 'hall-monitor':
-				camFollow.x -= 200;
-				camFollow.y -= 180;
-			case 'playrobot':
-				camFollow.x -= 160;
-				camFollow.y = boyfriend.getMidpoint().y - 100;
-			case 'playrobot-crazy':
-				camFollow.x -= 160;
-				camFollow.y -= 10;
 			default:
 				camFollow.x += char.camOffset[0];
 				camFollow.y += char.camOffset[1];
@@ -4742,28 +4640,6 @@ class PlayState extends MusicBeatState
 				{
 					tweenCamIn();
 				}
-			case 'ringi':
-				opponent.y -= 275;
-				opponent.x -= 255;
-			case 'bendu':
-				opponent.y += 50;
-				opponent.x += 10;
-			case 'silly-sally':
-				opponent.x -= 300;
-				opponent.y -= 230;
-			case 'garrett':
-				opponent.y += 65;
-			case 'diamond-man':
-				opponent.y += 25;
-			case 'hall-monitor':
-				opponent.x += 45;
-				opponent.y += 185;
-			case 'playrobot':
-				opponent.y += 265;
-				opponent.x += 150;
-			case 'playrobot-crazy':
-				opponent.y += 365;
-				opponent.x += 165;
 			default:
 				opponent.x += opponent.gameOffset[0];
 				opponent.y += opponent.gameOffset[1];

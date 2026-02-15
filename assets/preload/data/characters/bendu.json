@@ -1,37 +1,38 @@
 {
-  "name": "RECOVERED_PROJECT",
-  "asset": "characters/recover/RECOVERED_PROJECT_01",
+  "name": "Bendu",
+  "asset": "characters/oc/bendu",
   "barColor": [
-    	201,
-    	191,
-    	183
+    	253,
+    	253,
+    	63
     ],
   "globalOffset": [0, 0],
-  "gameOffset": [0, 0],
+  "gameOffset": [50, 10],
   "camOffset": [0, 0],
+  "float": "default",
   "antialiasing": false,
-  "icon": "recover",
+  "icon": "bendu",
   "scale": "(width * furiosityScale), (height * furiosityScale)",
   "animations": [
     {
       "name": "idle",
-      "prefix": "idle"
+      "prefix": "IDLE"
     },
     {
       "name": "singRIGHT",
-      "prefix": "right"
+      "prefix": "RIGHT"
     },
     {
       "name": "singUP",
-      "prefix": "up"
+      "prefix": "UP"
     },
     {
       "name": "singDOWN",
-      "prefix": "down"
+      "prefix": "DOWN"
     },
     {
       "name": "singLEFT",
-      "prefix": "left"
+      "prefix": "LEFT"
     }
   ]
 }

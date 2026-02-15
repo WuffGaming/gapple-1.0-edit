@@ -1,17 +1,18 @@
 {
-  "name": "RECOVERED_PROJECT",
-  "asset": "characters/recover/RECOVERED_PROJECT_01",
+  "name": "Diamond Man (DFAC)",
+  "asset": "characters/algebra/diamondMan",
   "barColor": [
-    	201,
-    	191,
-    	183
+    	129,
+    	180,
+    	227
     ],
   "globalOffset": [0, 0],
-  "gameOffset": [0, 0],
+  "gameOffset": [0, 25],
   "camOffset": [0, 0],
   "antialiasing": false,
-  "icon": "recover",
-  "scale": "(width * furiosityScale), (height * furiosityScale)",
+  "icon": "diamond-man",
+  "scaleSize": true,
+  "scale": "1.3, 1.3",
   "animations": [
     {
       "name": "idle",

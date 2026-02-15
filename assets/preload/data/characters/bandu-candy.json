@@ -1,0 +1,61 @@
+{
+  "name": "Bandu (Crazy)",
+  "asset": "characters/bandu/bandu_crazy",
+  "barColor": [
+    	72,
+    	254,
+    	45
+    ],
+  "globalOffset": [0, 0],
+  "gameOffset": [-275, -255],
+  "camOffset": [0, 0],
+  "float": "rush",
+  "antialiasing": false,
+  "icon": "bandu-sugar",
+  "scale": "(width / furiosityScale)",
+  "bopDance": true,
+  "animations": [
+    {
+      "name": "danceLeft",
+      "prefix": "IDLE",
+      "frameIndices": [0, 1, 2, 3, 4, 5]
+    },
+    {
+      "name": "danceRight",
+      "prefix": "IDLE",
+      "frameIndices": [9, 8, 7, 6, 5, 4]
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "RIGHT"
+    },
+    {
+      "name": "singUP",
+      "prefix": "UP"
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "DOWN"
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "LEFT"
+    },
+    {
+      "name": "singRIGHT-alt",
+      "prefix": "altright"
+    },
+    {
+      "name": "singUP-alt",
+      "prefix": "ALT-UP"
+    },
+    {
+      "name": "singDOWN-alt",
+      "prefix": "ALT-DOWN"
+    },
+    {
+      "name": "singLEFT-alt",
+      "prefix": "ALT-LEFT"
+    }
+  ]
+}

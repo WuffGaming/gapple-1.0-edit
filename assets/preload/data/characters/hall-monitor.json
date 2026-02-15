@@ -1,21 +1,22 @@
 {
-  "name": "RECOVERED_PROJECT",
-  "asset": "characters/recover/RECOVERED_PROJECT_01",
+  "name": "Green Hall Monitor (DFAC)",
+  "asset": "characters/algebra/HALL_MONITOR",
   "barColor": [
-    	201,
+    	37,
     	191,
-    	183
+    	55
     ],
   "globalOffset": [0, 0],
-  "gameOffset": [0, 0],
-  "camOffset": [0, 0],
+  "gameOffset": [45, 185],
+  "camOffset": [-200, -180],
   "antialiasing": false,
-  "icon": "recover",
-  "scale": "(width * furiosityScale), (height * furiosityScale)",
+  "icon": "green-hall-monitor",
+  "scaleSize": true,
+  "scale": "1.5, 1.5",
   "animations": [
     {
       "name": "idle",
-      "prefix": "idle"
+      "prefix": "gdj"
     },
     {
       "name": "singRIGHT",

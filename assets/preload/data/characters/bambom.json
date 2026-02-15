@@ -1,16 +1,17 @@
 {
-  "name": "RECOVERED_PROJECT",
-  "asset": "characters/recover/RECOVERED_PROJECT_01",
+  "name": "Bambom",
+  "asset": "characters/oc/bambom",
   "barColor": [
-    	201,
-    	191,
-    	183
+    	255,
+    	0,
+    	0
     ],
   "globalOffset": [0, 0],
-  "gameOffset": [0, 0],
-  "camOffset": [0, 0],
+  "gameOffset": [50, 10],
+  "camOffset": [100, 0],
+  "float": "circle",
   "antialiasing": false,
-  "icon": "recover",
+  "icon": "bambom",
   "scale": "(width * furiosityScale), (height * furiosityScale)",
   "animations": [
     {
