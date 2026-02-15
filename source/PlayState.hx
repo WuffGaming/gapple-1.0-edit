@@ -123,7 +123,7 @@ class PlayState extends MusicBeatState
 
 	var focusOnDadGlobal:Bool = true;
 
-	var funnyFloatyBoys:Array<String> = ['dave-angey', 'bambi-3d', 'dave-annoyed-3d', 'dave-3d-standing-bruh-what', 'bambi-unfair', 'bambi-piss-3d', 'bandu', 'unfair-junker', 'split-dave-3d', 'insane-dave-3d', 'badai', 'tunnel-dave', 'tunnel-bf', 'tunnel-bf-flipped', 'bandu-candy', 'bandu-origin', 'ringi', 'bambom', 'bendu', 'little-bandu'];
+	var funnyFloatyBoys:Array<String> = ['bambi-piss-3d', 'bandu', 'unfair-junker', 'split-dave-3d', 'insane-dave-3d', 'badai', 'tunnel-dave', 'tunnel-bf', 'tunnel-bf-flipped', 'bandu-candy', 'bandu-origin', 'ringi', 'bambom', 'bendu', 'little-bandu'];
 
 	var storyDifficultyText:String = "";
 	var iconRPC:String = "";
@@ -468,7 +468,7 @@ class PlayState extends MusicBeatState
 			case 'applecore' | 'sugar-rush':
 				opponentmirror = new Character(opponent.x, opponent.y, opponent.curCharacter);
 			default:
-				opponentmirror = new Character(100, 100, "dave-angey");
+				opponentmirror = new Character(100, 100, opponent.curCharacter);
 			
 		}
 

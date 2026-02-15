@@ -1,13 +1,14 @@
 package;
 
-import sys.FileSystem; 
-import sys.io.File;
 import flixel.graphics.FlxGraphic;
 import flixel.FlxG;
 import flixel.graphics.frames.FlxAtlasFrames;
 import openfl.utils.AssetType;
 import openfl.utils.Assets as OpenFlAssets;
 import openfl.display.BitmapData;
+import haxe.Json;
+
+using StringTools;
 
 class Paths
 {
@@ -74,6 +75,31 @@ class Paths
 		return getPath('data/$key.json', TEXT, library);
 	}
 
+	static public function loadJSON(key:String, ?library:String):Dynamic
+	{
+		var rawJson = OpenFlAssets.getText(Paths.json(key, library)).trim();
+
+		// Perform cleanup on files that have bad data at the end.
+		while (!rawJson.endsWith("}"))
+		{
+			rawJson = rawJson.substr(0, rawJson.length - 1);
+		}
+
+		try
+		{
+			// Attempt to parse and return the JSON data.
+			return Json.parse(rawJson);
+		}
+		catch (e)
+		{
+			trace("AN ERROR OCCURRED parsing a JSON file.");
+			trace(e.message);
+
+			// Return null.
+			return null;
+		}
+	}
+
 	static public function sound(key:String, ?library:String)
 	{
 		return getPath('sounds/$key.$SOUND_EXT', SOUND, library);
@@ -124,30 +150,9 @@ class Paths
 		return getPath('data/offsets/' + character + '.txt', TEXT, library); // library is useless here but idc
 	}
 
-	inline static public function customImage(key:String)
-			{
-				if (FileSystem.exists('${key}.png')) {
-				return (FlxGraphic.fromBitmapData(BitmapData.fromFile('${key}.png')));
-				} else {
-				trace('bro that doesn\'t exist ' + '${key}.png');
-				return (FlxGraphic.fromBitmapData(BitmapData.fromFile('assets/shared/images/blank.png')));
-				}
-			}
-	inline static public function customFile(file:String)
-		{
-			   var defaultReturnPath = File.getContent(file);
-
-				return defaultReturnPath;
-		}
-
 	inline static public function getSparrowAtlas(key:String, ?library:String)
 	{
 		return FlxAtlasFrames.fromSparrow(image(key, library), file('images/$key.xml', library));
-	}
-
-	inline static public function getCustomSparrowAtlas(key:String)
-	{
-		return FlxAtlasFrames.fromSparrow(customImage(key), customFile('$key.xml'));	
 	}
 
 	inline static public function getPackerAtlas(key:String, ?library:String)

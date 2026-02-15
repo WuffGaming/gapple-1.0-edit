@@ -1,7 +1,9 @@
 package;
 
-import sys.FileSystem;
-import sys.io.File;
+//import sys.FileSystem;
+//import sys.io.File;
+import haxe.io.Path;
+import openfl.utils.ByteArray;
 import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
 import flixel.FlxG;
@@ -13,35 +15,52 @@ import haxe.format.JsonParser;
 
 using StringTools;
 
-typedef CharacterFile =
+typedef CharacterData =
 {
-	var animations:Array<Anim>;
-	var barcolor:RGB;
-    var	antialiasing:Bool;
-	var characterImage:String;
-    var icon:String;
-	var flipX:Bool;
-	var updateHitbox:Bool;
-	var setGraphicSize:String;
-	var nativelyPlayable:Bool;
-	var bopDance:Bool;
+	var name:String;
+	var asset:String;
+
+	/**
+	 * The color of this character's health bar.
+	 */
+	var barColor:Array<Int>;
+
+	var ?bopDance:Bool;
+
+	var ?nativelyPlayable:Bool;
+
+	var ?flipX:Bool;
+
+	var ?antialiasing:Bool;
+
+	var scale:String;
+
+	var icon:String;
+
+	var animations:Array<AnimationData>;
 }
 
-typedef Anim = 
+typedef AnimationData =
 {
-	var animName:String;
-	var anim:String;
-	var fps:Int;
-	var loop:Bool;
-}
+	var name:String;
+	var prefix:String;
 
-typedef RGB = 
-{
-	var red:Int;
-	var green:Int;
-	var blue:Int;
-}
+	/**
+	 * Whether this animation is looped.
+	 * @default false
+	 */
+	var ?looped:Bool;
 
+	var ?flipX:Bool;
+
+	/**
+	 * The frame rate of this animation.
+	 		* @default 24
+	 */
+	var ?frameRate:Int;
+
+	var ?frameIndices:Array<Int>;
+}
 class Character extends FlxSprite
 {
 
@@ -60,10 +79,10 @@ class Character extends FlxSprite
 	public var barColor:FlxColor;
 	public var bopDance:Bool = false;
 
-	public var rawJsonCustom:String;
-	public var charJson:CharacterFile;
-
 	public var globaloffset:Array<Float> = [0,0];
+
+	public var barColorArray:Array<Int> = [255, 0, 0];
+
 
 	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:Bool = false)
 	{
@@ -885,37 +904,7 @@ class Character extends FlxSprite
 
 				nativelyPlayable = true;
 			default:
-				// THANX DAVE AND BAMBI MODDABLE BY CamLikesKirby I USED IT AS A REFERENCE FOR A LOT OF THIS!!
-				var customPath:String = '';
-				if (FileSystem.exists('data/characters/${curCharacter}.json'))
-				{
-					customPath = 'data/characters/${curCharacter}.json';
-					rawJsonCustom = File.getContent(customPath);
-			    	charJson = cast Json.parse(rawJsonCustom);
-
-					if (charJson.characterImage != null) {
-						tex = Paths.getCustomSparrowAtlas(charJson.characterImage);
-
-					frames = tex;
-
-					for (i in charJson.animations) {
-						animation.addByPrefix(i.animName, i.anim, i.fps, i.loop);
-					}
-
-					barColor = FlxColor.fromRGB(charJson.barcolor.red, charJson.barcolor.green, charJson.barcolor.blue);
-					bopDance = charJson.bopDance;
-					loadOffsetFile(curCharacter);
-					iconName = charJson.icon;
-					nativelyPlayable = charJson.nativelyPlayable;
-					flipX = charJson.flipX;
-					antialiasing = charJson.antialiasing;
-
-					if (charJson.setGraphicSize != null)
-						setGraphicSize(Std.parseInt(charJson.setGraphicSize));
-					if (charJson.updateHitbox)
-						updateHitbox;
-					playAnim(charJson.bopDance ? 'danceRight' : 'idle');
-				}
+				parseDataFile();
 			}
 		dance();
 
@@ -924,7 +913,6 @@ class Character extends FlxSprite
 			flipX = !flipX;
 		}
 	}
-}
 	public var POOP:Bool = false; // https://cdn.discordapp.com/attachments/902006463654936587/906412566534848542/video0-14.mov
 
 	override function update(elapsed:Float)
@@ -994,9 +982,7 @@ class Character extends FlxSprite
 	{
 		if (animation.getByName(AnimName) == null)
 		{
-			//WHY THE FUCK WAS THIS TRACE HERE
-			//trace(AnimName);
-			return; //why wasn't this a thing in the first place
+			return;
 		}
 		if(AnimName.toLowerCase().startsWith('idle') && !canDance)
 		{
@@ -1033,7 +1019,7 @@ class Character extends FlxSprite
 		else
 			offset.set(0, 0);
 	
-		if (curCharacter == 'gf')
+		if (bopDance)
 		{
 			if (AnimName == 'singLEFT')
 			{
@@ -1049,6 +1035,52 @@ class Character extends FlxSprite
 				danced = !danced;
 			}
 		}
+	}
+
+	function parseDataFile() // kadedev i love you i will do anything for you
+	{
+		// Load the data from JSON and cast it to a struct we can easily read.
+		var jsonData = Paths.loadJSON('characters/${curCharacter}');
+		if (jsonData == null)
+		{
+			trace('Failed to parse JSON data for character ${curCharacter}');
+			return;
+		}
+
+		var data:CharacterData = cast jsonData;
+
+		if(data.barColor != null && data.barColor.length > 2)
+			barColorArray = data.barColor;
+
+		var tex:FlxAtlasFrames = Paths.getSparrowAtlas(data.asset, 'preload');
+		frames = tex;
+		if (frames != null)
+			for (anim in data.animations)
+			{
+				var frameRate = anim.frameRate == null ? 24 : anim.frameRate;
+				var looped = anim.looped == null ? false : anim.looped;
+
+				if (anim.frameIndices != null)
+				{
+					animation.addByIndices(anim.name, anim.prefix, anim.frameIndices, "", frameRate, looped);
+				}
+				else
+				{
+					animation.addByPrefix(anim.name, anim.prefix, frameRate, looped);
+				}
+
+				loadOffsetFile(curCharacter);
+			}
+		
+		bopDance = data.bopDance == null ? false : data.bopDance;
+		antialiasing = data.antialiasing == null ? true : data.antialiasing;
+		nativelyPlayable = data.nativelyPlayable == null ? false : data.nativelyPlayable;
+		flipX = data.flipX == null ? false : data.flipX;
+		iconName = data.icon;
+		setGraphicSize(Std.parseInt(data.scale));
+		barColor = FlxColor.fromRGB(barColorArray[0], barColorArray[1], barColorArray[2]);
+
+		playAnim(data.bopDance ? 'danceRight' : 'idle');
 	}
 
 	function loadOffsetFile(character:String)

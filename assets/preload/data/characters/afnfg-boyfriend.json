@@ -1,49 +1,37 @@
 {
-    "animations": [
-        {
-            "animName": "idle",
-            "anim": "idl",
-            "fps": 60,
-            "loop": false
-        },
-        {
-            "animName": "singUP",
-            "anim": "up",
-            "fps": 24,
-            "loop": false
-
-        },
-        {
-            "animName": "singLEFT",
-            "anim": "left",
-            "fps": 24,
-            "loop": false
-
-        },
-        {
-            "animName": "singRIGHT",
-            "anim": "right",
-            "fps": 24,
-            "loop": false
-        },
-        {
-            "animName": "singDOWN",
-            "anim": "down",
-            "fps": 24,
-            "loop": false
-        },
-        {
+  "name": "AFNFG Boyfriend",
+  "asset": "characters/other/afnfg_boyfriend",
+  "barcolor": [
+    	49,
+    	176,
+    	209
     ],
-    "barcolor": {
-        "red": 49,
-        "green": 176,
-        "blue": 209
+  "antialiasing": false,
+  "characterImage": "characters/other/afnfg_boyfriend",
+  "icon": "bf-3d",
+  "nativelyPlayable": true,
+  "flipX": true,
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "idl",
+      "frameRate": "60"
     },
-    "antialiasing": false,
-    "characterImage": "characters/other/afnfg_boyfriend",
-    "icon": "bf-3d",
-    "nativelyPlayable": true,
-    "flipX": true,
-    "updateHitbox": false,
-    "bopDance": false,
+    {
+      "name": "singRIGHT",
+      "prefix": "right"
+    },
+    {
+      "name": "singUP",
+      "prefix": "up"
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "down"
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "left"
+    }
+  ]
 }
