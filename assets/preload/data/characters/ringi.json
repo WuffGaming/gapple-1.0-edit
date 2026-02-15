@@ -12,7 +12,7 @@
   "float": "angled",
   "antialiasing": false,
   "icon": "ringi",
-  "scale": "(width * furiosityScale), (height * furiosityScale)",
+  "scale": 1.02,
   "animations": [
     {
       "name": "idle",

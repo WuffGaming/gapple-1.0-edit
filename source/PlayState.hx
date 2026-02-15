@@ -955,7 +955,6 @@ class PlayState extends MusicBeatState
 				
 			case 'recover':
 				defaultCamZoom = 1.4;
-				opponent.setPosition(-307, 10);
 				var yea = new FlxSprite(-641, -222).loadGraphic(Paths.image('backgrounds/RECOVER_assets/q'));
 				yea.setGraphicSize(2478);
 				yea.updateHitbox();
@@ -3153,16 +3152,6 @@ class PlayState extends MusicBeatState
 	function nextSong()
 	{
 		var difficulty:String = "";
-
-		if (storyDifficulty == 0)
-			difficulty = '-easy';
-
-		if (storyDifficulty == 2)
-			difficulty = '-hard';
-
-		if (storyDifficulty == 3)
-			difficulty = '-unnerf';
-
 		trace(PlayState.storyPlaylist[0].toLowerCase() + difficulty);
 
 		FlxTransitionableState.skipNextTransIn = true;
@@ -4640,6 +4629,10 @@ class PlayState extends MusicBeatState
 				{
 					tweenCamIn();
 				}
+			case 'recovered_project' | 'recovered_project_2' | 'recovered_project_3':
+				opponent.setPosition(-307, 10);
+				opponent.x += opponent.gameOffset[0];
+				opponent.y += opponent.gameOffset[1];
 			default:
 				opponent.x += opponent.gameOffset[0];
 				opponent.y += opponent.gameOffset[1];

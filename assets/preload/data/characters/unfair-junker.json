@@ -13,7 +13,7 @@
   "antialiasing": false,
   "bopDance": true,
   "icon": "expunged",
-  "scale": "(width * 1.3) / furiosityScale)",
+  "scale": 1.3,
   "animations": [
     {
       "name": "danceLeft",

@@ -48,10 +48,6 @@ class ExtraSongState extends MusicBeatState
 		if (!FlxG.sound.music.playing)
 		{
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
-			if (FlxG.keys.justPressed.SPACE)
-			{
-				FlxG.sound.music.stop();
-			}
 		}
 
         #if desktop DiscordClient.changePresence("In the Extra Songs Menu", null); #end
@@ -154,7 +150,6 @@ class ExtraSongState extends MusicBeatState
 
 					PlayState.formoverride = 'none';
 
-                    PlayState.storyWeek = songs[curSelected].week;
 					if(songs[curSelected].songName.toLowerCase() == 'origin')
 					{
 						LoadingState.loadAndSwitchState(new PlayState());
@@ -185,17 +180,6 @@ class ExtraSongState extends MusicBeatState
             default:
                 swagText.visible = false;
         }
-
-		if (FlxG.keys.justPressed.SPACE)
-		{
-		#if PRELOAD_ALL
-		if(songs[curSelected].songName.toLowerCase() != 'unknown')
-			
-			
-				FlxG.sound.playMusic(Paths.inst(songs[curSelected].songName), 0);
-			
-		#end
-		}
 		var bullShit:Int = 0;
 
         for (i in 0...iconArray.length)

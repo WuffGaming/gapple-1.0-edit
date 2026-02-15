@@ -7,12 +7,12 @@
     	45
     ],
   "globalOffset": [0, 0],
-  "gameOffset": [-275, -255],
+  "gameOffset": [0, 0],
   "camOffset": [0, 0],
   "float": "rush",
   "antialiasing": false,
   "icon": "bandu-sugar",
-  "scale": "(width / furiosityScale)",
+  "scale": 0.98,
   "bopDance": true,
   "animations": [
     {

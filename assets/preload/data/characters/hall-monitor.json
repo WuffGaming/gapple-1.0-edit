@@ -11,7 +11,8 @@
   "camOffset": [-200, -180],
   "antialiasing": false,
   "icon": "green-hall-monitor",
-  "scale": "714 * 2, 695  * 2",
+  "scaleSize": true,
+  "scale": 1.5,
   "animations": [
     {
       "name": "idle",

@@ -38,13 +38,7 @@ typedef CharacterData =
 
 	var ?scaleSize:Bool;
 
-	/**
-	 * I don't fucking know.
-	 		* @default 1.02
-	 */
-	var furiosityScale:Float;
-
-	var scale:String;
+	var scale:Null<Float>;
 
 	var float:String;
 
@@ -85,7 +79,6 @@ class Character extends FlxSprite
 	public var iconName:String = 'face';
 
 	public var holdTimer:Float = 0;
-	public var furiosityScale:Float = 1.02;
 	public var canDance:Bool = true;
 
 	public var nativelyPlayable:Bool = false;
@@ -96,6 +89,7 @@ class Character extends FlxSprite
 	public var gameOffset:Array<Float> = [0,0];
 	public var camOffset:Array<Float> = [0,0];
 	public var floater:String = 'false';
+	public var charScale:Float = 1;
 
 	public var barColorArray:Array<Int> = [0, 0, 0];
 
@@ -311,25 +305,19 @@ class Character extends FlxSprite
 		nativelyPlayable = data.nativelyPlayable == null ? false : data.nativelyPlayable;
 		flipX = data.flipX == null ? false : data.flipX;
 		floater = data.float == null ? 'false' : data.float; // add easy
+		charScale = data.scale == null ? 1 : data.scale; // add normal
 		iconName = data.icon;
-		furiosityScale = data.furiosityScale;
 		switch (curCharacter) // TODO: make scaling work for the life of me
 		{
-			case 'hall-monitor':
-					scale.set(1.5, 1.5);
-			case 'diamond-man':
-					scale.set(1.3, 1.3);
-			case 'garrett':
-					furiosityScale = 1.3;
-					setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
-			default:
+			default: // furiosityScale has been deprecated!
 				if (data.scaleSize)
-					scale.set(Std.parseInt(data.scale));
+					scale.set(charScale, charScale); // scale can be a float
 				else
-					setGraphicSize(Std.parseInt(data.scale));
+					setGraphicSize(Std.int(width * charScale), Std.int(height * charScale)); // setGraphicSize cannot
 		}
-		
-		trace(data.scale);
+		trace(data.scaleSize);
+		trace(charScale);
+		trace(Std.int(width * charScale), Std.int(height * charScale));
 		updateHitbox();
 		globaloffset = data.globalOffset; // mostly dependency for tha cores
 		gameOffset = data.gameOffset;

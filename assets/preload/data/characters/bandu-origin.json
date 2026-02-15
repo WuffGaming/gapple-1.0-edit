@@ -12,7 +12,7 @@
   "float": "default",
   "antialiasing": false,
   "icon": "bandu-origin",
-  "scale": "(width * furiosityScale), (height * furiosityScale)",
+  "scale": 1.02,
   "animations": [
     {
       "name": "idle",

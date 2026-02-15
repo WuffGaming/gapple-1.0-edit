@@ -8,10 +8,10 @@
     ],
   "globalOffset": [0, 0],
   "gameOffset": [-307, -125],
-  "camOffset": [400, 125],
+  "camOffset": [125, 420],
   "antialiasing": false,
   "icon": "recover-irreversible",
-  "scale": "(765 * furiosityScale), (903  * furiosityScale)",
+  "scale": 0.7,
   "animations": [
     {
       "name": "idle",

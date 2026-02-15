@@ -12,7 +12,7 @@
   "float": "wire",
   "antialiasing": false,
   "icon": "dave-3d-suit",
-  "scale": "(width * furiosityScale), (height * furiosityScale)",
+  "scale": 1.02,
   "animations": [
     {
       "name": "idle",

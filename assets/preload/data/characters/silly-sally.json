@@ -11,7 +11,7 @@
   "camOffset": [-100, 0],
   "antialiasing": false,
   "icon": "silly-sally",
-  "scale": "(width / furiosityScale)",
+  "scale": 0.98,
   "animations": [
     {
       "name": "idle",
