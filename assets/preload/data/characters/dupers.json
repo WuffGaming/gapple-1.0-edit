@@ -1,0 +1,36 @@
+{
+  "name": "Bambi (PLACEHOLDER)",
+  "asset": "characters/bambi/duperbamb",
+  "barColor": [
+    	37,
+    	191,
+    	55
+    ],
+  "globalOffset": [0, 0],
+  "gameOffset": [-30, -460],
+  "camOffset": [0, 0],
+  "antialiasing": true,
+  "icon": "bambi-mad",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "Idle"
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "right"
+    },
+    {
+      "name": "singUP",
+      "prefix": "up"
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "down"
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "left"
+    }
+  ]
+}

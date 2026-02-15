@@ -1,0 +1,38 @@
+{
+  "name": "Cameo (Origin)",
+  "asset": "characters/bandu/cameo_origin",
+  "barColor": [
+    	251,
+    	247,
+    	50
+    ],
+  "globalOffset": [0, 0],
+  "gameOffset": [-60, -120],
+  "camOffset": [0, 0],
+  "antialiasing": false,
+  "icon": "cameo",
+  "nativelyPlayable": true,
+  "flipX": true,
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "idle"
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "right"
+    },
+    {
+      "name": "singUP",
+      "prefix": "up"
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "down"
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "left"
+    }
+  ]
+}

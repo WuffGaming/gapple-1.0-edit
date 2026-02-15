@@ -1,0 +1,37 @@
+{
+  "name": "RECOVERED_PROJECT_2",
+  "asset": "characters/recover/recovered_project_2",
+  "barColor": [
+    	201,
+    	191,
+    	183
+    ],
+  "globalOffset": [0, 0],
+  "gameOffset": [-307, 90],
+  "camOffset": [0, 0],
+  "antialiasing": false,
+  "icon": "recover-2d",
+  "scale": "(765 * furiosityScale), (903  * furiosityScale)",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "IDLE"
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "RIGHT"
+    },
+    {
+      "name": "singUP",
+      "prefix": "UP"
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "DOWN"
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "LEFT"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "name": "Bambi (PLACEHOLDER)",
+  "asset": "characters/bambi/PLACEHOLDER_BAMBI",
+  "barColor": [
+    	37,
+    	191,
+    	55
+    ],
+  "globalOffset": [0, 0],
+  "gameOffset": [0, 675],
+  "camOffset": [0, 0],
+  "antialiasing": true,
+  "icon": "bambi",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "Idle"
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "right"
+    },
+    {
+      "name": "singUP",
+      "prefix": "up"
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "down"
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "left"
+    }
+  ]
+}

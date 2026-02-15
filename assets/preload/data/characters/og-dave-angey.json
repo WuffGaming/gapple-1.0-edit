@@ -1,0 +1,41 @@
+{
+  "name": "Angey Dave (DFAC)",
+  "asset": "characters/algebra/og_dave_angey",
+  "barColor": [
+    	181,
+    	255,
+    	255
+    ],
+  "globalOffset": [0, 0],
+  "gameOffset": [-190, 0],
+  "camOffset": [0, 0],
+  "antialiasing": false,
+  "icon": "og-dave",
+  "scale": "(width * furiosityScale), (height * furiosityScale)",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "IDLE"
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "RIGHT"
+    },
+    {
+      "name": "singUP",
+      "prefix": "UP"
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "DOWN"
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "LEFT"
+    },
+    {
+      "name": "stand",
+      "prefix": "STAND"
+    }
+  ]
+}

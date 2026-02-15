@@ -1,0 +1,36 @@
+{
+  "name": "Dave",
+  "asset": "characters/dave/PLACEHOLDER_DAVE",
+  "barColor": [
+    	15,
+    	95,
+    	255
+    ],
+  "globalOffset": [0, 0],
+  "gameOffset": [-50, 160],
+  "camOffset": [0, 0],
+  "antialiasing": true,
+  "icon": "dave",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "idleDance"
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "Right"
+    },
+    {
+      "name": "singUP",
+      "prefix": "Up"
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "Down"
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "Left"
+    }
+  ]
+}

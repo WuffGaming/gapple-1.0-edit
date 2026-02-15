@@ -251,195 +251,6 @@ class Character extends FlxSprite
 				barColor = FlxColor.fromRGB(253, 253, 63);
 				iconName = 'bendu';
 				playAnim('idle');
-			case 'dave-png':
-				frames = Paths.getSparrowAtlas('characters/dave/dave-png');
-				animation.addByPrefix('idle', 'idle', 24, false);
-				for (anim in ['left', 'down', 'up', 'right']) {
-					animation.addByPrefix('sing${anim.toUpperCase()}', anim, 24, false);
-				}
-
-				loadOffsetFile(curCharacter);
-
-				iconName = 'dave';
-				barColor = FlxColor.fromRGB(15, 95, 255);
-
-				playAnim('idle');
-			case 'bandu-origin':
-				tex = Paths.getSparrowAtlas('characters/bandu/bandu_origin');
-				frames = tex;
-				animation.addByPrefix('idle', 'IDLE', 24, false);
-				animation.addByPrefix('singUP', 'UP', 24, false);
-				animation.addByPrefix('singRIGHT', 'RIGHT', 24, false);
-				animation.addByPrefix('singDOWN', 'DOWN', 24, false);
-				animation.addByPrefix('singLEFT', 'LEFT', 24, false);
-				animation.addByPrefix('cutscene', 'CUTSCENE', 24, false);
-		
-				loadOffsetFile(curCharacter);
-				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
-				updateHitbox();
-				antialiasing = false;
-				iconName = 'bandu-origin';
-				barColor = FlxColor.fromRGB(255, 255, 179);
-
-				playAnim('idle');
-
-			case 'cameo-origin':
-				tex = Paths.getSparrowAtlas('characters/bandu/cameo_origin');
-				frames = tex;
-				animation.addByPrefix('idle', 'idle', 24, false);
-				animation.addByPrefix('singUP', 'up', 24, false);
-				animation.addByPrefix('singRIGHT', 'right', 24, false);
-				animation.addByPrefix('singDOWN', 'down', 24, false);
-				animation.addByPrefix('singLEFT', 'left', 24, false);
-		
-				loadOffsetFile(curCharacter);
-				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
-				updateHitbox();
-				antialiasing = false;
-
-				nativelyPlayable = true;
-
-				flipX = true;
-				iconName = 'cameo';
-				barColor = FlxColor.fromRGB(251, 247, 50);
-
-				playAnim('idle');
-
-
-			case 'RECOVERED_PROJECT':
-				tex = Paths.getSparrowAtlas('characters/recover/RECOVERED_PROJECT_01');
-				frames = tex;
-				animation.addByPrefix('idle', 'idle', 24, false);
-				animation.addByPrefix('singUP', 'up', 24, false);
-				animation.addByPrefix('singRIGHT', 'right', 24, false);
-				animation.addByPrefix('singDOWN', 'down', 24, false);
-				animation.addByPrefix('singLEFT', 'left', 24, false);
-		
-				loadOffsetFile(curCharacter);
-				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
-				updateHitbox();
-				antialiasing = false;
-				iconName = 'recover';
-				barColor = FlxColor.fromRGB(201, 191, 183);
-		
-				playAnim('idle');
-
-			case 'RECOVERED_PROJECT_2':
-				tex = Paths.getSparrowAtlas('characters/recover/recovered_project_2');
-				frames = tex;
-				animation.addByPrefix('idle', 'IDLE', 24, true);
-				animation.addByPrefix('singUP', 'UP', 24, false);
-				animation.addByPrefix('singRIGHT', 'RIGHT', 24, false);
-				animation.addByPrefix('singDOWN', 'DOWN', 24, false);
-				animation.addByPrefix('singLEFT', 'LEFT', 24, false);
-		
-				loadOffsetFile(curCharacter);
-				setGraphicSize(Std.int(765 * furiosityScale),Std.int(903 * furiosityScale));
-				updateHitbox();
-				antialiasing = false;
-				iconName = 'recover-2d';
-				barColor = FlxColor.fromRGB(201, 191, 183);
-		
-				playAnim('idle');
-
-			case 'RECOVERED_PROJECT_3':
-				tex = Paths.getSparrowAtlas('characters/recover/recovered_project_3');
-				frames = tex;
-				animation.addByPrefix('idle', 'IDLE', 24, false);
-				animation.addByPrefix('singUP', 'UP', 24, false);
-				animation.addByPrefix('singRIGHT', 'RIGHT', 24, false);
-				animation.addByPrefix('singDOWN', 'DOWN', 24, false);
-				animation.addByPrefix('singLEFT', 'LEFT', 24, false);
-		
-				loadOffsetFile(curCharacter);
-				setGraphicSize(Std.int(765 * furiosityScale),Std.int(903 * furiosityScale));
-				updateHitbox();
-				antialiasing = false;
-				iconName = 'recover-irreversible';
-				barColor = FlxColor.fromRGB(201, 191, 183);
-		
-				playAnim('idle');
-
-			case 'badai':
-				// BADAI SHITE ANIMATION LOADING CODE
-				tex = Paths.getSparrowAtlas('characters/bandu/badai');
-				frames = tex;
-				animation.addByPrefix('idle', 'IDLE', 24, false);
-				animation.addByPrefix('singUP', 'UP', 24, false);
-				animation.addByPrefix('singRIGHT', 'RIGHT', 24, false);
-				animation.addByPrefix('singDOWN', 'DOWN', 24, false);
-				animation.addByPrefix('singLEFT', 'LEFT', 24, false);
-		
-				loadOffsetFile(curCharacter);
-				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
-				updateHitbox();
-				antialiasing = false;
-				iconName = 'badai';
-				barColor = FlxColor.fromRGB(218, 46, 138);
-		
-				playAnim('idle');
-
-			case 'tunnel-dave':
-				// DAVE SHITE ANIMATION LOADING CODE
-				tex = Paths.getSparrowAtlas('characters/dave/tunnel_chase_dave');
-				frames = tex;
-				animation.addByPrefix('idle', 'IDLE', 24, false);
-				animation.addByPrefix('singUP', 'UP', 24, false);
-				animation.addByPrefix('singRIGHT', 'RIGHT', 24, false);
-				animation.addByPrefix('singDOWN', 'DOWN', 24, false);
-				animation.addByPrefix('singLEFT', 'LEFT', 24, false);
-		
-				loadOffsetFile(curCharacter);
-				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
-				updateHitbox();
-				antialiasing = false;
-				iconName = 'dave-3d-suit';
-				barColor = FlxColor.fromRGB(230, 62, 61);
-		
-				playAnim('idle');
-
-			case 'og-dave':
-				// DAVE SHITE ANIMATION LOADING CODE
-				tex = Paths.getSparrowAtlas('characters/algebra/og_dave');
-				frames = tex;
-				animation.addByPrefix('idle', 'IDLE', 24, false);
-				animation.addByPrefix('singUP', 'UP', 24, false);
-				animation.addByPrefix('singRIGHT', 'RIGHT', 24, false);
-				animation.addByPrefix('singDOWN', 'DOWN', 24, false);
-				animation.addByPrefix('singLEFT', 'LEFT', 24, false);
-				animation.addByPrefix('stand', 'STAND', 24, false);
-		
-				loadOffsetFile(curCharacter);
-
-				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
-				updateHitbox();
-				antialiasing = false;
-				iconName = 'og-dave';
-				barColor = FlxColor.fromRGB(181, 255, 255);
-		
-				playAnim('idle');
-
-			case 'og-dave-angey':
-				// DAVE SHITE ANIMATION LOADING CODE
-				tex = Paths.getSparrowAtlas('characters/algebra/og_dave_angey');
-				frames = tex;
-				animation.addByPrefix('idle', 'IDLE', 24, false);
-				animation.addByPrefix('singUP', 'UP', 24, false);
-				animation.addByPrefix('singRIGHT', 'RIGHT', 24, false);
-				animation.addByPrefix('singDOWN', 'DOWN', 24, false);
-				animation.addByPrefix('singLEFT', 'LEFT', 24, false);
-				animation.addByPrefix('stand', 'STAND', 24, false);
-		
-				loadOffsetFile(curCharacter);
-
-				setGraphicSize(Std.int(width * furiosityScale),Std.int(height * furiosityScale));
-				updateHitbox();
-				antialiasing = false;
-				iconName = 'og-dave';
-				barColor = FlxColor.fromRGB(181, 255, 255);
-		
-				playAnim('idle');
-
 			case 'garrett':
 				// DAVE SHITE ANIMATION LOADING CODE
 				tex = Paths.getSparrowAtlas('characters/algebra/garrett_algebra');
@@ -461,42 +272,6 @@ class Character extends FlxSprite
 				antialiasing = false;
 				iconName = 'garrett';
 				barColor = FlxColor.fromRGB(253, 253, 63);
-		
-				playAnim('idle');
-
-			case 'dupers':
-				// fucking Dupered out
-				frames = Paths.getSparrowAtlas('characters/bambi/duperbamb');
-				animation.addByPrefix('idle', 'Idle', 24, false);
-				animation.addByPrefix('singDOWN', 'down', 24, false);
-				animation.addByPrefix('singUP', 'up', 24, false);
-				animation.addByPrefix('singLEFT', 'left', 24, false);
-				animation.addByPrefix('singRIGHT', 'right', 24, false);
-
-				loadOffsetFile(curCharacter);
-
-				barColor = FlxColor.fromRGB(37, 191, 55);
-				iconName = 'bambi-mad';
-				playAnim('idle');
-
-			case 'bambi-piss-3d':
-				// BAMBI SHITE ANIMATION LOADING CODE
-				tex = Paths.getSparrowAtlas('characters/bambi/bambi_pissyboy');
-				frames = tex;
-				animation.addByPrefix('idle', 'idle', 24, false);
-				animation.addByPrefix('singDOWN', 'down', 24, false);
-				animation.addByPrefix('singUP', 'up', 24, false);
-				animation.addByPrefix('singLEFT', 'left', 24, false);
-				animation.addByPrefix('singRIGHT', 'right', 24, false);
-		
-				loadOffsetFile(curCharacter);
-				globaloffset[0] = 60;
-				globaloffset[1] = 450; //this is the y
-				setGraphicSize(Std.int(width / furiosityScale));
-				updateHitbox();
-				antialiasing = false;
-				iconName = 'bambi-disrupt';
-				barColor = FlxColor.fromRGB(37, 191, 55);
 		
 				playAnim('idle');
 
@@ -530,25 +305,6 @@ class Character extends FlxSprite
 				barColor = FlxColor.fromRGB(72, 254, 45);
 
 				playAnim('idle');
-			case 'little-bandu':
-				frames = Paths.getSparrowAtlas('characters/bandu/litt le bandu');
-				
-				animation.addByPrefix('idle', 'idle', 24, true);
-				animation.addByPrefix('singUP', 'up', 24, false);
-				animation.addByPrefix('singRIGHT', 'right', 24, false);
-				animation.addByPrefix('singDOWN', 'down', 24, false);
-				animation.addByPrefix('singLEFT', 'left', 24, false);
-				
-				loadOffsetFile(curCharacter);
-
-				setGraphicSize(Std.int(width / furiosityScale));
-				updateHitbox();
-
-				antialiasing = false;
-				iconName = 'bandu';
-				barColor = FlxColor.fromRGB(72, 254, 45);
-
-				playAnim('idle');
 			case 'bandu-candy':
 				frames = Paths.getSparrowAtlas('characters/bandu/bandu_crazy');
 				
@@ -574,67 +330,6 @@ class Character extends FlxSprite
 				barColor = FlxColor.fromRGB(72, 254, 45);
 
 				playAnim('danceLeft');
-			case 'bambi-good':
-				// ships my cute
-				frames = Paths.getSparrowAtlas('characters/bambi/PLACEHOLDER_BAMBI');
-				animation.addByPrefix('idle', 'Idle', 24, false);
-				animation.addByPrefix('singDOWN', 'down', 24, false);
-				animation.addByPrefix('singUP', 'up', 24, false);
-				animation.addByPrefix('singLEFT', 'left', 24, false);
-				animation.addByPrefix('singRIGHT', 'right', 24, false);
-
-				loadOffsetFile(curCharacter);
-				iconName = 'bambi';
-				barColor = FlxColor.fromRGB(37, 191, 55);
-
-				playAnim('idle');
-			case 'dave-good':
-				// not a placeholder
-				tex = Paths.getSparrowAtlas('characters/dave/PLACEHOLDER_DAVE');
-				frames = tex;
-				animation.addByPrefix('idle', 'idleDance', 24, false);
-				animation.addByPrefix('singUP', 'Up', 24, false);
-				animation.addByPrefix('singRIGHT', 'Right', 24, false);
-				animation.addByPrefix('singDOWN', 'Down', 24, false);
-				animation.addByPrefix('singLEFT', 'Left', 24, false);
-	
-				loadOffsetFile(curCharacter);
-				iconName = 'dave';
-				barColor = FlxColor.fromRGB(15, 95, 255);
-
-				playAnim('idle');
-
-			case 'dave':
-				// maybe a placeholder
-				tex = Paths.getSparrowAtlas('characters/dave/PLACEHOLDER_DAVE');
-				frames = tex;
-				animation.addByPrefix('idle', 'idleDance', 24, false);
-				animation.addByPrefix('singUP', 'Up', 24, false);
-				animation.addByPrefix('singRIGHT', 'Right', 24, false);
-				animation.addByPrefix('singDOWN', 'Down', 24, false);
-				animation.addByPrefix('singLEFT', 'Left', 24, false);
-	
-				loadOffsetFile(curCharacter);
-				iconName = 'dave';
-				barColor = FlxColor.fromRGB(15, 95, 255);
-
-				playAnim('idle');
-
-
-			case 'dave-insane':
-				// ji
-				tex = Paths.getSparrowAtlas('characters/dave/INSANE_DAVE');
-				frames = tex;
-				animation.addByPrefix('idle', 'Idle', 24, false);
-				animation.addByPrefix('singUP', 'Up', 24, false);
-				animation.addByPrefix('singRIGHT', 'Right', 24, false);
-				animation.addByPrefix('singDOWN', 'Down', 24, false);
-				animation.addByPrefix('singLEFT', 'Left', 24, false);
-	
-				loadOffsetFile(curCharacter);
-				iconName = 'dave';
-				barColor = FlxColor.fromRGB(15, 95, 255);
-				playAnim('idle');
 			default:
 				parseDataFile();
 			}
@@ -780,6 +475,7 @@ class Character extends FlxSprite
 		}
 
 		var data:CharacterData = cast jsonData;
+		trace(data.name);
 
 		barColorArray = (data.barColor != null && data.barColor.length > 2) ? data.barColor : [161, 161, 161];
 		trace(barColorArray, barColorArray[0], barColorArray[1], barColorArray[2], '1');
@@ -795,12 +491,12 @@ class Character extends FlxSprite
 				if (anim.frameIndices != null)
 				{
 					animation.addByIndices(anim.name, anim.prefix, anim.frameIndices, "", frameRate, looped);
-					trace(animation);
+					trace(anim.name, anim.prefix, 'Indices', anim.frameIndices, "", frameRate, looped);
 				}
 				else
 				{
 					animation.addByPrefix(anim.name, anim.prefix, frameRate, looped);
-					trace(animation);
+					trace(anim.name, anim.prefix, frameRate, looped);
 				}
 
 				loadOffsetFile(curCharacter);

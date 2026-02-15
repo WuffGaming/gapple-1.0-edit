@@ -1,0 +1,37 @@
+{
+  "name": "Silly Sally",
+  "asset": "characters/warehouse/sillysally",
+  "barColor": [
+    	131,
+    	246,
+    	50
+    ],
+  "globalOffset": [0, 0],
+  "gameOffset": [-30, -460],
+  "camOffset": [-100, 0],
+  "antialiasing": false,
+  "icon": "silly-sally",
+  "scale": "(width / furiosityScale)",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "idle"
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "right"
+    },
+    {
+      "name": "singUP",
+      "prefix": "up"
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "down"
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "left"
+    }
+  ]
+}

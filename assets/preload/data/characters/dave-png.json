@@ -1,0 +1,36 @@
+{
+  "name": "Dave (Image)",
+  "asset": "characters/dave/dave-png",
+  "barColor": [
+    	15,
+    	95,
+    	255
+    ],
+  "globalOffset": [0, 0],
+  "gameOffset": [81, 108],
+  "camOffset": [0, 0],
+  "antialiasing": true,
+  "icon": "dave",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "idle"
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "right"
+    },
+    {
+      "name": "singUP",
+      "prefix": "up"
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "down"
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "left"
+    }
+  ]
+}

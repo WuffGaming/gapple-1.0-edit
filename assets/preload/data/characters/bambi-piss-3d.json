@@ -1,0 +1,38 @@
+{
+  "name": "Disruption Bambi",
+  "asset": "characters/bambi/bambi_pissyboy",
+  "barColor": [
+    	37,
+    	191,
+    	55
+    ],
+  "globalOffset": [60, 450],
+  "gameOffset": [0, 100],
+  "camOffset": [0, 0],
+  "antialiasing": false,
+  "icon": "bambi-disrupt",
+  "float": "default",
+  "scale": "(width / furiosityScale)",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "idle"
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "right"
+    },
+    {
+      "name": "singUP",
+      "prefix": "up"
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "down"
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "left"
+    }
+  ]
+}

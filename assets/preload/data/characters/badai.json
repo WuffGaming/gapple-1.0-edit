@@ -1,0 +1,38 @@
+{
+  "name": "Badai",
+  "asset": "characters/bandu/badai",
+  "barColor": [
+    	218,
+    	46,
+    	138
+    ],
+  "globalOffset": [0, 0],
+  "gameOffset": [0, 0],
+  "camOffset": [0, 0],
+  "float": "badai",
+  "antialiasing": false,
+  "icon": "badai",
+  "scale": "(width * furiosityScale), (height * furiosityScale)",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "IDLE"
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "RIGHT"
+    },
+    {
+      "name": "singUP",
+      "prefix": "UP"
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "DOWN"
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "LEFT"
+    }
+  ]
+}

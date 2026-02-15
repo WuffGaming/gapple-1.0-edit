@@ -123,7 +123,7 @@ class PlayState extends MusicBeatState
 
 	var focusOnDadGlobal:Bool = true;
 
-	var funnyFloatyBoys:Array<String> = ['bambi-piss-3d', 'bandu', 'unfair-junker', 'badai', 'tunnel-dave', 'bandu-candy', 'bandu-origin', 'ringi', 'bambom', 'bendu', 'little-bandu'];
+	var funnyFloatyBoys:Array<String> = ['bambi-piss-3d', 'bandu', 'unfair-junker', 'badai', 'bandu-candy', 'ringi', 'bambom', 'bendu'];
 
 	var storyDifficultyText:String = "";
 	var iconRPC:String = "";
@@ -411,10 +411,7 @@ class PlayState extends MusicBeatState
 					dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/RadicalNULLDialogue'));
 				}
 			default:
-				if (dialogue != null)
-					dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/' + SONG.song.toLowerCase() + 'Dialogue'));
-				else
-					dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/NULLDialogue'));
+				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/NULLDialogue'));
 
 		}
 
@@ -440,7 +437,7 @@ class PlayState extends MusicBeatState
 		gf.x += gf.gameOffset[0];
 		gf.y += gf.gameOffset[1];
 
-		if (!(formoverride == "bf" || formoverride == "none" || formoverride == "bf-pixel" || formoverride == "bf-christmas" || formoverride == "radical") && SONG.song != "Tutorial")
+		if (!(formoverride == "bf" || formoverride == "none" || formoverride == "bf-pixel" || formoverride == "3d-bf" || formoverride == "radical") && SONG.song != "Tutorial")
 		{
 			gf.visible = false;
 			gf.y = 130;
@@ -496,18 +493,12 @@ class PlayState extends MusicBeatState
 		// Boyfriend Form Positions
 		switch (boyfriend.curCharacter)
 		{
-			case 'dave-good':
-				boyfriend.y = 100 + 160;
 			case '3d-bf':
 				boyfriendOldIcon = '3d-bf-old';
 				boyfriend.x += boyfriend.gameOffset[0];
 				boyfriend.y += boyfriend.gameOffset[1];
 			case 'bambi-piss-3d':
 				boyfriend.y = 100 + 350;
-			case 'bambi-unfair':
-				boyfriend.y = 100 + 575;
-			case 'bambi-good':
-				boyfriend.y = 100 + 450;
 			default:
 				boyfriend.x += boyfriend.gameOffset[0];
 				boyfriend.y += boyfriend.gameOffset[1];
@@ -587,26 +578,6 @@ class PlayState extends MusicBeatState
 		{
 			opponent.x -= 35;
 			boyfriend.y += 150;
-		}
-
-
-
-		if(opponent.curCharacter == 'bandu-origin')
-		{
-			opponent.x -= 250;
-			opponent.y -= 350;
-		}
-
-		if(opponent.curCharacter == 'cameo-origin')
-		{
-			opponent.x -= 60;
-			opponent.y -= 120;
-		}
-
-		if(opponent.curCharacter == 'dupers')
-		{
-			opponent.x -= -30;
-			opponent.y -= -460;
 		}
 
 		dadChar = opponent.curCharacter;
@@ -859,15 +830,14 @@ class PlayState extends MusicBeatState
 		{
 			switch (curSong.toLowerCase())
 			{
+				case 'disruption' | 'applecore' | 'disability' | 'wireframe' | 'duper' | 'recovered-project' | 'blitz':
+					schoolIntro(doof);
 				case 'algebra':
 					baldiIntro(doof);
 				case 'origin':
 					originCutscene();
 				default:
-					if (dialogue != null) // this was pretty easy actually
-						schoolIntro(doof);
-					else
-						startCountdown();
+					startCountdown();
 			}
 		}
 		else
@@ -2226,18 +2196,12 @@ class PlayState extends MusicBeatState
 				case 'badai':
 					opponent.angle += elapsed * 10;
 					opponent.y += (Math.sin(elapsedtime) * 0.6);
-				case 'little-bandu':
-					opponent.angle += elapsed * 2;
-					opponent.y += (Math.sin(elapsedtime) * 0.65);
-					opponent.x = -125 + Math.sin(elapsedtime) * 425;
 				case 'ringi':
 					opponent.y += (Math.sin(elapsedtime) * 0.6);
 					opponent.x += (Math.sin(elapsedtime) * 0.6);
 				case 'bambom':
 					opponent.y += (Math.sin(elapsedtime) * 0.5);
 					opponent.x += (Math.cos(elapsedtime) * 0.5);
-				case 'tunnel-dave':
-					opponent.y -= (Math.sin(elapsedtime) * 0.6);
 				default:
 					opponent.y += (Math.sin(elapsedtime) * 0.6);
 			}
@@ -2287,7 +2251,7 @@ class PlayState extends MusicBeatState
 					opponent.x += (Math.cos(elapsedtime) * 0.5);
 				case 'wire':
 					opponent.y -= (Math.sin(elapsedtime) * 0.6);
-				default:
+				case 'default':
 					opponent.y += (Math.sin(elapsedtime) * 0.6);
 			}
 		}
@@ -2312,7 +2276,7 @@ class PlayState extends MusicBeatState
 					opponent2.angle = Math.sin(elapsedtime) * 15;
 					opponent2.x += Math.sin(elapsedtime) * 0.6;
 					opponent2.y += (Math.sin(elapsedtime) * 0.6);
-				default:
+				case 'default':
 					opponent2.y += (Math.sin(elapsedtime) * 0.6);
 			}
 			switch(opponent2.floater)
@@ -2350,7 +2314,7 @@ class PlayState extends MusicBeatState
 					opponent2.x += (Math.cos(elapsedtime) * 0.5);
 				case 'wire':
 					opponent2.y -= (Math.sin(elapsedtime) * 0.6);
-				default:
+				case 'default':
 					opponent2.y += (Math.sin(elapsedtime) * 0.6);
 			}
 		}
@@ -2402,7 +2366,7 @@ class PlayState extends MusicBeatState
 					boyfriend.x += (Math.cos(elapsedtime) * 0.5);
 				case 'wire':
 					boyfriend.y -= (Math.sin(elapsedtime) * 0.6);
-				default:
+				case 'default':
 					boyfriend.y += (Math.sin(elapsedtime) * 0.6);
 			}
 		}
@@ -3162,12 +3126,6 @@ class PlayState extends MusicBeatState
 
 			case 'bambom':
 				camFollow.y += 100;
-
-			case 'silly-sally':
-				camFollow.x -= 100;
-			case 'RECOVERED_PROJECT_3': // shoulda just taken this from 1.1 from the start lmao
-				camFollow.y += 400;
-				camFollow.x += 125;
 			case 'hall-monitor':
 				camFollow.x -= 200;
 				camFollow.y -= 180;
@@ -4784,30 +4742,12 @@ class PlayState extends MusicBeatState
 				{
 					tweenCamIn();
 				}
-			case "tristan":
-				opponent.y += 325;
-				opponent.x += 100;
 			case 'ringi':
 				opponent.y -= 275;
 				opponent.x -= 255;
 			case 'bendu':
 				opponent.y += 50;
 				opponent.x += 10;
-			case 'dave' | 'dave-insane':
-				opponent.y += 160;
-				opponent.x -= 50;
-			case 'dave-png':
-				opponent.x += 81;
-				opponent.y += 108;
-			case 'bambi-angey':
-				opponent.y += 450;
-				opponent.x += 100;
-			case 'RECOVERED_PROJECT' | 'RECOVERED_PROJECT_2':
-				opponent.setPosition(-307, 10);
-			case 'RECOVERED_PROJECT_3':
-				opponent.setPosition(-307, 10);
-				opponent.y -= 400;
-				opponent.x -= 125;
 			case 'silly-sally':
 				opponent.x -= 300;
 				opponent.y -= 230;
@@ -4815,8 +4755,6 @@ class PlayState extends MusicBeatState
 				opponent.y += 65;
 			case 'diamond-man':
 				opponent.y += 25;
-			case 'og-dave' | 'og-dave-angey':
-				opponent.x -= 190;
 			case 'hall-monitor':
 				opponent.x += 45;
 				opponent.y += 185;

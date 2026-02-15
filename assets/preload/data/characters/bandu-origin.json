@@ -1,0 +1,42 @@
+{
+  "name": "Bandu (Origin)",
+  "asset": "characters/bandu/bandu_origin",
+  "barColor": [
+    	255,
+    	255,
+    	179
+    ],
+  "globalOffset": [0, 0],
+  "gameOffset": [-250, -350],
+  "camOffset": [0, 0],
+  "float": "default",
+  "antialiasing": false,
+  "icon": "bandu-origin",
+  "scale": "(width * furiosityScale), (height * furiosityScale)",
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "IDLE"
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "RIGHT"
+    },
+    {
+      "name": "singUP",
+      "prefix": "UP"
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "DOWN"
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "LEFT"
+    },
+    {
+      "name": "cutscene",
+      "prefix": "CUTSCENE"
+    }
+  ]
+}
