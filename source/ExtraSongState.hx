@@ -23,7 +23,6 @@ typedef SongInfo =
 	var songName:String;
 	var bgColor:Array<Int>;
 	var songIcon:String;
-	var ?isSecret:Bool;
 }
 
 class ExtraSongState extends MusicBeatState
@@ -184,47 +183,34 @@ class ExtraSongState extends MusicBeatState
 	function getSongs() // thank john
 	{
 		trace(songList);
-		var jsonData = Paths.loadSongJson('${songList}/info'); // unless your song's name info for some reason, you should be fine
-		if (jsonData == null)
+		for (i in 0...songList.length)
 		{
-			trace('Failed to parse JSON data for song ${songList}');
-			addSong('DATA-IS-NULL', [0, 0, 0], 'dave-3d', true);
-			return;
-		}
-		trace(jsonData);
-		var data:SongInfo = cast jsonData;
-		trace(data);
-		if (songList != null)
-		{
-			for (songName in songList) { 
-				if (data.songName == songName)
-				{
-					if ((songName.toLowerCase() == 'dave-x-bambi-shipping-cute' && !FlxG.save.data.shipUnlocked) || (songName.toLowerCase() == 'recovered-project' && !FlxG.save.data.foundRecoveredProject))
-						addSong('unknown', [0, 0, 0], data.songIcon, true); 
-					else
-						addSong(data.songName, data.bgColor, data.songIcon); 
+			var jsonData = Paths.loadSongJson('${songList[i]}/info'); // unless your song's name info for some reason, you should be fine
+			if (jsonData == null)
+			{
+				trace('Failed to parse JSON data for song ${songList[i]}');
+				addSong('DATA-IS-NULL', [0, 0, 0], 'dave-3d', true);
+				return;
+			}
+			var data:SongInfo = cast jsonData;
+			trace(songList[i] + '' + data);
+			if (songList != null)
+			{
+				for (songName in songList) { 
+					if (data.songName.toLowerCase() == songName)
+					{
+						if ((songName.toLowerCase() == 'dave-x-bambi-shipping-cute' && !FlxG.save.data.shipUnlocked) || (songName.toLowerCase() == 'recovered-project' && !FlxG.save.data.foundRecoveredProject))
+							addSong('unknown', [0, 0, 0], data.songIcon, true); 
+						else
+							addSong(data.songName, data.bgColor, data.songIcon); 
+					}
 				}
 			}
+			else
+			{
+				addSong('NO-SONG-FOUND', [0, 0, 0], 'dave-3d', true); // incase a song is wrong
+			}
 		}
-		else
-		{
-			addSong('NO-SONG-FOUND', [0, 0, 0], 'dave-3d', true); // incase a song is wrong
-		}
-		
-				
-				/**
-				addSong('Sugar-Rush', [0, 181, 21], 'bandu-sugar');
-				addSong('Origin', [0, 181, 21], 'bandu-origin');
-				addSong('Tantalum', [0, 181, 21], 'ringi');
-				addSong('Jam', [0, 181, 21], 'bambom');
-				addSong('Keyboard', [0, 181, 21], 'bendu');
-				addSong('Blitz', [73, 101, 205], 'dave-3d');
-				addSong('Thunderstorm', [73, 101, 205], 'dave');
-				addSong('Dave-x-Bambi-Shipping-Cute', [73, 101, 205], 'dave');
-				addSong('RECOVERED-PROJECT', [73, 101, 205], 'recover');
-				addSong('Sart-Producer', [0, 0, 0], 'silly-sally');
-				addSong('Tutorial', [202, 31, 111], 'gf');
-				**/
 	}
 }
 

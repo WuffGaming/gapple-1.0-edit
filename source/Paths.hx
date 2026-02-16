@@ -75,11 +75,6 @@ class Paths
 		return getPath('data/$key.json', TEXT, library);
 	}
 
-	inline static public function infojson(key:String) // this shit gets so tiring
-	{
-		return getPath('songs/$key.json', TEXT, 'default');
-	}
-
 	static public function loadJSON(key:String, ?library:String):Dynamic
 	{
 		var rawJson = OpenFlAssets.getText(Paths.json(key, library)).trim();
@@ -107,7 +102,7 @@ class Paths
 
 	static public function loadSongJson(song:String):Dynamic
 	{
-		var rawJson = OpenFlAssets.getText(Paths.infojson(song)).trim();
+		var rawJson = OpenFlAssets.getText(Paths.chart(song)).trim();
 
 		// Perform cleanup on files that have bad data at the end.
 		while (!rawJson.endsWith("}"))
