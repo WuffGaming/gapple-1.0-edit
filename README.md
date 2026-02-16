@@ -1,11 +1,11 @@
 
-## Powered by a heavily modified version of Kade Engine!
+## Powered by a VERY heavily modified version of Kade Engine!
 ![KadeEngineLogo](https://user-images.githubusercontent.com/26305836/110529589-4b4eb600-80ce-11eb-9c44-e899118b0bf0.png)
 
 ## Hello!
-As you can probably see, this thing is quite WIP! The whole plan for this is to have a slightly different story, while also replacing all the stuff made by bad people "and adding new stuff along the way."
+This runs on a custom engine based from Golden Apple 1.0, which was based from Dave and Bambi 2.5, which THAT was based from Kade Engine 1.2.
 
-If you want to play, I recommend checking the releases tab. That's where major releases will be. The newest release will always be from the source code, though, so if you want to see current changes, or even help, you can learn to compile. I could use all the help I could get, especially considering I'm hardly a coder at all! 
+If you would like to contribute, it'd be very appreciated.
 
 ## Dave
 this is dave
