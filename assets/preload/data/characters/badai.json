@@ -13,6 +13,7 @@
   "antialiasing": false,
   "icon": "badai",
   "scale": 1.02,
+  "noteStyle": "3D",
   "animations": [
     {
       "name": "idle",

@@ -45,9 +45,8 @@ class Note extends FlxSprite
 
 	private var InPlayState:Bool = false;
 
-	public static var CharactersWith3D:Array<String> = ['bambi-piss-3d', 'bandu', 'tunnel-dave', 'badai', 'unfair-junker', 'og-dave', 'split-dave-3d', 'garrett', 'og-dave-angey', '3d-bf', 'bandu-candy', 'silly-sally', 
-	'ringi', 'bambom', 'bendu', 'diamond-man', 'bandu-origin', 'RECOVERED_PROJECT', 'RECOVERED_PROJECT_2', 'RECOVERED_PROJECT_3', 'hall-monitor', 'playrobot', 'playrobot-crazy', 
-	'cameo-origin', 'little-bandu', 'insane-dave-3d'];
+	public static var CharactersWith3D:Array<String> = ['dave-angey'];
+	public static var CharactersWithPixel:Array<String> = ['senpai']; // because why not
 
 	public var rating:String = "shit";
 
@@ -55,6 +54,7 @@ class Note extends FlxSprite
 
 	var dumbasspath:String = 'ui/notes/NOTE_assets';
 	var dumb3dpath:String = 'ui/notes/NOTE_assets_3D';
+	var dumbpixelpath:String = 'ui/notes/NOTE_assets_pixel';
 
 	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, ?musthit:Bool = true, noteStyle:String = "2D") //had to add a new variable to this because FNF dumb
 	{
@@ -133,6 +133,33 @@ class Note extends FlxSprite
 				setGraphicSize(Std.int(width * 0.7));
 				updateHitbox();
 				antialiasing = false;
+		}
+		else if (((CharactersWithPixel.contains(PlayState.dadChar) && !musthit) || (CharactersWithPixel.contains(PlayState.bfChar) && musthit)))
+		{
+				loadGraphic(Paths.image(dumbpixelpath), true, 17, 17);
+
+				animation.add('greenScroll', [6]);
+				animation.add('redScroll', [7]);
+				animation.add('blueScroll', [5]);
+				animation.add('purpleScroll', [4]);
+
+				if (isSustainNote)
+				{
+					loadGraphic(Paths.image(dumbpixelpath + '-ENDS'), true, 7, 6);
+
+					animation.add('purpleholdend', [4]);
+					animation.add('greenholdend', [6]);
+					animation.add('redholdend', [7]);
+					animation.add('blueholdend', [5]);
+
+					animation.add('purplehold', [0]);
+					animation.add('greenhold', [2]);
+					animation.add('redhold', [3]);
+					animation.add('bluehold', [1]);
+				}
+
+				setGraphicSize(Std.int(width * PlayState.daPixelZoom));
+				updateHitbox();
 		}
 		else
 		{
@@ -259,7 +286,7 @@ class Note extends FlxSprite
 
 			x -= width / 2;
 
-			if (PlayState.curStage.startsWith('school'))
+			if (CharactersWithPixel.contains(PlayState.dadChar) || CharactersWithPixel.contains(PlayState.bfChar))
 				x += 30;
 
 			if (prevNote.isSustainNote)
@@ -312,6 +339,35 @@ class Note extends FlxSprite
 			setGraphicSize(Std.int(width * 0.7));
 			updateHitbox();
 			antialiasing = false;
+		}
+		else if (((CharactersWithPixel.contains(PlayState.dadChar)) || (CharactersWithPixel.contains(PlayState.bfChar))))
+		{
+				frames = Paths.getSparrowAtlas(dumbpixelpath);
+
+				loadGraphic(Paths.image(dumbpixelpath), true, 17, 17);
+
+				animation.add('greenScroll', [6]);
+				animation.add('redScroll', [7]);
+				animation.add('blueScroll', [5]);
+				animation.add('purpleScroll', [4]);
+
+				if (isSustainNote)
+				{
+					loadGraphic(Paths.image(dumbpixelpath + '-ENDS'), true, 7, 6);
+
+					animation.add('purpleholdend', [4]);
+					animation.add('greenholdend', [6]);
+					animation.add('redholdend', [7]);
+					animation.add('blueholdend', [5]);
+
+					animation.add('purplehold', [0]);
+					animation.add('greenhold', [2]);
+					animation.add('redhold', [3]);
+					animation.add('bluehold', [1]);
+				}
+
+				setGraphicSize(Std.int(width * PlayState.daPixelZoom));
+				updateHitbox();
 		}
 		else
 		{

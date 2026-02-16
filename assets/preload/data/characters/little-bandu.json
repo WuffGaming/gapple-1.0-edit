@@ -13,6 +13,7 @@
   "icon": "bandu",
   "float": "badai-slow",
   "scale": 0.98,
+  "noteStyle": "3D",
   "animations": [
     {
       "name": "idle",

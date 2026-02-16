@@ -14,6 +14,7 @@
   "bopDance": true,
   "icon": "expunged",
   "scale": 1.3,
+  "noteStyle": "3D",
   "animations": [
     {
       "name": "danceLeft",

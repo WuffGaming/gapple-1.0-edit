@@ -13,6 +13,7 @@
   "icon": "green-hall-monitor",
   "scaleSize": true,
   "scale": 1.5,
+  "noteStyle": "3D",
   "animations": [
     {
       "name": "idle",

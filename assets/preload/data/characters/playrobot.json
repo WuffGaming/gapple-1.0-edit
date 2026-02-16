@@ -11,6 +11,7 @@
   "camOffset": [-160, -20],
   "antialiasing": false,
   "icon": "playrobot",
+  "noteStyle": "3D",
   "animations": [
     {
       "name": "idle",

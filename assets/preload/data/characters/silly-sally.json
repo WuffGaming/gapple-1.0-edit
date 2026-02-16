@@ -12,6 +12,7 @@
   "antialiasing": false,
   "icon": "silly-sally",
   "scale": 0.98,
+  "noteStyle": "3D",
   "animations": [
     {
       "name": "idle",

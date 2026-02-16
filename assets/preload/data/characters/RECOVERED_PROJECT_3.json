@@ -12,6 +12,7 @@
   "antialiasing": false,
   "icon": "recover-irreversible",
   "scale": 0.7,
+  "noteStyle": "3D",
   "animations": [
     {
       "name": "idle",

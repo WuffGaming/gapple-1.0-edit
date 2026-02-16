@@ -42,6 +42,8 @@ typedef CharacterData =
 
 	var float:String;
 
+	var noteStyle:String;
+
 	var icon:String;
 
 	var animations:Array<AnimationData>;
@@ -89,6 +91,7 @@ class Character extends FlxSprite
 	public var gameOffset:Array<Float> = [0,0];
 	public var camOffset:Array<Float> = [0,0];
 	public var floater:String = 'false';
+	public var noteStyle:String = '2D';
 	public var charScale:Float = 1;
 
 	public var barColorArray:Array<Int> = [0, 0, 0];
@@ -273,10 +276,10 @@ class Character extends FlxSprite
 		}
 
 		var data:CharacterData = cast jsonData;
-		trace(data.name);
+		trace(data.name, curCharacter);
 
 		barColorArray = (data.barColor != null && data.barColor.length > 2) ? data.barColor : [161, 161, 161];
-		trace(barColorArray, barColorArray[0], barColorArray[1], barColorArray[2], '1');
+		trace(data.name, barColorArray, barColorArray[0], barColorArray[1], barColorArray[2], '1');
 
 		var tex:FlxAtlasFrames = Paths.getSparrowAtlas(data.asset, 'preload');
 		frames = tex;
@@ -289,24 +292,46 @@ class Character extends FlxSprite
 				if (anim.frameIndices != null)
 				{
 					animation.addByIndices(anim.name, anim.prefix, anim.frameIndices, "", frameRate, looped);
-					trace(anim.name, anim.prefix, 'Indices', anim.frameIndices, "", frameRate, looped);
 				}
 				else
 				{
 					animation.addByPrefix(anim.name, anim.prefix, frameRate, looped);
-					trace(anim.name, anim.prefix, frameRate, looped);
 				}
 
 				loadOffsetFile(curCharacter);
 			}
 		
+		// do dances use DanceLeft / DanceRight?
 		bopDance = data.bopDance == null ? false : data.bopDance;
+
 		antialiasing = data.antialiasing == null ? true : data.antialiasing;
+
 		nativelyPlayable = data.nativelyPlayable == null ? false : data.nativelyPlayable;
+
 		flipX = data.flipX == null ? false : data.flipX;
+
 		floater = data.float == null ? 'false' : data.float; // add easy
+
 		charScale = data.scale == null ? 1 : data.scale; // add normal
+
+		noteStyle = data.noteStyle == null ? '2D' : data.noteStyle; // add hard
+
+		if (noteStyle == '3D')
+		{
+			if (Note.CharactersWith3D.contains(curCharacter)) { Note.CharactersWith3D.remove(curCharacter); }
+			Note.CharactersWith3D.push(curCharacter);
+		}
+		if (noteStyle == 'pixel')
+		{
+			if (Note.CharactersWithPixel.contains(curCharacter)) { Note.CharactersWithPixel.remove(curCharacter); }
+			Note.CharactersWithPixel.push(curCharacter);
+		}
+		trace(data.name, noteStyle);
+
 		iconName = data.icon;
+
+		trace(data.name, iconName);
+
 		switch (curCharacter) // TODO: make scaling work for the life of me
 		{
 			default: // furiosityScale has been deprecated!

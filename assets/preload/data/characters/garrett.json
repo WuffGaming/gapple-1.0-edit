@@ -12,6 +12,7 @@
   "antialiasing": false,
   "icon": "garrett",
   "scale": 1.3,
+  "noteStyle": "3D",
   "animations": [
     {
       "name": "idle",

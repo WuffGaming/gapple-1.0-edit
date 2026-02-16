@@ -12,6 +12,7 @@
   "float": "circle",
   "antialiasing": false,
   "icon": "bambom",
+  "noteStyle": "3D",
   "scale": 1.02,
   "animations": [
     {

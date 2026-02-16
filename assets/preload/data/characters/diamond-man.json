@@ -13,6 +13,7 @@
   "icon": "diamond-man",
   "scaleSize": true,
   "scale": 1.3,
+  "noteStyle": "3D",
   "animations": [
     {
       "name": "idle",

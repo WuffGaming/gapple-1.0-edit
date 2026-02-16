@@ -13,6 +13,7 @@
   "icon": "cameo",
   "nativelyPlayable": true,
   "flipX": true,
+  "noteStyle": "3D",
   "animations": [
     {
       "name": "idle",

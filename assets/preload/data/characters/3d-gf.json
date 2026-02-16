@@ -12,6 +12,7 @@
   "antialiasing": false,
   "icon": "gf",
   "bopDance": true,
+  "noteStyle": "3D",
   "animations": [
     {
       "name": "danceLeft",

@@ -12,6 +12,7 @@
   "antialiasing": false,
   "icon": "og-dave",
   "scale": 1.02,
+  "noteStyle": "3D",
   "animations": [
     {
       "name": "idle",

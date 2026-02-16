@@ -713,15 +713,7 @@ class PlayState extends MusicBeatState
 		var credits:String;
 		switch (SONG.song.toLowerCase())
 		{
-			case 'supernovae':
-				credits = 'Original Song made by ArchWk!';
-			case 'glitch':
-				credits = 'Original Song made by DeadShadow and PixelGH!';
-			case 'mealie':
-				credits = 'Original Song made by Alexander Cooper 19!';
-			case 'unfairness':
-				credits = "Ghost tapping is forced off! Screw you!";
-			case 'cheating' | 'disruption':
+			case 'disruption':
 				credits = 'Screw you!';
 			case 'duper':
 				credits = 'What the FUCK?';
@@ -1315,6 +1307,10 @@ class PlayState extends MusicBeatState
 			{
 				ratingstype = 'baldi';
 			}
+		if(Note.CharactersWithPixel.contains(dadChar) || Note.CharactersWithPixel.contains(bfChar))
+			{
+				ratingstype = 'pixel';
+			}
 
 		startTimer = new FlxTimer().start(Conductor.crochet / (1000 * startSpeed), function(tmr:FlxTimer)
 		{
@@ -1334,16 +1330,6 @@ class PlayState extends MusicBeatState
 			introAssets.set('default', ['ui/ratings/' + ratingstype + '/ready', 'ui/ratings/' + ratingstype + '/set', 'ui/ratings/' + ratingstype + '/go']);
 
 			var introAlts:Array<String> = introAssets.get('default');
-			var altSuffix:String = "";
-
-			for (value in introAssets.keys())
-			{
-				if (value == curStage)
-				{
-					introAlts = introAssets.get(value);
-					altSuffix = '-pixel';
-				}
-			}
 
 			switch (swagCounter)
 
@@ -1357,7 +1343,7 @@ class PlayState extends MusicBeatState
 					ready.scrollFactor.set();
 					ready.updateHitbox();
 
-					if (curStage.startsWith('school'))
+					if (Note.CharactersWithPixel.contains(dadChar) || Note.CharactersWithPixel.contains(bfChar))
 						ready.setGraphicSize(Std.int(ready.width * daPixelZoom));
 
 					ready.screenCenter();
@@ -1376,7 +1362,7 @@ class PlayState extends MusicBeatState
 					var set:FlxSprite = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
 					set.scrollFactor.set();
 
-					if (curStage.startsWith('school'))
+					if (Note.CharactersWithPixel.contains(dadChar) || Note.CharactersWithPixel.contains(bfChar))
 						set.setGraphicSize(Std.int(set.width * daPixelZoom));
 
 					set.screenCenter();
@@ -1395,7 +1381,7 @@ class PlayState extends MusicBeatState
 					var go:FlxSprite = new FlxSprite().loadGraphic(Paths.image(introAlts[2]));
 					go.scrollFactor.set();
 
-					if (curStage.startsWith('school'))
+					if (Note.CharactersWithPixel.contains(dadChar) || Note.CharactersWithPixel.contains(bfChar))
 						go.setGraphicSize(Std.int(go.width * daPixelZoom));
 
 					go.updateHitbox();
@@ -1625,6 +1611,42 @@ class PlayState extends MusicBeatState
 						babyArrow.animation.addByPrefix('static', 'arrowRIGHT');
 						babyArrow.animation.addByPrefix('pressed', 'right press', 24, false);
 						babyArrow.animation.addByPrefix('confirm', 'right confirm', 24, false);
+				}
+			}
+			else if (((Note.CharactersWithPixel.contains(opponent.curCharacter) && player == 0) || (Note.CharactersWithPixel.contains(boyfriend.curCharacter) && player == 1)))
+			{
+				babyArrow.loadGraphic(Paths.image('ui/notes/NOTE_assets_pixel'), true, 17, 17);
+				babyArrow.animation.add('green', [6]);
+				babyArrow.animation.add('red', [7]);
+				babyArrow.animation.add('blue', [5]);
+				babyArrow.animation.add('purplel', [4]);
+
+				babyArrow.setGraphicSize(Std.int(babyArrow.width * daPixelZoom));
+				babyArrow.updateHitbox();
+				babyArrow.antialiasing = false;
+
+				switch (Math.abs(i))
+				{
+					case 0:
+						babyArrow.x += Note.swagWidth * 0;
+						babyArrow.animation.add('static', [0]);
+						babyArrow.animation.add('pressed', [4, 8], 12, false);
+						babyArrow.animation.add('confirm', [12, 16], 24, false);
+					case 1:
+						babyArrow.x += Note.swagWidth * 1;
+						babyArrow.animation.add('static', [1]);
+						babyArrow.animation.add('pressed', [5, 9], 12, false);
+						babyArrow.animation.add('confirm', [13, 17], 24, false);
+					case 2:
+						babyArrow.x += Note.swagWidth * 2;
+						babyArrow.animation.add('static', [2]);
+						babyArrow.animation.add('pressed', [6, 10], 12, false);
+						babyArrow.animation.add('confirm', [14, 18], 12, false);
+					case 3:
+						babyArrow.x += Note.swagWidth * 3;
+						babyArrow.animation.add('static', [3]);
+						babyArrow.animation.add('pressed', [7, 11], 12, false);
+						babyArrow.animation.add('confirm', [15, 19], 24, false);
 				}
 			}
 			else
@@ -3313,17 +3335,17 @@ class PlayState extends MusicBeatState
 			comboSpr.velocity.x += FlxG.random.int(1, 10);
 			add(rating);
 
-			if (!curStage.startsWith('school'))
+			if (Note.CharactersWithPixel.contains(dadChar) || Note.CharactersWithPixel.contains(bfChar))
+			{
+				rating.setGraphicSize(Std.int(rating.width * daPixelZoom * 0.7));
+				comboSpr.setGraphicSize(Std.int(comboSpr.width * daPixelZoom * 0.7));
+			}
+			else
 			{
 				rating.setGraphicSize(Std.int(rating.width * 0.7));
 				rating.antialiasing = true;
 				comboSpr.setGraphicSize(Std.int(comboSpr.width * 0.7));
 				comboSpr.antialiasing = true;
-			}
-			else
-			{
-				rating.setGraphicSize(Std.int(rating.width * daPixelZoom * 0.7));
-				comboSpr.setGraphicSize(Std.int(comboSpr.width * daPixelZoom * 0.7));
 			}
 
 			comboSpr.updateHitbox();
@@ -3350,14 +3372,14 @@ class PlayState extends MusicBeatState
 				numScore.x = rating.x + (43 * daLoop) - 50;
  				numScore.y = rating.y + 100;
  
-				if (!curStage.startsWith('school'))
+				if (Note.CharactersWithPixel.contains(dadChar) || Note.CharactersWithPixel.contains(bfChar))
 				{
-					numScore.antialiasing = true;
-					numScore.setGraphicSize(Std.int(numScore.width * 0.5));
+					numScore.setGraphicSize(Std.int(numScore.width * daPixelZoom));
 				}
 				else
 				{
-					numScore.setGraphicSize(Std.int(numScore.width * daPixelZoom));
+					numScore.antialiasing = true;
+					numScore.setGraphicSize(Std.int(numScore.width * 0.5));
 				}
 				numScore.updateHitbox();
 
