@@ -18,10 +18,20 @@ import Discord.DiscordClient;
 #end
 using StringTools;
 
+typedef SongInfo =
+{
+	var songName:String;
+	var bgColor:Array<Int>;
+	var songIcon:String;
+	var ?isSecret:Bool;
+}
+
 class ExtraSongState extends MusicBeatState
 {
 
     var songs:Array<SongMetadata> = [];
+
+	var songList:Array<String> = CoolUtil.coolTextFile(Paths.txt('songList'));
 
     var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('ui/backgrounds/SUSSUS AMOGUS'));
     var curSelected:Int = 0;
@@ -29,21 +39,11 @@ class ExtraSongState extends MusicBeatState
     private var iconArray:Array<HealthIcon> = [];
 
     var swagText:FlxText = new FlxText(0, 0, 0, 'my poop is brimming', 85);
-
-    var songColors:Array<FlxColor> = [
-    	0xFFca1f6f, // GF
-		0xFF4965FF, // DAVE
-		0xFF00B515, // MISTER BAMBI r slur (i cant reclaim)
-		0xFF00FFFF, //SPLIT THE THONNNNN
-		0xFF000000, // sart.
-		FlxColor.RED, // girl
-    ];
     
     private var grpSongs:FlxTypedGroup<Alphabet>;
 
     override function create() 
 	{
-
 		
 		if (!FlxG.sound.music.playing)
 		{
@@ -55,11 +55,8 @@ class ExtraSongState extends MusicBeatState
         bg.loadGraphic(MainMenuState.randomizeBG());
 		bg.color = 0xFF4965FF;
 		add(bg);
-        
-		addSongList(['Sugar-Rush', 'Origin', 'Tantalum', 'Jam', 'Keyboard'], 2, ['bandu-sugar', 'bandu-origin', 'ringi', 'bambom', 'bendu']);
-        addSongList(['Blitz', 'Thunderstorm', 'Dave-x-Bambi-Shipping-Cute', 'RECOVERED-PROJECT'], 1, ['dave-3d', 'dave', 'dave', 'recover']);
-		addSongList(['Sart-Producer'], 4, ['silly-sally']);
-		addSongList(['Tutorial'], 5, ['gf']);
+		
+		getSongs();
 
         grpSongs = new FlxTypedGroup<Alphabet>();
 		add(grpSongs);
@@ -91,26 +88,7 @@ class ExtraSongState extends MusicBeatState
 
         super.create();
     }
-
-    public function addSongList(songs:Array<String>, weekNum:Int, ?songCharacters:Array<String>)
-	{
-		if (songCharacters == null)
-			songCharacters = ['bf'];
-
-		var num:Int = 0;
-		for (song in songs)
-		{
-            if ((song.toLowerCase() == 'dave-x-bambi-shipping-cute' && !FlxG.save.data.shipUnlocked) || (song.toLowerCase() == 'recovered-project' && !FlxG.save.data.foundRecoveredProject))
-                addSong('unknown', weekNum, songCharacters[num], true);
-            else
-			    addSong(song, weekNum, songCharacters[num], false);
-
-			if (songCharacters.length != 1)
-				num++;
-		}
-	}
-
-    public function addSong(songName:String, weekNum:Int, songCharacter:String, blackoutIcon:Bool = false)
+    public function addSong(songName:String, weekNum:Array<Int>, songCharacter:String, blackoutIcon:Bool = false)
 	{
 		songs.push(new SongMetadata(songName, weekNum, songCharacter, blackoutIcon));
 	}
@@ -201,18 +179,63 @@ class ExtraSongState extends MusicBeatState
 				item.alpha = 1;
 			}
 		}
-		FlxTween.color(bg, 0.25, bg.color, songColors[songs[curSelected].week]);
+		FlxTween.color(bg, 0.25, bg.color, FlxColor.fromRGB(songs[curSelected].week[0], songs[curSelected].week[1], songs[curSelected].week[2]));
+	}
+	function getSongs() // thank john
+	{
+		trace(songList);
+		var jsonData = Paths.loadSongJson('${songList}/info'); // unless your song's name info for some reason, you should be fine
+		if (jsonData == null)
+		{
+			trace('Failed to parse JSON data for song ${songList}');
+			addSong('DATA-IS-NULL', [0, 0, 0], 'dave-3d', true);
+			return;
+		}
+		trace(jsonData);
+		var data:SongInfo = cast jsonData;
+		trace(data);
+		if (songList != null)
+		{
+			for (songName in songList) { 
+				if (data.songName == songName)
+				{
+					if ((songName.toLowerCase() == 'dave-x-bambi-shipping-cute' && !FlxG.save.data.shipUnlocked) || (songName.toLowerCase() == 'recovered-project' && !FlxG.save.data.foundRecoveredProject))
+						addSong('unknown', [0, 0, 0], data.songIcon, true); 
+					else
+						addSong(data.songName, data.bgColor, data.songIcon); 
+				}
+			}
+		}
+		else
+		{
+			addSong('NO-SONG-FOUND', [0, 0, 0], 'dave-3d', true); // incase a song is wrong
+		}
+		
+				
+				/**
+				addSong('Sugar-Rush', [0, 181, 21], 'bandu-sugar');
+				addSong('Origin', [0, 181, 21], 'bandu-origin');
+				addSong('Tantalum', [0, 181, 21], 'ringi');
+				addSong('Jam', [0, 181, 21], 'bambom');
+				addSong('Keyboard', [0, 181, 21], 'bendu');
+				addSong('Blitz', [73, 101, 205], 'dave-3d');
+				addSong('Thunderstorm', [73, 101, 205], 'dave');
+				addSong('Dave-x-Bambi-Shipping-Cute', [73, 101, 205], 'dave');
+				addSong('RECOVERED-PROJECT', [73, 101, 205], 'recover');
+				addSong('Sart-Producer', [0, 0, 0], 'silly-sally');
+				addSong('Tutorial', [202, 31, 111], 'gf');
+				**/
 	}
 }
 
 class SongMetadata
 {
 	public var songName:String = "";
-	public var week:Int = 0;
+	public var week:Array<Int> = [0, 0, 0];
 	public var songCharacter:String = "";
 	public var blackoutIcon:Bool = false;
 
-	public function new(song:String, week:Int, songCharacter:String, blackoutIcon:Bool)
+	public function new(song:String, week:Array<Int>, songCharacter:String, blackoutIcon:Bool)
 	{
 		this.songName = song;
 		this.week = week;

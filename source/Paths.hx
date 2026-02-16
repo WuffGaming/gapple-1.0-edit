@@ -75,9 +75,39 @@ class Paths
 		return getPath('data/$key.json', TEXT, library);
 	}
 
+	inline static public function infojson(key:String) // this shit gets so tiring
+	{
+		return getPath('songs/$key.json', TEXT, 'default');
+	}
+
 	static public function loadJSON(key:String, ?library:String):Dynamic
 	{
 		var rawJson = OpenFlAssets.getText(Paths.json(key, library)).trim();
+
+		// Perform cleanup on files that have bad data at the end.
+		while (!rawJson.endsWith("}"))
+		{
+			rawJson = rawJson.substr(0, rawJson.length - 1);
+		}
+
+		try
+		{
+			// Attempt to parse and return the JSON data.
+			return Json.parse(rawJson);
+		}
+		catch (e)
+		{
+			trace("AN ERROR OCCURRED parsing a JSON file.");
+			trace(e.message);
+
+			// Return null.
+			return null;
+		}
+	}
+
+	static public function loadSongJson(song:String):Dynamic
+	{
+		var rawJson = OpenFlAssets.getText(Paths.infojson(song)).trim();
 
 		// Perform cleanup on files that have bad data at the end.
 		while (!rawJson.endsWith("}"))
