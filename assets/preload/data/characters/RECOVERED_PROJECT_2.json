@@ -16,7 +16,8 @@
   "animations": [
     {
       "name": "idle",
-      "prefix": "IDLE"
+      "prefix": "IDLE",
+      "looped": true
     },
     {
       "name": "singRIGHT",

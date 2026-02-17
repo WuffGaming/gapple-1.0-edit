@@ -24,6 +24,14 @@ import flixel.util.FlxStringUtil;
 
 **/
 
+using StringTools;
+
+typedef CharacterList =
+{
+	var names:Array<String>;
+	var polished:Array<String>;
+}
+
 class CharacterInSelect
 {
 	public var names:Array<String>;
@@ -46,6 +54,8 @@ class CharacterSelectState extends MusicBeatState
 
 	var notestuffs:Array<String> = ['LEFT', 'DOWN', 'UP', 'RIGHT'];
 
+	var order:Array<String> = CoolUtil.coolTextFile(Paths.txt('forms/order'));
+
 	public var isDebug:Bool = false; //CHANGE THIS TO FALSE BEFORE YOU COMMIT RETARDS
 
 	public var PressedTheFunny:Bool = false;
@@ -57,19 +67,27 @@ class CharacterSelectState extends MusicBeatState
 	var noteMsTexts:FlxTypedGroup<FlxText> = new FlxTypedGroup<FlxText>();
 
 	//it goes left,right,up,down
+
 	
-	public var characters:Array<CharacterInSelect> = 
-	[
-		new CharacterInSelect(['bf', '3d-bf', 'afnfg-boyfriend'], ["Boyfriend", '3D Boyfriend', 'AFNFG Boyfriend']),
-		new CharacterInSelect(['radical'], ['Radical! (And Gamingtastic)']),
-		new CharacterInSelect(['split-dave-3d', 'tunnel-dave', 'og-dave'], ['Disability Dave', 'Decimated Dave', 'Algebra Dave']),
-		new CharacterInSelect(['bambi-piss-3d'], ['Angry 3D Bambi']),
-		new CharacterInSelect(['unfair-junker'], ['Unfair Expunged (Facing Forward)']),
-		new CharacterInSelect(['bandu', 'badai', 'bandu-origin'], ['Bandu', 'Badai', 'Bandu (Origin)']),
-		new CharacterInSelect(['cameo-origin'], ['Cameo'])
-	];
+	public var characters:Array<CharacterInSelect> = []; // dependency
 	public function new() 
 	{
+		if(PlayState.SONG.song.toLowerCase() != 'dave-x-bambi-shipping-cute')
+			{
+				for (i in 0...order.length)
+				{
+					var jsonData = Paths.loadJSON('forms/${order[i]}');
+					if (jsonData == null)
+					{
+						trace('Failed to parse JSON data for list ${order[i]}');
+						characters.push(new CharacterInSelect(['bf'], ['ERROR']));
+						return;
+					}
+					var data:CharacterList = cast jsonData;
+					characters.push(new CharacterInSelect(data.names, data.polished));
+				}
+			}
+		
 		super();
 	}
 	
@@ -137,7 +155,7 @@ class CharacterSelectState extends MusicBeatState
 		FlxG.camera.zoom = 0.75;
 
 		//create character
-		char = new Boyfriend(FlxG.width / 2, FlxG.height / 2, "bf");
+		char = new Boyfriend(FlxG.width / 2, 100, "bf");
 		char.screenCenter();
 		char.y = 350;
 		add(char);
@@ -278,26 +296,8 @@ class CharacterSelectState extends MusicBeatState
 
 		switch (char.curCharacter)
 		{
-			case "tristan" | 'tristan-beta' | 'tristan-golden':
-				char.y = 100 + 325;
-			case 'dave' | 'dave-annoyed' | 'dave-splitathon':
-				char.y = 100 + 160;
-			case 'dave-old':
-				char.y = 100 + 270;
-			case 'dave-angey' | 'dave-annoyed-3d' | 'dave-3d-standing-bruh-what':
-				char.y = 100;
-			case 'bambi-3d' | 'bambi-piss-3d' | 'bandu' | 'bandu-candy' | 'unfair-junker':
+			case 'bandu' | 'bandu-candy' | 'unfair-junker':
 				char.y = 100 + 350;
-			case 'bambi-unfair':
-				char.y = 100 + 575;
-			case 'bambi' | 'bambi-old' | 'bambi-bevel' | 'what-lmao':
-				char.y = 100 + 400;
-			case 'bambi-new' | 'bambi-farmer-beta':
-				char.y = 100 + 450;
-			case 'bambi-splitathon':
-				char.y = 100 + 400;
-			case 'bambi-angey':
-				char.y = 100 + 450;
 			case 'radical':
 				char.y = 100 + 125;
 			case '3d-bf':

@@ -1,2 +1,3 @@
-THIS MOD FOLDER DOES NOT ENTIRELY WORK JUST YET!!!
-DONT EXPECT MUCH OUT OF IT RIGHT NOW!!!
+You can add custom mods to this folder here!
+
+Currently, this system is very robust. Please be warned for if mods break.
