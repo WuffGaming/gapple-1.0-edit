@@ -1,0 +1,1 @@
+This is an example playable character using the mod folder. It also includes a new song!

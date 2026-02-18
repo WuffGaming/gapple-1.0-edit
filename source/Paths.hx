@@ -100,9 +100,13 @@ class Paths
 		}
 	}
 
-	static public function loadSongJson(song:String):Dynamic
+	static public function loadSongJson(song:String, ?library:String):Dynamic
 	{
-		var rawJson = OpenFlAssets.getText(Paths.chart(song)).trim();
+		var rawJson:String;
+		if (library == 'mods')
+			rawJson = OpenFlAssets.getText(Paths.modchart(song, library)).trim();
+		else
+			rawJson = OpenFlAssets.getText(Paths.chart(song)).trim();
 
 		// Perform cleanup on files that have bad data at the end.
 		while (!rawJson.endsWith("}"))
@@ -153,6 +157,11 @@ class Paths
 	inline static public function chart(song:String)
 	{
 		return 'songs:assets/songs/$song.json';
+	}
+
+	inline static public function modchart(song:String, library:String)
+	{
+		return '$library:$song.json';
 	}
 
 	inline static public function externmusic(song:String)

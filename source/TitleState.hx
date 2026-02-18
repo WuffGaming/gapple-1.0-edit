@@ -1,5 +1,8 @@
 package;
 
+
+
+
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -27,10 +30,10 @@ import openfl.Assets;
 import Discord.DiscordClient;
 #end
 
-using StringTools;
-
 class TitleState extends MusicBeatState
 {
+	public static var loadedModIds:Array<String> = [];
+
 	static var initialized:Bool = false;
 
 	var blackScreen:FlxSprite;
@@ -52,11 +55,13 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
-		#if polymod
-		polymod.Polymod.init({modRoot: "mods", dirs: ['introMod']});
-		#end
-		
 		#if sys
+		loadedModIds = FileSystem.readDirectory('mods');
+		polymod.Polymod.init({
+			modRoot: "mods", 
+			dirs: loadedModIds
+		});
+		trace(loadedModIds);
 		if (!sys.FileSystem.exists(Sys.getCwd() + "\\assets\\replays"))
 			sys.FileSystem.createDirectory(Sys.getCwd() + "\\assets\\replays");
 		#end
@@ -82,11 +87,6 @@ class TitleState extends MusicBeatState
 		#end
 
 		super.create();
-
-		#if ng
-		var ng:NGio = new NGio(APIStuff.API, APIStuff.EncKey);
-		trace('NEWGROUNDS LOL');
-		#end
 			
 		FlxG.save.bind('funkin', 'ninjamuffin99');
 

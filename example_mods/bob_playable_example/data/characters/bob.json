@@ -1,0 +1,61 @@
+{
+  "name": "Boyfriend",
+  "asset": "characters/bob",
+  "barColor": [
+    	255,
+    	255,
+    	255
+    ],
+  "globalOffset": [0, 0],
+  "gameOffset": [-100, -45],
+  "camOffset": [0, -40],
+  "antialiasing": true,
+  "icon": "bob",
+  "flipX": true,
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "bob_idle"
+    },
+    {
+      "name": "singUP",
+      "prefix": "bob_UP"
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "bob_LEFT"
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "bob_RIGHT"
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "bob_DOWN"
+    },
+    {
+      "name": "singUPmiss",
+      "prefix": "MISS_bob_UP"
+    },
+    {
+      "name": "singLEFTmiss",
+      "prefix": "MISS_bob_LEFT"
+    },
+    {
+      "name": "singRIGHTmiss",
+      "prefix": "MISS_bob_RIGHT"
+    },
+    {
+      "name": "singDOWNmiss",
+      "prefix": "MISS_bob_DOWN"
+    },
+    {
+      "name": "hey",
+      "prefix": "bob_hey"
+    },
+    {
+      "name": "dodge",
+      "prefix": "bob_dodge"
+    }  
+  ]
+}
