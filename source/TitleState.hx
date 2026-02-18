@@ -32,8 +32,6 @@ import Discord.DiscordClient;
 
 class TitleState extends MusicBeatState
 {
-	public static var loadedModIds:Array<String> = [];
-
 	static var initialized:Bool = false;
 
 	var blackScreen:FlxSprite;
@@ -55,16 +53,22 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
-		#if sys
-		loadedModIds = FileSystem.readDirectory('mods');
-		polymod.Polymod.init({
-			modRoot: "mods", 
-			dirs: loadedModIds
-		});
-		trace(loadedModIds);
+		// i took this from psych 0.4.2 because i'm not smart enough to create an entirely all new modding system from scratch i just want things to look good
+		// why 0.4.2? i understand it better, it's probably simpler, and it still works
+		if (sys.FileSystem.exists('mods/')) { 
+			var folders:Array<String> = [];
+			for (file in sys.FileSystem.readDirectory('mods/')) {
+				var path = haxe.io.Path.join(['mods/', file]);
+				if (sys.FileSystem.isDirectory(path)) {
+					folders.push(file);
+				}
+			}
+			if(folders.length > 0) {
+				polymod.Polymod.init({modRoot: "mods", dirs: folders});
+			}
+		}
 		if (!sys.FileSystem.exists(Sys.getCwd() + "\\assets\\replays"))
 			sys.FileSystem.createDirectory(Sys.getCwd() + "\\assets\\replays");
-		#end
 
 		// preload all the long songs
 		var preloadSongs:Array<String> = [

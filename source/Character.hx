@@ -269,11 +269,16 @@ class Character extends FlxSprite
 	{
 		// Load the data from JSON and cast it to a struct we can easily read.
 		var jsonData = Paths.loadJSON('characters/${curCharacter}');
+		if (!FileSystem.exists(jsonData)) {
+			jsonData = Paths.loadmodJSON(curCharacter);
+		}
 		if (jsonData == null)
 		{
 			trace('Failed to parse JSON data for character ${curCharacter}');
+			jsonData = Paths.loadJSON('characters/bf');
 			return;
 		}
+		trace(jsonData);
 
 		var data:CharacterData = cast jsonData;
 		trace(data.name, curCharacter);

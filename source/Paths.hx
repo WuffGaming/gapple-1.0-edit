@@ -7,6 +7,10 @@ import openfl.utils.AssetType;
 import openfl.utils.Assets as OpenFlAssets;
 import openfl.display.BitmapData;
 import haxe.Json;
+import flash.media.Sound;
+import flixel.graphics.FlxGraphic;
+import openfl.display.BitmapData;
+
 
 using StringTools;
 
@@ -14,7 +18,13 @@ class Paths
 {
 	inline public static var SOUND_EXT = #if web "mp3" #else "ogg" #end;
 
+	public static var ignoreModFolders:Map<String, Bool> = new Map();
+	public static var customImagesLoaded:Map<String, Bool> = new Map();
+	public static var customSoundsLoaded:Map<String, Sound> = new Map();
+	static public var currentModDirectory:String = null;
+
 	static var currentLevel:String;
+	
 
 	static public function setCurrentLevel(name:String)
 	{
@@ -181,6 +191,7 @@ class Paths
 	
 	static public function offsetFile(character:String, ?library:String):String
 	{
+		if (character == null) {character = 'bf';} // this will be updated later
 		return getPath('data/offsets/' + character + '.txt', TEXT, library); // library is useless here but idc
 	}
 
@@ -192,5 +203,85 @@ class Paths
 	inline static public function getPackerAtlas(key:String, ?library:String)
 	{
 		return FlxAtlasFrames.fromSpriteSheetPacker(image(key, library), file('images/$key.txt', library));
+	}
+
+
+
+
+	// 0.4.2
+
+	/**
+	static public function addCustomGraphic(key:String):FlxGraphic {
+		if(FileSystem.exists(modsImages(key, '.png'))) {
+			if(!customImagesLoaded.exists(key + '.png')) {
+				var newBitmap:BitmapData = BitmapData.fromFile(modsImages(key, '.png'));
+				var newGraphic:FlxGraphic = FlxGraphic.fromBitmapData(newBitmap, false, key);
+				newGraphic.persist = true;
+				FlxG.bitmap.addGraphic(newGraphic);
+				customImagesLoaded.set(key, true);
+			}
+			return FlxG.bitmap.get(key);
+		}
+		return null;
+	}
+	**/
+
+	inline static public function mods(key:String = '') {
+		return 'mods/' + key;
+	}
+
+	inline static public function modsMusic(key:String) {
+		return modFolders('music/' + key + '.' + SOUND_EXT);
+	}
+
+	inline static public function modsSounds(key:String) {
+		return modFolders('sounds/' + key + '.' + SOUND_EXT);
+	}
+
+	inline static public function modsSongs(key:String) {
+		return modFolders('songs/' + key + '.' + SOUND_EXT);
+	}
+
+	inline static public function modsFile(parent:String, key:String, fileExt:String) {
+	return modFolders(parent + key + fileExt);
+	}
+
+	inline static public function modsImages(key:String, fileExt:String) {
+	return modFolders('images/' + key + fileExt);
+	}
+
+	static public function loadmodJSON(key:String):Dynamic
+	{
+		var rawJson = OpenFlAssets.getText(Paths.modsFile('characters/', key, '.json')).trim();
+
+		// Perform cleanup on files that have bad data at the end.
+		while (!rawJson.endsWith("}"))
+		{
+			rawJson = rawJson.substr(0, rawJson.length - 1);
+		}
+
+		try
+		{
+			// Attempt to parse and return the JSON data.
+			return Json.parse(rawJson);
+		}
+		catch (e)
+		{
+			trace("AN ERROR OCCURRED parsing a JSON file.");
+			trace(e.message);
+
+			// Return null.
+			return null;
+		}
+	}
+
+	static public function modFolders(key:String) {
+		if(currentModDirectory != null && currentModDirectory.length > 0) {
+			var fileToCheck:String = mods(currentModDirectory + '/' + key);
+			if(FileSystem.exists(fileToCheck)) {
+				return fileToCheck;
+			}
+		}
+		return 'mods/' + key;
 	}
 }

@@ -1,11 +1,13 @@
-	package;
+	package; // hey btw the entire class is a bit to the right.
 
 	import flixel.FlxG;
 	import flixel.FlxGame;
 	import flixel.FlxState;
 	import openfl.Assets;
+	import openfl.filters.GlowFilter;
 	import openfl.Lib;
 	import openfl.display.FPS;
+	import openfl.text.TextFormat;
 	import openfl.display.Sprite;
 	import openfl.events.Event;
 
@@ -93,6 +95,8 @@
 
 		#if !mobile
 		fpsCounter = new FPS(10, 3, 0xFFFFFF);
+		fpsCounter.defaultTextFormat = new TextFormat("Comic Sans MS Bold", 12, 0xFFFFFF, true);
+		fpsCounter.filters = [new GlowFilter(0x000000, 0.5, 2, 2, 2, 1)]; // makes it stand out
 		addChild(fpsCounter);
 		toggleFPS(FlxG.save.data.fps);
 		#end

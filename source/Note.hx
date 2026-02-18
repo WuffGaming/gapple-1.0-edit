@@ -45,8 +45,8 @@ class Note extends FlxSprite
 
 	private var InPlayState:Bool = false;
 
-	public static var CharactersWith3D:Array<String> = ['dave-angey'];
-	public static var CharactersWithPixel:Array<String> = ['senpai']; // because why not
+	public static var CharactersWith3D:Array<String> = []; // turns notes 3d
+	public static var CharactersWithPixel:Array<String> = []; // turns notes + ratings pixelated.
 
 	public var rating:String = "shit";
 

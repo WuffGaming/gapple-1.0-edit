@@ -182,12 +182,10 @@ class ExtraSongState extends MusicBeatState
 	}
 	function getSongs() // thank john
 	{
-		var curMod = TitleState.loadedModIds;
 		trace(songList);
 		for (i in 0...songList.length)
 		{
-			var songPath:Array<String> = songList[i] == null ? ['${curMod}/${songList[i]}/info', 'mods'] : ['${songList[i]}/info'];
-			var jsonData = Paths.loadSongJson(songPath[0], songPath[1]); // unless your song's name info for some reason, you should be fine
+			var jsonData = Paths.loadSongJson('${songList[i]}/info'); // unless your song's name info for some reason, you should be fine
 			if (jsonData == null)
 			{
 				trace('Failed to parse JSON data for song ${songList[i]}');
@@ -203,12 +201,14 @@ class ExtraSongState extends MusicBeatState
 					{
 						if ((songName.toLowerCase() == 'dave-x-bambi-shipping-cute' && !FlxG.save.data.shipUnlocked) || (songName.toLowerCase() == 'recovered-project' && !FlxG.save.data.foundRecoveredProject))
 							addSong('unknown', [0, 0, 0], data.songIcon, true); 
-						else if (songName == null) // if a song doesn't exist, try not to crash.
-							addSong('NO-SONG-FOUND', [0, 0, 0], 'dave-3d', true);
 						else
 							addSong(data.songName, data.bgColor, data.songIcon); 
 					}
 				}
+			}
+			else
+			{
+				addSong('NO-SONG-FOUND', [0, 0, 0], 'dave-3d', true); // incase songlist is null somehow
 			}
 		}
 	}
