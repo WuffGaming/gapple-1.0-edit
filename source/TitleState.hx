@@ -55,6 +55,12 @@ class TitleState extends MusicBeatState
 	{
 		// i took this from psych 0.4.2 because i'm not smart enough to create an entirely all new modding system from scratch i just want things to look good
 		// why 0.4.2? i understand it better, it's probably simpler, and it still works
+		/**
+		#if polymod
+		polymod.Polymod.init({modRoot: "mods", dirs: []});
+		#end
+		**/
+
 		if (sys.FileSystem.exists('mods/')) { 
 			var folders:Array<String> = [];
 			for (file in sys.FileSystem.readDirectory('mods/')) {
@@ -63,12 +69,14 @@ class TitleState extends MusicBeatState
 					folders.push(file);
 				}
 			}
+			trace(folders);
 			if(folders.length > 0) {
 				polymod.Polymod.init({modRoot: "mods", dirs: folders});
 			}
 		}
 		if (!sys.FileSystem.exists(Sys.getCwd() + "\\assets\\replays"))
 			sys.FileSystem.createDirectory(Sys.getCwd() + "\\assets\\replays");
+
 
 		// preload all the long songs
 		var preloadSongs:Array<String> = [

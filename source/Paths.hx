@@ -60,7 +60,7 @@ class Paths
 		return '$library:assets/$library/$file';
 	}
 
-	inline static function getPreloadPath(file:String)
+	inline static public function getPreloadPath(file:String)
 	{
 		return 'assets/$file';
 	}
@@ -85,7 +85,7 @@ class Paths
 		return getPath('data/$key.json', TEXT, library);
 	}
 
-	static public function loadJSON(key:String, ?library:String):Dynamic
+	static public function loadJSON(key:String, ?library:String):Dynamic // note: i think loading the json when we immediately find it MIGHT be causing so many crashes.. Maybe load the json when we know it exists?
 	{
 		var rawJson = OpenFlAssets.getText(Paths.json(key, library)).trim();
 
@@ -113,10 +113,7 @@ class Paths
 	static public function loadSongJson(song:String, ?library:String):Dynamic
 	{
 		var rawJson:String;
-		if (library == 'mods')
-			rawJson = OpenFlAssets.getText(Paths.modchart(song, library)).trim();
-		else
-			rawJson = OpenFlAssets.getText(Paths.chart(song)).trim();
+		rawJson = OpenFlAssets.getText(Paths.chart(song)).trim();
 
 		// Perform cleanup on files that have bad data at the end.
 		while (!rawJson.endsWith("}"))
@@ -169,11 +166,6 @@ class Paths
 		return 'songs:assets/songs/$song.json';
 	}
 
-	inline static public function modchart(song:String, library:String)
-	{
-		return '$library:$song.json';
-	}
-
 	inline static public function externmusic(song:String)
 	{
 		return 'songs:assets/songs/extern/${song.toLowerCase()}.$SOUND_EXT';
@@ -198,6 +190,11 @@ class Paths
 	inline static public function getSparrowAtlas(key:String, ?library:String)
 	{
 		return FlxAtlasFrames.fromSparrow(image(key, library), file('images/$key.xml', library));
+	}
+
+	inline static public function getCustomSparrowAtlas(key:String)
+	{
+		return FlxAtlasFrames.fromSparrow(modsImages(key, '.png'), modsImages(key, '.xml'));
 	}
 
 	inline static public function getPackerAtlas(key:String, ?library:String)

@@ -13,6 +13,7 @@ import flixel.util.FlxColor;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxStringUtil;
 import lime.utils.Assets;
+import haxe.Json;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -113,7 +114,7 @@ class ExtraSongState extends MusicBeatState
         if (FlxG.keys.pressed.ENTER)
 		{
             switch (songs[curSelected].songName.toLowerCase()) {
-                case 'unknown' | 'NO-SONG-FOUND':
+                case 'unknown' | 'NO-SONG-FOUND' | 'DATA-IS-NULL':
                     FlxG.sound.play(Paths.sound('cancelMenu'), 0.5);
                 default:   
                     var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), 1);
@@ -185,7 +186,13 @@ class ExtraSongState extends MusicBeatState
 		trace(songList);
 		for (i in 0...songList.length)
 		{
-			var jsonData = Paths.loadSongJson('${songList[i]}/info'); // unless your song's name info for some reason, you should be fine
+			var chartPath = 'songs/${songList[i]}/info.json';
+			var path:String = Paths.modFolders(chartPath);
+			if (!FileSystem.exists(path)) {
+				path = Paths.chart('${songList[i]}/info');
+			}
+			var rawJson:String = File.getContent(path); // unless your song's name info for some reason, you should be fine
+			var jsonData:SongInfo = cast Json.parse(rawJson);
 			if (jsonData == null)
 			{
 				trace('Failed to parse JSON data for song ${songList[i]}');
@@ -193,7 +200,7 @@ class ExtraSongState extends MusicBeatState
 				return;
 			}
 			var data:SongInfo = cast jsonData;
-			trace(songList[i] + '' + data);
+			trace(songList[i] + ' ' + data);
 			if (songList != null)
 			{
 				for (songName in songList) { 

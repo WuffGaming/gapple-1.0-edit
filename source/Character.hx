@@ -268,16 +268,13 @@ class Character extends FlxSprite
 	function parseDataFile() // kadedev i love you i will do anything for you
 	{
 		// Load the data from JSON and cast it to a struct we can easily read.
-		var jsonData = Paths.loadJSON('characters/${curCharacter}');
-		if (!FileSystem.exists(jsonData)) {
-			jsonData = Paths.loadmodJSON(curCharacter);
+		var charPath:String = 'data/characters/' + curCharacter + '.json';
+		var path:String = Paths.modFolders(charPath);
+		if (!FileSystem.exists(path)) {
+			path = Paths.getPreloadPath('data/characters/${curCharacter}.json');
 		}
-		if (jsonData == null)
-		{
-			trace('Failed to parse JSON data for character ${curCharacter}');
-			jsonData = Paths.loadJSON('characters/bf');
-			return;
-		}
+		var rawJson = File.getContent(path);
+		var jsonData:CharacterData = cast Json.parse(rawJson);
 		trace(jsonData);
 
 		var data:CharacterData = cast jsonData;
@@ -285,8 +282,11 @@ class Character extends FlxSprite
 
 		barColorArray = (data.barColor != null && data.barColor.length > 2) ? data.barColor : [161, 161, 161];
 		trace(data.name, barColorArray, barColorArray[0], barColorArray[1], barColorArray[2], '1');
-
-		var tex:FlxAtlasFrames = Paths.getSparrowAtlas(data.asset, 'preload');
+		var tex:FlxAtlasFrames;
+		if (FileSystem.exists(Paths.modsImages(data.asset, '.png')) && FileSystem.exists(Paths.modsImages(data.asset, '.xml')))
+			tex = Paths.getCustomSparrowAtlas(data.asset);
+		else
+			tex = Paths.getSparrowAtlas(data.asset, 'preload');
 		frames = tex;
 		if (frames != null)
 			for (anim in data.animations)
