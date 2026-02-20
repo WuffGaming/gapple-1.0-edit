@@ -14,9 +14,6 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxStringUtil;
 import lime.utils.Assets;
 import haxe.Json;
-#if desktop
-import Discord.DiscordClient;
-#end
 using StringTools;
 
 typedef SongInfo =
@@ -49,8 +46,6 @@ class ExtraSongState extends MusicBeatState
 		{
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
 		}
-
-        #if desktop DiscordClient.changePresence("In the Extra Songs Menu", null); #end
 
         bg.loadGraphic(MainMenuState.randomizeBG());
 		bg.color = 0xFF4965FF;
@@ -109,7 +104,7 @@ class ExtraSongState extends MusicBeatState
             changeSelection(1);
 
         if (controls.BACK)
-            FlxG.switchState(new PlayMenuState());
+            FlxG.switchState(()->new PlayMenuState());
 
         if (FlxG.keys.pressed.ENTER)
 		{
@@ -189,8 +184,9 @@ class ExtraSongState extends MusicBeatState
 			var chartPath = 'songs/${songList[i]}/info.json';
 			var path:String = Paths.modFolders(chartPath);
 			if (!FileSystem.exists(path)) {
-				path = Paths.chart('${songList[i]}/info');
+				path = Paths.getPreloadPath(chartPath);
 			}
+			trace(path);
 			var rawJson:String = File.getContent(path); // unless your song's name info for some reason, you should be fine
 			var jsonData:SongInfo = cast Json.parse(rawJson);
 			if (jsonData == null)

@@ -117,7 +117,7 @@ class AnimationDebug extends MusicBeatState
 
 		if(FlxG.keys.justPressed.ESCAPE)
 		{
-			FlxG.switchState(new MainMenuState());
+			FlxG.switchState(()->new MainMenuState());
 		}
 
 		if(FlxG.keys.justPressed.F)

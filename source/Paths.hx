@@ -24,6 +24,16 @@ class Paths
 	static public var currentModDirectory:String = null;
 
 	static var currentLevel:String;
+
+	static public function getModFolders()
+	{
+		ignoreModFolders.set('data', true);
+		ignoreModFolders.set('songs', true);
+		ignoreModFolders.set('music', true);
+		ignoreModFolders.set('sounds', true);
+		ignoreModFolders.set('videos', true);
+		ignoreModFolders.set('images', true);
+	}
 	
 
 	static public function setCurrentLevel(name:String)
@@ -161,9 +171,9 @@ class Paths
 		return 'songs:assets/songs/${song.toLowerCase()}/Inst.$SOUND_EXT';
 	}
 
-	inline static public function chart(song:String)
+	inline static public function chart(song:String):Any
 	{
-		return 'songs:assets/songs/$song.json';
+		return 'songs:assets/songs/${song.toLowerCase()}.json';
 	}
 
 	inline static public function externmusic(song:String)
@@ -171,8 +181,10 @@ class Paths
 		return 'songs:assets/songs/extern/${song.toLowerCase()}.$SOUND_EXT';
 	}
 
-	inline static public function image(key:String, ?library:String)
+	inline static public function image(key:String, ?library:String):Dynamic
 	{
+		var imageToReturn:FlxGraphic = addCustomGraphic(key);
+		if(imageToReturn != null) return imageToReturn;
 		return getPath('images/$key.png', IMAGE, library);
 	}
 
@@ -189,7 +201,14 @@ class Paths
 
 	inline static public function getSparrowAtlas(key:String, ?library:String)
 	{
-		return FlxAtlasFrames.fromSparrow(image(key, library), file('images/$key.xml', library));
+		var imageLoaded:FlxGraphic = addCustomGraphic(key);
+		var xmlExists:Bool = false;
+		if(FileSystem.exists(modsImages(key, '.xml'))) {
+			xmlExists = true;
+		}
+
+		return FlxAtlasFrames.fromSparrow((imageLoaded != null ? imageLoaded : image(key, library)), (xmlExists ? File.getContent(modsImages(key, '.xml')) : file('images/$key.xml', library)));
+		//return FlxAtlasFrames.fromSparrow(image(key, library), file('images/$key.xml', library));
 	}
 
 	inline static public function getCustomSparrowAtlas(key:String)
@@ -199,7 +218,14 @@ class Paths
 
 	inline static public function getPackerAtlas(key:String, ?library:String)
 	{
-		return FlxAtlasFrames.fromSpriteSheetPacker(image(key, library), file('images/$key.txt', library));
+		var imageLoaded:FlxGraphic = addCustomGraphic(key);
+		var txtExists:Bool = false;
+		if(FileSystem.exists(modsImages(key, '.txt'))) {
+			txtExists = true;
+		}
+
+		return FlxAtlasFrames.fromSpriteSheetPacker((imageLoaded != null ? imageLoaded : image(key, library)), (txtExists ? File.getContent(modsImages(key, '.txt')) : file('images/$key.txt', library)));
+		//return FlxAtlasFrames.fromSpriteSheetPacker(image(key, library), file('images/$key.txt', library));
 	}
 
 
@@ -207,7 +233,6 @@ class Paths
 
 	// 0.4.2
 
-	/**
 	static public function addCustomGraphic(key:String):FlxGraphic {
 		if(FileSystem.exists(modsImages(key, '.png'))) {
 			if(!customImagesLoaded.exists(key + '.png')) {
@@ -221,7 +246,6 @@ class Paths
 		}
 		return null;
 	}
-	**/
 
 	inline static public function mods(key:String = '') {
 		return 'mods/' + key;

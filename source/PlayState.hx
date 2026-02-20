@@ -27,7 +27,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
-import flixel.system.FlxSound;
+import flixel.sound.FlxSound;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -43,9 +43,6 @@ import openfl.display.BlendMode;
 import openfl.display.StageQuality;
 import openfl.filters.ShaderFilter;
 import flash.system.System;
-#if desktop
-import Discord.DiscordClient;
-#end
 
 #if windows
 import sys.io.File;
@@ -312,42 +309,10 @@ class PlayState extends MusicBeatState
 		goods = 0;
 		misses = 0;
 
-		// To avoid having duplicate images in Discord assets
-		switch (SONG.player2)
-		{
-			case 'og-dave' | 'og-dave-angey':
-				iconRPC = 'icon_og_dave';
-			case 'bambi-piss-3d':
-				iconRPC = 'icon_bambi_piss_3d';
-			case 'bandu' | 'bandu-candy' | 'bandu-origin':
-				iconRPC = 'icon_bandu';
-			case 'badai':
-				iconRPC = 'icon_badai';
-			case 'garrett':
-				iconRPC = 'icon_garrett';
-			case 'tunnel-dave':
-				iconRPC = 'icon_tunnel_dave';
-			case 'split-dave-3d':
-				iconRPC = 'icon_split_dave_3d';
-			case 'bambi-unfair' | 'unfair-junker':
-				iconRPC = 'icon_unfair_junker';
-		}
-
 		detailsText = "";
 
 		// String for when the game is paused
 		detailsPausedText = "Paused - " + detailsText;
-
-		// Updating Discord Rich Presence.
-		#if desktop
-		DiscordClient.changePresence(SONG.song,
-			"\nAcc: "
-			+ truncateFloat(accuracy, 2)
-			+ "% | Score: "
-			+ songScore
-			+ " | WuffGaming was here | Misses: "
-			+ misses, iconRPC);
-		#end
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
@@ -356,11 +321,11 @@ class PlayState extends MusicBeatState
 		camHUD.bgColor.alpha = 0;
 
 		FlxG.cameras.reset(camGame);
-		FlxG.cameras.add(camHUD);
-		FlxG.cameras.add(camDialogue);
+		FlxG.cameras.add(camHUD, false);
+		FlxG.cameras.add(camDialogue, false);
+		#if !debug
 		FlxG.mouse.visible = false;
-
-		FlxCamera.defaultCameras = [camGame];
+		#end
 		persistentUpdate = true;
 		persistentDraw = true;
 
@@ -1429,16 +1394,6 @@ class PlayState extends MusicBeatState
 		songLength = FlxG.sound.music.length;
 
 		FlxTween.tween(timeTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
-
-		#if desktop
-		DiscordClient.changePresence(SONG.song,
-			"\nAcc: "
-			+ truncateFloat(accuracy, 2)
-			+ "% | Score: "
-			+ songScore
-			+ " | WuffGaming was here | Misses: "
-			+ misses, iconRPC);
-		#end
 		FlxG.sound.music.onComplete = endSong;
 	}
 
@@ -1800,17 +1755,6 @@ class PlayState extends MusicBeatState
 				FlxG.sound.music.pause();
 				vocals.pause();
 			}
-
-			#if desktop
-			DiscordClient.changePresence("PAUSED on "
-				+ SONG.song,
-				"Acc: "
-				+ truncateFloat(accuracy, 2)
-				+ "% | Score: "
-				+ songScore
-				+ " | WuffGaming was here | Misses: "
-				+ misses, iconRPC);
-			#end
 			if (!startTimer.finished)
 				startTimer.active = false;
 		}
@@ -1830,27 +1774,6 @@ class PlayState extends MusicBeatState
 			if (!startTimer.finished)
 				startTimer.active = true;
 			paused = false;
-
-			if (startTimer.finished)
-				{
-					#if desktop
-					DiscordClient.changePresence(SONG.song,
-						"\nAcc: "
-						+ truncateFloat(accuracy, 2)
-						+ "% | Score: "
-						+ songScore
-						+ " | WuffGaming was here | Misses: "
-						+ misses, iconRPC, true,
-						FlxG.sound.music.length
-						- Conductor.songPosition);
-					#end
-				}
-				else
-				{
-					#if desktop
-					DiscordClient.changePresence(detailsText, SONG.song + " (" + storyDifficultyText + ") ", iconRPC);
-					#end
-				}
 		}
 
 		super.closeSubState();
@@ -1864,18 +1787,6 @@ class PlayState extends MusicBeatState
 		Conductor.songPosition = FlxG.sound.music.time;
 		vocals.time = Conductor.songPosition;
 		vocals.play();
-
-		#if desktop
-		DiscordClient.changePresence(detailsText
-			+ " "
-			+ SONG.song,
-			"\nAcc: "
-			+ truncateFloat(accuracy, 2)
-			+ "% | Score: "
-			+ songScore
-			+ " | WuffGaming was here | Misses: "
-			+ misses, iconRPC);
-		#end
 	}
 
 	private var paused:Bool = false;
@@ -2417,8 +2328,9 @@ class PlayState extends MusicBeatState
 		}
 
 		FlxG.watch.addQuick("WHAT", Conductor.songPosition);
+		
 			
-		FlxG.camera.setFilters([new ShaderFilter(screenshader.shader)]); // this is very stupid but doesn't effect memory all that much so
+		//FlxG.camera.setFilters([new ShaderFilter(screenshader.shader)]); // this is very stupid but doesn't effect memory all that much so
 		if (shakeCam && eyesoreson)
 		{
 			// var shad = cast(FlxG.camera.screen.shader,Shaders.PulseShader);
@@ -2478,7 +2390,7 @@ class PlayState extends MusicBeatState
 			if (FlxG.random.bool(0.1))
 			{
 				// gitaroo man easter egg
-				FlxG.switchState(new GitarooPause());
+				FlxG.switchState(()->new GitarooPause());
 			}
 			else
 				openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
@@ -2491,10 +2403,7 @@ class PlayState extends MusicBeatState
 				default:
 					PlayState.characteroverride = 'none';
 					PlayState.formoverride = 'none';
-					FlxG.switchState(new ChartingState());
-					#if desktop
-					DiscordClient.changePresence("Chart Editor", null, null, true);
-					#end
+					FlxG.switchState(()->new ChartingState());
 			}
 		}
 
@@ -2537,19 +2446,19 @@ class PlayState extends MusicBeatState
 		{
 			PlayState.characteroverride = 'none';
 			PlayState.formoverride = 'none';
-			FlxG.switchState(new AnimationDebug(opponent.curCharacter));
+			FlxG.switchState(()->new AnimationDebug(opponent.curCharacter));
 		}
 		if (FlxG.keys.justPressed.TWO)
 		{
 			PlayState.characteroverride = 'none';
 			PlayState.formoverride = 'none';
-			FlxG.switchState(new AnimationDebug(boyfriend.curCharacter));
+			FlxG.switchState(()->new AnimationDebug(boyfriend.curCharacter));
 		}
 		if (FlxG.keys.justPressed.THREE)
 		{
 			PlayState.characteroverride = 'none';
 			PlayState.formoverride = 'none';
-			FlxG.switchState(new AnimationDebug(gf.curCharacter));
+			FlxG.switchState(()->new AnimationDebug(gf.curCharacter));
 		}
 		if (startingSong)
 		{
@@ -2649,20 +2558,6 @@ class PlayState extends MusicBeatState
 				{
 					openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition()
 						.y, formoverride == "bf" || formoverride == "none" ? SONG.player1 : formoverride));
-
-						#if desktop
-						DiscordClient.changePresence("GAME OVER -- "
-						+ SONG.song
-						+ " ("
-						+ storyDifficultyText
-						+ ") ",
-						"\nAcc: "
-						+ truncateFloat(accuracy, 2)
-						+ "% | Score: "
-						+ songScore
-						+ "| Misses: "
-						+ misses, iconRPC);
-						#end
 				}
 			}
 			else
@@ -2685,17 +2580,6 @@ class PlayState extends MusicBeatState
 					{
 						openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition()
 							.y, formoverride == "bf" || formoverride == "none" ? SONG.player1 : formoverride));
-
-							#if desktop
-							DiscordClient.changePresence("GAME OVER - "
-							+ SONG.song,
-							"\nAcc: "
-							+ truncateFloat(accuracy, 2)
-							+ "% | Score: "
-							+ songScore
-							+ " | WuffGaming was here | Misses: "
-							+ misses, iconRPC);
-							#end
 					}
 				}
 			}
@@ -3104,20 +2988,19 @@ class PlayState extends MusicBeatState
 						doof.scrollFactor.set();
 						doof.finishThing = function()
 						{
-							FlxG.switchState(new PlayMenuState());
+							FlxG.switchState(()->new PlayMenuState());
 						};
 						doof.cameras = [camDialogue];
 						schoolIntro(doof, false);
 
 					default:
-						FlxG.switchState(new PlayMenuState());
+						FlxG.switchState(()->new PlayMenuState());
 				}
 				transIn = FlxTransitionableState.defaultTransIn;
 				transOut = FlxTransitionableState.defaultTransOut;
 
 				if (SONG.validScore)
 				{
-					NGio.unlockMedal(60961);
 					Highscore.saveWeekScore(storyWeek, campaignScore,
 						storyDifficulty, characteroverride == "none" || characteroverride == "bf" ? "bf" : characteroverride);
 				}
@@ -3134,7 +3017,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 		else if (xtraSong) {
-			FlxG.switchState(new ExtraSongState());
+			FlxG.switchState(()->new ExtraSongState());
 		}
 		else
 		{
@@ -3159,14 +3042,14 @@ class PlayState extends MusicBeatState
 			}
 			else
 			{
-				FlxG.switchState(new PlayMenuState());
+				FlxG.switchState(()->new PlayMenuState());
 			}
 		}
 	}
 
 	function ughWhyDoesThisHaveToFuckingExist() 
 	{
-		FlxG.switchState(new PlayMenuState());
+		FlxG.switchState(()->new PlayMenuState());
 	}
 
 	var endingSong:Bool = false;
@@ -3809,18 +3692,6 @@ class PlayState extends MusicBeatState
 		{
 			resyncVocals();
 		}
-
-		#if desktop
-		DiscordClient.changePresence(SONG.song,
-			"Acc: "
-			+ truncateFloat(accuracy, 2)
-			+ "% | Score: "
-			+ songScore
-			+ " | WuffGaming was here | Misses: "
-			+ misses, iconRPC, true,
-			FlxG.sound.music.length
-			- Conductor.songPosition);
-		#end
 	}
 
 	var lightningStrikeBeat:Int = 0;

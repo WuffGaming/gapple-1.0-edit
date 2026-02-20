@@ -3,8 +3,6 @@ package;
 import flixel.FlxSprite;
 import flixel.math.FlxMath;
 
-using StringTools;
-
 class HealthIcon extends FlxSprite
 {
 	/**

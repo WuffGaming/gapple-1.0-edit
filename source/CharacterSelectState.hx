@@ -3,7 +3,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.text.FlxText;
-import flixel.system.FlxSoundGroup;
+import flixel.sound.FlxSoundGroup;
 import flixel.math.FlxPoint;
 import openfl.geom.Point;
 import flixel.*;
@@ -72,11 +72,20 @@ class CharacterSelectState extends MusicBeatState
 	public var characters:Array<CharacterInSelect> = []; // dependency
 	public function new() 
 	{
+		trace('CharSelectOrder is ', order);
 		if(PlayState.SONG.song.toLowerCase() != 'dave-x-bambi-shipping-cute')
 			{
 				for (i in 0...order.length)
 				{
-					var jsonData = Paths.loadJSON('forms/${order[i]}');
+					var charPath:String = 'data/forms/${order[i]}';
+					var path:String = Paths.modFolders(charPath);
+					if (!FileSystem.exists(path)) {
+						path = Paths.getPreloadPath('data/forms/${order[i]}');
+					}
+					trace(path);
+					var rawJson = File.getContent(path);
+					var jsonData:CharacterList = cast Json.parse(rawJson);
+					trace(jsonData);
 					if (jsonData == null)
 					{
 						trace('Failed to parse JSON data for list ${order[i]}');

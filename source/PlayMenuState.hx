@@ -14,13 +14,7 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
-import io.newgrounds.NG;
 import lime.app.Application;
-#if desktop
-import Discord.DiscordClient;
-#end
-
-using StringTools;
 
 class PlayMenuState extends MusicBeatState
 {
@@ -75,10 +69,6 @@ class PlayMenuState extends MusicBeatState
 		{
 			FlxG.save.data.eyesores = true;
 		}
-
-		#if desktop
-		DiscordClient.changePresence("In the Menus", null);
-		#end
 		
 		if (FlxG.save.data.unlockedcharacters == null)
 		{
@@ -108,8 +98,6 @@ class PlayMenuState extends MusicBeatState
 
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
-
-		var tex;
 
 		camFollow = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
@@ -146,6 +134,7 @@ class PlayMenuState extends MusicBeatState
 
 		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, daRealEngineVer + " Engine", 12);
 		versionShit.scrollFactor.set();
+		versionShit.antialiasing = false;
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
 

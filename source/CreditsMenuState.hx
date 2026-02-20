@@ -26,15 +26,6 @@ import flixel.tweens.FlxTween;
 import flixel.tweens.misc.ColorTween;
 import flixel.util.FlxStringUtil;
 import lime.utils.Assets;
-#if desktop
-import Discord.DiscordClient;
-#end
-using StringTools;
-/*
-hi cool lil committers looking at this code, 95% of this is my code and I'd appreciate if you didn't steal it without asking for my permission
--vs dave dev T5mpler 
-i have to put this here just in case you think of doing so
-*/
 class CreditsMenuState extends MusicBeatState
 {
 	var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('ui/backgrounds/SUSSUS AMOGUS'));
@@ -134,16 +125,14 @@ class CreditsMenuState extends MusicBeatState
 
 	override function create()
 	{
-      #if desktop
-      DiscordClient.changePresence("In the Credits Menu", null);
-      #end
 
       mainCam.bgColor.alpha = 0;
       selectPersonCam.bgColor.alpha = 0;
       FlxG.cameras.reset(mainCam);
       FlxG.cameras.add(selectPersonCam);
 
-      FlxCamera.defaultCameras = [mainCam];
+      //FlxCamera.defaultCameras = [mainCam];
+      FlxG.cameras.setDefaultDrawTarget(mainCam, true);
       selectedPersonGroup.cameras = [selectPersonCam];
 
       state = State.SelectingName;
@@ -249,7 +238,7 @@ class CreditsMenuState extends MusicBeatState
             }
 				if (back)
 				{
-					FlxG.switchState(new MainMenuState());
+					FlxG.switchState(()->new MainMenuState());
 				}
 				if (accept && !transitioning)
 				{
@@ -263,7 +252,7 @@ class CreditsMenuState extends MusicBeatState
                      {
                         onComplete: function(tween:FlxTween)
                         {
-                           FlxCamera.defaultCameras = [selectPersonCam];
+                           FlxG.cameras.setDefaultDrawTarget(selectPersonCam, true);
                            selectPerson(peopleInCredits[curNameSelected]);
                         }
                      });
@@ -291,7 +280,7 @@ class CreditsMenuState extends MusicBeatState
                            {
                               socialButtons.remove(socialButtons[i]);
                            }
-                           FlxCamera.defaultCameras = [mainCam];
+                           FlxG.cameras.setDefaultDrawTarget(mainCam, true);
                            for (creditsText in creditsTextGroup)
                            {
                               FlxTween.tween(creditsText.text, {alpha: 1}, fadeTimer);

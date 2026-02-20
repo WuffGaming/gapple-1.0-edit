@@ -1,8 +1,5 @@
 package;
 
-
-
-
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -16,19 +13,15 @@ import flixel.group.FlxGroup;
 import flixel.input.gamepad.FlxGamepad;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
-import flixel.system.FlxSound;
+import flixel.sound.FlxSound;
 import flixel.system.ui.FlxSoundTray;
 import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-import io.newgrounds.NG;
 import lime.app.Application;
 import openfl.Assets;
-#if desktop
-import Discord.DiscordClient;
-#end
 
 class TitleState extends MusicBeatState
 {
@@ -93,10 +86,6 @@ class TitleState extends MusicBeatState
 		curWacky = FlxG.random.getObject(getIntroTextShit());
 
 		// DEBUG BULLSHIT
-
-		#if desktop
-		DiscordClient.initialize();
-		#end
 
 		super.create();
 			
@@ -265,13 +254,6 @@ class TitleState extends MusicBeatState
 
 		if (pressedEnter && !transitioning && skippedIntro)
 		{
-			#if !switch
-			NGio.unlockMedal(60960);
-
-			// If it's Friday according to da clock
-			if (Date.now().getDay() == 5)
-				NGio.unlockMedal(61034);
-			#end
 
 			titleText.animation.play('press');
 

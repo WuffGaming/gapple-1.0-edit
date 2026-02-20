@@ -1,7 +1,5 @@
 package;
 
-//import sys.FileSystem;
-//import sys.io.File;
 import haxe.io.Path;
 import openfl.utils.ByteArray;
 import flixel.math.FlxPoint;
@@ -10,10 +8,6 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.animation.FlxBaseAnimation;
 import flixel.graphics.frames.FlxAtlasFrames;
-import haxe.Json;
-import haxe.format.JsonParser;
-
-using StringTools;
 
 typedef CharacterData =
 {
@@ -273,6 +267,7 @@ class Character extends FlxSprite
 		if (!FileSystem.exists(path)) {
 			path = Paths.getPreloadPath('data/characters/${curCharacter}.json');
 		}
+		trace(path);
 		var rawJson = File.getContent(path);
 		var jsonData:CharacterData = cast Json.parse(rawJson);
 		trace(jsonData);
@@ -283,10 +278,10 @@ class Character extends FlxSprite
 		barColorArray = (data.barColor != null && data.barColor.length > 2) ? data.barColor : [161, 161, 161];
 		trace(data.name, barColorArray, barColorArray[0], barColorArray[1], barColorArray[2], '1');
 		var tex:FlxAtlasFrames;
-		if (FileSystem.exists(Paths.modsImages(data.asset, '.png')) && FileSystem.exists(Paths.modsImages(data.asset, '.xml')))
-			tex = Paths.getCustomSparrowAtlas(data.asset);
-		else
-			tex = Paths.getSparrowAtlas(data.asset, 'preload');
+		//if (FileSystem.exists(Paths.modsImages(data.asset, '.png')) && FileSystem.exists(Paths.modsImages(data.asset, '.xml')))
+			//tex = Paths.getCustomSparrowAtlas(data.asset);
+		//else
+			tex = Paths.getSparrowAtlas(data.asset/** ,'preload'**/);
 		frames = tex;
 		if (frames != null)
 			for (anim in data.animations)
