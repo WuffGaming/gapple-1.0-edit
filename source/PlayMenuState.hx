@@ -102,7 +102,7 @@ class PlayMenuState extends MusicBeatState
 		camFollow = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
 
-		FlxG.camera.follow(camFollow, null, 0.06);
+		FlxG.camera.follow(camFollow, null, 0.6);
 		
 		camFollow.setPosition(640, 150.5);
 		for (i in 0...optionShit.length)
@@ -134,7 +134,7 @@ class PlayMenuState extends MusicBeatState
 
 		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, daRealEngineVer + " Engine", 12);
 		versionShit.scrollFactor.set();
-		versionShit.antialiasing = false;
+		versionShit.antialiasing = true;
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
 
@@ -176,7 +176,7 @@ class PlayMenuState extends MusicBeatState
 
 			if (controls.BACK)
 			{
-				FlxG.switchState(new MainMenuState());
+				FlxG.switchState(()->new MainMenuState());
 			}
 
 			if (controls.ACCEPT)
@@ -212,7 +212,7 @@ class PlayMenuState extends MusicBeatState
 							switch (daChoice)
 							{
 								case 'extras':
-									FlxG.switchState(new ExtraSongState());
+									FlxG.switchState(()->new ExtraSongState());
 								default:
 									var poop:String = Highscore.formatSong(daChoice, 1);
 

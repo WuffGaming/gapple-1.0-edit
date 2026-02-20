@@ -2,6 +2,7 @@
 cd ..
 @echo on
 echo Installing dependencies
+haxelib install lime
 haxelib install flixel
 haxelib run lime setup flixel
 haxelib run lime setup

@@ -590,6 +590,7 @@ class PlayState extends MusicBeatState
 		timeTxt.scrollFactor.set();
 		timeTxt.alpha = 0;
 		timeTxt.borderSize = 2;
+		timeTxt.antialiasing = true;
 		timeTxt.visible = showTime;
 		if(FlxG.save.data.downscroll) timeTxt.y = FlxG.height - 44;
 		if(curStage == 'algebra')
@@ -706,6 +707,7 @@ class PlayState extends MusicBeatState
 		kadeEngineWatermark.setFormat(Paths.font("comic.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		kadeEngineWatermark.scrollFactor.set();
 		kadeEngineWatermark.borderSize = 1.25;
+		kadeEngineWatermark.antialiasing = true;
 		if(curStage == 'algebra')
 		{
 			kadeEngineWatermark.y = 5000000;
@@ -716,6 +718,7 @@ class PlayState extends MusicBeatState
 		creditsWatermark.setFormat(Paths.font("comic.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		creditsWatermark.scrollFactor.set();
 		creditsWatermark.borderSize = 1.25;
+		creditsWatermark.antialiasing = true;
 		add(creditsWatermark);
 
 		switch (curSong.toLowerCase())
@@ -744,6 +747,7 @@ class PlayState extends MusicBeatState
 		}
 		scoreTxt.scrollFactor.set();
 		scoreTxt.borderSize = 1.5;
+		scoreTxt.antialiasing = true;
 		scoreTxt.screenCenter(X);
 		if(curStage == 'algebra')
 		{
@@ -4136,8 +4140,7 @@ class PlayState extends MusicBeatState
 						defaultCamZoom = 0.85;
 						FlxG.camera.flash(FlxColor.WHITE, 1);
 						curbar = 'corruptedBar';
-						creditsWatermark.text = "CORRUPTED FILE";
-						kadeEngineWatermark.y -= 200000;
+						kadeEngineWatermark.text = "CORRUPTED FILE";
 						theFunne = false;
 				}
 			case 'wireframe':

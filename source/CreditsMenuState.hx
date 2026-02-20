@@ -138,6 +138,8 @@ class CreditsMenuState extends MusicBeatState
       state = State.SelectingName;
       defaultFormat = new FlxText().setFormat("Comic Sans MS Bold", 32, FlxColor.WHITE, CENTER);
       selectedFormat = new FlxText().setFormat("Comic Sans MS Bold", 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+      selectedFormat.antialiasing = true;
+      defaultFormat.antialiasing = true;
       
       bg.loadGraphic(MainMenuState.randomizeBG());
 		bg.color = 0xFFFF0000;
@@ -181,6 +183,7 @@ class CreditsMenuState extends MusicBeatState
             titleText.setFormat("Comic Sans MS Bold", 64, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
             titleText.borderSize = 3;
             titleText.borderQuality = 3;
+            titleText.antialiasing = true;
             titleText.screenCenter(X);
             titleText.scrollFactor.set(0, 1);
 
@@ -193,6 +196,7 @@ class CreditsMenuState extends MusicBeatState
          textItem.setFormat(defaultFormat.font, defaultFormat.size, defaultFormat.color, defaultFormat.alignment, defaultFormat.borderStyle, defaultFormat.borderColor);
          textItem.borderSize = 3;
          textItem.borderQuality = 3;
+         textItem.antialiasing = true;
          textItem.screenCenter(X);
          textItem.scrollFactor.set(0, 1);
          
@@ -425,6 +429,7 @@ class CreditsMenuState extends MusicBeatState
       personName.setFormat(selectedFormat.font, selectedFormat.size, selectedFormat.color, selectedFormat.alignment, selectedFormat.borderStyle, selectedFormat.borderColor);
       personName.screenCenter(X);
       personName.updateHitbox();
+      personName.antialiasing = true;
       personName.scrollFactor.set();
       personName.active = false;
       
@@ -432,6 +437,7 @@ class CreditsMenuState extends MusicBeatState
       credits.setFormat(selectedFormat.font, selectedFormat.size, selectedFormat.color, selectedFormat.alignment, selectedFormat.borderStyle, selectedFormat.borderColor);
       credits.screenCenter(X);
       credits.updateHitbox();
+      credits.antialiasing = true;
       credits.scrollFactor.set();
       credits.active = false;
 
@@ -476,6 +482,7 @@ class CreditsMenuState extends MusicBeatState
             discordText = new FlxText(socialGraphic.x + 100, socialGraphic.y + (i * 100) + offsetY, 0, social.socialLink, 40);
             discordText.setFormat(defaultFormat.font, defaultFormat.size, defaultFormat.color, defaultFormat.alignment, defaultFormat.borderStyle,
                defaultFormat.borderColor);
+            discordText.antialiasing = true;
             discordText.alpha = 0;
             discordText.updateHitbox();
             discordText.scrollFactor.set();

@@ -100,7 +100,7 @@ class MainMenuState extends MusicBeatState
 		camFollow = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
 
-		FlxG.camera.follow(camFollow, null, 0.06);
+		FlxG.camera.follow(camFollow, null, 0.6);
 		
 		camFollow.setPosition(640, 150.5);
 		for (i in 0...optionShit.length)
@@ -133,7 +133,7 @@ class MainMenuState extends MusicBeatState
 
 		var versionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, daRealEngineVer + " Engine", 12);
 		versionShit.scrollFactor.set();
-		versionShit.antialiasing = false;
+		versionShit.antialiasing = true;
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
 
@@ -182,7 +182,7 @@ class MainMenuState extends MusicBeatState
 
 			if (controls.BACK)
 			{
-				FlxG.switchState(new TitleState());
+				FlxG.switchState(()->new TitleState());
 			}
 
 			if (controls.ACCEPT)
@@ -221,13 +221,13 @@ class MainMenuState extends MusicBeatState
 							switch (daChoice)
 							{
 								case 'options':
-									FlxG.switchState(new OptionsMenu());
+									FlxG.switchState(()->new OptionsMenu());
 								case 'extras':
-									FlxG.switchState(new ExtraSongState());
+									FlxG.switchState(()->new ExtraSongState());
 								case 'credits':
-									FlxG.switchState(new CreditsMenuState());
+									FlxG.switchState(()->new CreditsMenuState());
 								case 'play':
-									FlxG.switchState(new PlayMenuState());
+									FlxG.switchState(()->new PlayMenuState());
 								case 'dave x bambi shipping cute':
 									var poop:String = Highscore.formatSong('dave-x-bambi-shipping-cute', 1);
 

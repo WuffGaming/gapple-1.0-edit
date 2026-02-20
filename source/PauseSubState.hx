@@ -40,6 +40,7 @@ class PauseSubState extends MusicBeatSubstate
 		var levelInfo:FlxText = new FlxText(20, 15, 0, "", 32);
 		levelInfo.text += CoolUtil.formatString(PlayState.SONG.song);
 		levelInfo.scrollFactor.set();
+		levelInfo.antialiasing = true;
 		levelInfo.setFormat(Paths.font("comic.ttf"), 32);
 		levelInfo.updateHitbox();
 		add(levelInfo);

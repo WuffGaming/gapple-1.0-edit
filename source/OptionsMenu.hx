@@ -60,6 +60,7 @@ class OptionsMenu extends MusicBeatState
 
 		versionShit = new FlxText(5, FlxG.height - 18, 0, "Offset (Left, Right): " + FlxG.save.data.offset, 12);
 		versionShit.scrollFactor.set();
+		versionShit.antialiasing = true;
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
 

@@ -77,10 +77,11 @@ class CharacterSelectState extends MusicBeatState
 			{
 				for (i in 0...order.length)
 				{
-					var charPath:String = 'data/forms/${order[i]}';
+					var charPath:String = 'data/forms/${order[i]}.json';
 					var path:String = Paths.modFolders(charPath);
+					trace(path);
 					if (!FileSystem.exists(path)) {
-						path = Paths.getPreloadPath('data/forms/${order[i]}');
+						path = Paths.getPreloadPath(charPath);
 					}
 					trace(path);
 					var rawJson = File.getContent(path);
