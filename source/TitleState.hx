@@ -25,6 +25,8 @@ import openfl.Assets;
 
 class TitleState extends MusicBeatState
 {
+	public var folders:Array<String> = [];
+
 	static var initialized:Bool = false;
 
 	var blackScreen:FlxSprite;
@@ -53,9 +55,8 @@ class TitleState extends MusicBeatState
 		polymod.Polymod.init({modRoot: "mods", dirs: []});
 		#end
 		**/
-
+		trace(FileSystem.readDirectory('mods/'));
 		if (sys.FileSystem.exists('mods/')) { 
-			var folders:Array<String> = [];
 			for (file in sys.FileSystem.readDirectory('mods/')) {
 				var path = haxe.io.Path.join(['mods/', file]);
 				if (sys.FileSystem.isDirectory(path)) {
@@ -67,8 +68,6 @@ class TitleState extends MusicBeatState
 				polymod.Polymod.init({modRoot: "mods", dirs: folders});
 			}
 		}
-		if (!sys.FileSystem.exists(Sys.getCwd() + "\\assets\\replays"))
-			sys.FileSystem.createDirectory(Sys.getCwd() + "\\assets\\replays");
 
 
 		// preload all the long songs
@@ -266,7 +265,7 @@ class TitleState extends MusicBeatState
 			new FlxTimer().start(2, function(tmr:FlxTimer)
 			{
 
-				FlxG.switchState(OutdatedSubState.leftState ? new MainMenuState() : new OutdatedSubState());
+				FlxG.switchState(OutdatedSubState.leftState ? ()->new MainMenuState() : ()->new OutdatedSubState());
 
 			});
 			// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
@@ -287,6 +286,7 @@ class TitleState extends MusicBeatState
 			var money:FlxText = new FlxText(0, 0, FlxG.width, textArray[i], 48);
 			money.setFormat("Comic Sans MS Bold", 48, FlxColor.WHITE, CENTER);
 			money.screenCenter(X);
+			money.antialiasing = true;
 			money.y += (i * 60) + 200;
 			credGroup.add(money);
 			textGroup.add(money);
@@ -299,6 +299,7 @@ class TitleState extends MusicBeatState
 		coolText.setFormat("Comic Sans MS Bold", 48, FlxColor.WHITE, CENTER);
 		coolText.screenCenter(X);
 		coolText.y += (textGroup.length * 60) + 200;
+		coolText.antialiasing = true;
 		credGroup.add(coolText);
 		textGroup.add(coolText);
 	}

@@ -295,8 +295,7 @@ class Paths
 			return null;
 		}
 	}
-
-	static public function modFolders(key:String) {
+	static public function modFolders(key:String) { // NOTE: it's only checking the direct mods directory. fix later
 		if(currentModDirectory != null && currentModDirectory.length > 0) {
 			var fileToCheck:String = mods(currentModDirectory + '/' + key);
 			if(FileSystem.exists(fileToCheck)) {

@@ -3041,7 +3041,7 @@ class PlayState extends MusicBeatState
 						doof.cameras = [camDialogue];
 						schoolIntro(doof, false);
 					default:
-						FlxG.switchState(new PlayMenuState());
+						FlxG.switchState(()->new PlayMenuState());
 				}
 			}
 			else
