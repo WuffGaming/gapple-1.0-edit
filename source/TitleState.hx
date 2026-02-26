@@ -22,6 +22,7 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import lime.app.Application;
 import openfl.Assets;
+import modding.PolymodHandler;
 
 class TitleState extends MusicBeatState
 {
@@ -48,28 +49,8 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
-		// i took this from psych 0.4.2 because i'm not smart enough to create an entirely all new modding system from scratch i just want things to look good
-		// why 0.4.2? i understand it better, it's probably simpler, and it still works
-		/**
-		#if polymod
-		polymod.Polymod.init({modRoot: "mods", dirs: []});
-		#end
-		**/
-		/**
-		trace(FileSystem.readDirectory('mods/'));
-		if (sys.FileSystem.exists('mods/')) { 
-			for (file in sys.FileSystem.readDirectory('mods/')) {
-				var path = haxe.io.Path.join(['mods/', file]);
-				if (sys.FileSystem.isDirectory(path)) {
-					folders.push(file);
-				}
-			}
-			trace(folders);
-			if(folders.length > 0) {
-				polymod.Polymod.init({modRoot: "mods", dirs: folders});
-			}
-		}
-		**/
+
+		PolymodHandler.loadMods();
 
 		// preload all the long songs
 		var preloadSongs:Array<String> = [
