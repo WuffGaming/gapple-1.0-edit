@@ -55,6 +55,7 @@ class TitleState extends MusicBeatState
 		polymod.Polymod.init({modRoot: "mods", dirs: []});
 		#end
 		**/
+		/**
 		trace(FileSystem.readDirectory('mods/'));
 		if (sys.FileSystem.exists('mods/')) { 
 			for (file in sys.FileSystem.readDirectory('mods/')) {
@@ -68,7 +69,7 @@ class TitleState extends MusicBeatState
 				polymod.Polymod.init({modRoot: "mods", dirs: folders});
 			}
 		}
-
+		**/
 
 		// preload all the long songs
 		var preloadSongs:Array<String> = [
