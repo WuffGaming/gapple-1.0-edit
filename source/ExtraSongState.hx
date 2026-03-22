@@ -85,7 +85,9 @@ class ExtraSongState extends MusicBeatState
     }
     public function addSong(songName:String, weekNum:Array<Int>, songCharacter:String, blackoutIcon:Bool = false)
 	{
-		songs.push(new SongMetadata(songName, weekNum, songCharacter, blackoutIcon));
+		var songMeta = new SongMetadata(songName, weekNum, songCharacter, blackoutIcon);
+		songs.push(songMeta);
+		return songMeta;
 	}
 
     override function update(p:Float)
@@ -182,10 +184,12 @@ class ExtraSongState extends MusicBeatState
 		for (i in 0...songList.length)
 		{
 			var chartPath = 'songs/${songList[i]}/info.json';
-			var path:String = Paths.modFolders(chartPath);
+			var path:String = Paths.getPreloadPath(chartPath);
 			if (!FileSystem.exists(path)) {
-				path = Paths.getPreloadPath(chartPath);
+				path = Paths.modFolders(chartPath);
 			}
+			if (!FileSystem.exists(path)) // if the info file doesn't exist in either folder, prevent a crash by returning.
+				return;
 			trace(path);
 			var rawJson:String = File.getContent(path); // unless your song's name info for some reason, you should be fine
 			var jsonData:SongInfo = cast Json.parse(rawJson);
@@ -205,13 +209,13 @@ class ExtraSongState extends MusicBeatState
 						if ((songName.toLowerCase() == 'dave-x-bambi-shipping-cute' && !FlxG.save.data.shipUnlocked) || (songName.toLowerCase() == 'recovered-project' && !FlxG.save.data.foundRecoveredProject))
 							addSong('unknown', [0, 0, 0], data.songIcon, true); 
 						else
-							addSong(data.songName, data.bgColor, data.songIcon); 
+							addSong(data.songName, data.bgColor, data.songIcon, false); 
 					}
 				}
 			}
 			else
 			{
-				addSong('NO-SONG-FOUND', [0, 0, 0], 'dave-3d', true); // incase songlist is null somehow
+				addSong('NO-SONGS-FOUND', [0, 0, 0], 'dave-3d', true); // incase songlist is null somehow
 			}
 		}
 	}

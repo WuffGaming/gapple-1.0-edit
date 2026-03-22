@@ -9,6 +9,7 @@ import modding.PolymodErrorHandler;
 /**
  * A class for interacting with Polymod, the atomic modding framework for Haxe.
  * I took basically all of this from Base Funkin' and just skimmed it down to get rid of hscript support. "or make it extremely vulnerable, who knows!"
+ * Why no HScript support? I'm too dumb for that. Sorry!
  */
 class PolymodHandler
 {
@@ -23,23 +24,9 @@ class PolymodHandler
   /**
    * Where relative to the executable that mods are located.
    */
-  static final MOD_FOLDER:String =
-    #if (REDIRECT_ASSETS_FOLDER && macos)
-    '../../../../../../../example_mods'
-    #elseif REDIRECT_ASSETS_FOLDER
-    '../../../../example_mods'
-    #else
-    'mods'
-    #end;
+  static final MOD_FOLDER:String = 'mods';
 
-  static final CORE_FOLDER:Null<String> =
-    #if (REDIRECT_ASSETS_FOLDER && macos)
-    '../../../../../../../assets'
-    #elseif REDIRECT_ASSETS_FOLDER
-    '../../../../assets'
-    #else
-    null
-    #end;
+  static final CORE_FOLDER:Null<String> = null;
 
   public static var loadedModIds:Array<String> = [];
 
