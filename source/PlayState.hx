@@ -84,7 +84,7 @@ class PlayState extends MusicBeatState
 	public var camMoveAllowed:Bool = true;
 
 	public var daveStand:Character;
-	public var garrettStand:Character;
+	public var spikeStand:Character;
 	public var hallMonitorStand:Character;
 	public var playRobotStand:Character;
 
@@ -131,7 +131,7 @@ class PlayState extends MusicBeatState
 
 	var daveJunk:FlxSprite;
 	var davePiss:FlxSprite;
-	var garrettJunk:FlxSprite;
+	var spikeJunk:FlxSprite;
 	var monitorJunk:FlxSprite;
 	var robotJunk:FlxSprite;
 	var diamondJunk:FlxSprite;
@@ -416,7 +416,7 @@ class PlayState extends MusicBeatState
 		add(standersGroup);
 
 		if (SONG.song.toLowerCase() == 'algebra') {
-			algebraStander('garrett', garrettStand, 500, 225); 
+			algebraStander('spike', spikeStand, 500, 225); 
 				algebraStander('og-dave-angey', daveStand, 250, 100); 
 				algebraStander('hall-monitor', hallMonitorStand, 0, 100); 
 				algebraStander('playrobot-scary', playRobotStand, 750, 100, false, true);
@@ -730,7 +730,7 @@ class PlayState extends MusicBeatState
 				preload('characters/algebra/diamondMan');
 				preload('characters/algebra/playrobot');
 				preload('characters/algebra/ohshit');
-				preload('characters/algebra/garrett_algebra');
+				preload('characters/algebra/spike_algebra');
 				preload('characters/algebra/og_dave_angey');
 			case 'recovered-project':
 				preload('characters/recover/recovered_project_2');
@@ -1001,8 +1001,8 @@ class PlayState extends MusicBeatState
 				davePiss.animation.addByPrefix('d', 'GRR', 24, false);
 				davePiss.animation.play('idle');
 
-				garrettJunk = new FlxSprite(237, 59).loadGraphic(bgImg('garrett'));
-				garrettJunk.y += 45;
+				spikeJunk = new FlxSprite(237, 59).loadGraphic(bgImg('spike'));
+				spikeJunk.y += 45;
 
 				monitorJunk = new FlxSprite(960, 61).loadGraphic(bgImg('monitor'));
 				monitorJunk.x += 275;
@@ -1015,7 +1015,7 @@ class PlayState extends MusicBeatState
 				robotJunk.x -= 250;
 				robotJunk.y += 75;
 
-				for (i in [diamondJunk, garrettJunk, daveJunk, davePiss, monitorJunk, robotJunk]) {
+				for (i in [diamondJunk, spikeJunk, daveJunk, davePiss, monitorJunk, robotJunk]) {
 					i.scale.set(1.35, 1.35);
 					i.visible = false;
 					i.antialiasing = false;
@@ -3823,8 +3823,8 @@ class PlayState extends MusicBeatState
 					//STANDER POSITIONING IS INCOMPLETE, FIX LATER
 					case 160:
 						swagSpeed = SONG.speed - 0.5;
-						//GARRETT TURN 1!!
-						swapDad('garrett');
+						//SPIKE TURN 1!!
+						swapDad('spike');
 						iconP2.changeIcon(opponent.iconName);
 						algebraStander('og-dave', daveStand, 250, 100);
 						health = 1;
@@ -3835,19 +3835,19 @@ class PlayState extends MusicBeatState
 						health = 1;
 						iconP2.changeIcon(opponent.iconName);
 						daveJunk.visible = false;
-						garrettJunk.visible = true;
+						spikeJunk.visible = true;
 						swagSpeed = SONG.speed - 0.3;
 						for(member in standersGroup.members)
 						{
 							member.destroy();
 						}
-						algebraStander('garrett', garrettStand, 500, 225);
+						algebraStander('spike', spikeStand, 300, 225);
 					case 536:
-						//GARRETT TURN 2
-						swapDad('garrett');
+						//SPIKE TURN 2
+						swapDad('spike');
 						health = 1;
 						davePiss.visible = true;
-						garrettJunk.visible = false;
+						spikeJunk.visible = false;
 						for(member in standersGroup.members)
 						{
 							member.destroy();
@@ -3859,12 +3859,12 @@ class PlayState extends MusicBeatState
 						swapDad('og-dave-angey');
 						health = 0.79;
 						davePiss.visible = false;
-						garrettJunk.visible = true;
+						spikeJunk.visible = true;
 						for(member in standersGroup.members)
 						{
 							member.destroy();
 						}
-						algebraStander('garrett', garrettStand, 500, 225);
+						algebraStander('spike', spikeStand, 300, 225);
 						iconP2.changeIcon(opponent.iconName);
 					case 696:
 						// GREENY GUY TURN
@@ -3878,7 +3878,7 @@ class PlayState extends MusicBeatState
 						{
 							member.destroy();
 						}
-						algebraStander('garrett', garrettStand, 500, 225);
+						algebraStander('spike', spikeStand, 300, 225);
 						algebraStander('og-dave-angey', daveStand, 250, 100);
 						iconP2.changeIcon(opponent.iconName);
 					case 1344:
@@ -3893,7 +3893,7 @@ class PlayState extends MusicBeatState
 						{
 							member.destroy();
 						}
-						algebraStander('garrett', garrettStand, 500, 225);
+						algebraStander('spike', spikeStand, 300, 225);
 						algebraStander('hall-monitor', hallMonitorStand, 0, 100);
 						algebraStander('og-dave-angey', daveStand, 250, 100);
 						iconP2.changeIcon(opponent.iconName);
@@ -3923,7 +3923,7 @@ class PlayState extends MusicBeatState
 							member.destroy();
 						}
 						algebraStander('playrobot-scary', playRobotStand, 750, 100, false, true);
-						algebraStander('garrett', garrettStand, 500, 225);
+						algebraStander('spike', spikeStand, 500, 225);
 						//UNCOMMENT THIS WHEN HALL MONITOR SPRITES ARE DONE AND IN
 						algebraStander('hall-monitor', hallMonitorStand, 0, 100);
 						iconP2.changeIcon(opponent.iconName);
