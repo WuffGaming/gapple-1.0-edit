@@ -377,9 +377,6 @@ class PlayState extends MusicBeatState
 				{
 					dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/RadicalNULLDialogue'));
 				}
-			default:
-				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/NULLDialogue'));
-
 		}
 
 		curStage = SONG.curStage;
@@ -999,8 +996,7 @@ class PlayState extends MusicBeatState
 				var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('backgrounds/algebra/algebraBg'));
 				bg.setGraphicSize(Std.int(bg.width * 1.35), Std.int(bg.height * 1.35));
 				bg.updateHitbox();
-				//this is temp until good positioning gets done
-				bg.screenCenter(); // no its not
+				bg.screenCenter();
 				sprites.add(bg);
 				add(bg);
 
@@ -1010,7 +1006,7 @@ class PlayState extends MusicBeatState
 				davePiss.animation.addByIndices('idle', 'GRR', [0], '', 0, false);
 				davePiss.animation.addByPrefix('d', 'GRR', 24, false);
 				davePiss.animation.play('idle');
-				davePiss.y += 10;
+				davePiss.y += 60;
 
 				spikeJunk = new FlxSprite(237, 59).loadGraphic(bgImg('spike'));
 				spikeJunk.x -= 300;

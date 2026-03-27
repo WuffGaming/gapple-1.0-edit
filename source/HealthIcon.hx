@@ -19,7 +19,6 @@ class HealthIcon extends FlxSprite
 		'junkers',
 		'dave-3d',
 		'dave-3d-suit',
-		'garrett',
 		'badai',
 		'bf-3d',
 		'bf-3d-old',
@@ -35,7 +34,8 @@ class HealthIcon extends FlxSprite
 		'bendu',
 		'cameo',
 		'og-dave',
-		'garrett',
+		'og-dave-angey',
+		'spike',
 	];
 
 	public var charPublic:String = 'bf';
