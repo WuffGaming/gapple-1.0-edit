@@ -33,10 +33,6 @@
     {
       "name": "singLEFT",
       "prefix": "LEFT"
-    },
-    {
-      "name": "stand",
-      "prefix": "STAND"
     }
   ]
 }

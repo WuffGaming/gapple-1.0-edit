@@ -293,6 +293,7 @@ class PlayState extends MusicBeatState
 	var kadeEngineWatermark:FlxText;
 
 	var thunderBlack:FlxSprite;
+	var algebraTxt:FlxText;
 
 	var curbar:String = 'healthBar';
 	var curThing:String = 'healthBarThing';
@@ -770,6 +771,13 @@ class PlayState extends MusicBeatState
 
 		updateIcons();
 
+		algebraTxt = new FlxText(0, 0, FlxG.width, "", 20);
+		algebraTxt.antialiasing = true;
+		algebraTxt.alpha = 0;
+		algebraTxt.setFormat("Comic Sans MS Bold", 64, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		algebraTxt.screenCenter();
+		add(algebraTxt);
+
 		thunderBlack.cameras = [camHUD];
 		strumLineNotes.cameras = [camHUD];
 		notes.cameras = [camHUD];
@@ -783,6 +791,7 @@ class PlayState extends MusicBeatState
 		creditsWatermark.cameras = [camHUD];
 		timeTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
+		algebraTxt.cameras = [camHUD];
 
 		startingSong = true;
 
@@ -3828,6 +3837,11 @@ class PlayState extends MusicBeatState
 			case 'algebra':
 				switch(curBeat)
 				{
+					case 1:
+						algebraTxt.text = 'House';
+						algebraTxt.alpha = 1;
+					case 8:
+						algebraTxt.alpha = 0;
 					case 160:
 						swagSpeed = SONG.speed - 0.5;
 						//SPIKE TURN 1!!
@@ -3837,7 +3851,9 @@ class PlayState extends MusicBeatState
 						health = 1;
 						daveJunk.visible = true;
 					case 416: // 
-						//HAPPY DAVE TURN 2!!
+						//EVIL INSANE WOO
+						algebraTxt.text = 'Insanity';
+						algebraTxt.alpha = 1;
 						swapDad('og-dave');
 						health = 1;
 						iconP2.changeIcon(opponent.iconName);
@@ -3849,6 +3865,8 @@ class PlayState extends MusicBeatState
 							member.destroy();
 						}
 						algebraStander('spike', spikeStand, 300, 255);
+					case 424:
+						algebraTxt.alpha = 0;
 					case 536:
 						//SPIKE TURN 2
 						swapDad('spike');
@@ -3863,6 +3881,8 @@ class PlayState extends MusicBeatState
 						iconP2.changeIcon(opponent.iconName);
 					case 552:
 						//ANGEY DAVE TURN 1!!
+						algebraTxt.text = 'Furiosity';
+						algebraTxt.alpha = 1;
 						swapDad('og-dave-angey');
 						health = 0.79;
 						davePiss.visible = false;
@@ -3873,6 +3893,8 @@ class PlayState extends MusicBeatState
 						}
 						algebraStander('spike', spikeStand, 300, 255);
 						iconP2.changeIcon(opponent.iconName);
+					case 568:
+						algebraTxt.alpha = 0;
 					case 696:
 						// GREENY GUY TURN
 						swapDad('hall-monitor');
