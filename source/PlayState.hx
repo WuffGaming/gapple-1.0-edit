@@ -365,8 +365,6 @@ class PlayState extends MusicBeatState
 				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/disableDialogue'));
 			case 'wireframe':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/wireDialogue'));
-			case 'algebra':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/algebraDialogue'));
 			case 'duper':
 				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/duperDialogue'));
 			case 'blitz':
@@ -798,8 +796,6 @@ class PlayState extends MusicBeatState
 			{
 				case 'disruption' | 'applecore' | 'disability' | 'wireframe' | 'duper' | 'recovered-project' | 'blitz':
 					schoolIntro(doof);
-				case 'algebra':
-					baldiIntro(doof);
 				case 'origin':
 					originCutscene();
 				default:

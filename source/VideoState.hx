@@ -17,6 +17,14 @@ import openfl.Lib;
 
 using StringTools;
 
+/**
+	VIDEO HANDLING!
+
+	https://github.com/GrowtopiaFli/openfl-haxeflixel-video-code
+
+	MAKE SURE THE WEBM USES THE CODEC VP8! OTHERWISE IT WILL CRASH.
+**/
+
 class VideoState extends MusicBeatState
 {
 	public var leSource:String = "";
