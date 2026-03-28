@@ -7,7 +7,7 @@
     	255
     ],
   "globalOffset": [0, 0],
-  "gameOffset": [-190, 0],
+  "gameOffset": [-190, 50],
   "camOffset": [0, 0],
   "antialiasing": false,
   "icon": "og-dave-angey",
@@ -16,7 +16,8 @@
   "animations": [
     {
       "name": "idle",
-      "prefix": "IDLE"
+      "prefix": "IDLE",
+      "looped": true
     },
     {
       "name": "singRIGHT",

@@ -118,16 +118,14 @@ class PlayMenuState extends MusicBeatState
 			menuItem.screenCenter(X);
 			menuItems.add(menuItem);
 			menuItem.scrollFactor.set(0, 1);
-			menuItem.antialiasing = true;
-			menuItem.y = 60 + (i * 160);
-			{
-				menuItem.y += 2000;
+			if (firstStart) // WHY WAS THIS REMOVED
 				FlxTween.tween(menuItem,{y: 60 + (i * 160)},1 + (i * 0.25) ,{ease: FlxEase.expoInOut, onComplete: function(flxTween:FlxTween) 
 					{
 						finishedFunnyMove = true; 
 						changeItem();
 					}});
-			}
+			else
+				menuItem.y = 60 + (i * 160);
 		}
 
 		firstStart = false;
