@@ -46,6 +46,7 @@ class CharacterInSelect
 class CharacterSelectState extends MusicBeatState
 {
 	public var char:Boyfriend;
+	public var starterChar:String = 'bf';
 	public var current:Int = 0;
 	public var curForm:Int = 0;
 	public var characterText:FlxText;
@@ -97,6 +98,11 @@ class CharacterSelectState extends MusicBeatState
 					characters.push(new CharacterInSelect(data.names, data.polished));
 				}
 			}
+		else
+			{
+				characters = [new CharacterInSelect(['dave-good','split-dave-3d', 'tunnel-dave', 'og-dave'], ['Dave (Dave x Bambi)', 'Disability Dave', 'Wireframe Dave', 'Algebra Dave'])];
+				starterChar = 'dave-good';
+			}
 		
 		super();
 	}
@@ -106,10 +112,7 @@ class CharacterSelectState extends MusicBeatState
 		super.create();
 		Conductor.changeBPM(110);
 		currentSelectedCharacter = characters[current];
-		if(PlayState.SONG.song.toLowerCase() == 'dave-x-bambi-shipping-cute')
-		{
-			characters = [new CharacterInSelect(['dave-good','split-dave-3d', 'tunnel-dave', 'og-dave'], ['Dave (Dave x Bambi)', 'Disability Dave', 'Wireframe Dave', 'Algebra Dave'])];
-		}
+		//if(PlayState.SONG.song.toLowerCase() == 'dave-x-bambi-shipping-cute')
 
 		FlxG.save.data.unlockedcharacters = [true,true,true,true,true,true,true,true]; //unlock everyone hi
 
@@ -165,7 +168,7 @@ class CharacterSelectState extends MusicBeatState
 		FlxG.camera.zoom = 0.75;
 
 		//create character
-		char = new Boyfriend(FlxG.width / 2, 100, "bf");
+		char = new Boyfriend(FlxG.width / 2, 100, starterChar);
 		char.screenCenter();
 		char.y = 350;
 		add(char);
@@ -334,6 +337,7 @@ class CharacterSelectState extends MusicBeatState
 	public function endIt(e:FlxTimer = null)
 	{
 		trace("ENDING");
+		trace(currentSelectedCharacter);
 		PlayState.characteroverride = currentSelectedCharacter.names[0];
 		PlayState.formoverride = currentSelectedCharacter.names[curForm];
 		PlayState.curmult = [1, 1, 1, 1];

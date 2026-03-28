@@ -1002,7 +1002,7 @@ class PlayState extends MusicBeatState
 				davePiss.animation.addByIndices('idle', 'GRR', [0], '', 0, false);
 				davePiss.animation.addByPrefix('d', 'GRR', 24, false);
 				davePiss.animation.play('idle');
-				davePiss.y += 60;
+				davePiss.y += 75;
 
 				spikeJunk = new FlxSprite(237, 59).loadGraphic(bgImg('spike'));
 				spikeJunk.x -= 300;
