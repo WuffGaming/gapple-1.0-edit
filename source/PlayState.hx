@@ -243,6 +243,8 @@ class PlayState extends MusicBeatState
 	var scoreTxt:FlxText;
 	var ratingstype:String = "normal";
 
+	public var deathEnabled:Bool = false; // Die from notes?
+
 	var GFScared:Bool = false;
 
 	public static var dadChar:String = 'bf';
@@ -1003,7 +1005,7 @@ class PlayState extends MusicBeatState
 				davePiss.animation.addByPrefix('d', 'GRR', 24, false);
 				davePiss.animation.play('idle');
 				davePiss.x += 200;
-				davePiss.y += 90;
+				davePiss.y += 100;
 
 				spikeJunk = new FlxSprite(237, 59).loadGraphic(bgImg('spike'));
 				spikeJunk.x -= 300;
@@ -1250,7 +1252,6 @@ class PlayState extends MusicBeatState
 		}
 
 	var startTimer:FlxTimer;
-	var perfectMode:Bool = false;
 
 	function startCountdown():Void
 	{
@@ -1399,10 +1400,6 @@ class PlayState extends MusicBeatState
 		if (!paused)
 			FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
 		vocals.play();
-		if (FlxG.save.data.tristanProgress == "pending play" && isStoryMode && storyWeek != 10)
-		{
-			FlxG.sound.music.volume = 0;
-		}
 		if (SONG.song.toLowerCase() == 'disruption') FlxG.sound.music.volume = 1; // WEIRD BUG!!! WTF!!!
 
 		songLength = FlxG.sound.music.length;
@@ -2546,7 +2543,7 @@ class PlayState extends MusicBeatState
 
 		if (health <= 0)
 		{
-			if(!perfectMode)
+			if(!deathEnabled)
 			{
 				boyfriend.stunned = true;
 
@@ -2568,7 +2565,7 @@ class PlayState extends MusicBeatState
 
 			if (!shakeCam)
 			{
-				if(!perfectMode)
+				if(!deathEnabled)
 				{
 					openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition()
 						.y, formoverride == "bf" || formoverride == "none" ? SONG.player1 : formoverride));
@@ -2590,7 +2587,7 @@ class PlayState extends MusicBeatState
 				}
 				else
 				{
-					if(!perfectMode)
+					if(!deathEnabled)
 					{
 						openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition()
 							.y, formoverride == "bf" || formoverride == "none" ? SONG.player1 : formoverride));
@@ -3387,7 +3384,7 @@ class PlayState extends MusicBeatState
 			{
 				var daNote = possibleNotes[0];
 
-				if (perfectMode)
+				if (deathEnabled)
 					noteCheck(true, daNote);
 
 				// Jump notes
@@ -4442,7 +4439,7 @@ class PlayState extends MusicBeatState
 				}
 		}
 
-		if (shakeCam)
+		if (shakeCam || GFScared)
 		{
 			gf.playAnim('scared', true);
 		}

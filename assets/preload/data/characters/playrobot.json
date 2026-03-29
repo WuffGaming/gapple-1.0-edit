@@ -7,8 +7,8 @@
     	188
     ],
   "globalOffset": [0, 0],
-  "gameOffset": [150, 265],
-  "camOffset": [-160, -20],
+  "gameOffset": [-100, 420],
+  "camOffset": [0, 0],
   "antialiasing": false,
   "icon": "playrobot",
   "noteStyle": "3D",
@@ -28,7 +28,7 @@
     },
     {
       "name": "singDOWN",
-      "prefix": "Down"
+      "prefix": "Down "
     },
     {
       "name": "singLEFT",
