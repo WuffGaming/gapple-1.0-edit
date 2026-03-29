@@ -22,7 +22,7 @@ class PlayMenuState extends MusicBeatState
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
 
-	var optionShit:Array<String> = ['duper', 'disruption', 'applecore', 'disability', 'wireframe', 'algebra', 'extras'];
+	var optionShit:Array<String> = CoolUtil.coolTextFile(Paths.txt('playList'));
 
 	var newGaming:FlxText;
 	var newGaming2:FlxText;
@@ -32,11 +32,7 @@ class PlayMenuState extends MusicBeatState
 
 	public static var finishedFunnyMove:Bool = false;
 
-	public static var daRealEngineVer:String = 'Golden Apple';
-
-	public static var engineVers:Array<String> = ['Golden Apple'];
-
-	public static var kadeEngineVer:String = "Golden Apple";
+	public static var daRealEngineVer:String = 'Golden Apple:E';
 
 	var lerpScore:Int = 0;
 	var intendedScore:Int = 0;
@@ -74,8 +70,6 @@ class PlayMenuState extends MusicBeatState
 		{
 			FlxG.save.data.unlockedcharacters = [true,true,false,false,false,false];
 		}
-
-		daRealEngineVer = engineVers[FlxG.random.int(0, 0)];
 		
 		bg = new FlxSprite(-80).loadGraphic(Paths.image('ui/songbackgrounds/${optionShit[0]}'));
 		bg.scrollFactor.set();

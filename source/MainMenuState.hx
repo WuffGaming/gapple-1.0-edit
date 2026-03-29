@@ -25,7 +25,7 @@ class MainMenuState extends MusicBeatState
 
 	var realMenuItems:Int = 4;
 
-	var optionShit:Array<String> = ['play', 'options', 'credits', 'discord', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'dave x bambi shipping cute'];
+	var optionShit:Array<String> = CoolUtil.coolTextFile(Paths.txt('menuList'));
 
 	var newGaming:FlxText;
 	var newGaming2:FlxText;
@@ -35,11 +35,7 @@ class MainMenuState extends MusicBeatState
 
 	public static var finishedFunnyMove:Bool = false;
 
-	public static var daRealEngineVer:String = 'Dave';
-
-	public static var engineVers:Array<String> = ['Golden Apple'];
-
-	public static var kadeEngineVer:String = "DAVE";
+	public static var daRealEngineVer:String = 'Golden Apple:E';
 
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
@@ -72,8 +68,6 @@ class MainMenuState extends MusicBeatState
 		{
 			FlxG.save.data.unlockedcharacters = [true,true,false,false,false,false];
 		}
-
-		daRealEngineVer = engineVers[FlxG.random.int(0, 0)];
 		
 		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(randomizeBG());
 		bg.scrollFactor.set();
