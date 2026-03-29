@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="sunshine.png">
+	<!-- Created with Adobe Animate version 21.0.6.41649 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="sunshine basic0000" x="0" y="0" width="546" height="142"/>
+	<SubTexture name="sunshine basic0001" x="0" y="0" width="546" height="142"/>
+	<SubTexture name="sunshine basic0002" x="0" y="0" width="546" height="142"/>
+	<SubTexture name="sunshine basic0003" x="550" y="0" width="546" height="142"/>
+	<SubTexture name="sunshine basic0004" x="550" y="0" width="546" height="142"/>
+	<SubTexture name="sunshine basic0005" x="550" y="0" width="546" height="142"/>
+	<SubTexture name="sunshine basic0006" x="1100" y="0" width="546" height="142"/>
+	<SubTexture name="sunshine basic0007" x="1100" y="0" width="546" height="142"/>
+	<SubTexture name="sunshine basic0008" x="1100" y="0" width="546" height="142"/>
+	<SubTexture name="sunshine white0000" x="0" y="146" width="569" height="202" frameX="0" frameY="-4" frameWidth="571" frameHeight="207"/>
+	<SubTexture name="sunshine white0001" x="573" y="146" width="570" height="204" frameX="-1" frameY="0" frameWidth="571" frameHeight="207"/>
+	<SubTexture name="sunshine white0002" x="1147" y="146" width="564" height="203" frameX="-2" frameY="-4" frameWidth="571" frameHeight="207"/>
+</TextureAtlas>

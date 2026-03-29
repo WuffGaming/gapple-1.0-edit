@@ -183,12 +183,7 @@ class ExtraSongState extends MusicBeatState
 		trace(songList);
 		for (i in 0...songList.length)
 		{
-			var path:String = Paths.songInfojson(songList[i]);
-			if (!FileSystem.exists(path)) // if the info file doesn't exist in either folder, prevent a crash by returning.
-				return;
-			trace(path);
-			var rawJson:String = Assets.getText(path); // unless your song's name info for some reason, you should be fine
-			var jsonData:SongInfo = cast Json.parse(rawJson);
+			var jsonData:SongInfo = Paths.loadSongJson('${songList[i]}/info');
 			if (jsonData == null)
 			{
 				trace('Failed to find JSON data for song ${songList[i]}');
