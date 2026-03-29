@@ -262,14 +262,9 @@ class Character extends FlxSprite
 	function parseDataFile() // kadedev i love you i will do anything for you
 	{
 		// Load the data from JSON and cast it to a struct we can easily read.
-		var charPath:String = 'data/characters/' + curCharacter + '.json';
-		var path:String = Paths.getPreloadPath('data/characters/${curCharacter}.json');
-		
-		if (!FileSystem.exists(path)) {
-			path = Paths.modFolders(charPath);
-		}
+		var path:String = Paths.json('characters/${curCharacter}');
 		trace(path);
-		var rawJson = File.getContent(path);
+		var rawJson = Assets.getText(path);
 		var jsonData:CharacterData = cast Json.parse(rawJson);
 		trace(jsonData);
 
@@ -279,10 +274,7 @@ class Character extends FlxSprite
 		barColorArray = (data.barColor != null && data.barColor.length > 2) ? data.barColor : [161, 161, 161];
 		trace(data.name, barColorArray, barColorArray[0], barColorArray[1], barColorArray[2], '1');
 		var tex:FlxAtlasFrames;
-		//if (FileSystem.exists(Paths.modsImages(data.asset, '.png')) && FileSystem.exists(Paths.modsImages(data.asset, '.xml')))
-			//tex = Paths.getCustomSparrowAtlas(data.asset);
-		//else
-			tex = Paths.getSparrowAtlas(data.asset/** ,'preload'**/);
+		tex = Paths.getSparrowAtlas(data.asset);
 		frames = tex;
 		if (frames != null)
 			for (anim in data.animations)

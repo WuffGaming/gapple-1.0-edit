@@ -7,6 +7,7 @@ import haxe.Json;
 import haxe.format.JsonParser;
 import json.JSONData;
 import json.patch.JSONPatch;
+import lime.utils.Assets;
 
 
 using StringTools;

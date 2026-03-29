@@ -1,9 +1,5 @@
 package;
 
-import lime.utils.Assets;
-
-using StringTools;
-
 class CoolUtil
 {
 	public static function boundTo(value:Float, min:Float, max:Float):Float

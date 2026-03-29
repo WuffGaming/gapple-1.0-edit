@@ -4,100 +4,102 @@ import flixel.graphics.FlxGraphic;
 import flixel.FlxG;
 import flixel.graphics.frames.FlxAtlasFrames;
 import openfl.utils.AssetType;
-import openfl.utils.Assets as OpenFlAssets;
+import openfl.utils.Assets;
 import openfl.display.BitmapData;
 import haxe.Json;
 import flash.media.Sound;
 import flixel.graphics.FlxGraphic;
 import openfl.display.BitmapData;
+import haxe.io.Path;
 
 
 using StringTools;
-
+@:nullSafety
 class Paths
 {
 	inline public static var SOUND_EXT = #if web "mp3" #else "ogg" #end;
 
-	public static var ignoreModFolders:Map<String, Bool> = new Map();
-	public static var customImagesLoaded:Map<String, Bool> = new Map();
-	public static var customSoundsLoaded:Map<String, Sound> = new Map();
-	static public var currentModDirectory:String = null;
-
-	static var currentLevel:String;
-
-	static public function getModFolders()
-	{
-		ignoreModFolders.set('data', true);
-		ignoreModFolders.set('songs', true);
-		ignoreModFolders.set('music', true);
-		ignoreModFolders.set('sounds', true);
-		ignoreModFolders.set('videos', true);
-		ignoreModFolders.set('images', true);
-	}
+	static var currentLevel:Null<String> = null;
 	
 
-	static public function setCurrentLevel(name:String)
-	{
-		currentLevel = name.toLowerCase();
-	}
+	public static function setCurrentLevel(name:Null<String>):Void
+  	{
+    	if (name == null)
+    	{
+     		currentLevel = null;
+    	}
+    	else
+    	{
+    		currentLevel = name.toLowerCase();
+    	}
+  	}
 
-	static function getPath(file:String, type:AssetType, library:Null<String>)
-	{
-		if (library != null)
-			return getLibraryPath(file, library);
+  	public static function getLibrary(path:String):String
+  	{
+    	var parts:Array<String> = path.split(':');
+    	if (parts.length < 2) return 'preload';
+    	return parts[0];
+  	}
 
-		if (currentLevel != null)
-		{
-			var levelPath = getLibraryPathForce(file, currentLevel);
-			if (OpenFlAssets.exists(levelPath, type))
-				return levelPath;
+ 	static function getPath(file:String, type:AssetType, library:Null<String>):String
+ 	{
+    	if (library != null) return getLibraryPath(file, library);
 
-			levelPath = getLibraryPathForce(file, "shared");
-			if (OpenFlAssets.exists(levelPath, type))
-				return levelPath;
-		}
+    	if (currentLevel != null)
+    	{
+    		var levelPath:String = getLibraryPathForce(file, currentLevel);
+			if (Assets.exists(levelPath, type)) return levelPath;
+  		}
 
-		return getPreloadPath(file);
-	}
+  		var levelPath:String = getLibraryPathForce(file, 'shared');
+ 		if (Assets.exists(levelPath, type)) return levelPath;
 
-	static public function getLibraryPath(file:String, library = "preload")
-	{
-		return if (library == "preload" || library == "default") getPreloadPath(file); else getLibraryPathForce(file, library);
-	}
+  		return getPreloadPath(file);
+ 	}
 
-	inline static function getLibraryPathForce(file:String, library:String)
-	{
-		return '$library:assets/$library/$file';
-	}
+ 	 public static function getLibraryPath(file:String, library = 'preload'):String
+ 	 {
+  	  return if (library == 'preload' || library == 'default') getPreloadPath(file); else getLibraryPathForce(file, library);
+ 	 }
+
+ 	 static inline function getLibraryPathForce(file:String, library:String):String
+ 	 {
+  	  return '$library:assets/$library/$file';
+  	}
 
 	inline static public function getPreloadPath(file:String)
 	{
 		return 'assets/$file';
 	}
 
-	inline static public function file(file:String, type:AssetType = TEXT, ?library:String)
+	static public function file(file:String, type:AssetType = TEXT, ?library:String)
 	{
 		return getPath(file, type, library);
 	}
 
-	inline static public function txt(key:String, ?library:String)
+	static public function txt(key:String, ?library:String)
 	{
 		return getPath('data/$key.txt', TEXT, library);
 	}
 
-	inline static public function xml(key:String, ?library:String)
+	static public function xml(key:String, ?library:String)
 	{
 		return getPath('data/$key.xml', TEXT, library);
 	}
 
-	inline static public function json(key:String, ?library:String)
+	static public function json(key:String, ?library:String)
 	{
 		return getPath('data/$key.json', TEXT, library);
 	}
 
+	static public function songInfojson(key:String, ?library:String)
+	{
+		return getPath('songs/$key/info.json', TEXT, library);
+	}
+
 	static public function loadJSON(key:String, ?library:String):Dynamic // note: i think loading the json when we immediately find it MIGHT be causing so many crashes.. Maybe load the json when we know it exists?
 	{
-		var rawJson = OpenFlAssets.getText(Paths.json(key, library)).trim();
+		var rawJson = Assets.getText(Paths.json(key, library)).trim();
 
 		// Perform cleanup on files that have bad data at the end.
 		while (!rawJson.endsWith("}"))
@@ -123,7 +125,7 @@ class Paths
 	static public function loadSongJson(song:String, ?library:String):Dynamic
 	{
 		var rawJson:String;
-		rawJson = OpenFlAssets.getText(Paths.chart(song)).trim();
+		rawJson = Assets.getText(Paths.chart(song)).trim();
 
 		// Perform cleanup on files that have bad data at the end.
 		while (!rawJson.endsWith("}"))
@@ -183,8 +185,6 @@ class Paths
 
 	inline static public function image(key:String, ?library:String):Dynamic
 	{
-		var imageToReturn:FlxGraphic = addCustomGraphic(key);
-		if(imageToReturn != null) return imageToReturn;
 		return getPath('images/$key.png', IMAGE, library);
 	}
 
@@ -199,38 +199,25 @@ class Paths
 		return getPath('data/offsets/' + character + '.txt', TEXT, library); // library is useless here but idc
 	}
 
-	inline static public function getSparrowAtlas(key:String, ?library:String)
-	{
-		var imageLoaded:FlxGraphic = addCustomGraphic(key);
-		var xmlExists:Bool = false;
-		if(FileSystem.exists(modsImages(key, '.xml'))) {
-			xmlExists = true;
-		}
+ 	public static function getSparrowAtlas(key:String, ?library:String):FlxAtlasFrames
+  	{
+  	  return FlxAtlasFrames.fromSparrow(image(key, library), file('images/$key.xml', library));
+  	}
 
-		return FlxAtlasFrames.fromSparrow((imageLoaded != null ? imageLoaded : image(key, library)), (xmlExists ? File.getContent(modsImages(key, '.xml')) : file('images/$key.xml', library)));
-		//return FlxAtlasFrames.fromSparrow(image(key, library), file('images/$key.xml', library));
-	}
-
+	/*
 	inline static public function getCustomSparrowAtlas(key:String)
 	{
 		return FlxAtlasFrames.fromSparrow(modsImages(key, '.png'), modsImages(key, '.xml'));
 	}
+	*/
 
 	inline static public function getPackerAtlas(key:String, ?library:String)
 	{
-		var imageLoaded:FlxGraphic = addCustomGraphic(key);
-		var txtExists:Bool = false;
-		if(FileSystem.exists(modsImages(key, '.txt'))) {
-			txtExists = true;
-		}
-
-		return FlxAtlasFrames.fromSpriteSheetPacker((imageLoaded != null ? imageLoaded : image(key, library)), (txtExists ? File.getContent(modsImages(key, '.txt')) : file('images/$key.txt', library)));
-		//return FlxAtlasFrames.fromSpriteSheetPacker(image(key, library), file('images/$key.txt', library));
+		return FlxAtlasFrames.fromSpriteSheetPacker(image(key, library), file('images/$key.txt', library));
 	}
 
 
-
-
+	/*
 	// 0.4.2
 
 	static public function addCustomGraphic(key:String):FlxGraphic {
@@ -304,4 +291,5 @@ class Paths
 		}
 		return 'mods/' + key;
 	}
+	*/
 }

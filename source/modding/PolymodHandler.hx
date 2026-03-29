@@ -92,6 +92,8 @@ class PolymodHandler
       trace('Attempting to load ${ids.length} mods...');
     }
 
+    buildImports();
+
     if (modFileSystem == null) modFileSystem = buildFileSystem();
 
     var loadedModList:Array<ModMetadata> = polymod.Polymod.init(
@@ -116,7 +118,7 @@ class PolymodHandler
         frameworkParams: buildFrameworkParams(),
 
         // List of filenames to ignore in mods. Use the default list to ignore the metadata file, etc.
-        ignoredFiles: Polymod.getDefaultIgnoreList(),
+        ignoredFiles: buildIgnoreList(),
 
         // Parsing rules for various data formats.
         parseRules: buildParseRules(),
@@ -190,11 +192,10 @@ class PolymodHandler
   static function buildFileSystem():polymod.fs.ZipFileSystem
   {
     polymod.Polymod.onError = PolymodErrorHandler.onPolymodError;
-    return new ZipFileSystem(
-      {
-        modRoot: MOD_FOLDER,
-        autoScan: true
-      });
+    return new ZipFileSystem({
+      modRoot: MOD_FOLDER,
+      autoScan: true
+    });
   }
 
   static function buildParseRules():polymod.format.ParseRules
@@ -206,6 +207,34 @@ class PolymodHandler
     // You can specify the format of a specific file, with file extension.
     // output.addFile("data/introText.txt", TextFileFormat.LINES)
     return output;
+  }
+
+static function buildImports():Void
+  {
+    // Add default imports for common classes.
+    static final DEFAULT_IMPORTS:Array<Class<Dynamic>> = [Paths, flixel.FlxG];
+
+    for (cls in DEFAULT_IMPORTS)
+    {
+      Polymod.addDefaultImport(cls);
+    }
+  }
+
+  /**
+   * Build a list of file paths that will be ignored in mods.
+   */
+  static function buildIgnoreList():Array<String>
+  {
+    var result = Polymod.getDefaultIgnoreList();
+
+    result.push('.vscode');
+    result.push('.idea');
+    result.push('.git');
+    result.push('.gitignore');
+    result.push('.gitattributes');
+    result.push('README.md');
+
+    return result;
   }
 
   static inline function buildFrameworkParams():polymod.Polymod.FrameworkParams

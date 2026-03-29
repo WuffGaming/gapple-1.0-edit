@@ -183,19 +183,15 @@ class ExtraSongState extends MusicBeatState
 		trace(songList);
 		for (i in 0...songList.length)
 		{
-			var chartPath = 'songs/${songList[i]}/info.json';
-			var path:String = Paths.getPreloadPath(chartPath);
-			if (!FileSystem.exists(path)) {
-				path = Paths.modFolders(chartPath);
-			}
+			var path:String = Paths.songInfojson(songList[i]);
 			if (!FileSystem.exists(path)) // if the info file doesn't exist in either folder, prevent a crash by returning.
 				return;
 			trace(path);
-			var rawJson:String = File.getContent(path); // unless your song's name info for some reason, you should be fine
+			var rawJson:String = Assets.getText(path); // unless your song's name info for some reason, you should be fine
 			var jsonData:SongInfo = cast Json.parse(rawJson);
 			if (jsonData == null)
 			{
-				trace('Failed to parse JSON data for song ${songList[i]}');
+				trace('Failed to find JSON data for song ${songList[i]}');
 				addSong('DATA-IS-NULL', [0, 0, 0], 'dave-3d', true);
 				return;
 			}

@@ -59,8 +59,7 @@
 			#if !debug
 			game.initialState = TitleState;
 			#end
-
-			Paths.getModFolders();
+			
 			addChild(new FlxGame(game.width, game.height, game.initialState, game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
 
 			var ourSource:String = "assets/videos/DO NOT DELETE OR GAME WILL CRASH/dontDelete.webm";
