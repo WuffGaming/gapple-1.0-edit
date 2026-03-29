@@ -11,42 +11,39 @@ import flixel.graphics.frames.FlxAtlasFrames;
 
 typedef CharacterData =
 {
-	var name:String;
-	var asset:String;
+	var name:String; // Visual name of the character.
+	var asset:String; // Path to the character's asset.
 
-	/**
-	 * The color of this character's health bar.
-	 */
-	var barColor:Array<Int>;
-	var globalOffset:Array<Float>;
-	var gameOffset:Array<Float>;
-	var camOffset:Array<Float>;
+	var barColor:Array<Int>; // Character's healthbar color.
+	var globalOffset:Array<Float>; // Offsets added directly to the pre-existing offset. Kept in for compatability reasons.
+	var gameOffset:Array<Float>; // Proper offset
+	var camOffset:Array<Float>; // Camera offset
 
-	var ?bopDance:Bool;
+	var ?bopDance:Bool; // Does the character bop left and right?
 
-	var ?nativelyPlayable:Bool;
+	var ?nativelyPlayable:Bool; // Can the character be played natively?
 
-	var ?flipX:Bool;
+	var ?flipX:Bool; // Flip the character sprite?
 
-	var ?antialiasing:Bool;
+	var ?antialiasing:Bool; // Alias the character?
 
-	var ?scaleSize:Bool;
+	var ?scaleSize:Bool; // Should you change the scale of the character or do setGraphicSize?
 
-	var scale:Null<Float>;
+	var scale:Null<Float>; // Changes scale/graphicsize by amount.
 
-	var float:String;
+	var float:String; // Which float should character use?
 
-	var noteStyle:String;
+	var noteStyle:String; // What style of notes should the character use?
 
-	var icon:String;
+	var icon:String; // What icon should be used?
 
-	var animations:Array<AnimationData>;
+	var animations:Array<AnimationData>; // Array of all animations. Offsets are handled in the data/offsets
 }
 
 typedef AnimationData =
 {
-	var name:String;
-	var prefix:String;
+	var name:String; // Name of animation
+	var prefix:String; // Name of animation in XML
 
 	/**
 	 * Whether this animation is looped.
@@ -54,15 +51,15 @@ typedef AnimationData =
 	 */
 	var ?looped:Bool;
 
-	var ?flipX:Bool;
+	var ?flipX:Bool; // Flip the character for specifically this animation?
 
 	/**
 	 * The frame rate of this animation.
-	 		* @default 24
+	 * @default 24
 	 */
-	var ?frameRate:Int;
+	var ?frameRate:Int; // Framerate of this specific animation.
 
-	var ?frameIndices:Array<Int>;
+	var ?frameIndices:Array<Int>; // If using indices, specify said indices. Plays full animation if null.
 }
 class Character extends FlxSprite
 {
@@ -284,11 +281,11 @@ class Character extends FlxSprite
 
 				if (anim.frameIndices != null)
 				{
-					animation.addByIndices(anim.name, anim.prefix, anim.frameIndices, "", frameRate, looped);
+					animation.addByIndices(anim.name, anim.prefix, anim.frameIndices, "", frameRate, looped, anim.flipX);
 				}
 				else
 				{
-					animation.addByPrefix(anim.name, anim.prefix, frameRate, looped);
+					animation.addByPrefix(anim.name, anim.prefix, frameRate, looped, anim.flipX);
 				}
 
 				loadOffsetFile(curCharacter);

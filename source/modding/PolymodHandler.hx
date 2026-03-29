@@ -8,8 +8,7 @@ import modding.PolymodErrorHandler;
 
 /**
  * A class for interacting with Polymod, the atomic modding framework for Haxe.
- * I took basically all of this from Base Funkin' and just skimmed it down to get rid of hscript support. "or make it extremely vulnerable, who knows!"
- * Why no HScript support? I'm too dumb for that. Sorry!
+ * This is practically all skidded from FunkinCrew https://github.com/FunkinCrew/Funkin/blob/main/source/funkin/modding/PolymodHandler.hx with minor changes.
  */
 class PolymodHandler
 {
