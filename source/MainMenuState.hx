@@ -187,7 +187,11 @@ class MainMenuState extends MusicBeatState
 				}
 				if(optionShit[curSelected] == 'discord')
 				{
-					fancyOpenURL('https://discord.gg/UvyuaUrX');
+					fancyOpenURL('https://discord.gg/wZckCne3jv'); // opens davecord
+					return;
+				}
+				if(optionShit[curSelected] == 'credits'){
+					fancyOpenURL('https://docs.google.com/document/d/1SGSBFc5oBo9YadZ5la46uUa7ppH0F03CVdr7F3uDnq4/edit?usp=sharing');
 					return;
 				}
 				selectedSomethin = true;
@@ -218,8 +222,6 @@ class MainMenuState extends MusicBeatState
 									FlxG.switchState(()->new OptionsMenu());
 								case 'extras':
 									FlxG.switchState(()->new ExtraSongState());
-								case 'credits':
-									FlxG.switchState(()->new CreditsMenuState());
 								case 'play':
 									FlxG.switchState(()->new PlayMenuState());
 								case 'dave x bambi shipping cute':
