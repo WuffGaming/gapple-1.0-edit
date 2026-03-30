@@ -240,8 +240,10 @@ class PlayState extends MusicBeatState
 	var score:Float = 0; // controls score earned per rating
 	var scoreMultiplier:Float = 3.251; // controls how much score is multiplied (combo / scoreMultiplier)
 	var sustainScore:Float = 11; // controls score earned while holding on sustain. Gives the illusion of randomness while being predetermined.
+	var ratingstype:String = "normal"; // what type of ratings asset to use?
+	var ratingOnCamera:Bool = false; // should ratings be represented on camhud?
+
 	var scoreTxt:FlxText;
-	var ratingstype:String = "normal";
 
 	public var deathEnabled:Bool = false; // Die from notes?
 
@@ -251,7 +253,6 @@ class PlayState extends MusicBeatState
 	public static var bfChar:String = 'bf';
 
 	var scaryBG:FlxSprite;
-	var showScary:Bool = false;
 
 	public static var campaignScore:Int = 0;
 
@@ -3107,10 +3108,9 @@ class PlayState extends MusicBeatState
 		});
 	}
 
-	function popUpScore(strumtime:Float, notedata:Int):Void
+	private function popUpScore(daNote:Note):Void
 	{
-		var noteDiff:Float = Math.abs(strumtime - Conductor.songPosition);
-		// boyfriend.playAnim('hey');
+		var noteDiff:Float = Math.abs(daNote.strumTime - Conductor.songPosition);
 		vocals.volume = 1;
 
 		var placement:String = Std.string(combo);
@@ -3175,7 +3175,7 @@ class PlayState extends MusicBeatState
 			totalNotesHit += 1;
 			sicks++;
 		}
-		switch (notedata)
+		switch (daNote.noteData)
 		{
 			case 2:
 				score = cast(FlxMath.roundDecimal(cast(score, Float) * curmult[2], 0), Int);
@@ -3190,14 +3190,6 @@ class PlayState extends MusicBeatState
 		if (daRating != 'shit' || daRating != 'bad')
 		{
 			songScore += Std.int(score);
-
-			/* if (combo > 60)
-					daRating = 'sick';
-				else if (combo > 12)
-					daRating = 'good'
-				else if (combo > 4)
-					daRating = 'bad';
-			*/
 
 			if(scoreTxtTween != null) 
 			{
@@ -3242,8 +3234,15 @@ class PlayState extends MusicBeatState
 				comboSpr.antialiasing = true;
 			}
 
-			comboSpr.updateHitbox();
 			rating.updateHitbox();
+			comboSpr.updateHitbox();
+
+			if (ratingOnCamera)
+			{
+				comboSpr.cameras = [camHUD];
+				rating.cameras = [camHUD];
+			}
+			
 
 			var seperatedScore:Array<Int> = [];
 
@@ -3265,6 +3264,10 @@ class PlayState extends MusicBeatState
 				numScore.screenCenter();
 				numScore.x = rating.x + (43 * daLoop) - 50;
  				numScore.y = rating.y + 100;
+				if (ratingOnCamera)
+				{
+					numScore.cameras = [camHUD];
+				}
  
 				if (Note.CharactersWithPixel.contains(dadChar) || Note.CharactersWithPixel.contains(bfChar))
 				{
@@ -3287,6 +3290,7 @@ class PlayState extends MusicBeatState
 				FlxTween.tween(numScore, {alpha: 0}, 0.2, {
 					onComplete: function(tween:FlxTween)
 					{
+						remove(numScore, true);
 						numScore.destroy();
 					},
 					startDelay: Conductor.crochet * 0.002
@@ -3309,6 +3313,10 @@ class PlayState extends MusicBeatState
 			FlxTween.tween(comboSpr, {alpha: 0}, 0.2, {
 				onComplete: function(tween:FlxTween)
 				{
+					remove(coolText, true);
+					remove(comboSpr, true);
+					remove(rating, true);
+					
 					coolText.destroy();
 					comboSpr.destroy();
 					rating.destroy();
@@ -3616,7 +3624,7 @@ class PlayState extends MusicBeatState
 		{
 			if (!note.isSustainNote)
 			{
-				popUpScore(note.strumTime, note.noteData);
+				popUpScore(note);
 				if (FlxG.save.data.donoteclick)
 				{
 					FlxG.sound.play(Paths.sound('note_click'));
