@@ -151,8 +151,8 @@ class DialogueBox extends FlxSpriteGroup
 		box.screenCenter(X);
 		portraitLeft.screenCenter(X);
 
-		dropText.antialiasing = true;
-		swagDialogue.antialiasing = true;
+		//dropText.antialiasing = true;
+		//swagDialogue.antialiasing = true;
 		
 
 		switch (PlayState.SONG.song.toLowerCase())
