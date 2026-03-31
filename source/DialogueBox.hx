@@ -126,44 +126,24 @@ class DialogueBox extends FlxSpriteGroup
 		
 		if (!hasDialog)
 			return;
-		var portraitLeftCharacter:String = '';
+		var portraitLeftCharacter:String = 'dave';
 		var portraitRightCharacter:String = 'bf';
 
-		portraitLeft = new FlxSprite();
-		portraitRight = new FlxSprite();
-
-		switch (PlayState.SONG.song.toLowerCase())
-		{
-			case 'algebra':
-				portraitLeftCharacter = 'olddave';
-			case 'recovered-project':
-				portraitLeftCharacter = 'recover';
-			case 'blocked' | 'corn-theft' | 'maze' | 'supernovae' | 'glitch' | 'splitathon' | 'cheating' | 'unfairness' | 'disruption' | 'duper':
-				portraitLeftCharacter = 'bambi';
-			case 'applecore':
-				portraitLeftCharacter = 'bandu';
-			default:
-				portraitLeftCharacter = 'dave';
-		}
-
 		var leftPortrait:Portrait = getPortrait(portraitLeftCharacter);
-
-		portraitLeft.frames = Paths.getSparrowAtlas(leftPortrait.portraitPath);
-		portraitLeft.animation.addByPrefix('enter', leftPortrait.portraitPrefix, 24, false);
-		portraitLeft.updateHitbox();
-		portraitLeft.scrollFactor.set();
-
 		var rightPortrait:Portrait = getPortrait(portraitRightCharacter);
-		
-		portraitRight.frames = Paths.getSparrowAtlas(rightPortrait.portraitPath);
-		portraitRight.animation.addByPrefix('enter', rightPortrait.portraitPrefix, 24, false);
-		portraitRight.updateHitbox();
-		portraitRight.scrollFactor.set();
+
+		portraitLeft = new FlxSprite(0, FlxG.height * 0.9);
+		portraitRight = new FlxSprite(0, FlxG.height * 0.9);
+		portraitLeft.loadGraphic(Paths.image(leftPortrait.portraitPath));
+		portraitRight.loadGraphic(Paths.image(rightPortrait.portraitPath));
 		
 		portraitRight.visible = false;
 
 		portraitLeft.setPosition(276.95, 170);
 		portraitLeft.visible = true;
+
+		portraitLeft.updateHitbox();
+		portraitRight.updateHitbox();
 		
 		add(portraitLeft);
 		add(portraitRight);
@@ -323,23 +303,25 @@ class DialogueBox extends FlxSpriteGroup
 	function startDialogue():Void
 	{
 		cleanDialog();
-		// var theDialog:Alphabet = new Alphabet(0, 70, dialogueList[0], false, true);
-		// dialogue = theDialog;
-		// add(theDialog);
-
-		// swagDialogue.text = ;
 		swagDialogue.resetText(dialogueList[0]);
 		swagDialogue.start(0.04, true);
 		curshader = null;
 		if (curCharacter != 'generic')
 		{
 			var portrait:Portrait = getPortrait(curCharacter);
+			switch (curCharacter)
+			{
+				case 'dave' | '3ddave' | 'wiredave' | 'bambi' | 'bambimad' | '3dbambi' | 'olddave' | 'bandu' | 'recover' | 'recoverweep' | 'expunged' | 'none':
+					portraitLeft.setPosition(220, 220);
+				case 'bf' | 'bfconfuse' | '3dbf' | 'gf' | 'gfcasual' | 'gfconfuse' | 'gfwhat' | 'radical': //create boyfriend, genderbent boyfriend, and gay boyfriend
+					portraitRight.setPosition(770, 220);
+			}
+			box.flipX = !portraitLeft.visible;
 			if (portrait.left)
 			{
-				portraitLeft.frames = Paths.getSparrowAtlas(portrait.portraitPath);
-				portraitLeft.animation.addByPrefix('enter', portrait.portraitPrefix, 24, false);
-				portraitLeft.updateHitbox();
-				portraitLeft.scrollFactor.set();
+				portraitLeft.x -= 150;
+				portraitLeft.alpha = 0;
+				FlxTween.tween(portraitLeft, {x: portraitLeft.x + 150, alpha: 1}, 0.15);
 				portraitRight.visible = false;
 				if (!portraitLeft.visible)
 				{
@@ -348,30 +330,17 @@ class DialogueBox extends FlxSpriteGroup
 			}
 			else
 			{
-				portraitRight.frames = Paths.getSparrowAtlas(portrait.portraitPath);
-				portraitRight.animation.addByPrefix('enter', portrait.portraitPrefix, 24, false);
-				portraitLeft.updateHitbox();
-				portraitLeft.scrollFactor.set();
+				portraitRight.x += 150;
+				portraitRight.alpha = 0;
+				FlxTween.tween(portraitRight, {x: portraitRight.x - 150, alpha: 1}, 0.15);
 				portraitLeft.visible = false;
 				if (!portraitRight.visible)
 				{
 					portraitRight.visible = true;
 				}
 			}
-			switch (curCharacter)
-			{
-				case 'dave' | '3ddave' | 'wiredave' | 'bambi' | 'bambimad' | '3dbambi' | 'olddave' | 'bandu' | 'recover' | 'recoverweep' | 'expunged' | 'none':
-					portraitLeft.setPosition(220, 220);
-				case 'bf' | 'bfconfuse' | '3dbf' | 'gf' | 'gfcasual' | 'gfconfuse' | 'gfwhat' | 'radical': //create boyfriend, genderbent boyfriend, and gay boyfriend
-					portraitRight.setPosition(570, 220);
-			}
-			box.flipX = portraitLeft.visible;
-			portraitLeft.x -= 150;
-			//portraitRight.x += 100;
 			portraitLeft.antialiasing = !noAa.contains(portrait.portraitPath);
-			portraitRight.antialiasing = true;
-			portraitLeft.animation.play('enter',true);
-			portraitRight.animation.play('enter',true);
+			portraitRight.antialiasing = !noAa.contains(portrait.portraitPath);
 		}
 		else
 		{
@@ -408,163 +377,15 @@ class DialogueBox extends FlxSpriteGroup
 	}
 	function getPortrait(character:String):Portrait
 	{
-		var portrait:Portrait = new Portrait('', '', '', true);
+		var portrait:Portrait = new Portrait('', '', true);
+		var charPath:String = 'ui/dialogue/' + character;
 		switch (character)
 		{
-			case 'none':
-				switch (PlayState.SONG.song.toLowerCase())
-				{
-					default:
-						portrait.portraitPath = 'ui/dialogue/none';
-						portrait.portraitPrefix = 'dave house portrait';
-				}
-			case 'dave':
-				switch (PlayState.SONG.song.toLowerCase())
-				{
-					default:
-						portrait.portraitPath = 'ui/dialogue/dave_house';
-						portrait.portraitPrefix = 'dave house portrait';
-				}
-			case '3ddave':
-				switch (PlayState.SONG.song.toLowerCase())
-				{
-					default:
-						portrait.portraitPath = 'ui/dialogue/3d_splitathon_dave_port';
-						portrait.portraitPrefix = 'dave 3d splitathon portrait';
-				}
-			case 'wiredave':
-				switch (PlayState.SONG.song.toLowerCase())
-				{
-					default:
-						portrait.portraitPath = 'ui/dialogue/3d_dave_wireframe_portrait';
-						portrait.portraitPrefix = 'dave 3d wireframe portrait';
-				}
-			case 'olddave':
-				switch (PlayState.SONG.song.toLowerCase())
-				{
-					default:
-						portrait.portraitPath = 'ui/dialogue/3d_dave_og_portrait';
-						portrait.portraitPrefix = 'dave 3d algebra portrait';
-				}
-			case 'recover':
-				switch (PlayState.SONG.song.toLowerCase())
-				{
-					default:
-						portrait.portraitPath = 'ui/dialogue/RECOVERED_PORT';
-						portrait.portraitPrefix = 'recovered';
-				}
-			case 'recoverweep':
-				switch (PlayState.SONG.song.toLowerCase())
-				{
-					default:
-						portrait.portraitPath = 'ui/dialogue/RECOVERED_PORT_WEEP';
-						portrait.portraitPrefix = 'recovered';
-				}
-			case 'bambi':
-				switch (PlayState.SONG.song.toLowerCase())
-				{
-					default:
-						portrait.portraitPath = 'ui/dialogue/bambi_corntheft';
-						portrait.portraitPrefix = 'bambi corntheft portrait';
-				}
-			case 'bambimad':
-				switch (PlayState.SONG.song.toLowerCase())
-				{
-					default:
-						portrait.portraitPath = 'ui/dialogue/bambi_blocked';
-						portrait.portraitPrefix = 'bambi blocked portrait';
-				}
-			case '3dbambi':
-				switch (PlayState.SONG.song.toLowerCase())
-				{
-					default:
-						portrait.portraitPath = 'ui/dialogue/3d_bambi_disruption_portrait';
-						portrait.portraitPrefix = '3d bambi disruption portrait';
-				}
-			case 'bandu':
-				switch (PlayState.SONG.song.toLowerCase())
-				{
-					default:
-						portrait.portraitPath = 'ui/dialogue/bandu_portrait';
-						portrait.portraitPrefix = 'bandu portrait';
-				}
-			case 'expunged':
-				switch (PlayState.SONG.song.toLowerCase())
-				{
-					default:
-						portrait.portraitPath = 'ui/dialogue/EXPUNGED';
-						portrait.portraitPrefix = 'EXPUNGED';
-				}
-			case 'bf':
-				switch (PlayState.SONG.song.toLowerCase())
-				{
-					default:
-						portrait.portraitPath = 'ui/dialogue/bf_insanity_splitathon';
-						portrait.portraitPrefix = 'bf insanity & splitathon portrait';
-				}
-				portrait.left = false;
-			case 'bfconfuse':
-				switch (PlayState.SONG.song.toLowerCase())
-				{
-					default:
-						portrait.portraitPath = 'ui/dialogue/bf_furiosity_corntheft';
-						portrait.portraitPrefix = 'bf furiosity & corntheft portrait';
-				}
-				portrait.left = false;
-			case '3dbf':
-				switch (PlayState.SONG.song.toLowerCase())
-				{
-					default:
-						portrait.portraitPath = 'ui/dialogue/bf_algebra';
-						portrait.portraitPrefix = 'bf insanity & splitathon portrait';
-				}
-				portrait.left = false;
-			case 'gf':
-				switch (PlayState.SONG.song.toLowerCase())
-				{
-					default:
-						portrait.portraitPath = 'ui/dialogue/gf_splitathon';
-						portrait.portraitPrefix = 'gf splitathon portrait';
-				}
-				portrait.left = false;
-			case 'gfcasual':
-				switch (PlayState.SONG.song.toLowerCase())
-				{
-					default:
-						portrait.portraitPath = 'ui/dialogue/gf_blocked';
-						portrait.portraitPrefix = 'gf blocked portrait';
-				}
-				portrait.left = false;
-			case 'gfconfuse':
-				switch (PlayState.SONG.song.toLowerCase())
-				{
-					default:
-						portrait.portraitPath = 'ui/dialogue/gf_corntheft';
-						portrait.portraitPrefix = 'gf corntheft portrait';
-				}
-				portrait.left = false;
-			case 'gfwhat':
-				switch (PlayState.SONG.song.toLowerCase())
-				{
-					default:
-						portrait.portraitPath = 'ui/dialogue/gf_maze';
-						portrait.portraitPrefix = 'gf maze portrait';
-				}
-				portrait.left = false;
-			case 'tristan':
-				portrait.portraitPath = 'ui/dialogue/tristanPortrait';
-				portrait.portraitPrefix = 'tristan portrait';
-			case 'radical':
-				switch (PlayState.SONG.song.toLowerCase())
-				{
-					default:
-						portrait.portraitPath = 'ui/dialogue/radical';
-						portrait.portraitPrefix = 'radical';
-				}
+			case 'bf' | 'bfconfuse' | '3dbf' | 'gf' | 'gfcasual' | 'gfconfuse' | 'gfwhat' | 'radical': // all portraitlefts
+				portrait.portraitPath = charPath;
 				portrait.left = false;
 			default:
-				portrait.portraitPath = 'ui/dialogue/dave_house';
-				portrait.portraitPrefix = 'dave house portrait';
+				portrait.portraitPath = charPath;
 		}
 		return portrait;
 	}
@@ -581,13 +402,11 @@ class Portrait
 {
 	public var portraitPath:String;
 	public var portraitLibraryPath:String = '';
-	public var portraitPrefix:String;
 	public var left:Bool;
-	public function new (portraitPath:String, portraitLibraryPath:String = '', portraitPrefix:String, left:Bool)
+	public function new (portraitPath:String, portraitLibraryPath:String = '', left:Bool)
 	{
 		this.portraitPath = portraitPath;
 		this.portraitLibraryPath = portraitLibraryPath;
-		this.portraitPrefix = portraitPrefix;
 		this.left = left;
 	}
 }
