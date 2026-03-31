@@ -1,4 +1,4 @@
-:dave: what are you
+:bob: what are you
 :bf: beep
-:dave: you look stupid
+:bob: you look stupid
 :bf: :(

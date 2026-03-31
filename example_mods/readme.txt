@@ -7,10 +7,10 @@ Heres a list of things you can do:
 Custom Play Songs
 Custom Extra Songs
 Custom Characters & Forms
+Custom Dialogue & Portraits "PORTRAITS ARE WIP!!!"
 
 Heres a list of things planned in the future:
 
-Custom Dialogue & Portraits
 Custom Stages
 Custom Noteskins
 Charter Events

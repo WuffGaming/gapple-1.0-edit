@@ -1,27 +1,10 @@
 OK OK so theres many things to do with Dialogue.
 
-There are currently 20 characters.
+The character images are the same as a character name, so you can use all the images in this folder. You can also add more portraits with the mods folder, though you can't modify them much. You can create dialogue like so:
 
 :dave:Hi!
-:3ddave:Wait
-:wiredave:FUCKKKK
-:bambi:WHAT?
-:bambimad:WHAT THE FUCK!!
-:3dbambi:FUCK YOU!!!
-:bf:Beep da!
-:bfconfuse:..bo
-:gf:Wow. What a smart, honest, working man I could trust.
-:gfcasual:Anyways..
-:gfconfuse:uhh
-:gfwhat:what
-:3dbf:Ba Bee-dee Do ba!
-:expunged:FUCK OFF!!!
-:bandu:Buddy boy, that's quite a rude thing to say!
-:olddave:I don't expect this class to succeed in anything..
-:none:Nothing
-:recover:Hi!
-:recoverweep:Words I don't know the meaning of start tomorrow
-:radical:Hello.
+
+For now, you need source code to dictate antialiasing, left-ness, and sound.
 
 There are currently 11 events that can happen in dialogue. This includes:
 

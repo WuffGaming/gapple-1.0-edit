@@ -151,6 +151,10 @@ class DialogueBox extends FlxSpriteGroup
 		box.screenCenter(X);
 		portraitLeft.screenCenter(X);
 
+		dropText.antialiasing = true;
+		swagDialogue.antialiasing = true;
+		
+
 		switch (PlayState.SONG.song.toLowerCase())
 		{
 			case 'furiosity' | 'polygonized' | 'cheating' | 'unfairness' | 'disruption' | 'applecore' | 'disability' | 'wireframe' | 'algebra' | 'recovered-project':
@@ -312,9 +316,10 @@ class DialogueBox extends FlxSpriteGroup
 					portraitLeft.setPosition(220, 220);
 					portraitLeft.loadGraphic(Paths.image(charPath));
 			}
-			box.flipX = portraitLeft.visible;
+			//box.flipX = portraitLeft.visible;
 			if (portrait.left)
 			{
+				box.flipX = true;
 				portraitLeft.x -= 150;
 				portraitLeft.alpha = 0;
 				FlxTween.tween(portraitLeft, {x: portraitLeft.x + 150, alpha: 1}, 0.15);
@@ -326,6 +331,7 @@ class DialogueBox extends FlxSpriteGroup
 			}
 			else
 			{
+				box.flipX = false;
 				portraitRight.x += 150;
 				portraitRight.alpha = 0;
 				FlxTween.tween(portraitRight, {x: portraitRight.x - 150, alpha: 1}, 0.15);
@@ -382,6 +388,7 @@ class DialogueBox extends FlxSpriteGroup
 				portrait.left = false;
 			default:
 				portrait.portraitPath = charPath;
+				portrait.left = true;
 		}
 		return portrait;
 	}
