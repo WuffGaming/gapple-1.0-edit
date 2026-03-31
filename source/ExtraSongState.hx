@@ -14,6 +14,10 @@ typedef SongInfo =
 	var bgColor:Array<Int>;
 	
 	var songIcon:String;
+
+	var hasDialogue:Bool;
+
+	var dialogue:String;
 }
 
 class ExtraSongState extends MusicBeatState
@@ -27,6 +31,9 @@ class ExtraSongState extends MusicBeatState
     var curSelected:Int = 0;
 
     private var iconArray:Array<HealthIcon> = [];
+
+	var hasDialogue:Bool = false;
+	var dialogue:String = "";
 
     var swagText:FlxText = new FlxText(0, 0, 0, 'my poop is brimming', 85);
     
@@ -191,9 +198,13 @@ class ExtraSongState extends MusicBeatState
 					if (data.songName.toLowerCase() == songName)
 					{
 						if ((songName.toLowerCase() == 'dave-x-bambi-shipping-cute' && !FlxG.save.data.shipUnlocked) || (songName.toLowerCase() == 'recovered-project' && !FlxG.save.data.foundRecoveredProject))
-							addSong('unknown', [0, 0, 0], data.songIcon, true); 
+						{
+							addSong('unknown', [0, 0, 0], data.songIcon, true);
+						}
 						else
-							addSong(data.songName, data.bgColor, data.songIcon, false); 
+						{
+							addSong(data.songName, data.bgColor, data.songIcon, false);
+						}
 					}
 				}
 			}

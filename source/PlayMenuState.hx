@@ -8,6 +8,7 @@ import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.effects.FlxFlicker;
+import ExtraSongState.SongInfo;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
@@ -27,6 +28,7 @@ class PlayMenuState extends MusicBeatState
 	var newGaming:FlxText;
 	var newGaming2:FlxText;
 	var newInput:Bool;
+
 
 	public static var firstStart:Bool = true;
 
@@ -54,6 +56,7 @@ class PlayMenuState extends MusicBeatState
 
 	override function create()
 	{
+
 		if (!FlxG.sound.music.playing)
 		{
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));

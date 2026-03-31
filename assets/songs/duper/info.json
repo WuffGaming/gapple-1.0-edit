@@ -5,5 +5,7 @@
         181,
         21
     ],
-    "songIcon": "bandu-sugar"
+    "songIcon": "bandu-sugar",
+    "hasDialogue": true,
+    "dialogue": "duperDialogue"
 }

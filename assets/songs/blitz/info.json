@@ -5,5 +5,7 @@
         101,
         205
     ],
-    "songIcon": "dave-3d"
+    "songIcon": "dave-3d",
+    "hasDialogue": true,
+    "dialogue": "blitzDialogue"
 }

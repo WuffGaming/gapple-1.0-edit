@@ -5,5 +5,7 @@
         0,
         0
     ],
-    "songIcon": "dave-3d-suit"
+    "songIcon": "dave-3d-suit",
+    "hasDialogue": true,
+    "dialogue": "wireDialogue"
 }

@@ -5,5 +5,7 @@
         101,
         205
     ],
-    "songIcon": "recover"
+    "songIcon": "recover",
+    "hasDialogue": true,
+    "dialogue": "NULLDialogue"
 }

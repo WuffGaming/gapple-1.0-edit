@@ -7,6 +7,7 @@ import openfl.filters.BitmapFilter;
 import Shaders.PulseEffect;
 import Section.SwagSection;
 import Song.SwagSong;
+import ExtraSongState.SongInfo;
 import flixel.FlxBasic;
 import flixel.FlxCamera;
 import flixel.FlxG;
@@ -49,8 +50,6 @@ import sys.io.File;
 import sys.io.Process;
 #end
 
-using StringTools;
-
 class PlayState extends MusicBeatState
 {
 	public static var STRUM_X = 42;
@@ -73,9 +72,6 @@ class PlayState extends MusicBeatState
 	public static var bads:Int = 0;
 	public static var goods:Int = 0;
 	public static var sicks:Int = 0;
-	var farmsky:FlxSprite;
-	var threedeez:FlxSprite;
-	var thirdimension:FlxSprite;
 
 	public var camBeatSnap:Int = 4;
 	public var danceBeatSnap:Int = 2;
@@ -292,6 +288,10 @@ class PlayState extends MusicBeatState
 	var swagBG:FlxSprite;
 	var unswagBG:FlxSprite;
 
+	var farmsky:FlxSprite;
+	var threedeez:FlxSprite;
+	var thirdimension:FlxSprite;
+
 	var creditsWatermark:FlxText;
 	var kadeEngineWatermark:FlxText;
 
@@ -313,6 +313,9 @@ class PlayState extends MusicBeatState
 		shits = 0;
 		goods = 0;
 		misses = 0;
+
+		var songInfoData:SongInfo = Paths.loadSongJson('${SONG.song.toLowerCase()}/info');
+		var songInfo:SongInfo = cast songInfoData;
 
 		detailsText = "";
 
@@ -357,27 +360,19 @@ class PlayState extends MusicBeatState
 			case 4:
 				trace("suck my balls");
 		}
-
-		switch (SONG.song.toLowerCase())
+		if (songInfo.hasDialogue)
 		{
-			case 'disruption':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/disruptDialogue'));
-			case 'applecore':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/coreDialogue'));
-			case 'disability':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/disableDialogue'));
-			case 'wireframe':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/wireDialogue'));
-			case 'duper':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/duperDialogue'));
-			case 'blitz':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/blitzDialogue'));
-			case 'recovered-project':
-				dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/NULLDialogue'));
-				if(formoverride == "radical")
-				{
-					dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/RadicalNULLDialogue'));
-				}
+			switch (SONG.song.toLowerCase())
+			{
+				case 'recovered-project':
+					dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/' + songInfo.dialogue));
+						if(formoverride == "radical")
+						{
+							dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/RadicalNULLDialogue'));
+						}
+				default:
+					dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/' + songInfo.dialogue));
+			}
 		}
 
 		curStage = SONG.curStage;
@@ -795,15 +790,21 @@ class PlayState extends MusicBeatState
 
 		if (isStoryMode || FlxG.save.data.freeplayCuts)
 		{
-			switch (curSong.toLowerCase())
+			if (songInfo.hasDialogue)
 			{
-				case 'disruption' | 'applecore' | 'disability' | 'wireframe' | 'duper' | 'recovered-project' | 'blitz':
-					schoolIntro(doof);
-				case 'origin':
-					originCutscene();
-				default:
-					startCountdown();
+				schoolIntro(doof);
 			}
+			else
+			{
+				switch (curSong.toLowerCase())
+				{
+					case 'origin':
+						originCutscene();
+					default:
+						startCountdown();
+				}
+			}
+			
 		}
 		else
 		{

@@ -5,5 +5,7 @@
         255,
         255
     ],
-    "songIcon": "bob"
+    "songIcon": "bob",
+    "hasDialogue": true,
+    "dialogue": "sunshineDialogue"
 }
