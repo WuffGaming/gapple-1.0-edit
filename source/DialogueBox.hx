@@ -37,9 +37,7 @@ class DialogueBox extends FlxSpriteGroup
 
 	public var finishThing:Void->Void;
 
-	public var noAa:Array<String> = ["ui/dialogue/dave_furiosity", "ui/dialogue/3d_bamb", "ui/dialogue/unfairnessPortrait", 'ui/dialogue/3d_bambi_disruption_portrait', 
-	'ui/dialogue/bandu_portrait', 'ui/dialogue/3d_splitathon_dave_port', 'ui/dialogue/3d_dave_wireframe_portrait', 'ui/dialogue/3d_dave_og_portrait', 'dialogue/EXPUNGED'
-, 'ui/dialogue/RECOVERED_PORT', 'ui/dialogue/RECOVERED_PORT_WEEP', 'ui/dialogue/bf_algebra'];
+	public var noAa:Array<String> = ['3dbambi', 'bandu', '3ddave', 'wiredave', 'olddave', 'expunged', 'recover', 'recoverweep', '3dbf'];
 
 	var portraitLeft:FlxSprite;
 	var portraitRight:FlxSprite;
@@ -53,8 +51,6 @@ class DialogueBox extends FlxSpriteGroup
 	var debug:Bool = false;
 
 	var curshader:Dynamic;
-
-	public static var randomNumber:Int;
 
 	public function new(talkingRight:Bool = true, ?dialogueList:Array<String>)
 	{
@@ -126,7 +122,7 @@ class DialogueBox extends FlxSpriteGroup
 		
 		if (!hasDialog)
 			return;
-		var portraitLeftCharacter:String = 'dave';
+		var portraitLeftCharacter:String = 'none';
 		var portraitRightCharacter:String = 'bf';
 
 		var leftPortrait:Portrait = getPortrait(portraitLeftCharacter);
@@ -136,11 +132,10 @@ class DialogueBox extends FlxSpriteGroup
 		portraitRight = new FlxSprite(0, FlxG.height * 0.9);
 		portraitLeft.loadGraphic(Paths.image(leftPortrait.portraitPath));
 		portraitRight.loadGraphic(Paths.image(rightPortrait.portraitPath));
-		
-		portraitRight.visible = false;
 
 		portraitLeft.setPosition(276.95, 170);
 		portraitLeft.visible = true;
+		portraitRight.visible = false;
 
 		portraitLeft.updateHitbox();
 		portraitRight.updateHitbox();
@@ -204,8 +199,6 @@ class DialogueBox extends FlxSpriteGroup
 				add(swagDialogue);
 		}
 		dialogue = new Alphabet(0, 80, "", false, true);
-		// dialogue.x = 90;
-		// add(dialogue);
 	}
 
 	var dialogueOpened:Bool = false;
@@ -305,18 +298,21 @@ class DialogueBox extends FlxSpriteGroup
 		cleanDialog();
 		swagDialogue.resetText(dialogueList[0]);
 		swagDialogue.start(0.04, true);
+		var charPath:String = 'ui/dialogue/' + curCharacter;
 		curshader = null;
 		if (curCharacter != 'generic')
 		{
 			var portrait:Portrait = getPortrait(curCharacter);
 			switch (curCharacter)
 			{
-				case 'dave' | '3ddave' | 'wiredave' | 'bambi' | 'bambimad' | '3dbambi' | 'olddave' | 'bandu' | 'recover' | 'recoverweep' | 'expunged' | 'none':
-					portraitLeft.setPosition(220, 220);
 				case 'bf' | 'bfconfuse' | '3dbf' | 'gf' | 'gfcasual' | 'gfconfuse' | 'gfwhat' | 'radical': //create boyfriend, genderbent boyfriend, and gay boyfriend
 					portraitRight.setPosition(770, 220);
+					portraitRight.loadGraphic(Paths.image(charPath));
+				default:
+					portraitLeft.setPosition(220, 220);
+					portraitLeft.loadGraphic(Paths.image(charPath));
 			}
-			box.flipX = !portraitLeft.visible;
+			box.flipX = portraitLeft.visible;
 			if (portrait.left)
 			{
 				portraitLeft.x -= 150;
