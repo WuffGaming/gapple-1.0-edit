@@ -136,6 +136,7 @@ class DialogueBox extends FlxSpriteGroup
 		portraitLeft.setPosition(276.95, 170);
 		portraitLeft.visible = true;
 		portraitRight.visible = false;
+		portraitRight.flipX = true;
 
 		portraitLeft.updateHitbox();
 		portraitRight.updateHitbox();
@@ -316,7 +317,6 @@ class DialogueBox extends FlxSpriteGroup
 					portraitLeft.setPosition(220, 220);
 					portraitLeft.loadGraphic(Paths.image(charPath));
 			}
-			//box.flipX = portraitLeft.visible;
 			if (portrait.left)
 			{
 				box.flipX = true;
@@ -332,9 +332,19 @@ class DialogueBox extends FlxSpriteGroup
 			else
 			{
 				box.flipX = false;
-				portraitRight.x += 150;
-				portraitRight.alpha = 0;
-				FlxTween.tween(portraitRight, {x: portraitRight.x - 150, alpha: 1}, 0.15);
+				switch (curCharacter)
+				{
+					/*
+					case 'gf' | 'gfcasual' | 'gfconfuse' | 'gfwhat':
+						portraitRight.y += 150;
+						portraitRight.alpha = 0;
+						FlxTween.tween(portraitRight, {y: portraitRight.y - 150, alpha: 1}, 0.15);
+					*/
+					default:
+						portraitRight.x += 150;
+						portraitRight.alpha = 0;
+						FlxTween.tween(portraitRight, {x: portraitRight.x - 150, alpha: 1}, 0.15);
+				}
 				portraitLeft.visible = false;
 				if (!portraitRight.visible)
 				{
