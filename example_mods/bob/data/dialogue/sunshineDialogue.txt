@@ -1,4 +1,4 @@
-:bob: what are you
-:bf: beep
-:bob: you look stupid
-:bf: :(
+:bob,left: what are you
+:bf,right: beep
+:bob,left: you look stupid
+:bf,right: :(

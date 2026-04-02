@@ -1,7 +1,7 @@
-:recover:YOU SHOULDN'T HAVE-
-:recover:...
-:recoverweep:AND WHO ARE YOU?
-:radical:Me?
-:radical:I'm Radical!
-:recover:...
-:radical:Ok
+:recover,left:YOU SHOULDN'T HAVE-
+:recover,left:...
+:recoverweep,left:AND WHO ARE YOU?
+:radical,right:Me?
+:radical,right:I'm Radical!
+:recover,left:...
+:radical,right:Ok

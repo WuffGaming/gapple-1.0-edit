@@ -24,8 +24,10 @@ class DialogueBox extends FlxSpriteGroup
 	var blackScreen:FlxSprite;
 	var blitzObject:FlxSprite;
 
-	var curCharacter:String = '';
 	var curMod:String = '';
+	var curCharacter:String = '';
+	var curDirection:String = '';
+	
 
 	var dialogue:Alphabet;
 	var dialogueList:Array<String> = [];
@@ -310,13 +312,13 @@ class DialogueBox extends FlxSpriteGroup
 			var portrait:Portrait = getPortrait(curCharacter);
 			switch (curCharacter)
 			{
-				case 'bf' | 'bfconfuse' | '3dbf' | 'gf' | 'gfcasual' | 'gfconfuse' | 'gfwhat' | 'radical': //create boyfriend, genderbent boyfriend, and gay boyfriend
-					portraitRight.setPosition(770, 220);
-					portraitRight.loadGraphic(Paths.image(charPath));
 				default:
 					portraitLeft.setPosition(220, 220);
-					portraitLeft.loadGraphic(Paths.image(charPath));
+					portraitRight.setPosition(770, 220);
+					
 			}
+			portraitLeft.loadGraphic(Paths.image(charPath));
+			portraitRight.loadGraphic(Paths.image(charPath));
 			if (portrait.left)
 			{
 				box.flipX = true;
@@ -391,9 +393,9 @@ class DialogueBox extends FlxSpriteGroup
 	{
 		var portrait:Portrait = new Portrait('', '', true);
 		var charPath:String = 'ui/dialogue/' + character;
-		switch (character)
+		switch (curDirection)
 		{
-			case 'bf' | 'bfconfuse' | '3dbf' | 'gf' | 'gfcasual' | 'gfconfuse' | 'gfwhat' | 'radical': // all portraitlefts
+			case 'right': // all portraitlefts
 				portrait.portraitPath = charPath;
 				portrait.left = false;
 			default:
@@ -406,8 +408,10 @@ class DialogueBox extends FlxSpriteGroup
 	function cleanDialog():Void
 	{
 		var splitName:Array<String> = dialogueList[0].split(":");
-		curCharacter = splitName[1];
+		var splitNameName:Array<String> = splitName[1].split(",");
 		curMod = splitName[0];
+		curCharacter = splitNameName[0];
+		curDirection = splitNameName[1];
 		dialogueList[0] = dialogueList[0].substr(splitName[1].length + splitName[0].length + 2).trim();
 	}
 }

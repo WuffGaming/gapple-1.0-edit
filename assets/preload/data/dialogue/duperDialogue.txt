@@ -1,7 +1,7 @@
-:gfcasual:It was fun singing with Dave some more without any risk of nearly turning the world into something that Haxe could truly never handle.
-:bf:Bah!
-:bambimad:MY PHONE!!!
-:bfconfuse:...wtf man
-:bambimad:WHY ARE YOU BACK?! YOU FUCKING CHEATER!!!
-:bf:Bop da.
-:bambimad:YOU'RE GOING DOWN.
+:gfcasual,right:It was fun singing with Dave some more without any risk of nearly turning the world into something that Haxe could truly never handle.
+:bf,right:Bah!
+:bambimad,left:MY PHONE!!!
+:bfconfuse,right:...wtf man
+:bambimad,left:WHY ARE YOU BACK?! YOU FUCKING CHEATER!!!
+:bf,right:Bop da.
+:bambimad,left:YOU'RE GOING DOWN.

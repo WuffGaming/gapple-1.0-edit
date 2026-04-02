@@ -1,5 +1,5 @@
-:recover:YOU SHOULDN'T HAVE COME HERE.
-:gfwhat:Yeah, uhh..
-:gfwhat:We've heard that about a billion times today.
-:bfconfuse:..Da bo?
-:recoverweep:..I'M SORRY FOR WHAT'S ABOUT TO HAPPEN.
+:recover,left:YOU SHOULDN'T HAVE COME HERE.
+:gfwhat,right:Yeah, uhh..
+:gfwhat,right:We've heard that about a billion times today.
+:bfconfuse,right:..Da bo?
+:recoverweep,left:..I'M SORRY FOR WHAT'S ABOUT TO HAPPEN.

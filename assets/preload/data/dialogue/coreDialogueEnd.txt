@@ -1,10 +1,10 @@
-:expunged:MWAHAHAHAHAAA!!!
-:expunged:I'LL BE BACK!!!
-:expunged:IF IT WEREN'T FOR THAT MEDDLING BOY AND HIS GIRLFRIEND'S SINGIN' SKILLZ....
-:expunged:...YOU'D ALL BE TOAST!
-to_black:bf:...
-:bandu:Wow! What a doozy. Glad we got all THAT taken care of.. Am I right, Bambi?
-:3dbambi:...
-:3dbambi:What the fuck?
-:none:Something quickly snatches up Boyfriend & Girlfriend, sending them somewhere elsewhere.
-:3ddave:Uhh..
+:expunged,left:MWAHAHAHAHAAA!!!
+:expunged,left:I'LL BE BACK!!!
+:expunged,left:IF IT WEREN'T FOR THAT MEDDLING BOY AND HIS GIRLFRIEND'S SINGIN' SKILLZ....
+:expunged,left:...YOU'D ALL BE TOAST!
+to_black:bf,right:...
+:bandu,right:Wow! What a doozy. Glad we got all THAT taken care of.. Am I right, Bambi?
+:3dbambi,left:...
+:3dbambi,left:What the fuck?
+:none,left:Something quickly snatches up Boyfriend & Girlfriend, sending them somewhere elsewhere.
+:3ddave,left:Uhh..
