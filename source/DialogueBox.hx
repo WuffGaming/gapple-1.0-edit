@@ -353,8 +353,8 @@ class DialogueBox extends FlxSpriteGroup
 					portraitRight.visible = true;
 				}
 			}
-			portraitLeft.antialiasing = !noAa.contains(portrait.portraitPath);
-			portraitRight.antialiasing = !noAa.contains(portrait.portraitPath);
+			portraitLeft.antialiasing = !noAa.contains(curCharacter);
+			portraitRight.antialiasing = !noAa.contains(curCharacter);
 		}
 		else
 		{
