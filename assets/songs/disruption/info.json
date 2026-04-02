@@ -7,5 +7,7 @@
     ],
     "songIcon": "bandu-sugar",
     "hasDialogue": true,
-    "dialogue": "disruptDialogue"
+    "dialogue": "disruptDialogue",
+    "introMusic": "scaryAmbience",
+    "box": "3d"
 }

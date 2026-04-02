@@ -1,12 +1,12 @@
 OK OK so theres many things to do with Dialogue.
 
-The character images are the same as a character name, so you can use all the images in this folder. You can also add more portraits with the mods folder, though you can't modify them much. You can create dialogue like so:
+The character images are the same as a character name, so you can use all the images in this folder. You can also add more portraits with the mods folder. You can create dialogue like so:
 
 :dave:Hi!
 
-For now, you need source code to dictate antialiasing, left-ness, and sound.
+You can look in data/dialogue/portraits to change aliasing and the sound.
 
-There are currently 11 events that can happen in dialogue. This includes:
+There are currently 14 events that can happen in dialogue. This includes:
 
 setfont_code:none:You can't see my text!
 setfont_normal:none:You can see my text!
@@ -19,6 +19,9 @@ droptext_blue:dave:I'm blue now!
 droptext_white:gfcasual:White people tomorrow morning
 showblitz:3ddave:Shows the Blitz cutscene image! Wow!
 :noblitz:3ddave:No longer!
+:slowDialogueSpeed:bambimad:I'm slow.
+:fastDialogueSpeed:dave:I'm fast!
+:normalDialogueSpeed:bf:Hey
 
 Only one event can happen at a time.
 

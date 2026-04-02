@@ -7,5 +7,6 @@
     ],
     "songIcon": "dave-3d",
     "hasDialogue": true,
-    "dialogue": "blitzDialogue"
+    "dialogue": "blitzDialogue",
+    "introMusic": "DaveDialogue"
 }

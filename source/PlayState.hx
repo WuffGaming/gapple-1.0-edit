@@ -365,13 +365,13 @@ class PlayState extends MusicBeatState
 			switch (SONG.song.toLowerCase())
 			{
 				case 'recovered-project':
-					dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/' + songInfo.dialogue));
+					dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/dialogue/' + songInfo.dialogue));
 						if(formoverride == "radical")
 						{
-							dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/RadicalNULLDialogue'));
+							dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/dialogue/RadicalNULLDialogue'));
 						}
 				default:
-					dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/' + songInfo.dialogue));
+					dialogue = CoolUtil.coolTextFile(Paths.txt('dialogue/dialogue/' + songInfo.dialogue));
 			}
 		}
 

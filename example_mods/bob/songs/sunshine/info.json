@@ -7,5 +7,6 @@
     ],
     "songIcon": "bob",
     "hasDialogue": true,
-    "dialogue": "sunshineDialogue"
+    "dialogue": "sunshineDialogue",
+    "introMusic": "bobDialogue"
 }

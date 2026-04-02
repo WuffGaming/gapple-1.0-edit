@@ -7,5 +7,6 @@
     ],
     "songIcon": "recover",
     "hasDialogue": true,
-    "dialogue": "NULLDialogue"
+    "dialogue": "NULLDialogue",
+    "introMusic": "scaryAmbience"
 }

@@ -7,7 +7,7 @@ Heres a list of things you can do:
 Custom Play Songs
 Custom Extra Songs
 Custom Characters & Forms
-Custom Dialogue & Portraits "PORTRAITS ARE WIP!!!"
+Custom Dialogue & Portraits
 
 Heres a list of things planned in the future:
 

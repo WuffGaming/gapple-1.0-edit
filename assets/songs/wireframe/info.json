@@ -7,5 +7,7 @@
     ],
     "songIcon": "dave-3d-suit",
     "hasDialogue": true,
-    "dialogue": "wireDialogue"
+    "dialogue": "wireDialogue",
+    "introMusic": "scaryAmbience",
+    "box": "3d"
 }

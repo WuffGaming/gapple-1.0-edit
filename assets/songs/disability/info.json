@@ -7,5 +7,7 @@
     ],
     "songIcon": "dave",
     "hasDialogue": true,
-    "dialogue": "disableDialogue"
+    "dialogue": "disableDialogue",
+    "introMusic": "DaveDialogue",
+    "box": "3d"
 }

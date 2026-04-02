@@ -18,6 +18,10 @@ typedef SongInfo =
 	var hasDialogue:Bool;
 
 	var dialogue:String;
+
+	var introMusic:String;
+
+	var box:String;
 }
 
 class ExtraSongState extends MusicBeatState

@@ -7,5 +7,7 @@
     ],
     "songIcon": "bandu",
     "hasDialogue": true,
-    "dialogue": "coreDialogue"
+    "dialogue": "coreDialogue",
+    "introMusic": "DaveDialogue",
+    "box": "3d"
 }

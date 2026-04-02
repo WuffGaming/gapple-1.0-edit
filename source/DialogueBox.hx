@@ -1,5 +1,6 @@
 package;
 
+import lime.utils.DataView;
 import flixel.math.FlxPoint;
 import openfl.display.Shader;
 import flixel.tweens.FlxTween;
@@ -9,13 +10,21 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.text.FlxTypeText;
 import flixel.graphics.frames.FlxAtlasFrames;
+import ExtraSongState.SongInfo;
 import flixel.group.FlxSpriteGroup;
 import flixel.input.FlxKeyManager;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 
-using StringTools;
+typedef PortraitInfo =
+{
+	var dialogueSound:String;
+
+	var soundAmount:Null<Int>;
+
+	var antialiased:Bool;
+}
 
 class DialogueBox extends FlxSpriteGroup
 {
@@ -25,12 +34,13 @@ class DialogueBox extends FlxSpriteGroup
 	var blitzObject:FlxSprite;
 
 	var curMod:String = '';
-	var curCharacter:String = '';
-	var curDirection:String = '';
+	var curCharacter:String = 'bf';
+	var curDirection:String = 'right';
 	
 
 	var dialogue:Alphabet;
 	var dialogueList:Array<String> = [];
+	var dialogueSpeed:Float = 0.04;
 
 	// SECOND DIALOGUE FOR THE PIXEL SHIT INSTEAD???
 	var swagDialogue:FlxTypeText;
@@ -38,8 +48,6 @@ class DialogueBox extends FlxSpriteGroup
 	var dropText:FlxText;
 
 	public var finishThing:Void->Void;
-
-	public var noAa:Array<String> = ['3dbambi', 'bandu', '3ddave', 'wiredave', 'olddave', 'expunged', 'recover', 'recoverweep', '3dbf'];
 
 	var portraitLeft:FlxSprite;
 	var portraitRight:FlxSprite;
@@ -58,19 +66,14 @@ class DialogueBox extends FlxSpriteGroup
 	{
 		super();
 
-		if (FlxG.save.data.freeplayCuts) {
-			switch (PlayState.SONG.song.toLowerCase())
+		var songInfoData:SongInfo = Paths.loadSongJson('${PlayState.SONG.song.toLowerCase()}/info');
+		var songInfo:SongInfo = cast songInfoData;
+
+		if (songInfo.introMusic != null || songInfo.introMusic != '')
 			{
-				case 'blitz' | 'disability' | 'applecore':
-					FlxG.sound.playMusic(Paths.music('DaveDialogue'), 0);
-					FlxG.sound.music.fadeIn(1, 0, 0.8);
-				case 'disruption' | 'wireframe' | 'duper' | 'recovered-project':
-					FlxG.sound.playMusic(Paths.music('scaryAmbience'), 0);
-					FlxG.sound.music.fadeIn(1, 0, 0.8);
-				case 'algebra':
-					FlxG.sound.playMusic(Paths.music('Algebrah'), 0.7);
+				FlxG.sound.playMusic(Paths.music(songInfo.introMusic), 0);
+				FlxG.sound.music.fadeIn(1, 0, 0.8);
 			}
-		}
 
 		bgFade = new FlxSprite(-200, -200).makeGraphic(Std.int(FlxG.width * 1.3), Std.int(FlxG.height * 1.3), 0xFFB3DFd8);
 		bgFade.scrollFactor.set();
@@ -92,9 +95,9 @@ class DialogueBox extends FlxSpriteGroup
 		add(blitzObject);
 		
 		var hasDialog = false;
-		switch (PlayState.SONG.song.toLowerCase())
+		switch (songInfo.box)
 		{
-			case 'algebra':
+			case 'baldi':
 				hasDialog = true;
 				box.frames = Paths.getSparrowAtlas('ui/boxes/qualitybox');
 				box.setGraphicSize(Std.int(box.width / textBoxSizeFix));
@@ -102,7 +105,7 @@ class DialogueBox extends FlxSpriteGroup
 				box.animation.addByPrefix('normalOpen', 'Speech Bubble Normal Open', 24, false);
 				box.animation.addByPrefix('normal', 'speech bubble normal', 24, true);
 				box.antialiasing = false;
-			case 'disruption' | 'applecore' | 'disability' | 'wireframe':
+			case '3d':
 				hasDialog = true;
 				box.frames = Paths.getSparrowAtlas('ui/boxes/3dbox');
 				box.setGraphicSize(Std.int(box.width / textBoxSizeFix));
@@ -153,24 +156,10 @@ class DialogueBox extends FlxSpriteGroup
 
 		box.screenCenter(X);
 		portraitLeft.screenCenter(X);
-
-		//dropText.antialiasing = true;
-		//swagDialogue.antialiasing = true;
 		
 
 		switch (PlayState.SONG.song.toLowerCase())
 		{
-			case 'furiosity' | 'polygonized' | 'cheating' | 'unfairness' | 'disruption' | 'applecore' | 'disability' | 'wireframe' | 'algebra' | 'recovered-project':
-				dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", 32);
-				dropText.font = 'Comic Sans MS Bold';
-				dropText.color = 0xFFFFFFFF;
-				add(dropText);
-			
-				swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
-				swagDialogue.font = 'Comic Sans MS Bold';
-				swagDialogue.color = 0xFF000000;
-				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText'), 0.6)];
-				add(swagDialogue);
 			case 'duper':
 				dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", 32);
 				dropText.font = 'Comic Sans MS Bold';
@@ -194,16 +183,32 @@ class DialogueBox extends FlxSpriteGroup
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText'), 0.6)];
 				add(swagDialogue);
 			default:
-				dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", 32);
-				dropText.font = 'Comic Sans MS Bold';
-				dropText.color = 0xFF00137F;
-				add(dropText);
+				switch (songInfo.box)
+				{
+					case '3d' | 'baldi':
+						dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", 32);
+						dropText.font = 'Comic Sans MS Bold';
+						dropText.color = 0xFFFFFFFF;
+						add(dropText);
+			
+						swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
+						swagDialogue.font = 'Comic Sans MS Bold';
+						swagDialogue.color = 0xFF000000;
+						swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText'), 0.6)];
+						add(swagDialogue);
+					default:
+						dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", 32);
+						dropText.font = 'Comic Sans MS Bold';
+						dropText.color = 0xFF00137F;
+						add(dropText);
 		
-				swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
-				swagDialogue.font = 'Comic Sans MS Bold';
-				swagDialogue.color = 0xFF000000;
-				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText'), 0.6)];
-				add(swagDialogue);
+						swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
+						swagDialogue.font = 'Comic Sans MS Bold';
+						swagDialogue.color = 0xFF000000;
+						swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText'), 0.6)];
+						add(swagDialogue);
+				}
+					
 		}
 		dialogue = new Alphabet(0, 80, "", false, true);
 	}
@@ -213,33 +218,21 @@ class DialogueBox extends FlxSpriteGroup
 
 	override function update(elapsed:Float)
 	{
+		var jsonData:PortraitInfo = Paths.loadJSON('dialogue/portraits/${curCharacter}');
+		var data:PortraitInfo = cast jsonData;
 		if (curshader != null)
 		{
 			curshader.shader.uTime.value[0] += elapsed;
 		}
 
 		dropText.text = swagDialogue.text;
-		switch (curCharacter)
-		{
-			case 'dave' | '3ddave' | 'wiredave':
-				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/daveDialogue'), 0.9)];
-			case 'olddave':
-				swagDialogue.sounds = [FlxG.sound.load(Paths.soundRandom('dialogue/retroDialogue', 1, 3), 0.6)];
-			case 'recover' | 'recoverweep':
-				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/RECOVER'), 0.9)];
-			case 'bambi' | 'bambimad' | '3dbambi':
-				swagDialogue.sounds = [FlxG.sound.load(Paths.soundRandom('dialogue/bambDialogue', 1, 3), 0.6)];
-			case 'bandu':
-				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/banduDialogue'), 0.9)];
-			case 'bf' | 'bfconfuse' | '3dbf' | 'radical':
-				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/bfDialogue'), 0.6)];		
-			case 'gf' | 'gfcasual' | 'gfconfuse' | 'gfwhat':
-				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/gfDialogue'), 0.6)];
-			case 'expunged':
-				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/expungedDialogue'), 0.9)];	
-			default:
-				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/pixelText'), 0.6)];	
-		}
+		if (data.dialogueSound != null || data.dialogueSound != '')
+			if (data.soundAmount != null || data.soundAmount >= 1)
+				swagDialogue.sounds = [FlxG.sound.load(Paths.soundRandom('dialogue/${data.dialogueSound}', 1, data.soundAmount), 0.6)];
+			else
+				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/${data.dialogueSound}'), 0.6)];	
+		else
+			swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/pixelText'), 0.6)];	
 
 		if (box.animation.curAnim != null)
 		{
@@ -304,21 +297,22 @@ class DialogueBox extends FlxSpriteGroup
 	{
 		cleanDialog();
 		swagDialogue.resetText(dialogueList[0]);
-		swagDialogue.start(0.04, true);
+		swagDialogue.start(dialogueSpeed, true);
 		var charPath:String = 'ui/dialogue/' + curCharacter;
 		curshader = null;
 		if (curCharacter != 'generic')
 		{
 			var portrait:Portrait = getPortrait(curCharacter);
-			switch (curCharacter)
-			{
-				default:
-					portraitLeft.setPosition(220, 220);
-					portraitRight.setPosition(770, 220);
-					
-			}
+
+			var jsonData:PortraitInfo = Paths.loadJSON('dialogue/portraits/${curCharacter}');
+			var data:PortraitInfo = cast jsonData;
+
+			portraitLeft.setPosition(220, 220);
+			portraitRight.setPosition(770, 220);
+
 			portraitLeft.loadGraphic(Paths.image(charPath));
 			portraitRight.loadGraphic(Paths.image(charPath));
+
 			if (portrait.left)
 			{
 				box.flipX = true;
@@ -334,27 +328,17 @@ class DialogueBox extends FlxSpriteGroup
 			else
 			{
 				box.flipX = false;
-				switch (curCharacter)
-				{
-					/*
-					case 'gf' | 'gfcasual' | 'gfconfuse' | 'gfwhat':
-						portraitRight.y += 150;
-						portraitRight.alpha = 0;
-						FlxTween.tween(portraitRight, {y: portraitRight.y - 150, alpha: 1}, 0.15);
-					*/
-					default:
-						portraitRight.x += 150;
-						portraitRight.alpha = 0;
-						FlxTween.tween(portraitRight, {x: portraitRight.x - 150, alpha: 1}, 0.15);
-				}
+				portraitRight.x += 150;
+				portraitRight.alpha = 0;
+				FlxTween.tween(portraitRight, {x: portraitRight.x - 150, alpha: 1}, 0.15);
 				portraitLeft.visible = false;
 				if (!portraitRight.visible)
 				{
 					portraitRight.visible = true;
 				}
 			}
-			portraitLeft.antialiasing = !noAa.contains(curCharacter);
-			portraitRight.antialiasing = !noAa.contains(curCharacter);
+			portraitLeft.antialiasing = data.antialiased;
+			portraitRight.antialiasing = data.antialiased;
 		}
 		else
 		{
@@ -387,6 +371,12 @@ class DialogueBox extends FlxSpriteGroup
 				dropText.color = FlxColor.WHITE;
 			case 'droptext_blue':
 				dropText.color = FlxColor.BLUE;
+			case 'slowDialogueSpeed':
+				dialogueSpeed = 0.08;
+			case 'fastDialogueSpeed':
+				dialogueSpeed = 0.02;
+			case 'normalDialogueSpeed':
+				dialogueSpeed = 0.04;
 		}
 	}
 	function getPortrait(character:String):Portrait
