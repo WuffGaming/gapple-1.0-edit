@@ -1,0 +1,88 @@
+{
+  "cameraZoom": 0.5,
+  "gfOffset": [0,0],
+  "opponentOffset": [0,50],
+  "bfOffset": [0,40],
+  "props": [
+    {
+      "name": "sky",
+      "assetPath": "backgrounds/LordXStage/sky",
+      "position": [-1900,-1006],
+      "graphicSize": 0.5
+    },
+    {
+      "name": "hills1",
+      "assetPath": "backgrounds/LordXStage/hills1",
+      "position": [-1900,-1006],
+      "scroll": [1.1,1],
+      "graphicSize": 0.5
+    },
+    {
+      "name": "hills2",
+      "assetPath": "backgrounds/LordXStage/hills2",
+      "position": [-1900,-1006],
+      "scroll": [1.2,1],
+      "graphicSize": 0.5
+    },
+    {
+      "name": "floor",
+      "assetPath": "backgrounds/LordXStage/floor",
+      "position": [-1900,-996],
+      "scroll": [1.495,1],
+      "graphicSize": 0.5
+    },
+    {
+      "name": "eyeflower",
+      "assetPath": "backgrounds/LordXStage/ANIMATEDeye",
+      "animations":[
+        {
+          "name": "animatedeye",
+          "prefix": "EyeAnimated"
+        }
+      ],
+      "position": [-200,-300],
+      "scroll": [1.5,1],
+      "graphicSize": 2
+    },
+    {
+      "name": "hands",
+      "assetPath": "backgrounds/LordXStage/SonicXHandsAnimated",
+      "animations":[
+        {
+          "name": "handss",
+          "prefix": "HandsAnimated"
+        }
+      ],
+      "position": [-200,-600],
+      "scroll": [1.5,1],
+      "graphicSize": 0.5
+    },
+    {
+      "name": "smallflower",
+      "assetPath": "backgrounds/LordXStage/smallflower",
+      "position": [-1900,-1006],
+      "scroll": [1.5,1.005],
+      "graphicSize": 0.5
+    },
+    {
+      "name": "smallflowe2",
+      "assetPath": "backgrounds/LordXStage/smallflowe2",
+      "position": [-1900,-1006],
+      "scroll": [1.5,1.005],
+      "graphicSize": 0.5
+    },
+    {
+      "name": "tree",
+      "assetPath": "backgrounds/LordXStage/TreeAnimatedMoment",
+      "animations":[
+        {
+          "name": "treeanimation",
+          "prefix": "TreeAnimated"
+        }
+      ],
+      "position": [1250,-50],
+      "scroll": [1.5,1],
+      "graphicSize": 2
+    }
+  ]
+}

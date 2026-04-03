@@ -71,9 +71,13 @@ typedef PropData =
 
 	var scale:Array<Float>; // How big or small is the prop?
 
+	var graphicSize:Null<Float>; // Uses graphicSize instead.
+
 	var name:String; // Name of prop
 
 	var assetPath:String; // Where prop is located
+
+	var animations:Array<AnimatedPropData>;
 
 	var flipX:Null<Bool>; // Is prop flipped by X?
 
@@ -87,6 +91,30 @@ typedef PropData =
 	// TODO: MAKE IT ACTUALLY WAVE! IM TOO LAZY TO DO JACK SHIT RN
 
 	var scroll:Array<Float>; // What is the scroll factor? x,y
+}
+
+typedef AnimatedPropData = // literally just copied from character.hx LMAO
+{
+	var name:String; // Name of animation
+	var prefix:String; // Name of animation in XML
+
+	var offset:Array<Float>; // Offsets for specified Animations
+
+	/**
+	 * Whether this animation is looped.
+	 * @default false
+	 */
+	var ?looped:Bool;
+
+	var ?flipX:Bool; // Flip the character for specifically this animation?
+
+	/**
+	 * The frame rate of this animation.
+	 * @default 24
+	 */
+	var ?frameRate:Int; // Framerate of this specific animation.
+
+	var ?frameIndices:Array<Int>; // If using indices, specify said indices. Plays full animation if null.
 }
 
 class PlayState extends MusicBeatState
@@ -1222,14 +1250,48 @@ class PlayState extends MusicBeatState
 					defaultCamZoom = data.cameraZoom;
 					for (prop in data.props)
 					{
+						var theprop:FlxSprite = new FlxSprite (prop.position[0], prop.position[1]);
 						trace(prop.name);
-						var theprop:FlxSprite = new FlxSprite(prop.position[0], prop.position[1]).loadGraphic(Paths.image(prop.assetPath));
+						if (prop.animations != null)
+						{
+							var tex:FlxAtlasFrames = Paths.getSparrowAtlas(prop.assetPath);
+							theprop.frames = tex;
+							if (theprop.frames != null)
+								for (anim in prop.animations)
+									{
+										var frameRate = anim.frameRate == null ? 24 : anim.frameRate;
+										var looped = anim.looped == null ? true : anim.looped;
+
+										if (anim.frameIndices != null)
+										{
+											theprop.animation.addByIndices(anim.name, anim.prefix, anim.frameIndices, "", frameRate, looped, anim.flipX);
+										}
+										else
+										{
+											theprop.animation.addByPrefix(anim.name, anim.prefix, frameRate, looped, anim.flipX);
+										}
+										if (anim.offset != null)
+										{
+											theprop.x += anim.offset[0];
+											theprop.y += anim.offset[1];
+										}
+										theprop.animation.play(anim.name, true);
+									}
+						}
+						else
+						{
+							theprop.loadGraphic(Paths.image(prop.assetPath));
+						}
+						
 						if (prop.antialiasing != null)
 							theprop.antialiasing = prop.antialiasing;
 						else
 							theprop.antialiasing = true;
 						if (prop.scale != null)
 							theprop.scale.set(prop.scale[0], prop.scale[1]);
+
+						if (prop.graphicSize != null)
+							theprop.setGraphicSize(theprop.width * prop.graphicSize);
 
 						if (prop.scroll != null)
 							theprop.scrollFactor.set(prop.scroll[0], prop.scroll[1]);
