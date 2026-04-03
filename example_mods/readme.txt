@@ -8,14 +8,14 @@ Custom Play Songs
 Custom Extra Songs
 Custom Characters & Forms
 Custom Dialogue & Portraits
+Custom Stages
 
 Heres a list of things planned in the future:
 
-Custom Stages
 Custom Noteskins
 Charter Events
 
-Heres a list of things unlikely to be added in the near future:
+Heres a list of things unlikely to be added in the near future "waddabout the far?":
 
 Custom Notes
 Custom Charter Events

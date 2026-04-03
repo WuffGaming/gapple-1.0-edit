@@ -1,0 +1,19 @@
+{
+  "cameraZoom": 1.05,
+  "gfOffset": [-50,50],
+  "opponentOffset": [100,300],
+  "props": [
+    {
+      "name": "sky",
+      "assetPath": "backgrounds/sunshine/bg",
+      "position": [-100,0],
+      "scroll": [0.1,0.1]
+    },
+    {
+      "name": "ground",
+      "assetPath": "backgrounds/sunshine/ground",
+      "position": [-537,-158],
+      "scroll": [1,1]
+    }
+  ]
+}

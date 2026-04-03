@@ -16,6 +16,7 @@ import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.FlxSubState;
+import flixel.group.FlxSpriteGroup;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.addons.effects.FlxTrail;
 import flixel.addons.effects.FlxTrailArea;
@@ -49,6 +50,44 @@ import flash.system.System;
 import sys.io.File;
 import sys.io.Process;
 #end
+
+// Stage information
+
+typedef StageData =
+{
+	var cameraZoom:Float; // Path to the character's asset.
+
+	// Offsets are added into the current character positions.
+	var bfOffset:Array<Int>;
+	var gfOffset:Array<Int>;
+	var opponentOffset:Array<Int>;
+
+	var props:Array<PropData>; // Array of all props.
+}
+
+typedef PropData =
+{
+	var position:Array<Int>; // Where is prop located?
+
+	var scale:Array<Float>; // How big or small is the prop?
+
+	var name:String; // Name of prop
+
+	var assetPath:String; // Where prop is located
+
+	var flipX:Null<Bool>; // Is prop flipped by X?
+
+	var flipY:Null<Bool>; // Is prop flipped by Y?
+
+	var alpha:Null<Float>; // Specify the alpha of prop.
+
+	var antialiasing:Null<Bool>; // Antialised?
+
+	var wavy:Null<Bool>; // Does it wave?
+	// TODO: MAKE IT ACTUALLY WAVE! IM TOO LAZY TO DO JACK SHIT RN
+
+	var scroll:Array<Float>; // What is the scroll factor? x,y
+}
 
 class PlayState extends MusicBeatState
 {
@@ -91,6 +130,8 @@ class PlayState extends MusicBeatState
 	var songLength:Float = 0;
 
 	var note:Note;
+
+	var scriptedStage:Bool = false;
 
 	public var darkLevels:Array<String> = ['bambiFarmNight', 'daveHouse_night', 'unfairness', 'disabled'];
 	public var sunsetLevels:Array<String> = ['bambiFarmSunset', 'daveHouse_Sunset'];
@@ -484,6 +525,27 @@ class PlayState extends MusicBeatState
 			case 'algebra':
 				boyfriend.y += 80;
 				// fucker
+			default:
+				if (scriptedStage = true)
+				{
+					var jsonData:StageData = Paths.loadJSON('stages/${curStage}');
+					var data:StageData = cast jsonData;
+					if (data.bfOffset != null)
+					{
+						boyfriend.x += data.bfOffset[0];
+						boyfriend.y += data.bfOffset[1];
+					}
+					if (data.gfOffset != null)
+					{
+						gf.x += data.gfOffset[0];
+						gf.y += data.gfOffset[1];
+					}
+					if (data.opponentOffset != null)
+					{
+						opponent.x += data.opponentOffset[0];
+						opponent.y += data.opponentOffset[1];
+					}
+				}
 		}
 
 		if(darkLevels.contains(curStage) && SONG.song.toLowerCase() != "polygonized")
@@ -1120,7 +1182,7 @@ class PlayState extends MusicBeatState
 
 				var ground:ShaggyModMoment = new ShaggyModMoment('backgrounds/thunda/ground', -660, 624, 1, 1, 4);
 				add(ground);
-			default:
+			case 'stage':
 				defaultCamZoom = 0.9;
 				var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('backgrounds/shared/stageback'));
 				bg.antialiasing = true;
@@ -1149,6 +1211,52 @@ class PlayState extends MusicBeatState
 	
 				sprites.add(stageCurtains);
 				add(stageCurtains);
+			default:
+				if (curStage != null)
+				{
+					var jsonData:StageData = Paths.loadJSON('stages/${curStage}');
+					var data:StageData = cast jsonData;
+
+					scriptedStage = true;
+				
+					defaultCamZoom = data.cameraZoom;
+					for (prop in data.props)
+					{
+						trace(prop.name);
+						var theprop:FlxSprite = new FlxSprite(prop.position[0], prop.position[1]).loadGraphic(Paths.image(prop.assetPath));
+						if (prop.antialiasing != null)
+							theprop.antialiasing = prop.antialiasing;
+						else
+							theprop.antialiasing = true;
+						if (prop.scale != null)
+							theprop.scale.set(prop.scale[0], prop.scale[1]);
+
+						if (prop.scroll != null)
+							theprop.scrollFactor.set(prop.scroll[0], prop.scroll[1]);
+
+						if (prop.wavy != null && prop.wavy == true)
+						{
+							var shader:Shaders.GlitchEffect = new Shaders.GlitchEffect();
+							shader.waveAmplitude = 0.25;
+							shader.waveFrequency = 10;
+							shader.waveSpeed = 3;
+							theprop.shader = shader.shader;
+						}
+
+						if (prop.flipX != null)
+							theprop.flipX = prop.flipX;
+
+						if (prop.flipY != null)
+							theprop.flipY = prop.flipY;
+
+						if (prop.alpha != null)
+							theprop.alpha = prop.alpha;
+						theprop.updateHitbox();
+						add(theprop);
+					}
+				}
+				else
+					curStage = 'stage';
 		}
 		return sprites;
 	}
