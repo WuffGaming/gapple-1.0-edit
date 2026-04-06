@@ -39,8 +39,8 @@ class MainMenuState extends MusicBeatState
 
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
-	public static var bgPaths:Array<String> = 
-	[
+
+	public static var bgPaths:Array<String> = [
 		'ui/backgrounds/SUSSUS AMOGUS',
 		'ui/backgrounds/SwagnotrllyTheMod',
 		'ui/backgrounds/Olyantwo',
@@ -58,17 +58,17 @@ class MainMenuState extends MusicBeatState
 		}
 
 		persistentUpdate = persistentDraw = true;
-		
+
 		if (FlxG.save.data.eyesores == null)
 		{
 			FlxG.save.data.eyesores = true;
 		}
-		
+
 		if (FlxG.save.data.unlockedcharacters == null)
 		{
-			FlxG.save.data.unlockedcharacters = [true,true,false,false,false,false];
+			FlxG.save.data.unlockedcharacters = [true, true, false, false, false, false];
 		}
-		
+
 		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(randomizeBG());
 		bg.scrollFactor.set();
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
@@ -95,7 +95,7 @@ class MainMenuState extends MusicBeatState
 		add(camFollow);
 
 		FlxG.camera.follow(camFollow, null, 0.6);
-		
+
 		camFollow.setPosition(640, 150.5);
 		for (i in 0...optionShit.length)
 		{
@@ -104,7 +104,8 @@ class MainMenuState extends MusicBeatState
 			menuItem.frames = tex;
 			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
 			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
-			if (optionShit[i] == '') menuItem.visible = false;
+			if (optionShit[i] == '')
+				menuItem.visible = false;
 			menuItem.animation.play('idle');
 			menuItem.ID = i;
 			menuItem.screenCenter(X);
@@ -115,11 +116,14 @@ class MainMenuState extends MusicBeatState
 			if (firstStart)
 			{
 				menuItem.y += 2000;
-				FlxTween.tween(menuItem,{y: 60 + (i * 160)},1 + (i * 0.25) ,{ease: FlxEase.expoInOut, onComplete: function(flxTween:FlxTween) 
+				FlxTween.tween(menuItem, {y: 60 + (i * 160)}, 1 + (i * 0.25), {
+					ease: FlxEase.expoInOut,
+					onComplete: function(flxTween:FlxTween)
 					{
-						finishedFunnyMove = true; 
+						finishedFunnyMove = true;
 						changeItem();
-					}});
+					}
+				});
 			}
 		}
 
@@ -132,7 +136,6 @@ class MainMenuState extends MusicBeatState
 		add(versionShit);
 
 		// NG.core.calls.event.logEvent('swag').send();
-
 
 		if (FlxG.save.data.dfjk)
 			controls.setKeyboardScheme(KeyboardScheme.Solo, true);
@@ -176,21 +179,22 @@ class MainMenuState extends MusicBeatState
 
 			if (controls.BACK)
 			{
-				FlxG.switchState(()->new TitleState());
+				FlxG.switchState(() -> new TitleState());
 			}
 
 			if (controls.ACCEPT)
 			{
-				if(optionShit[curSelected] == '')
+				if (optionShit[curSelected] == '')
 				{
 					return;
 				}
-				if(optionShit[curSelected] == 'discord')
+				if (optionShit[curSelected] == 'discord')
 				{
 					fancyOpenURL('https://discord.gg/wZckCne3jv'); // opens davecord
 					return;
 				}
-				if(optionShit[curSelected] == 'credits'){
+				if (optionShit[curSelected] == 'credits')
+				{
 					fancyOpenURL('https://docs.google.com/document/d/1SGSBFc5oBo9YadZ5la46uUa7ppH0F03CVdr7F3uDnq4/edit?usp=sharing');
 					return;
 				}
@@ -219,30 +223,29 @@ class MainMenuState extends MusicBeatState
 							switch (daChoice)
 							{
 								case 'options':
-									FlxG.switchState(()->new OptionsMenu());
+									FlxG.switchState(() -> new OptionsMenu());
 								case 'extras':
-									FlxG.switchState(()->new ExtraSongState());
+									FlxG.switchState(() -> new ExtraSongState());
 								case 'play':
-									FlxG.switchState(()->new PlayMenuState());
+									FlxG.switchState(() -> new PlayMenuState());
 								case 'dave x bambi shipping cute':
 									var poop:String = Highscore.formatSong('dave-x-bambi-shipping-cute', 1);
 
 									trace(poop);
 
 									FlxG.save.data.shipUnlocked = true;
-						
+
 									PlayState.SONG = Song.loadFromJson(poop, 'dave-x-bambi-shipping-cute');
 									PlayState.isStoryMode = false;
 									PlayState.storyDifficulty = 1;
 									PlayState.xtraSong = false;
-						
+
 									PlayState.storyWeek = 1;
 									LoadingState.loadAndSwitchState(new PlayState());
 							}
 						});
 					}
 				});
-				
 			}
 		}
 	}
@@ -250,7 +253,6 @@ class MainMenuState extends MusicBeatState
 	override function beatHit()
 	{
 		super.beatHit();
-		
 	}
 
 	function changeItem(huh:Int = 0)
@@ -262,7 +264,7 @@ class MainMenuState extends MusicBeatState
 			if (curSelected >= menuItems.length)
 				curSelected = 0;
 			if (curSelected < 0)
-				curSelected = realMenuItems - 1;	
+				curSelected = realMenuItems - 1;
 		}
 
 		menuItems.forEach(function(spr:FlxSprite)
@@ -278,6 +280,7 @@ class MainMenuState extends MusicBeatState
 			spr.updateHitbox();
 		});
 	}
+
 	public static function randomizeBG():flixel.system.FlxAssets.FlxGraphicAsset
 	{
 		var chance:Int = FlxG.random.int(0, bgPaths.length - 1);

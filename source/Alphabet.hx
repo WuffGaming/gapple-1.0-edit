@@ -197,7 +197,7 @@ class Alphabet extends FlxSpriteGroup
 				var letter:AlphaCharacter = new AlphaCharacter(xPos, 55 * yMulti);
 				letter.row = curRow;
 				if (isBold)
-				{	
+				{
 					if (isNumber)
 					{
 						letter.createBoldNumber(splitWords[loopNum]);
@@ -255,14 +255,14 @@ class Alphabet extends FlxSpriteGroup
 				var scaledX = FlxMath.remapToRange(targetY, 0, 1, 0, 1.3);
 
 				x = FlxMath.lerp(x, (scaledX * 120) + (text.length * 30), 0.16);
-				//y = FlxMath.lerp(y, (targetY * 20) + 90, 0.16);
+				// y = FlxMath.lerp(y, (targetY * 20) + 90, 0.16);
 			}
 			else
 			{
 				var scaledY = FlxMath.remapToRange(targetY, 0, 1, 0, 1.3);
 
 				y = FlxMath.lerp(y, (scaledY * 120) + (FlxG.height * 0.48), 0.16);
-				x = FlxMath.lerp(x, (targetY * 20) + 90, 0.16);	
+				x = FlxMath.lerp(x, (targetY * 20) + 90, 0.16);
 			}
 		}
 
@@ -271,7 +271,7 @@ class Alphabet extends FlxSpriteGroup
 }
 
 class AlphaCharacter extends FlxSprite
-{	
+{
 	private var textSize:Float = 1;
 
 	public static var alphabet:String = "abcdefghijklmnopqrstuvwxyz";
@@ -331,7 +331,7 @@ class AlphaCharacter extends FlxSprite
 			case "'":
 				y -= 20 * textSize;
 			case '-':
-				//x -= 35 - (90 * (1.0 - textSize));
+				// x -= 35 - (90 * (1.0 - textSize));
 				y += 20 * textSize;
 				visible = false;
 			case '(':
@@ -367,13 +367,13 @@ class AlphaCharacter extends FlxSprite
 		y += row * 60;
 	}
 
-	public function createNumber(letter:String,invert:Bool = false):Void
+	public function createNumber(letter:String, invert:Bool = false):Void
 	{
 		animation.addByPrefix(letter, letter, 24);
 		animation.play(letter);
 		if (invert)
 		{
-		this.shader = new InvertShader();
+			this.shader = new InvertShader();
 		}
 
 		updateHitbox();

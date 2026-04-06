@@ -34,6 +34,7 @@ class OptionsMenu extends MusicBeatState
 
 	private var grpControls:FlxTypedGroup<Alphabet>;
 	var versionShit:FlxText;
+
 	override function create()
 	{
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image("ui/backgrounds/SUSSUS AMOGUS"));
@@ -57,7 +58,6 @@ class OptionsMenu extends MusicBeatState
 			// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
 		}
 
-
 		versionShit = new FlxText(5, FlxG.height - 18, 0, "Offset (Left, Right): " + FlxG.save.data.offset, 12);
 		versionShit.scrollFactor.set();
 		versionShit.antialiasing = true;
@@ -71,35 +71,35 @@ class OptionsMenu extends MusicBeatState
 	{
 		super.update(elapsed);
 
-			if (controls.BACK)
-				FlxG.switchState(()->new MainMenuState());
-			if (controls.UP_P)
-				changeSelection(-1);
-			if (controls.DOWN_P)
-				changeSelection(1);
-			
-			if (controls.RIGHT_R)
-			{
-				FlxG.save.data.offset++;
-				versionShit.text = "Offset (Left, Right): " + FlxG.save.data.offset;
-			}
+		if (controls.BACK)
+			FlxG.switchState(() -> new MainMenuState());
+		if (controls.UP_P)
+			changeSelection(-1);
+		if (controls.DOWN_P)
+			changeSelection(1);
 
-			if (controls.LEFT_R)
-				{
-					FlxG.save.data.offset--;
-					versionShit.text = "Offset (Left, Right): " + FlxG.save.data.offset;
-				}
-	
+		if (controls.RIGHT_R)
+		{
+			FlxG.save.data.offset++;
+			versionShit.text = "Offset (Left, Right): " + FlxG.save.data.offset;
+		}
 
-			if (controls.ACCEPT)
+		if (controls.LEFT_R)
+		{
+			FlxG.save.data.offset--;
+			versionShit.text = "Offset (Left, Right): " + FlxG.save.data.offset;
+		}
+
+		if (controls.ACCEPT)
+		{
+			if (options[curSelected].press())
 			{
-				if (options[curSelected].press()) {
-					grpControls.remove(grpControls.members[curSelected]);
-					var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, options[curSelected].getDisplay(), true, false);
-					ctrl.isMenuItem = true;
-					grpControls.add(ctrl);
-				}
+				grpControls.remove(grpControls.members[curSelected]);
+				var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, options[curSelected].getDisplay(), true, false);
+				ctrl.isMenuItem = true;
+				grpControls.add(ctrl);
 			}
+		}
 		FlxG.save.flush();
 	}
 
@@ -110,7 +110,7 @@ class OptionsMenu extends MusicBeatState
 		#if !switch
 		// NGio.logEvent("Fresh");
 		#end
-		
+
 		FlxG.sound.play(Paths.sound("scrollMenu"), 0.4);
 
 		curSelected += change;

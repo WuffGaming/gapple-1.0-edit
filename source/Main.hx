@@ -1,68 +1,67 @@
-	package; // hey btw the entire class is a bit to the right.
+package; // hey btw the entire class is a bit to the right.
 
-	import flixel.FlxG;
-	import flixel.FlxGame;
-	import flixel.FlxState;
-	import openfl.Assets;
-	import openfl.filters.GlowFilter;
-	import openfl.Lib;
-	import openfl.display.FPS;
-	import openfl.text.TextFormat;
-	import openfl.display.Sprite;
-	import openfl.events.Event;
+import flixel.FlxG;
+import flixel.FlxGame;
+import flixel.FlxState;
+import openfl.Assets;
+import openfl.filters.GlowFilter;
+import openfl.Lib;
+import openfl.display.FPS;
+import openfl.text.TextFormat;
+import openfl.display.Sprite;
+import openfl.events.Event;
 
-	class Main extends Sprite
-	{
-		public static final game = {
+class Main extends Sprite
+{
+	public static final game = {
 		width: 1280, // WINDOW width
 		height: 720, // WINDOW height
 		initialState: TitleState, // initial game state
 		framerate: 144, // default framerate
 		skipSplash: true, // if the default flixel splash screen should be skipped
 		startFullscreen: false // if the game should start at fullscreen mode
-		};
+	};
 
-		// You can pretty much ignore everything from here on - your code should go in your states.
+	// You can pretty much ignore everything from here on - your code should go in your states.
 
-		public static function main():Void
+	public static function main():Void
+	{
+		Lib.current.addChild(new Main());
+	}
+
+	public function new()
+	{
+		super();
+
+		if (stage != null)
 		{
-			Lib.current.addChild(new Main());
+			init();
+		}
+		else
+		{
+			addEventListener(Event.ADDED_TO_STAGE, init);
+		}
+	}
+
+	private function init(?E:Event):Void
+	{
+		if (hasEventListener(Event.ADDED_TO_STAGE))
+		{
+			removeEventListener(Event.ADDED_TO_STAGE, init);
 		}
 
-		public function new()
-		{
-			super();
+		setupGame();
+	}
 
-			if (stage != null)
-			{
-				init();
-			}
-			else
-			{
-				addEventListener(Event.ADDED_TO_STAGE, init);
-			}
-		}
+	private function setupGame():Void
+	{
+		#if !debug
+		game.initialState = TitleState;
+		#end
 
-		private function init(?E:Event):Void
-		{
-			if (hasEventListener(Event.ADDED_TO_STAGE))
-			{
-				removeEventListener(Event.ADDED_TO_STAGE, init);
-			}
+		addChild(new FlxGame(game.width, game.height, game.initialState, game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
 
-			setupGame();
-		}
-
-		private function setupGame():Void
-		{
-
-			#if !debug
-			game.initialState = TitleState;
-			#end
-			
-			addChild(new FlxGame(game.width, game.height, game.initialState, game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
-
-			var ourSource:String = "assets/videos/DO NOT DELETE OR GAME WILL CRASH/dontDelete.webm";
+		var ourSource:String = "assets/videos/DO NOT DELETE OR GAME WILL CRASH/dontDelete.webm";
 
 		#if web
 		var str1:String = "HTML CRAP";
@@ -74,7 +73,7 @@
 		GlobalVideo.setVid(vHandler);
 		vHandler.source(ourSource);
 		#elseif desktop
-		var str1:String = "WEBM SHIT"; 
+		var str1:String = "WEBM SHIT";
 		var webmHandle = new WebmHandler();
 		webmHandle.source(ourSource);
 		webmHandle.makePlayer();
@@ -94,7 +93,8 @@
 
 	var fpsCounter:FPS;
 
-	public function toggleFPS(fpsEnabled:Bool):Void {
+	public function toggleFPS(fpsEnabled:Bool):Void
+	{
 		fpsCounter.visible = fpsEnabled;
-		}
 	}
+}

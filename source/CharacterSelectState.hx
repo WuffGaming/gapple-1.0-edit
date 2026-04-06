@@ -1,4 +1,5 @@
 package;
+
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
@@ -11,19 +12,18 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import flixel.math.FlxMath;
 import flixel.util.FlxStringUtil;
- /**
- hey you fun commiting people, 
- i don't know about the rest of the mod but since this is basically 99% my code 
- i do not give you guys permission to grab this specific code and re-use it in your own mods without asking me first.
- the secondary dev, ben
-*/
 
+/**
+	hey you fun commiting people, 
+	i don't know about the rest of the mod but since this is basically 99% my code 
+	i do not give you guys permission to grab this specific code and re-use it in your own mods without asking me first.
+	the secondary dev, ben
+ */
 /**
 
 	hi
 
 **/
-
 using StringTools;
 
 typedef CharacterList =
@@ -43,6 +43,7 @@ class CharacterInSelect
 		this.polishedNames = polishedNames;
 	}
 }
+
 class CharacterSelectState extends MusicBeatState
 {
 	public var char:Boyfriend;
@@ -57,7 +58,7 @@ class CharacterSelectState extends MusicBeatState
 
 	var order:Array<String> = CoolUtil.coolTextFile(Paths.txt('forms/order'));
 
-	public var isDebug:Bool = false; //CHANGE THIS TO FALSE BEFORE YOU COMMIT RETARDS
+	public var isDebug:Bool = false; // CHANGE THIS TO FALSE BEFORE YOU COMMIT RETARDS
 
 	public var PressedTheFunny:Bool = false;
 
@@ -67,87 +68,89 @@ class CharacterSelectState extends MusicBeatState
 
 	var noteMsTexts:FlxTypedGroup<FlxText> = new FlxTypedGroup<FlxText>();
 
-	//it goes left,right,up,down
-
-	
+	// it goes left,right,up,down
 	public var characters:Array<CharacterInSelect> = []; // dependency
-	public function new() 
+
+	public function new()
 	{
 		trace('CharSelectOrder is ', order);
-		if(PlayState.SONG.song.toLowerCase() != 'dave-x-bambi-shipping-cute')
+		if (PlayState.SONG.song.toLowerCase() != 'dave-x-bambi-shipping-cute')
+		{
+			for (i in 0...order.length)
 			{
-				for (i in 0...order.length)
+				var charPath:String = 'forms/${order[i]}';
+				var path:String = Paths.json(charPath);
+				trace(path);
+				var rawJson = Assets.getText(path);
+				var jsonData:CharacterList = cast Json.parse(rawJson);
+				trace(jsonData);
+				if (jsonData == null)
 				{
-					var charPath:String = 'forms/${order[i]}';
-					var path:String = Paths.json(charPath);
-					trace(path);
-					var rawJson = Assets.getText(path);
-					var jsonData:CharacterList = cast Json.parse(rawJson);
-					trace(jsonData);
-					if (jsonData == null)
-					{
-						trace('Failed to parse JSON data for list ${order[i]}');
-						characters.push(new CharacterInSelect(['bf'], ['ERROR']));
-						return;
-					}
-					var data:CharacterList = cast jsonData;
-					characters.push(new CharacterInSelect(data.names, data.polished));
+					trace('Failed to parse JSON data for list ${order[i]}');
+					characters.push(new CharacterInSelect(['bf'], ['ERROR']));
+					return;
 				}
+				var data:CharacterList = cast jsonData;
+				characters.push(new CharacterInSelect(data.names, data.polished));
 			}
+		}
 		else
-			{
-				characters = [new CharacterInSelect(['dave-good','split-dave-3d', 'tunnel-dave', 'og-dave'], ['Dave (Dave x Bambi)', 'Disability Dave', 'Wireframe Dave', 'Algebra Dave'])];
-				starterChar = 'dave-good';
-			}
-		
+		{
+			characters = [
+				new CharacterInSelect(['dave-good', 'split-dave-3d', 'tunnel-dave', 'og-dave'],
+					['Dave (Dave x Bambi)', 'Disability Dave', 'Wireframe Dave', 'Algebra Dave'])
+			];
+			starterChar = 'dave-good';
+		}
+
 		super();
 	}
-	
-	override public function create():Void 
+
+	override public function create():Void
 	{
 		super.create();
 		Conductor.changeBPM(110);
 		currentSelectedCharacter = characters[current];
-		//if(PlayState.SONG.song.toLowerCase() == 'dave-x-bambi-shipping-cute')
+		// if(PlayState.SONG.song.toLowerCase() == 'dave-x-bambi-shipping-cute')
 
-		FlxG.save.data.unlockedcharacters = [true,true,true,true,true,true,true,true]; //unlock everyone hi
+		FlxG.save.data.unlockedcharacters = [true, true, true, true, true, true, true, true]; // unlock everyone hi
 
 		var end:FlxSprite = new FlxSprite(0, 0);
-		FlxG.sound.playMusic(Paths.music("goodEnding"),1,true);
+		FlxG.sound.playMusic(Paths.music("goodEnding"), 1, true);
 		add(end);
-		
-		//create stage
+
+		// create stage
 		var bg:FlxSprite = new FlxSprite(-700, -250).loadGraphic(Paths.image('backgrounds/farm/sky'));
 		bg.antialiasing = true;
 		bg.scrollFactor.set(0.9, 0.9);
 		bg.active = false;
-	
+
 		var hills:FlxSprite = new FlxSprite(-250, 200).loadGraphic(Paths.image('backgrounds/farm/orangey hills'));
 		hills.antialiasing = true;
 		hills.scrollFactor.set(0.9, 0.7);
 		hills.active = false;
-	
+
 		var farm:FlxSprite = new FlxSprite(150, 250).loadGraphic(Paths.image('backgrounds/farm/funfarmhouse'));
 		farm.antialiasing = true;
 		farm.scrollFactor.set(1.1, 0.9);
 		farm.active = false;
-				
+
 		var foreground:FlxSprite = new FlxSprite(-400, 600).loadGraphic(Paths.image('backgrounds/farm/grass lands'));
 		foreground.antialiasing = true;
 		foreground.active = false;
-				
+
 		var cornSet:FlxSprite = new FlxSprite(-350, 325).loadGraphic(Paths.image('backgrounds/farm/Cornys'));
 		cornSet.antialiasing = true;
 		cornSet.active = false;
-				
+
 		var cornSet2:FlxSprite = new FlxSprite(1050, 325).loadGraphic(Paths.image('backgrounds/farm/Cornys'));
 		cornSet2.antialiasing = true;
 		cornSet2.active = false;
-				
+
 		var fence:FlxSprite = new FlxSprite(-350, 450).loadGraphic(Paths.image('backgrounds/farm/crazy fences'));
 		fence.antialiasing = true;
 		fence.active = false;
-	
+
 		var sign:FlxSprite = new FlxSprite(0, 500).loadGraphic(Paths.image('backgrounds/farm/Sign'));
 		sign.antialiasing = true;
 		sign.active = false;
@@ -163,12 +166,12 @@ class CharacterSelectState extends MusicBeatState
 
 		FlxG.camera.zoom = 0.75;
 
-		//create character
+		// create character
 		char = new Boyfriend(FlxG.width / 2, 100, starterChar);
 		char.screenCenter();
 		char.y = 350;
 		add(char);
-		
+
 		characterText = new FlxText((FlxG.width / 9) - 50, (FlxG.height / 8) - 225, "Boyfriend");
 		characterText.font = 'Comic Sans MS Bold';
 		characterText.setFormat(Paths.font("comic.ttf"), 90, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -189,19 +192,19 @@ class CharacterSelectState extends MusicBeatState
 		add(tutorialThing);
 	}
 
-	override public function update(elapsed:Float):Void 
+	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
-		//FlxG.camera.focusOn(FlxG.ce);
+		// FlxG.camera.focusOn(FlxG.ce);
 
 		if (FlxG.keys.justPressed.ESCAPE)
 		{
 			LoadingState.loadAndSwitchState(new ExtraSongState());
 		}
 
-		if(controls.LEFT_P && !PressedTheFunny)
+		if (controls.LEFT_P && !PressedTheFunny)
 		{
-			if(!char.nativelyPlayable)
+			if (!char.nativelyPlayable)
 			{
 				char.playAnim('singRIGHT', true);
 			}
@@ -209,11 +212,10 @@ class CharacterSelectState extends MusicBeatState
 			{
 				char.playAnim('singLEFT', true);
 			}
-
 		}
-		if(controls.RIGHT_P && !PressedTheFunny)
+		if (controls.RIGHT_P && !PressedTheFunny)
 		{
-			if(!char.nativelyPlayable)
+			if (!char.nativelyPlayable)
 			{
 				char.playAnim('singLEFT', true);
 			}
@@ -222,11 +224,11 @@ class CharacterSelectState extends MusicBeatState
 				char.playAnim('singRIGHT', true);
 			}
 		}
-		if(controls.UP_P && !PressedTheFunny)
+		if (controls.UP_P && !PressedTheFunny)
 		{
 			char.playAnim('singUP', true);
 		}
-		if(controls.DOWN_P && !PressedTheFunny)
+		if (controls.DOWN_P && !PressedTheFunny)
 		{
 			char.playAnim('singDOWN', true);
 		}
@@ -241,7 +243,7 @@ class CharacterSelectState extends MusicBeatState
 				PressedTheFunny = true;
 			}
 			selectedCharacter = true;
-			var heyAnimation:Bool = char.animation.getByName("hey") != null; 
+			var heyAnimation:Bool = char.animation.getByName("hey") != null;
 			char.playAnim(heyAnimation ? 'hey' : 'singUP', true);
 			FlxG.sound.music.stop();
 			FlxG.sound.play(Paths.music('gameOverEnd'));
@@ -312,8 +314,9 @@ class CharacterSelectState extends MusicBeatState
 			case '3d-bf':
 				char.y = 100 + 20;
 			case 'bf' | 'bf-pixel' | 'bf-christmas' | 'afnfg-boyfriend' | 'cameo':
-				//dont do anything
-			default: char.y = 100;
+				// dont do anything
+			default:
+				char.y = 100;
 		}
 		add(char);
 		funnyIconMan.animation.play(char.curCharacter);
@@ -328,8 +331,7 @@ class CharacterSelectState extends MusicBeatState
 			char.playAnim('idle');
 		}
 	}
-	
-	
+
 	public function endIt(e:FlxTimer = null)
 	{
 		trace("ENDING");
@@ -339,5 +341,4 @@ class CharacterSelectState extends MusicBeatState
 		PlayState.curmult = [1, 1, 1, 1];
 		LoadingState.loadAndSwitchState(new PlayState());
 	}
-	
 }

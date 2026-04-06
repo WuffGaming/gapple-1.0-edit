@@ -42,21 +42,21 @@ class OutdatedSubState extends MusicBeatState
 		if (controls.PAUSE && FlxG.save.data.begin_thing == true)
 		{
 			leftState = true;
-			FlxG.switchState(new MainMenuState());
+			FlxG.switchState(() -> new MainMenuState());
 		}
 		if (FlxG.keys.justPressed.Y && FlxG.save.data.begin_thing != true)
 		{
 			FlxG.save.data.begin_thing = true;
 			FlxG.save.data.eyesores = true;
 			leftState = true;
-			FlxG.switchState(new MainMenuState());
+			FlxG.switchState(() -> new MainMenuState());
 		}
 		if (FlxG.keys.justPressed.N && FlxG.save.data.begin_thing != true)
 		{
 			FlxG.save.data.begin_thing = true;
 			FlxG.save.data.eyesores = false;
 			leftState = true;
-			FlxG.switchState(new MainMenuState());
+			FlxG.switchState(() -> new MainMenuState());
 		}
 		super.update(elapsed);
 	}

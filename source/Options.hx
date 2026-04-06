@@ -13,14 +13,22 @@ class Option
 	}
 
 	private var display:String;
+
 	public final function getDisplay():String
 	{
 		return display;
 	}
 
 	// Returns whether the label is to be updated.
-	public function press():Bool { return throw "stub!"; }
-	private function updateDisplay():String { return throw "stub!"; }
+	public function press():Bool
+	{
+		return throw "stub!";
+	}
+
+	private function updateDisplay():String
+	{
+		return throw "stub!";
+	}
 }
 
 class DFJKOption extends Option
@@ -36,7 +44,7 @@ class DFJKOption extends Option
 	public override function press():Bool
 	{
 		FlxG.save.data.dfjk = !FlxG.save.data.dfjk;
-		
+
 		if (FlxG.save.data.dfjk)
 			controls.setKeyboardScheme(KeyboardScheme.Solo, true);
 		else
@@ -48,7 +56,7 @@ class DFJKOption extends Option
 
 	private override function updateDisplay():String
 	{
-		return  FlxG.save.data.dfjk ? "DFJK" : "WASD";
+		return FlxG.save.data.dfjk ? "DFJK" : "WASD";
 	}
 }
 
@@ -102,7 +110,7 @@ class FPSOption extends Option
 	public override function press():Bool
 	{
 		FlxG.save.data.fps = !FlxG.save.data.fps;
-		(cast (Lib.current.getChildAt(0), Main)).toggleFPS(FlxG.save.data.fps);
+		(cast(Lib.current.getChildAt(0), Main)).toggleFPS(FlxG.save.data.fps);
 		display = updateDisplay();
 		return true;
 	}
@@ -127,7 +135,6 @@ class CutsceneOption extends Option
 		return "Cutscenes " + (!FlxG.save.data.freeplayCuts ? "off" : "on");
 	}
 }
-
 
 class EyesoresOption extends Option
 {
@@ -159,20 +166,17 @@ class HitsoundOption extends Option
 	}
 }
 
-
 class InstantRespawn extends Option
 {
- 
- 	public override function press():Bool
- 	{
- 		FlxG.save.data.InstantRespawn = !FlxG.save.data.InstantRespawn;
- 		display = updateDisplay();
- 		return true;
- 	}
- 
- 	private override function updateDisplay():String
- 	{
- 		return "Instant Respawn " + (!FlxG.save.data.InstantRespawn ? "off" : "on");
- 	}
+	public override function press():Bool
+	{
+		FlxG.save.data.InstantRespawn = !FlxG.save.data.InstantRespawn;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return "Instant Respawn " + (!FlxG.save.data.InstantRespawn ? "off" : "on");
+	}
 }
- 

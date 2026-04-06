@@ -61,9 +61,9 @@ typedef AnimationData =
 
 	var ?frameIndices:Array<Int>; // If using indices, specify said indices. Plays full animation if null.
 }
+
 class Character extends FlxSprite
 {
-
 	public var animOffsets:Map<String, Array<Dynamic>>;
 	public var debugMode:Bool = false;
 
@@ -78,15 +78,14 @@ class Character extends FlxSprite
 	public var barColor:FlxColor;
 	public var bopDance:Bool = false;
 
-	public var globaloffset:Array<Float> = [0,0];
-	public var gameOffset:Array<Float> = [0,0];
-	public var camOffset:Array<Float> = [0,0];
+	public var globaloffset:Array<Float> = [0, 0];
+	public var gameOffset:Array<Float> = [0, 0];
+	public var camOffset:Array<Float> = [0, 0];
 	public var floater:String = 'false';
 	public var noteStyle:String = '2D';
 	public var charScale:Float = 1;
 
 	public var barColorArray:Array<Int> = [0, 0, 0];
-
 
 	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:Bool = false)
 	{
@@ -103,35 +102,36 @@ class Character extends FlxSprite
 		switch (curCharacter)
 		{
 			/**
-			case 'your-hardcoded-character':
-				tex = Paths.getSparrowAtlas('characters/your/path');
-				frames = tex;
-				animation.addByPrefix('idle', 'IDLE', 24, false);
-				animation.addByPrefix('singUP', 'UP', 24, false);
-				animation.addByPrefix('singRIGHT', 'RIGHT', 24, false);
-				animation.addByPrefix('singDOWN', 'DOWN', 24, false);
-				animation.addByPrefix('singLEFT', 'LEFT', 24, false);
-				animation.addByPrefix('stand', 'STAND', 24, false);
-		
-				loadOffsetFile(curCharacter);
+					case 'your-hardcoded-character':
+						tex = Paths.getSparrowAtlas('characters/your/path');
+						frames = tex;
+						animation.addByPrefix('idle', 'IDLE', 24, false);
+						animation.addByPrefix('singUP', 'UP', 24, false);
+						animation.addByPrefix('singRIGHT', 'RIGHT', 24, false);
+						animation.addByPrefix('singDOWN', 'DOWN', 24, false);
+						animation.addByPrefix('singLEFT', 'LEFT', 24, false);
+						animation.addByPrefix('stand', 'STAND', 24, false);
 
-				updateHitbox();
-				antialiasing = false;
-				iconName = 'icon';
-				barColor = FlxColor.fromRGB(255, 255, 255);
-		
-				playAnim('idle');
+						loadOffsetFile(curCharacter);
+
+						updateHitbox();
+						antialiasing = false;
+						iconName = 'icon';
+						barColor = FlxColor.fromRGB(255, 255, 255);
+
+						playAnim('idle');
 			**/
 			default:
 				parseDataFile();
-			}
+		}
 		dance();
 
-		if(isPlayer)
+		if (isPlayer)
 		{
 			flipX = !flipX;
 		}
 	}
+
 	public var POOP:Bool = false; // https://cdn.discordapp.com/attachments/902006463654936587/906412566534848542/video0-14.mov
 
 	override function update(elapsed:Float)
@@ -162,9 +162,10 @@ class Character extends FlxSprite
 			}
 		}
 
-		if (bopDance){
+		if (bopDance)
+		{
 			if (animation.curAnim.name == 'hairFall' && animation.curAnim.finished)
-					playAnim('danceRight');
+				playAnim('danceRight');
 		}
 
 		super.update(elapsed);
@@ -180,20 +181,20 @@ class Character extends FlxSprite
 		if (!debugMode && canDance)
 		{
 			var poopInPants:String = alt ? '-alt' : '';
-				if (bopDance)
+			if (bopDance)
+			{
+				if (!animation.curAnim.name.startsWith('hair'))
 				{
-					if (!animation.curAnim.name.startsWith('hair'))
-					{
-						danced = !danced;
+					danced = !danced;
 
-						if (danced)
-							playAnim('danceRight' + poopInPants, true);
-						else
-							playAnim('danceLeft' + poopInPants, true);
-					}
+					if (danced)
+						playAnim('danceRight' + poopInPants, true);
+					else
+						playAnim('danceLeft' + poopInPants, true);
 				}
-				else
-					playAnim('idle' + poopInPants, true);
+			}
+			else
+				playAnim('idle' + poopInPants, true);
 		}
 	}
 
@@ -203,18 +204,18 @@ class Character extends FlxSprite
 		{
 			return;
 		}
-		if(AnimName.toLowerCase().startsWith('idle') && !canDance)
+		if (AnimName.toLowerCase().startsWith('idle') && !canDance)
 		{
 			return;
 		}
 		animation.play(AnimName, Force, Reversed, Frame);
-	
+
 		var daOffset = animOffsets.get(AnimName);
 		if (animOffsets.exists(AnimName))
 		{
 			if (isPlayer)
 			{
-				if(!nativelyPlayable)
+				if (!nativelyPlayable)
 				{
 					offset.set((daOffset[0] * -1) + globaloffset[0], daOffset[1] + globaloffset[1]);
 				}
@@ -225,7 +226,7 @@ class Character extends FlxSprite
 			}
 			else
 			{
-				if(nativelyPlayable)
+				if (nativelyPlayable)
 				{
 					offset.set((daOffset[0] * -1), daOffset[1]);
 				}
@@ -237,7 +238,7 @@ class Character extends FlxSprite
 		}
 		else
 			offset.set(0, 0);
-	
+
 		if (bopDance)
 		{
 			if (AnimName == 'singLEFT')
@@ -248,7 +249,7 @@ class Character extends FlxSprite
 			{
 				danced = false;
 			}
-	
+
 			if (AnimName == 'singUP' || AnimName == 'singDOWN')
 			{
 				danced = !danced;
@@ -290,7 +291,7 @@ class Character extends FlxSprite
 
 				loadOffsetFile(curCharacter);
 			}
-		
+
 		// do dances use DanceLeft / DanceRight?
 		bopDance = data.bopDance == null ? false : data.bopDance;
 
@@ -308,12 +309,18 @@ class Character extends FlxSprite
 
 		if (noteStyle == '3D')
 		{
-			if (Note.CharactersWith3D.contains(curCharacter)) { Note.CharactersWith3D.remove(curCharacter); }
+			if (Note.CharactersWith3D.contains(curCharacter))
+			{
+				Note.CharactersWith3D.remove(curCharacter);
+			}
 			Note.CharactersWith3D.push(curCharacter);
 		}
 		if (noteStyle == 'pixel')
 		{
-			if (Note.CharactersWithPixel.contains(curCharacter)) { Note.CharactersWithPixel.remove(curCharacter); }
+			if (Note.CharactersWithPixel.contains(curCharacter))
+			{
+				Note.CharactersWithPixel.remove(curCharacter);
+			}
 			Note.CharactersWithPixel.push(curCharacter);
 		}
 		trace(data.name, noteStyle);
@@ -345,7 +352,7 @@ class Character extends FlxSprite
 	function loadOffsetFile(character:String)
 	{
 		var offsetStuffs:Array<String> = CoolUtil.coolTextFile(Paths.offsetFile(character));
-		
+
 		for (offsetText in offsetStuffs)
 		{
 			var offsetInfo:Array<String> = offsetText.split(' ');

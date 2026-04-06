@@ -15,7 +15,7 @@ class GameOverSubstate extends MusicBeatSubstate
 
 	var stageSuffix:String = "";
 
-	public function new(x:Float, y:Float,char:String)
+	public function new(x:Float, y:Float, char:String)
 	{
 		var daStage = PlayState.curStage;
 		var daBf:String = '';
@@ -44,7 +44,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		Conductor.songPosition = 0;
 
 		bf = new Boyfriend(x, y, char);
-		if(bf.animation.getByName('firstDeath') == null)
+		if (bf.animation.getByName('firstDeath') == null)
 		{
 			bf = new Boyfriend(x, y, "bf-dead");
 		}
@@ -75,17 +75,17 @@ class GameOverSubstate extends MusicBeatSubstate
 			endBullshit();
 		}
 
-		if(FlxG.save.data.InstantRespawn)
- 		{
- 			LoadingState.loadAndSwitchState(new PlayState());
- 		}
- 
+		if (FlxG.save.data.InstantRespawn)
+		{
+			LoadingState.loadAndSwitchState(new PlayState());
+		}
 
 		if (controls.BACK)
 		{
 			FlxG.sound.music.stop();
 
-			if (PlayState.SONG.song.toLowerCase() == 'disability') {
+			if (PlayState.SONG.song.toLowerCase() == 'disability')
+			{
 				trace("WUH OH!!!");
 
 				FlxG.save.data.foundRecoveredProject = true;
@@ -102,7 +102,7 @@ class GameOverSubstate extends MusicBeatSubstate
 				LoadingState.loadAndSwitchState(new PlayState());
 			}
 			else
-				FlxG.switchState(new MainMenuState());
+				FlxG.switchState(() -> new MainMenuState());
 		}
 
 		if (bf.animation.curAnim.name == 'firstDeath' && bf.animation.curAnim.curFrame == 12)
@@ -135,18 +135,17 @@ class GameOverSubstate extends MusicBeatSubstate
 		if (!isEnding)
 		{
 			isEnding = true;
-			
-				bf.playAnim('deathConfirm', true);
-				FlxG.sound.music.stop();
-				FlxG.sound.play(Paths.music('gameOverEnd' + stageSuffix));
-				new FlxTimer().start(0.7, function(tmr:FlxTimer)
+
+			bf.playAnim('deathConfirm', true);
+			FlxG.sound.music.stop();
+			FlxG.sound.play(Paths.music('gameOverEnd' + stageSuffix));
+			new FlxTimer().start(0.7, function(tmr:FlxTimer)
+			{
+				FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
 				{
-					FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
-					{
-						LoadingState.loadAndSwitchState(new PlayState());
-					});
+					LoadingState.loadAndSwitchState(new PlayState());
 				});
-			
+			});
 		}
 	}
 }

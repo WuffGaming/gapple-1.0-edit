@@ -49,15 +49,13 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
-
 		PolymodHandler.loadMods();
 
 		// preload all the long songs
-		var preloadSongs:Array<String> = [
-			'Algebra', 'AppleCore'
-		];
+		var preloadSongs:Array<String> = ['Algebra', 'AppleCore'];
 
-		for (song in preloadSongs) {
+		for (song in preloadSongs)
+		{
 			FlxG.sound.cache(Paths.inst(song));
 			FlxG.sound.cache(Paths.voices(song));
 		}
@@ -69,7 +67,7 @@ class TitleState extends MusicBeatState
 		// DEBUG BULLSHIT
 
 		super.create();
-			
+
 		FlxG.save.bind('funkin', 'ninjamuffin99');
 
 		SaveDataHandler.initSave();
@@ -90,7 +88,6 @@ class TitleState extends MusicBeatState
 
 	var logoBl:FlxSprite;
 	var titleText:FlxSprite;
-
 
 	function startIntro()
 	{
@@ -235,7 +232,6 @@ class TitleState extends MusicBeatState
 
 		if (pressedEnter && !transitioning && skippedIntro)
 		{
-
 			titleText.animation.play('press');
 
 			FlxG.camera.flash(FlxColor.WHITE, 1);
@@ -246,9 +242,7 @@ class TitleState extends MusicBeatState
 
 			new FlxTimer().start(2, function(tmr:FlxTimer)
 			{
-
-				FlxG.switchState(OutdatedSubState.leftState ? ()->new MainMenuState() : ()->new OutdatedSubState());
-
+				FlxG.switchState(OutdatedSubState.leftState ? () -> new MainMenuState() : () -> new OutdatedSubState());
 			});
 			// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
 		}
@@ -307,9 +301,9 @@ class TitleState extends MusicBeatState
 	{
 		super.beatHit();
 
-		if(curBeat % 2 == 0)
+		if (curBeat % 2 == 0)
 		{
-			if(danced)
+			if (danced)
 			{
 				logoBl.animation.play('logobumpin', true);
 				titleDude.animation.play('idle', true);

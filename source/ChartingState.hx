@@ -58,7 +58,7 @@ class ChartingState extends MusicBeatState
 	var noteType:Int = 0;
 	var styles:Array<String> = ['normal', 'phone'];
 
-	var noteTypeText:FlxText = new FlxText(-200, 0, 0,'Charting: Note', 16);
+	var noteTypeText:FlxText = new FlxText(-200, 0, 0, 'Charting: Note', 16);
 
 	var highlight:FlxSprite;
 
@@ -88,7 +88,7 @@ class ChartingState extends MusicBeatState
 	var rightIcon:HealthIcon;
 
 	var oneSectionSong:Bool = false;
-	
+
 	override function create()
 	{
 		curSection = lastSection;
@@ -123,7 +123,7 @@ class ChartingState extends MusicBeatState
 				notes: []
 			};
 		}
-		
+
 		leftIcon = new HealthIcon(_song.player1);
 		midIcon = new HealthIcon(_song.gf);
 		rightIcon = new HealthIcon(_song.player2);
@@ -142,7 +142,6 @@ class ChartingState extends MusicBeatState
 		leftIcon.setPosition(0, -100);
 		midIcon.setPosition(gridBG.width / 3, -120);
 		rightIcon.setPosition(gridBG.width / 2, -100);
-
 
 		FlxG.mouse.visible = true;
 		FlxG.save.bind('funkin', 'ninjamuffin99');
@@ -224,7 +223,6 @@ class ChartingState extends MusicBeatState
 			_song.gf_visible = gf_visible.checked;
 		};
 
-
 		var saveButton:FlxButton = new FlxButton(110, 8, "Save", function()
 		{
 			saveLevel();
@@ -237,7 +235,8 @@ class ChartingState extends MusicBeatState
 
 		var reloadSongJson:FlxButton = new FlxButton(reloadSong.x, saveButton.y + 30, "Reload JSON", function()
 		{
-			if (typingShit.text == null) {
+			if (typingShit.text == null)
+			{
 				typingShit.text == 'Disability';
 			}
 			else
@@ -549,6 +548,7 @@ class ChartingState extends MusicBeatState
 		}
 		return songLengthInSteps;
 	}
+
 	override function update(elapsed:Float)
 	{
 		curStep = recalculateSteps();
@@ -562,7 +562,6 @@ class ChartingState extends MusicBeatState
 		}
 		else
 		{
-			
 			strumLine.y = getYfromStrum(Conductor.songPosition % (Conductor.stepCrochet * getSongLengthInSteps()));
 		}
 		if (curBeat % 4 == 0 && curStep >= 16 * (curSection + 1))
@@ -575,7 +574,7 @@ class ChartingState extends MusicBeatState
 			{
 				addSection();
 			}
-			
+
 			if (!oneSectionSong)
 			{
 				changeSection(curSection + 1, false);
@@ -680,22 +679,22 @@ class ChartingState extends MusicBeatState
 					FlxG.sound.music.play();
 				}
 			}
-			if(FlxG.keys.justPressed.Z)
+			if (FlxG.keys.justPressed.Z)
 			{
 				this.noteType--;
-				if(noteType < 0)
+				if (noteType < 0)
 				{
 					noteType = styles.length - 1;
 				}
 			}
-			if(FlxG.keys.justPressed.X)
+			if (FlxG.keys.justPressed.X)
+			{
+				this.noteType++;
+				if (noteType == styles.length)
 				{
-					this.noteType++;
-					if(noteType == styles.length)
-					{
-						noteType = 0;
-					}
+					noteType = 0;
 				}
+			}
 
 			if (FlxG.keys.justPressed.R)
 			{
@@ -989,8 +988,6 @@ class ChartingState extends MusicBeatState
 			var daSus = i[2];
 			var daStyle = i[3];
 
-			
-
 			var note:Note = new Note(daStrumTime, daNoteInfo % 4, null, false, true, daStyle);
 			note.sustainLength = daSus;
 			note.setGraphicSize(GRID_SIZE, GRID_SIZE);
@@ -1043,26 +1040,24 @@ class ChartingState extends MusicBeatState
 	}
 
 	function deleteNote(note:Note):Void
+	{
+		trace(_song.notes[curSection].sectionNotes);
+		for (n in 0..._song.notes[curSection].sectionNotes.length)
 		{
-			trace(_song.notes[curSection].sectionNotes);
-			for (n in 0..._song.notes[curSection].sectionNotes.length)
+			var i = _song.notes[curSection].sectionNotes[n];
+			if (i == null)
+				continue;
+			if ((i[0] == note.strumTime + (note.strumTime == 0 ? 0 : 1) ? true : i[0] == note.strumTime) && i[1] % 4 == note.noteData)
+				// Why does it do this?
+				// I DONT FUCKING KNOW!!!!!!!!!!!!!!
 			{
-				var i = _song.notes[curSection].sectionNotes[n];
-				if (i == null)
-					continue;
-				if ((i[0] == note.strumTime + (note.strumTime == 0 ? 0 : 1) 
-					? true : i[0] == note.strumTime) 
-					&& i[1] % 4 == note.noteData)
-					// Why does it do this?
-					// I DONT FUCKING KNOW!!!!!!!!!!!!!!
-				{
-					trace('GAMING');
-					_song.notes[curSection].sectionNotes.remove(i);
-				}
+				trace('GAMING');
+				_song.notes[curSection].sectionNotes.remove(i);
 			}
-	
-			updateGrid();
 		}
+
+		updateGrid();
+	}
 
 	function clearSection():Void
 	{
@@ -1162,7 +1157,8 @@ class ChartingState extends MusicBeatState
 	{
 		if (song.toLowerCase() == 'recovered-project' || song.toLowerCase() == 'dave-x-bambi-shipping-cute')
 		{
-			FlxG.switchState(new VideoState('assets/videos/fortnite/fortniteballs.webm', new CrasherState())); //YOU THINK YOU ARE SO CLEVER DON'T YOU? HAHA FUCK YOU
+			FlxG.switchState(new VideoState('assets/videos/fortnite/fortniteballs.webm',
+				new CrasherState())); // YOU THINK YOU ARE SO CLEVER DON'T YOU? HAHA FUCK YOU
 		}
 		if (PlayState.SONG == null)
 		{

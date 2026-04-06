@@ -6,12 +6,12 @@ import flixel.FlxG;
 
 /**
  * handles save data initialization
-*/
+ */
 class SaveDataHandler
 {
-    public static function initSave()
-    {
-        if (FlxG.save.data.newInput == null)
+	public static function initSave()
+	{
+		if (FlxG.save.data.newInput == null)
 			FlxG.save.data.newInput = true;
 
 		if (FlxG.save.data.downscroll == null)
@@ -34,5 +34,5 @@ class SaveDataHandler
 
 		if (FlxG.save.data.fps == null)
 			FlxG.save.data.fps = false;
-    }
+	}
 }

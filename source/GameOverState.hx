@@ -33,7 +33,7 @@ class GameOverState extends FlxTransitionableState
 		loser.antialiasing = true;
 		add(loser);
 
-		var bf:Boyfriend = new Boyfriend(bfX, bfY,charr);
+		var bf:Boyfriend = new Boyfriend(bfX, bfY, charr);
 		// bf.scrollFactor.set();
 		add(bf);
 		bf.playAnim('firstDeath');
@@ -63,15 +63,15 @@ class GameOverState extends FlxTransitionableState
 
 		var gamepad:FlxGamepad = FlxG.gamepads.lastActive;
 
-		if(FlxG.save.data.InstantRespawn)
- 		{
- 			fading = true;
- 			FlxG.sound.music.fadeOut(0.5, 0, function(twn:FlxTween)
- 			{
- 				FlxG.sound.music.stop();
- 				LoadingState.loadAndSwitchState(new PlayState());
- 			});
- 		}
+		if (FlxG.save.data.InstantRespawn)
+		{
+			fading = true;
+			FlxG.sound.music.fadeOut(0.5, 0, function(twn:FlxTween)
+			{
+				FlxG.sound.music.stop();
+				LoadingState.loadAndSwitchState(new PlayState());
+			});
+		}
 
 		if (gamepad != null)
 		{

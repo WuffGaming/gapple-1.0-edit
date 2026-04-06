@@ -115,12 +115,12 @@ class AnimationDebug extends MusicBeatState
 	{
 		textAnim.text = char.animation.curAnim.name;
 
-		if(FlxG.keys.justPressed.ESCAPE)
+		if (FlxG.keys.justPressed.ESCAPE)
 		{
-			FlxG.switchState(()->new MainMenuState());
+			FlxG.switchState(() -> new MainMenuState());
 		}
 
-		if(FlxG.keys.justPressed.F)
+		if (FlxG.keys.justPressed.F)
 		{
 			char.flipX = !char.flipX;
 		}

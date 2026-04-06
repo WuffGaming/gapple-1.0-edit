@@ -12,7 +12,7 @@ typedef SongInfo =
 	var songName:String;
 
 	var bgColor:Array<Int>;
-	
+
 	var songIcon:String;
 
 	var hasDialogue:Bool;
@@ -26,41 +26,39 @@ typedef SongInfo =
 
 class ExtraSongState extends MusicBeatState
 {
-
-    var songs:Array<SongMetadata> = [];
+	var songs:Array<SongMetadata> = [];
 
 	var songList:Array<String> = CoolUtil.coolTextFile(Paths.txt('songList'));
 
-    var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('ui/backgrounds/SUSSUS AMOGUS'));
-    var curSelected:Int = 0;
+	var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('ui/backgrounds/SUSSUS AMOGUS'));
+	var curSelected:Int = 0;
 
-    private var iconArray:Array<HealthIcon> = [];
+	private var iconArray:Array<HealthIcon> = [];
 
 	var hasDialogue:Bool = false;
 	var dialogue:String = "";
 
-    var swagText:FlxText = new FlxText(0, 0, 0, 'my poop is brimming', 85);
-    
-    private var grpSongs:FlxTypedGroup<Alphabet>;
+	var swagText:FlxText = new FlxText(0, 0, 0, 'my poop is brimming', 85);
 
-    override function create() 
+	private var grpSongs:FlxTypedGroup<Alphabet>;
+
+	override function create()
 	{
-		
 		if (!FlxG.sound.music.playing)
 		{
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
 		}
 
-        bg.loadGraphic(MainMenuState.randomizeBG());
+		bg.loadGraphic(MainMenuState.randomizeBG());
 		bg.color = 0xFF4965FF;
 		add(bg);
-		
+
 		getSongs();
 
-        grpSongs = new FlxTypedGroup<Alphabet>();
+		grpSongs = new FlxTypedGroup<Alphabet>();
 		add(grpSongs);
 
-        swagText.setFormat(Paths.font("vcr.ttf"), 47, FlxColor.BLACK, LEFT);
+		swagText.setFormat(Paths.font("vcr.ttf"), 47, FlxColor.BLACK, LEFT);
 		swagText.screenCenter(X);
 		swagText.y += 50;
 		add(swagText);
@@ -72,9 +70,9 @@ class ExtraSongState extends MusicBeatState
 			songText.targetY = i;
 			grpSongs.add(songText);
 
-            var icon:HealthIcon = new HealthIcon(songs[i].songCharacter);
+			var icon:HealthIcon = new HealthIcon(songs[i].songCharacter);
 			icon.sprTracker = songText;
-			if(songs[i].blackoutIcon)
+			if (songs[i].blackoutIcon)
 			{
 				icon.color = FlxColor.BLACK;
 			}
@@ -85,51 +83,53 @@ class ExtraSongState extends MusicBeatState
 
 		changeSelection();
 
-        super.create();
-    }
-    public function addSong(songName:String, weekNum:Array<Int>, songCharacter:String, blackoutIcon:Bool = false)
+		super.create();
+	}
+
+	public function addSong(songName:String, weekNum:Array<Int>, songCharacter:String, blackoutIcon:Bool = false)
 	{
 		var songMeta = new SongMetadata(songName, weekNum, songCharacter, blackoutIcon);
 		songs.push(songMeta);
 		return songMeta;
 	}
 
-    override function update(p:Float)
+	override function update(p:Float)
 	{
 		if (FlxG.sound.music.volume < 0.7)
 		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 		}
 
-        super.update(p);
+		super.update(p);
 
-        if (controls.UP_P)
-            changeSelection(-1);
+		if (controls.UP_P)
+			changeSelection(-1);
 
-        if (controls.DOWN_P)
-            changeSelection(1);
+		if (controls.DOWN_P)
+			changeSelection(1);
 
-        if (controls.BACK)
-            FlxG.switchState(()->new PlayMenuState());
+		if (controls.BACK)
+			FlxG.switchState(() -> new PlayMenuState());
 
-        if (FlxG.keys.pressed.ENTER)
+		if (FlxG.keys.pressed.ENTER)
 		{
-            switch (songs[curSelected].songName.toLowerCase()) {
-                case 'unknown' | 'NO-SONG-FOUND' | 'DATA-IS-NULL':
-                    FlxG.sound.play(Paths.sound('cancelMenu'), 0.5);
-                default:   
-                    var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), 1);
+			switch (songs[curSelected].songName.toLowerCase())
+			{
+				case 'unknown' | 'NO-SONG-FOUND' | 'DATA-IS-NULL':
+					FlxG.sound.play(Paths.sound('cancelMenu'), 0.5);
+				default:
+					var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), 1);
 
-                    trace(poop);
+					trace(poop);
 
-                    PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
-                    PlayState.isStoryMode = false;
-                    PlayState.storyDifficulty = 1;
-                    PlayState.xtraSong = true;
+					PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
+					PlayState.isStoryMode = false;
+					PlayState.storyDifficulty = 1;
+					PlayState.xtraSong = true;
 
 					PlayState.formoverride = 'none';
 
-					if(songs[curSelected].songName.toLowerCase() == 'origin')
+					if (songs[curSelected].songName.toLowerCase() == 'origin')
 					{
 						LoadingState.loadAndSwitchState(new PlayState());
 					}
@@ -137,11 +137,11 @@ class ExtraSongState extends MusicBeatState
 					{
 						LoadingState.loadAndSwitchState(new CharacterSelectState());
 					}
-            }
+			}
 		}
-    }
+	}
 
-    function changeSelection(change:Int = 0)
+	function changeSelection(change:Int = 0)
 	{
 		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 		curSelected += change;
@@ -152,16 +152,17 @@ class ExtraSongState extends MusicBeatState
 		if (curSelected >= songs.length)
 			curSelected = 0;
 
-        switch(songs[curSelected].songName.toLowerCase()) {
-            case 'unknown':
-                swagText.text = 'A secret is required to unlock this song!';
-                swagText.visible = true;
-            default:
-                swagText.visible = false;
-        }
+		switch (songs[curSelected].songName.toLowerCase())
+		{
+			case 'unknown':
+				swagText.text = 'A secret is required to unlock this song!';
+				swagText.visible = true;
+			default:
+				swagText.visible = false;
+		}
 		var bullShit:Int = 0;
 
-        for (i in 0...iconArray.length)
+		for (i in 0...iconArray.length)
 		{
 			iconArray[i].alpha = 0.6;
 		}
@@ -182,6 +183,7 @@ class ExtraSongState extends MusicBeatState
 		}
 		FlxTween.color(bg, 0.25, bg.color, FlxColor.fromRGB(songs[curSelected].week[0], songs[curSelected].week[1], songs[curSelected].week[2]));
 	}
+
 	function getSongs() // thank john
 	{
 		trace(songList);
@@ -198,10 +200,12 @@ class ExtraSongState extends MusicBeatState
 			trace(songList[i] + ' ' + data);
 			if (songList != null)
 			{
-				for (songName in songList) { 
+				for (songName in songList)
+				{
 					if (data.songName.toLowerCase() == songName)
 					{
-						if ((songName.toLowerCase() == 'dave-x-bambi-shipping-cute' && !FlxG.save.data.shipUnlocked) || (songName.toLowerCase() == 'recovered-project' && !FlxG.save.data.foundRecoveredProject))
+						if ((songName.toLowerCase() == 'dave-x-bambi-shipping-cute' && !FlxG.save.data.shipUnlocked)
+							|| (songName.toLowerCase() == 'recovered-project' && !FlxG.save.data.foundRecoveredProject))
 						{
 							addSong('unknown', [0, 0, 0], data.songIcon, true);
 						}

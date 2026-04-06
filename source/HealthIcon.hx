@@ -51,7 +51,8 @@ class HealthIcon extends FlxSprite
 		scrollFactor.set();
 	}
 
-	function addIcon(char:String, startFrame:Int, singleIcon:Bool = false) {
+	function addIcon(char:String, startFrame:Int, singleIcon:Bool = false)
+	{
 		animation.add(char, !singleIcon ? [startFrame, startFrame + 1] : [startFrame], 0, false, isPlayer);
 	}
 
@@ -59,24 +60,24 @@ class HealthIcon extends FlxSprite
 	{
 		charPublic = char;
 
-		if(char == 'bandu-origin')
+		if (char == 'bandu-origin')
 		{
 			frames = Paths.getSparrowAtlas('ui/icons/bandu_origin_icon');
 			animation.addByPrefix(char, char, 24, false, isPlayer, false);
 		}
-		else if(char == 'gf' || char.endsWith('-single'))
+		else if (char == 'gf' || char.endsWith('-single'))
 		{
 			loadGraphic(Paths.image('ui/icons/' + char), true, 150, 150);
 
 			addIcon(char, 0, true);
 		}
-		else if(char == 'junkers')
+		else if (char == 'junkers')
 		{
 			loadGraphic(Paths.image('ui/icons/' + char), true, 200, 200);
 
 			addIcon(char, 0);
 		}
-		else if(char == 'expunged')
+		else if (char == 'expunged')
 		{
 			loadGraphic(Paths.image('ui/icons/' + char), true, 300, 300);
 
@@ -87,7 +88,7 @@ class HealthIcon extends FlxSprite
 			loadGraphic(Paths.image('ui/icons/' + char), true, 150, 150);
 
 			addIcon(char, 0);
-		}	
+		}
 
 		if (charPublic.endsWith('-3d') || charPublic.endsWith('-pixel')) // allows for json chars to have aliased icons
 			antialiasing = false;
@@ -95,16 +96,15 @@ class HealthIcon extends FlxSprite
 			antialiasing = !noAaChars.contains(char);
 
 		animation.play(char);
-
 	}
 
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
 
-		offset.set(Std.int(FlxMath.bound(width - 150,0)),Std.int(FlxMath.bound(height - 150,0)));
+		offset.set(Std.int(FlxMath.bound(width - 150, 0)), Std.int(FlxMath.bound(height - 150, 0)));
 
 		if (sprTracker != null)
-				setPosition(sprTracker.x + sprTracker.width + 10, sprTracker.y - 30);
+			setPosition(sprTracker.x + sprTracker.width + 10, sprTracker.y - 30);
 	}
 }

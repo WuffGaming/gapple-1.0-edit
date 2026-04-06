@@ -36,7 +36,6 @@ class DialogueBox extends FlxSpriteGroup
 	var curMod:String = '';
 	var curCharacter:String = 'bf';
 	var curDirection:String = 'right';
-	
 
 	var dialogue:Alphabet;
 	var dialogueList:Array<String> = [];
@@ -70,10 +69,10 @@ class DialogueBox extends FlxSpriteGroup
 		var songInfo:SongInfo = cast songInfoData;
 
 		if (songInfo.introMusic != null || songInfo.introMusic != '')
-			{
-				FlxG.sound.playMusic(Paths.music(songInfo.introMusic), 0);
-				FlxG.sound.music.fadeIn(1, 0, 0.8);
-			}
+		{
+			FlxG.sound.playMusic(Paths.music(songInfo.introMusic), 0);
+			FlxG.sound.music.fadeIn(1, 0, 0.8);
+		}
 
 		bgFade = new FlxSprite(-200, -200).makeGraphic(Std.int(FlxG.width * 1.3), Std.int(FlxG.height * 1.3), 0xFFB3DFd8);
 		bgFade.scrollFactor.set();
@@ -93,7 +92,7 @@ class DialogueBox extends FlxSpriteGroup
 		blitzObject.screenCenter();
 		blitzObject.alpha = 0;
 		add(blitzObject);
-		
+
 		var hasDialog = false;
 		switch (songInfo.box)
 		{
@@ -124,7 +123,7 @@ class DialogueBox extends FlxSpriteGroup
 		}
 
 		this.dialogueList = dialogueList;
-		
+
 		if (!hasDialog)
 			return;
 		var portraitLeftCharacter:String = 'none';
@@ -145,7 +144,7 @@ class DialogueBox extends FlxSpriteGroup
 
 		portraitLeft.updateHitbox();
 		portraitRight.updateHitbox();
-		
+
 		add(portraitLeft);
 		add(portraitRight);
 
@@ -156,7 +155,6 @@ class DialogueBox extends FlxSpriteGroup
 
 		box.screenCenter(X);
 		portraitLeft.screenCenter(X);
-		
 
 		switch (PlayState.SONG.song.toLowerCase())
 		{
@@ -164,7 +162,7 @@ class DialogueBox extends FlxSpriteGroup
 				dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", 32);
 				dropText.font = 'Comic Sans MS Bold';
 				dropText.color = FlxColor.GREEN;
-		
+
 				swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
 				swagDialogue.font = 'Comic Sans MS Bold';
 				swagDialogue.color = 0xFF000000;
@@ -173,7 +171,7 @@ class DialogueBox extends FlxSpriteGroup
 				dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", 32);
 				dropText.font = 'Comic Sans MS Bold';
 				dropText.color = FlxColor.BLUE;
-		
+
 				swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
 				swagDialogue.font = 'Comic Sans MS Bold';
 				swagDialogue.color = 0xFF000000;
@@ -185,7 +183,7 @@ class DialogueBox extends FlxSpriteGroup
 						dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", 32);
 						dropText.font = 'Comic Sans MS Bold';
 						dropText.color = 0xFFFFFFFF;
-			
+
 						swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
 						swagDialogue.font = 'Comic Sans MS Bold';
 						swagDialogue.color = 0xFF000000;
@@ -194,13 +192,12 @@ class DialogueBox extends FlxSpriteGroup
 						dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", 32);
 						dropText.font = 'Comic Sans MS Bold';
 						dropText.color = 0xFF00137F;
-		
+
 						swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
 						swagDialogue.font = 'Comic Sans MS Bold';
 						swagDialogue.color = 0xFF000000;
 						swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText'), 0.6)];
 				}
-					
 		}
 		dropText.antialiasing = true;
 		swagDialogue.antialiasing = true;
@@ -224,11 +221,13 @@ class DialogueBox extends FlxSpriteGroup
 		dropText.text = swagDialogue.text;
 		if (data.dialogueSound != null || data.dialogueSound != '')
 			if (data.soundAmount != null || data.soundAmount >= 1)
-				swagDialogue.sounds = [FlxG.sound.load(Paths.soundRandom('dialogue/${data.dialogueSound}', 1, data.soundAmount), 0.6)];
+				swagDialogue.sounds = [
+					FlxG.sound.load(Paths.soundRandom('dialogue/${data.dialogueSound}', 1, data.soundAmount), 0.6)
+				];
 			else
-				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/${data.dialogueSound}'), 0.6)];	
+				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/${data.dialogueSound}'), 0.6)];
 		else
-			swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/pixelText'), 0.6)];	
+			swagDialogue.sounds = [FlxG.sound.load(Paths.sound('dialogue/pixelText'), 0.6)];
 
 		if (box.animation.curAnim != null)
 		{
@@ -245,10 +244,10 @@ class DialogueBox extends FlxSpriteGroup
 			dialogueStarted = true;
 		}
 
-		if (FlxG.keys.justPressed.ANY  && dialogueStarted)
+		if (FlxG.keys.justPressed.ANY && dialogueStarted)
 		{
 			remove(dialogue);
-			
+
 			switch (PlayState.SONG.song.toLowerCase())
 			{
 				default:
@@ -260,7 +259,7 @@ class DialogueBox extends FlxSpriteGroup
 				if (!isEnding)
 				{
 					isEnding = true;
-						
+
 					FlxG.sound.music.fadeOut(2.2, 0);
 
 					FlxTween.tween(box, {alpha: 0}, 1.2);
@@ -283,7 +282,7 @@ class DialogueBox extends FlxSpriteGroup
 				startDialogue();
 			}
 		}
-		
+
 		super.update(elapsed);
 	}
 
@@ -354,13 +353,13 @@ class DialogueBox extends FlxSpriteGroup
 			case 'no_black':
 				blackScreen.alpha = 0;
 			case 'to_black':
-				FlxTween.tween(blackScreen, {alpha:1}, 0.25);
+				FlxTween.tween(blackScreen, {alpha: 1}, 0.25);
 			case 'off_black':
-				FlxTween.tween(blackScreen, {alpha:0}, 0.25);
+				FlxTween.tween(blackScreen, {alpha: 0}, 0.25);
 			case 'showblitz':
-				FlxTween.tween(blitzObject, {alpha:1}, 0.25);
+				FlxTween.tween(blitzObject, {alpha: 1}, 0.25);
 			case 'noblitz':
-				FlxTween.tween(blitzObject, {alpha:0}, 0.25);
+				FlxTween.tween(blitzObject, {alpha: 0}, 0.25);
 			case 'droptext_green':
 				dropText.color = FlxColor.GREEN;
 			case 'droptext_white':
@@ -375,6 +374,7 @@ class DialogueBox extends FlxSpriteGroup
 				dialogueSpeed = 0.04;
 		}
 	}
+
 	function getPortrait(character:String):Portrait
 	{
 		var portrait:Portrait = new Portrait('', '', true);
@@ -401,12 +401,14 @@ class DialogueBox extends FlxSpriteGroup
 		dialogueList[0] = dialogueList[0].substr(splitName[1].length + splitName[0].length + 2).trim();
 	}
 }
+
 class Portrait
 {
 	public var portraitPath:String;
 	public var portraitLibraryPath:String = '';
 	public var left:Bool;
-	public function new (portraitPath:String, portraitLibraryPath:String = '', left:Bool)
+
+	public function new(portraitPath:String, portraitLibraryPath:String = '', left:Bool)
 	{
 		this.portraitPath = portraitPath;
 		this.portraitLibraryPath = portraitLibraryPath;
