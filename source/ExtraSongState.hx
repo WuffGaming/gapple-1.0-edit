@@ -58,7 +58,7 @@ class ExtraSongState extends MusicBeatState
 		grpSongs = new FlxTypedGroup<Alphabet>();
 		add(grpSongs);
 
-		swagText.setFormat(Paths.font("vcr.ttf"), 47, FlxColor.BLACK, LEFT);
+		swagText.setFormat(Paths.font("comic.ttf"), 47, FlxColor.BLACK, LEFT);
 		swagText.screenCenter(X);
 		swagText.y += 50;
 		add(swagText);
