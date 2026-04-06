@@ -1,10 +1,10 @@
-HOW 2 COMPILE:
+# HOW 2 COMPILE:
 
 Run THESE commands after installing Haxe 4.3.7 & Git:
 
 haxelib --global install hmm
 haxelib --global run hmm setup
-hmm install (NOTE DONT COPY: IF YOU RUN INTO AN ERROR, RERUN THE COMMAND!
+hmm install (NOTE DONT COPY: IF YOU RUN INTO AN ERROR, RERUN THE COMMAND!)
 haxelib run lime setup
 lime rebuild extension-webm windows
 
