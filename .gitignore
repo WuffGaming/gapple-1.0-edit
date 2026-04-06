@@ -1,9 +1,10 @@
-export/
-.vscode/
-.vs/
+export/*
+.vs/*
 .git
-APIStuff.hx
-art/Source Files/
-/.vs/slnx.sqlite
-/.vs/slnx.sqlite
-/.vs/VSWorkspaceState.json
+.DS_Store
+.icloud
+.haxelib/*
+.history
+.ionide
+vscode-project.hxml
+!.vscode/settings.json

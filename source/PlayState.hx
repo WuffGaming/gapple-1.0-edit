@@ -140,6 +140,9 @@ class PlayState extends MusicBeatState
 	public static var goods:Int = 0;
 	public static var sicks:Int = 0;
 
+	public static var scriptedStages:Array<String> = ['farm', 'out', '3dbg', 'sugar', 'warehouse', 'redTunnel', 'POOP',
+'algebra', 'basement', 'stage', 'recover']; // PUT YOUR SCRIPTED STAGES HERE!!!
+
 	public var camBeatSnap:Int = 4;
 	public var danceBeatSnap:Int = 2;
 	public var OpponentDanceSnap:Int = 2;
@@ -553,6 +556,7 @@ class PlayState extends MusicBeatState
 			case 'algebra':
 				boyfriend.y += 80;
 				// fucker
+			/*
 			default:
 				if (scriptedStage = true)
 				{
@@ -574,6 +578,7 @@ class PlayState extends MusicBeatState
 						opponent.y += data.opponentOffset[1];
 					}
 				}
+			*/
 		}
 
 		if(darkLevels.contains(curStage) && SONG.song.toLowerCase() != "polygonized")
@@ -1239,8 +1244,8 @@ class PlayState extends MusicBeatState
 	
 				sprites.add(stageCurtains);
 				add(stageCurtains);
-			default:
-				if (curStage != null)
+			/*default:
+				if (curStage != null || !scriptedStages.contains(curStage))
 				{
 					var jsonData:StageData = Paths.loadJSON('stages/${curStage}');
 					var data:StageData = cast jsonData;
@@ -1319,6 +1324,7 @@ class PlayState extends MusicBeatState
 				}
 				else
 					curStage = 'stage';
+				*/
 		}
 		return sprites;
 	}
@@ -1566,7 +1572,7 @@ class PlayState extends MusicBeatState
 	{
 		startingSong = false;
 
-		previousFrameTime = FlxG.game.ticks;
+		previousFrameTime = Std.int(FlxG.game.ticks);
 		lastReportedPlayheadPosition = 0;
 
 		if (!paused)
@@ -2660,7 +2666,7 @@ class PlayState extends MusicBeatState
 			if (!paused)
 			{
 				songTime += FlxG.game.ticks - previousFrameTime;
-				previousFrameTime = FlxG.game.ticks;
+				previousFrameTime = Std.int(FlxG.game.ticks);
 
 				// Interpolation type beat
 				if (Conductor.lastSongPos != Conductor.songPosition)

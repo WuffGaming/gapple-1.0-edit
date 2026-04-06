@@ -164,24 +164,20 @@ class DialogueBox extends FlxSpriteGroup
 				dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", 32);
 				dropText.font = 'Comic Sans MS Bold';
 				dropText.color = FlxColor.GREEN;
-				add(dropText);
 		
 				swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
 				swagDialogue.font = 'Comic Sans MS Bold';
 				swagDialogue.color = 0xFF000000;
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText'), 0.6)];
-				add(swagDialogue);
 			case 'blitz':
 				dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", 32);
 				dropText.font = 'Comic Sans MS Bold';
 				dropText.color = FlxColor.BLUE;
-				add(dropText);
 		
 				swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
 				swagDialogue.font = 'Comic Sans MS Bold';
 				swagDialogue.color = 0xFF000000;
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText'), 0.6)];
-				add(swagDialogue);
 			default:
 				switch (songInfo.box)
 				{
@@ -189,27 +185,27 @@ class DialogueBox extends FlxSpriteGroup
 						dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", 32);
 						dropText.font = 'Comic Sans MS Bold';
 						dropText.color = 0xFFFFFFFF;
-						add(dropText);
 			
 						swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
 						swagDialogue.font = 'Comic Sans MS Bold';
 						swagDialogue.color = 0xFF000000;
 						swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText'), 0.6)];
-						add(swagDialogue);
 					default:
 						dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", 32);
 						dropText.font = 'Comic Sans MS Bold';
 						dropText.color = 0xFF00137F;
-						add(dropText);
 		
 						swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
 						swagDialogue.font = 'Comic Sans MS Bold';
 						swagDialogue.color = 0xFF000000;
 						swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText'), 0.6)];
-						add(swagDialogue);
 				}
 					
 		}
+		dropText.antialiasing = true;
+		swagDialogue.antialiasing = true;
+		add(dropText);
+		add(swagDialogue);
 		dialogue = new Alphabet(0, 80, "", false, true);
 	}
 
