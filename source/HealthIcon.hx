@@ -40,6 +40,10 @@ class HealthIcon extends FlxSprite
 
 	public var charPublic:String = 'bf';
 
+	public var animatedIcon:Bool = false;
+
+	public var losing:Bool = false;
+
 	public function new(char:String = 'bf', isPlayer:Bool = false)
 	{
 		super();
@@ -62,6 +66,7 @@ class HealthIcon extends FlxSprite
 
 		if (char == 'bandu-origin')
 		{
+			animatedIcon = true;
 			frames = Paths.getSparrowAtlas('ui/icons/bandu_origin_icon');
 			animation.addByPrefix(char, char, 24, false, isPlayer, false);
 		}
