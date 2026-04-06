@@ -139,6 +139,8 @@ class PlayState extends MusicBeatState
 	public static var goods:Int = 0;
 	public static var sicks:Int = 0;
 
+	public static var gitarooManChance:Int = 10000; // Chance of seeing Gitaroo Man, set as 1 in 10000.
+
 	public static var scriptedStages:Array<String> = [
 		// PUT YOUR SCRIPTED STAGES HERE!!!
 		'farm',
@@ -236,14 +238,7 @@ class PlayState extends MusicBeatState
 
 	private var daveExpressionSplitathon:Character;
 
-	public static var shakingChars:Array<String> = [
-		'bambi-unfair',
-		'bambi-3d',
-		'bambi-piss-3d',
-		'badai',
-		'unfair-junker',
-		'tunnel-dave'
-	];
+	public static var shakingChars:Array<String> = [];
 
 	private var notes:FlxTypedGroup<Note>;
 	private var altNotes:FlxTypedGroup<Note>;
@@ -2622,22 +2617,17 @@ class PlayState extends MusicBeatState
 			camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
 
 		super.update(elapsed);
+		var fullScore = 'Score: ${FlxStringUtil.formatMoney(scoreLerp, false, true)}';
+		var fullMiss = 'Misses: ${misses}';
+		var fullAccuracy = 'Accuracy: ${truncateFloat(accuracy, 2)}%';
 
-		var commaSeparated:Bool = true;
 		if (curStage == 'algebra')
 		{
-			scoreTxt.text = "Score:" + songScore;
+			scoreTxt.text = 'Score:${scoreLerp}';
 		}
 		else
 		{
-			scoreTxt.text = "Score: "
-				+ FlxStringUtil.formatMoney(scoreLerp, false, commaSeparated)
-				+ " | Misses: "
-				+ misses
-				+ " | Accuracy: "
-				+ truncateFloat(accuracy, 2)
-				+ "% | "
-				+ generateRanking();
+			scoreTxt.text = '${fullScore} | ${fullMiss} | ${fullAccuracy} | ${generateRanking()}';
 		}
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
 		{
@@ -2647,7 +2637,7 @@ class PlayState extends MusicBeatState
 			trace('PAULSCODE ' + paused);
 
 			// 1 / 1000 chance for Gitaroo Man easter egg
-			if (FlxG.random.bool(0.1))
+			if (FlxG.random.bool(100 / gitarooManChance))
 			{
 				// gitaroo man easter egg
 				FlxG.switchState(() -> new GitarooPause());

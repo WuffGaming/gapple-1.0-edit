@@ -11,6 +11,7 @@
   "camOffset": [0, 0],
   "float": "badai",
   "antialiasing": false,
+  "causeCameraShake": true,
   "icon": "badai",
   "scale": 1.02,
   "noteStyle": "3D",

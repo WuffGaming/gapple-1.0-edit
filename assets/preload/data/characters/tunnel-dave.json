@@ -10,6 +10,7 @@
   "gameOffset": [0, 0],
   "camOffset": [0, 0],
   "float": "wire",
+  "causeCameraShake": true,
   "antialiasing": false,
   "icon": "dave-3d-suit",
   "scale": 1.02,

@@ -12,6 +12,7 @@
   "antialiasing": false,
   "icon": "bambi-disrupt",
   "float": "default",
+  "causeCameraShake": true,
   "scale": 0.98,
   "noteStyle": "3D",
   "animations": [

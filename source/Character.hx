@@ -25,6 +25,8 @@ typedef CharacterData =
 
 	var ?flipX:Bool; // Flip the character sprite?
 
+	var ?causeCameraShake:Bool; // Flip the character sprite?
+
 	var ?antialiasing:Bool; // Alias the character?
 
 	var ?scaleSize:Bool; // Should you change the scale of the character or do setGraphicSize?
@@ -102,24 +104,24 @@ class Character extends FlxSprite
 		switch (curCharacter)
 		{
 			/**
-					case 'your-hardcoded-character':
-						tex = Paths.getSparrowAtlas('characters/your/path');
-						frames = tex;
-						animation.addByPrefix('idle', 'IDLE', 24, false);
-						animation.addByPrefix('singUP', 'UP', 24, false);
-						animation.addByPrefix('singRIGHT', 'RIGHT', 24, false);
-						animation.addByPrefix('singDOWN', 'DOWN', 24, false);
-						animation.addByPrefix('singLEFT', 'LEFT', 24, false);
-						animation.addByPrefix('stand', 'STAND', 24, false);
+				case 'your-hardcoded-character':
+					tex = Paths.getSparrowAtlas('characters/your/path');
+					frames = tex;
+					animation.addByPrefix('idle', 'IDLE', 24, false);
+					animation.addByPrefix('singUP', 'UP', 24, false);
+					animation.addByPrefix('singRIGHT', 'RIGHT', 24, false);
+					animation.addByPrefix('singDOWN', 'DOWN', 24, false);
+					animation.addByPrefix('singLEFT', 'LEFT', 24, false);
+					animation.addByPrefix('stand', 'STAND', 24, false);
 
-						loadOffsetFile(curCharacter);
+					loadOffsetFile(curCharacter);
 
-						updateHitbox();
-						antialiasing = false;
-						iconName = 'icon';
-						barColor = FlxColor.fromRGB(255, 255, 255);
+					updateHitbox();
+					antialiasing = false;
+					iconName = 'icon';
+					barColor = FlxColor.fromRGB(255, 255, 255);
 
-						playAnim('idle');
+					playAnim('idle');
 			**/
 			default:
 				parseDataFile();
@@ -300,6 +302,9 @@ class Character extends FlxSprite
 		nativelyPlayable = data.nativelyPlayable == null ? false : data.nativelyPlayable;
 
 		flipX = data.flipX == null ? false : data.flipX;
+
+		if (data.causeCameraShake)
+			PlayState.shakingChars.push(curCharacter);
 
 		floater = data.float == null ? 'false' : data.float; // add easy
 
