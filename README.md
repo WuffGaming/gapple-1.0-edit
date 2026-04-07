@@ -21,4 +21,4 @@ For compiling instructions, make your way over to COMPILING.md
 
 ## Contributing
 
-Wanna help contribute? Contact me on Discord "wuffgaming"
+Wanna help contribute? Contact me on Discord "wuffgaming" or make a pull request with changes you'd like to make.
