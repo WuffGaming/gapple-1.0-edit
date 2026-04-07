@@ -139,6 +139,8 @@ class PlayState extends MusicBeatState
 	public static var goods:Int = 0;
 	public static var sicks:Int = 0;
 
+	public static var iconBounce:String = 'gapple';
+
 	public static var gitarooManChance:Int = 10000; // Chance of seeing Gitaroo Man, set as 1 in 10000.
 
 	public static var scriptedStages:Array<String> = [
@@ -167,7 +169,7 @@ class PlayState extends MusicBeatState
 	public var hallMonitorStand:Character;
 	public var playRobotStand:Character;
 
-	public var standersGroup:FlxTypedGroup<FlxSprite>;
+	public var strumOffset:Int = 0;
 
 	var songPercent:Float = 0;
 
@@ -186,8 +188,6 @@ class PlayState extends MusicBeatState
 	public var stupidx:Float = 0;
 	public var stupidy:Float = 0; // stupid velocities for cutscene
 	public var updatevels:Bool = false;
-
-	var scoreTxtTween:FlxTween;
 
 	var timeTxtTween:FlxTween;
 
@@ -497,17 +497,6 @@ class PlayState extends MusicBeatState
 		else if (SONG.song.toLowerCase() == 'sugar-rush' && formoverride == "radical") // hotboy
 		{
 			gf.y = 130;
-		}
-
-		standersGroup = new FlxTypedGroup<FlxSprite>();
-		add(standersGroup);
-
-		if (SONG.song.toLowerCase() == 'algebra')
-		{
-			algebraStander('spike', spikeStand, 200, 200);
-			algebraStander('og-dave-angey', daveStand, 250, 120);
-			algebraStander('hall-monitor', hallMonitorStand, 0, 100);
-			algebraStander('playrobot-scary', playRobotStand, 750, 100, false, true);
 		}
 
 		opponent = new Character(100, 100, SONG.player2);
@@ -849,7 +838,37 @@ class PlayState extends MusicBeatState
 				preload('characters/recover/recovered_project_3');
 		}
 
-		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width / 2 - 150, healthBarBG.y + 40, FlxG.width, "", 20);
+		var iconP2Flipped:Bool = false;
+		var iconP1Flipped:Bool = false;
+		if (SONG.song.toLowerCase() == 'wireframe')
+		{
+			iconP1Flipped = false;
+		}
+		if (SONG.song.toLowerCase() == 'algebra')
+			iconBounce = 'algebra';
+
+		switch (iconBounce)
+		{
+			case 'algebra':
+				{
+					iconP2 = new HealthIcon(opponent.iconName, iconP2Flipped);
+					add(iconP2);
+
+					iconP1 = new HealthIcon(boyfriend.iconName, !iconP1Flipped);
+					add(iconP1);
+				}
+			default:
+				{
+					iconP1 = new HealthIcon(boyfriend.iconName, !iconP1Flipped);
+					add(iconP1);
+					iconP2 = new HealthIcon(opponent.iconName, iconP2Flipped);
+					add(iconP2);
+				}
+		}
+
+		updateIcons();
+
+		scoreTxt = new FlxText(healthBarBG.x + healthBarBG.width / 2 - 150, healthBarBG.y + 30, FlxG.width, "", 20);
 		if (curStage == 'algebra')
 		{
 			scoreTxt.setFormat(Paths.font("comic.ttf"), 20, FlxColor.WHITE, CENTER);
@@ -868,19 +887,6 @@ class PlayState extends MusicBeatState
 			scoreTxt.y -= 10;
 		}
 		add(scoreTxt);
-
-		var iconP1IsPlayer:Bool = true;
-		if (SONG.song.toLowerCase() == 'wireframe')
-		{
-			iconP1IsPlayer = false;
-		}
-		iconP1 = new HealthIcon(boyfriend.iconName, iconP1IsPlayer);
-		add(iconP1);
-
-		iconP2 = new HealthIcon(opponent.iconName, false);
-		add(iconP2);
-
-		updateIcons();
 
 		algebraTxt = new FlxText(0, 0, FlxG.width, "", 20);
 		algebraTxt.antialiasing = true;
@@ -1884,7 +1890,7 @@ class PlayState extends MusicBeatState
 			}
 
 			babyArrow.animation.play('static');
-			babyArrow.x += 50;
+			babyArrow.x += 75 + strumOffset;
 			babyArrow.x += ((FlxG.width / 2) * player);
 
 			strumLineNotes.add(babyArrow);
@@ -2021,70 +2027,6 @@ class PlayState extends MusicBeatState
 		num = num * Math.pow(10, precision);
 		num = Math.round(num) / Math.pow(10, precision);
 		return num;
-	}
-
-	function generateRanking():String
-	{
-		var ranking:String = "N/A";
-
-		if (misses == 0 && bads == 0 && shits == 0 && goods == 0) // Marvelous (SICK) Full Combo
-			ranking = "(PFC)";
-		else if (misses == 0 && bads == 0 && shits == 0 && goods >= 1) // Good Full Combo (Nothing but Goods & Sicks)
-			ranking = "(GFC)";
-		else if ((shits < 10 && shits != 0 || bads < 10 && bads != 0) && misses == 0) // Single Digit Combo Breaks
-			ranking = "(SDCB)";
-		else if (misses == 0 && (shits >= 10 || bads >= 10)) // Regular FC
-			ranking = "(FC)";
-		else if (misses <= 3) // Combo Breaks
-			ranking = "(CB)";
-		else
-			ranking = "";
-
-		// WIFE GONE its no longer based on wife3 FUCK YOUUU
-
-		var wifeConditions:Array<Bool> = [
-			accuracy >= 98, // Spenis
-			accuracy >= 95, // AAA
-			accuracy >= 90, // AA
-			accuracy >= 85, // A
-			accuracy >= 70, // B
-			accuracy >= 60, // C
-			accuracy >= 40, // D
-			accuracy < 40 // F
-		];
-
-		for (i in 0...wifeConditions.length)
-		{
-			var b = wifeConditions[i];
-			if (b)
-			{
-				switch (i)
-				{
-					case 1:
-						ranking += " S";
-					case 2:
-						ranking += " AAA";
-					case 3:
-						ranking += " AA";
-					case 4:
-						ranking += " A";
-					case 5:
-						ranking += " B";
-					case 6:
-						ranking += " C";
-					case 7:
-						ranking += " D";
-					case 8:
-						ranking += " F";
-				}
-				break;
-			}
-		}
-
-		if (accuracy == 0)
-			ranking = "N/A";
-
-		return ranking;
 	}
 
 	private var banduJunk:Float = 0;
@@ -2623,11 +2565,11 @@ class PlayState extends MusicBeatState
 
 		if (curStage == 'algebra')
 		{
-			scoreTxt.text = 'Score:${scoreLerp}';
+			scoreTxt.text = 'Score:${Math.round(scoreLerp)}';
 		}
 		else
 		{
-			scoreTxt.text = '${fullScore} | ${fullMiss} | ${fullAccuracy} | ${generateRanking()}';
+			scoreTxt.text = '${fullAccuracy} • ${fullMiss} • ${fullScore}';
 		}
 		if (FlxG.keys.justPressed.ENTER && startedCountdown && canPause)
 		{
@@ -3449,19 +3391,6 @@ class PlayState extends MusicBeatState
 		{
 			songScore += Std.int(score);
 
-			if (scoreTxtTween != null)
-			{
-				scoreTxtTween.cancel();
-			}
-
-			scoreTxt.scale.x = 1.1;
-			scoreTxt.scale.y = 1.1;
-			scoreTxtTween = FlxTween.tween(scoreTxt.scale, {x: 1, y: 1}, 0.2, {
-				onComplete: function(twn:FlxTween)
-				{
-					scoreTxtTween = null;
-				}
-			});
 			rating.loadGraphic(Paths.image(ratingFolder + '/' + ratingstype + '/' + daRating));
 			rating.screenCenter();
 			rating.y -= 50;
@@ -4109,7 +4038,6 @@ class PlayState extends MusicBeatState
 						// SPIKE TURN 1!!
 						swapDad('spike');
 						iconP2.changeIcon(opponent.iconName);
-						algebraStander('og-dave', daveStand, 250, 80);
 						health = 1;
 						daveJunk.visible = true;
 					case 416: //
@@ -4122,11 +4050,6 @@ class PlayState extends MusicBeatState
 						daveJunk.visible = false;
 						spikeJunk.visible = true;
 						swagSpeed = SONG.speed - 0.3;
-						for (member in standersGroup.members)
-						{
-							member.destroy();
-						}
-						algebraStander('spike', spikeStand, 300, 255);
 					case 424:
 						algebraTxt.alpha = 0;
 					case 536:
@@ -4135,11 +4058,6 @@ class PlayState extends MusicBeatState
 						health = 1;
 						davePiss.visible = true;
 						spikeJunk.visible = false;
-						for (member in standersGroup.members)
-						{
-							member.destroy();
-						}
-						algebraStander('og-dave-angey', daveStand, 250, 120);
 						iconP2.changeIcon(opponent.iconName);
 					case 552:
 						// ANGEY DAVE TURN 1!!
@@ -4149,11 +4067,6 @@ class PlayState extends MusicBeatState
 						health = 0.79;
 						davePiss.visible = false;
 						spikeJunk.visible = true;
-						for (member in standersGroup.members)
-						{
-							member.destroy();
-						}
-						algebraStander('spike', spikeStand, 300, 255);
 						iconP2.changeIcon(opponent.iconName);
 					case 568:
 						algebraTxt.alpha = 0;
@@ -4166,12 +4079,6 @@ class PlayState extends MusicBeatState
 						diamondJunk.visible = true;
 						diamondJunk.x += 800;
 						swagSpeed = 2;
-						for (member in standersGroup.members)
-						{
-							member.destroy();
-						}
-						algebraStander('spike', spikeStand, 500, 255);
-						algebraStander('og-dave-angey', daveStand, 250, 120);
 						iconP2.changeIcon(opponent.iconName);
 					case 704:
 						FlxTween.tween(diamondJunk, {x: diamondJunk.x - 800}, 0.5, {ease: FlxEase.quadOut});
@@ -4185,13 +4092,6 @@ class PlayState extends MusicBeatState
 						robotJunk.x -= 800;
 						diamondJunk.visible = false;
 						swagSpeed = SONG.speed;
-						for (member in standersGroup.members)
-						{
-							member.destroy();
-						}
-						algebraStander('spike', spikeStand, 500, 255);
-						algebraStander('hall-monitor', hallMonitorStand, 0, 100);
-						algebraStander('og-dave-angey', daveStand, 250, 120);
 						iconP2.changeIcon(opponent.iconName);
 					case 1400:
 						FlxTween.tween(robotJunk, {x: robotJunk.x + 800}, 1, {ease: FlxEase.quadOut});
@@ -4217,14 +4117,6 @@ class PlayState extends MusicBeatState
 						health = 1;
 						robotUsb.visible = true;
 						davePiss.visible = false;
-						for (member in standersGroup.members)
-						{
-							member.destroy();
-						}
-						algebraStander('playrobot-scary', playRobotStand, 750, 100, false, true);
-						algebraStander('spike', spikeStand, 500, 255);
-						// UNCOMMENT THIS WHEN HALL MONITOR SPRITES ARE DONE AND IN
-						algebraStander('hall-monitor', hallMonitorStand, 0, 100);
 						iconP2.changeIcon(opponent.iconName);
 					case 2140:
 						swagSpeed = SONG.speed + 0.9;
@@ -4759,38 +4651,52 @@ class PlayState extends MusicBeatState
 			gf.playAnim('scared', true);
 		}
 
-		// health icon bounce but epic
+		// health icon bounce but epic-er
 		if (curBeat % gfSpeed == 0)
 		{
-			curBeat % (gfSpeed * 2) == 0 ? {
-				if (iconP1.losing)
-					iconP1.scale.set(1.05, 0.9);
-				else
-					iconP1.scale.set(1.1, 0.8);
-				if (iconP2.losing)
-					iconP2.scale.set(1.05, 1.15);
-				else
-					iconP2.scale.set(1.1, 1.3);
+			switch (iconBounce)
+			{
+				case 'algebra':
+					{
+						curBeat % (gfSpeed * 2) == 0 ? {
+							iconP1.scale.set(0.9, 0.9);
+							iconP2.scale.set(1.1, 1.1);
+						} : {
+							iconP1.scale.set(1.1, 1.1);
+							iconP2.scale.set(0.9, 0.9);
+							}
+					}
+				default:
+					curBeat % (gfSpeed * 2) == 0 ? {
+						if (iconP1.losing)
+							iconP1.scale.set(1.05, 0.9);
+						else
+							iconP1.scale.set(1.1, 0.8);
+						if (iconP2.losing)
+							iconP2.scale.set(1.05, 1.15);
+						else
+							iconP2.scale.set(1.1, 1.3);
 
-				if (!iconP1.losing)
-					FlxTween.angle(iconP1, -15, 0, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut});
-				if (!iconP2.losing)
-					FlxTween.angle(iconP2, 15, 0, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut});
-			} : {
-				if (iconP1.losing)
-					iconP1.scale.set(1.05, 1.15);
-				else
-					iconP1.scale.set(1.1, 1.3);
-				if (iconP2.losing)
-					iconP2.scale.set(1.05, 0.9);
-				else
-					iconP2.scale.set(1.1, 0.8);
+						if (!iconP1.losing)
+							FlxTween.angle(iconP1, -15, 0, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut});
+						if (!iconP2.losing)
+							FlxTween.angle(iconP2, 15, 0, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut});
+					} : {
+						if (iconP1.losing)
+							iconP1.scale.set(1.05, 1.15);
+						else
+							iconP1.scale.set(1.1, 1.3);
+						if (iconP2.losing)
+							iconP2.scale.set(1.05, 0.9);
+						else
+							iconP2.scale.set(1.1, 0.8);
 
-				if (!iconP2.losing)
-					FlxTween.angle(iconP2, -15, 0, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut});
-				if (!iconP1.losing)
-					FlxTween.angle(iconP1, 15, 0, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut});
-				}
+						if (!iconP2.losing)
+							FlxTween.angle(iconP2, -15, 0, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut});
+						if (!iconP1.losing)
+							FlxTween.angle(iconP1, 15, 0, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut});
+						}
+			}
 
 			FlxTween.tween(iconP1, {'scale.x': 1, 'scale.y': 1}, Conductor.crochet / 1250 * gfSpeed, {ease: FlxEase.quadOut});
 			FlxTween.tween(iconP2, {'scale.x': 1, 'scale.y': 1}, Conductor.crochet / 1250 * gfSpeed, {ease: FlxEase.quadOut});
@@ -4892,41 +4798,6 @@ class PlayState extends MusicBeatState
 			default:
 				opponent.x += opponent.gameOffset[0];
 				opponent.y += opponent.gameOffset[1];
-		}
-	}
-
-	function algebraStander(char:String, physChar:Character, x:Float = 100, y:Float = 100, startScared:Bool = false, idleAsStand:Bool = false)
-	{
-		return;
-		if (physChar != null)
-		{
-			if (standersGroup.members.contains(physChar))
-				standersGroup.remove(physChar);
-			trace('remove physstander from group');
-			remove(physChar);
-			trace('remove physstander entirely');
-		}
-		physChar = new Character(x, y, char, false);
-		trace('new physstander');
-		standersGroup.add(physChar);
-		trace('physstander in group');
-		if (startScared)
-		{
-			physChar.playAnim('scared', true);
-			trace('scaredy');
-			new FlxTimer().start(Conductor.crochet / 1000, function(dick:FlxTimer)
-			{
-				physChar.playAnim('stand', true);
-				trace('standy');
-			});
-		}
-		else
-		{
-			if (idleAsStand)
-				physChar.playAnim('idle', true);
-			else
-				physChar.playAnim('stand', true);
-			trace('standy');
 		}
 	}
 
