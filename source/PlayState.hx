@@ -143,20 +143,7 @@ class PlayState extends MusicBeatState
 
 	public static var gitarooManChance:Int = 10000; // Chance of seeing Gitaroo Man, set as 1 in 10000.
 
-	public static var scriptedStages:Array<String> = [
-		// PUT YOUR SCRIPTED STAGES HERE!!!
-		'farm',
-		'out',
-		'3dbg',
-		'sugar',
-		'warehouse',
-		'redTunnel',
-		'POOP',
-		'algebra',
-		'basement',
-		'stage',
-		'recover'
-	];
+	public static var scriptedStages:Array<String> = [];
 
 	public var camBeatSnap:Int = 4;
 	public var danceBeatSnap:Int = 2;
@@ -177,7 +164,7 @@ class PlayState extends MusicBeatState
 
 	var note:Note;
 
-	var scriptedStage:Bool = false;
+	var jsonStage:Bool = false;
 
 	public var darkLevels:Array<String> = ['bambiFarmNight', 'daveHouse_night', 'unfairness', 'disabled'];
 	public var sunsetLevels:Array<String> = ['bambiFarmSunset', 'daveHouse_Sunset'];
@@ -466,8 +453,9 @@ class PlayState extends MusicBeatState
 		}
 
 		curStage = SONG.curStage;
-		if (curStage != null)
-			backgroundSprites = createBackgroundSprites(curStage);
+		if (curStage == null)
+			curStage = 'stage';
+		backgroundSprites = createBackgroundSprites(curStage);
 
 		screenshader.waveAmplitude = 1;
 		screenshader.waveFrequency = 2;
@@ -500,6 +488,7 @@ class PlayState extends MusicBeatState
 		}
 
 		opponent = new Character(100, 100, SONG.player2);
+
 		if (SONG.song.toLowerCase() == 'wireframe')
 		{
 			opponent2 = new Character(-1250, -1250, 'badai');
@@ -951,6 +940,7 @@ class PlayState extends MusicBeatState
 			case 'sugar':
 				camBeatSnap = 1;
 				defaultCamZoom = 0.85;
+				scriptedStages.push(stage);
 
 				var swag:FlxSprite = new FlxSprite(120, -35).loadGraphic(Paths.image('backgrounds/3dbg/pissing_too'));
 				swag.x -= 250;
@@ -962,6 +952,7 @@ class PlayState extends MusicBeatState
 
 			case 'basement':
 				defaultCamZoom = 0.9;
+				scriptedStages.push(stage);
 
 				var twodeez:FlxSprite = new FlxSprite(-1982, -707).loadGraphic(Paths.image('backgrounds/house/basement-2d'));
 				twodeez.updateHitbox();
@@ -977,6 +968,7 @@ class PlayState extends MusicBeatState
 
 			case 'farm':
 				defaultCamZoom = 0.9;
+				scriptedStages.push(stage);
 
 				farmsky = new FlxSprite(-700, 0).loadGraphic(Paths.image('backgrounds/farm/sky'));
 				farmsky.antialiasing = true;
@@ -1045,6 +1037,7 @@ class PlayState extends MusicBeatState
 
 			case 'recover':
 				defaultCamZoom = 1.4;
+				scriptedStages.push(stage);
 				var yea = new FlxSprite(-641, -222).loadGraphic(Paths.image('backgrounds/RECOVER_assets/q'));
 				yea.setGraphicSize(2478);
 				yea.updateHitbox();
@@ -1052,6 +1045,7 @@ class PlayState extends MusicBeatState
 				add(yea);
 			case 'POOP':
 				defaultCamZoom = 0.5;
+				scriptedStages.push(stage);
 				swagger = new Character(-300, 100 - 900 - 400, 'bambi-piss-3d');
 				altSong = Song.loadFromJson('alt-notes', 'applecore');
 
@@ -1114,6 +1108,7 @@ class PlayState extends MusicBeatState
 				}
 
 			case 'algebra':
+				scriptedStages.push(stage);
 				defaultCamZoom = 0.85;
 				swagSpeed = 1.6;
 				var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('backgrounds/algebra/algebraBg'));
@@ -1163,6 +1158,7 @@ class PlayState extends MusicBeatState
 
 			case '3dbg':
 				defaultCamZoom = 0.9;
+				scriptedStages.push(stage);
 				var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('backgrounds/3dbg/disabled'));
 				bg.active = true;
 				bg.scrollFactor.set(0.1, 0.1);
@@ -1211,6 +1207,7 @@ class PlayState extends MusicBeatState
 				curbg = bg;
 			case 'redTunnel':
 				defaultCamZoom = 0.67;
+				scriptedStages.push(stage);
 				var stupidFuckingRedBg = new FlxSprite().makeGraphic(9999, 9999, FlxColor.fromRGB(42, 0, 0)).screenCenter();
 				add(stupidFuckingRedBg);
 				redTunnel = new FlxSprite(-1000, -700).loadGraphic(Paths.image('backgrounds/3dbg/redTunnel'));
@@ -1229,6 +1226,7 @@ class PlayState extends MusicBeatState
 				add(new FlxSprite(-1350, -1111).loadGraphic(Paths.image('backgrounds/warehouse/bg')));
 			case 'out':
 				defaultCamZoom = 0.8;
+				scriptedStages.push(stage);
 
 				var sky:ShaggyModMoment = new ShaggyModMoment('backgrounds/thunda/sky', -1204, -456, 0.15, 1, 0);
 				add(sky);
@@ -1246,6 +1244,7 @@ class PlayState extends MusicBeatState
 				add(ground);
 			case 'stage':
 				defaultCamZoom = 0.9;
+				scriptedStages.push(stage);
 				var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('backgrounds/shared/stageback'));
 				bg.antialiasing = true;
 				bg.scrollFactor.set(0.9, 0.9);
@@ -1277,7 +1276,7 @@ class PlayState extends MusicBeatState
 				var jsonData:StageData = Paths.loadJSON('stages/${curStage}');
 				var data:StageData = cast jsonData;
 
-				scriptedStage = true;
+				jsonStage = true;
 
 				defaultCamZoom = data.cameraZoom;
 				for (prop in data.props)

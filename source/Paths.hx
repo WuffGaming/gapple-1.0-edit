@@ -12,8 +12,6 @@ import flixel.graphics.FlxGraphic;
 import openfl.display.BitmapData;
 import haxe.io.Path;
 
-using StringTools;
-
 @:nullSafety
 class Paths
 {

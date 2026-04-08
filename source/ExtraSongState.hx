@@ -115,7 +115,7 @@ class ExtraSongState extends MusicBeatState
 		{
 			switch (songs[curSelected].songName.toLowerCase())
 			{
-				case 'unknown' | 'NO-SONG-FOUND' | 'DATA-IS-NULL':
+				case 'unknown' | 'no-song-found' | 'data-is-null':
 					FlxG.sound.play(Paths.sound('cancelMenu'), 0.5);
 				default:
 					var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), 1);
@@ -186,40 +186,42 @@ class ExtraSongState extends MusicBeatState
 
 	function getSongs() // thank john
 	{
-		trace(songList);
-		for (i in 0...songList.length)
+		if (Assets.exists(Paths.txt('songList'))) // check if songlist exists
 		{
-			var jsonData:SongInfo = Paths.loadSongJson('${songList[i]}/info');
-			if (jsonData == null)
+			trace(songList); // trace all songs in songlist
+			for (i in 0...songList.length)
 			{
-				trace('Failed to find JSON data for song ${songList[i]}');
-				addSong('DATA-IS-NULL', [0, 0, 0], 'dave-3d', true);
-				return;
-			}
-			var data:SongInfo = cast jsonData;
-			trace(songList[i] + ' ' + data);
-			if (songList != null)
-			{
-				for (songName in songList)
+				if (Assets.exists(Paths.chart('${songList[i]}/info'))) // check if the song exists
 				{
-					if (data.songName.toLowerCase() == songName)
+					var jsonData:SongInfo = Paths.loadSongJson('${songList[i]}/info');
+					var data:SongInfo = cast jsonData;
+					trace(songList[i] + ' ' + data);
+
+					for (songName in songList)
 					{
-						if ((songName.toLowerCase() == 'dave-x-bambi-shipping-cute' && !FlxG.save.data.shipUnlocked)
-							|| (songName.toLowerCase() == 'recovered-project' && !FlxG.save.data.foundRecoveredProject))
+						if (data.songName.toLowerCase() == songName)
 						{
-							addSong('unknown', [0, 0, 0], data.songIcon, true);
-						}
-						else
-						{
-							addSong(data.songName, data.bgColor, data.songIcon, false);
+							if ((songName.toLowerCase() == 'dave-x-bambi-shipping-cute' && !FlxG.save.data.shipUnlocked)
+								|| (songName.toLowerCase() == 'recovered-project' && !FlxG.save.data.foundRecoveredProject))
+							{
+								addSong('unknown', [0, 0, 0], data.songIcon, true);
+							}
+							else
+							{
+								addSong(data.songName, data.bgColor, data.songIcon, false);
+							}
 						}
 					}
 				}
+				else
+				{
+					addSong('data-is-null', [0, 0, 0], 'dave-3d', true); // incase song is null
+				}
 			}
-			else
-			{
-				addSong('NO-SONGS-FOUND', [0, 0, 0], 'dave-3d', true); // incase songlist is null somehow
-			}
+		}
+		else
+		{
+			addSong('no-songs-found', [0, 0, 0], 'dave-3d', true); // incase songlist is null somehow
 		}
 	}
 }

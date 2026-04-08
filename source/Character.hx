@@ -97,9 +97,11 @@ class Character extends FlxSprite
 		curCharacter = character;
 		this.isPlayer = isPlayer;
 
-		var tex:FlxAtlasFrames;
 		antialiasing = true;
 		barColor = FlxColor.fromRGB(255, 255, 255);
+
+		if (curCharacter == null)
+			curCharacter = 'bf';
 
 		switch (curCharacter)
 		{
