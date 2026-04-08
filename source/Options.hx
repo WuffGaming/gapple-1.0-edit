@@ -121,6 +121,36 @@ class FPSOption extends Option
 	}
 }
 
+class MiddlescrollOption extends Option
+{
+	public override function press():Bool
+	{
+		FlxG.save.data.middlescroll = !FlxG.save.data.middlescroll;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return "Middlescroll " + (!FlxG.save.data.middlescroll ? "off" : "on");
+	}
+}
+
+class RatingOption extends Option
+{
+	public override function press():Bool
+	{
+		FlxG.save.data.ratingsOnCamera = !FlxG.save.data.ratingsOnCamera;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return "Cam Ratings " + (!FlxG.save.data.ratingsOnCamera ? "off" : "on");
+	}
+}
+
 class CutsceneOption extends Option
 {
 	public override function press():Bool

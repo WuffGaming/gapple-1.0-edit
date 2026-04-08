@@ -448,15 +448,22 @@ class Note extends FlxSprite
 				}
 				else
 				{
-					state.dadStrums.forEach(function(spr:FlxSprite)
+					if (!state.middlescroll)
 					{
-						if (spr.ID == notetolookfor)
+						state.dadStrums.forEach(function(spr:FlxSprite)
 						{
-							x = spr.x;
-							// angle = spr.angle;
-							MyStrum = spr;
-						}
-					});
+							if (spr.ID == notetolookfor)
+							{
+								x = spr.x;
+								// angle = spr.angle;
+								MyStrum = spr;
+							}
+						});
+					}
+					else
+					{
+						x = 10000; // ensure note isnt visible at all costs if its middlescroll.
+					}
 				}
 			}
 		}

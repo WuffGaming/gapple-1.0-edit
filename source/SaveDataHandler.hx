@@ -34,5 +34,11 @@ class SaveDataHandler
 
 		if (FlxG.save.data.fps == null)
 			FlxG.save.data.fps = false;
+
+		if (FlxG.save.data.middlescroll == null)
+			FlxG.save.data.middlescroll = false;
+
+		if (FlxG.save.data.ratingsOnCamera == null)
+			FlxG.save.data.ratingsOnCamera = false;
 	}
 }

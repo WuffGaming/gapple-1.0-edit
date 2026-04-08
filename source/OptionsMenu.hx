@@ -22,6 +22,8 @@ class OptionsMenu extends MusicBeatState
 		new DFJKOption(controls),
 		new NewInputOption(),
 		new DownscrollOption(),
+		new MiddlescrollOption(),
+		new RatingOption(),
 		new AccuracyOption(),
 		new HitsoundOption(),
 		new CutsceneOption(),
