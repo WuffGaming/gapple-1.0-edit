@@ -4,6 +4,7 @@ export/*
 .DS_Store
 .icloud
 .haxelib/*
+example_mods/personal/
 .history
 .ionide
 vscode-project.hxml

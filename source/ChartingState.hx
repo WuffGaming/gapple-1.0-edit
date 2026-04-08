@@ -1157,7 +1157,7 @@ class ChartingState extends MusicBeatState
 	{
 		if (song.toLowerCase() == 'recovered-project' || song.toLowerCase() == 'dave-x-bambi-shipping-cute')
 		{
-			FlxG.switchState(new VideoState('assets/videos/fortnite/fortniteballs.webm',
+			FlxG.switchState(() -> new VideoState('assets/videos/fortnite/fortniteballs.webm',
 				new CrasherState())); // YOU THINK YOU ARE SO CLEVER DON'T YOU? HAHA FUCK YOU
 		}
 		if (PlayState.SONG == null)

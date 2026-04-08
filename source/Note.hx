@@ -12,8 +12,6 @@ import Song.SwagSong;
 import polymod.format.ParseRules.TargetSignatureElement;
 #end
 
-using StringTools;
-
 class Note extends FlxSprite
 {
 	public var strumTime:Float = 0;
