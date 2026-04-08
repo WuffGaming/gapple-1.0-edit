@@ -695,11 +695,6 @@ class PlayState extends MusicBeatState
 			middlescroll = false; // we DONT want middlescroll on applecore
 			altStrumLine = new FlxSprite(0, -100);
 		}
-		if (SONG.song.toLowerCase() == 'disruption')
-		{
-			middlescroll = false; // we CANT use middlescroll on disruption for some reason.
-		}
-
 		if (FlxG.save.data.downscroll)
 			strumLine.y = FlxG.height - 165;
 
@@ -1470,8 +1465,7 @@ class PlayState extends MusicBeatState
 		opponent.canDance = true;
 		gf.canDance = true;
 
-		if (!middlescroll)
-			generateStaticArrows(0);
+		generateStaticArrows(0);
 		generateStaticArrows(1);
 
 		var startSpeed:Float = 1;
@@ -1903,6 +1897,8 @@ class PlayState extends MusicBeatState
 			strumOffset = middlescroll ? -300 : 0;
 			babyArrow.x += 75 + strumOffset;
 			babyArrow.x += ((FlxG.width / 2) * player);
+			if (middlescroll && player == 0)
+				babyArrow.x += 10000;
 
 			strumLineNotes.add(babyArrow);
 
@@ -2439,13 +2435,10 @@ class PlayState extends MusicBeatState
 			{
 				spr.angle += (Math.sin(elapsedtime * 2.5) + 1) * 5;
 			});
-			if (!middlescroll)
+			dadStrums.forEach(function(spr:Strum)
 			{
-				dadStrums.forEach(function(spr:Strum)
-				{
-					spr.angle += (Math.sin(elapsedtime * 2.5) + 1) * 5;
-				});
-			}
+				spr.angle += (Math.sin(elapsedtime * 2.5) + 1) * 5;
+			});
 			for (note in notes)
 			{
 				if (note.mustPress)
@@ -2455,11 +2448,8 @@ class PlayState extends MusicBeatState
 				}
 				else
 				{
-					if (!middlescroll)
-					{
-						if (!note.isSustainNote)
-							note.angle = dadStrums.members[note.noteData].angle;
-					}
+					if (!note.isSustainNote)
+						note.angle = dadStrums.members[note.noteData].angle;
 				}
 			}
 		}
@@ -2469,6 +2459,7 @@ class PlayState extends MusicBeatState
 			var krunkThing = 60;
 
 			poop.alpha = Math.sin(elapsedtime) / 2.5 + 0.4;
+
 			playerStrums.forEach(function(spr:FlxSprite)
 			{
 				spr.x = arrowJunks[spr.ID + 4][0] + (Math.sin(elapsedtime) * ((spr.ID % 2) == 0 ? 1 : -1)) * krunkThing;
@@ -2500,7 +2491,6 @@ class PlayState extends MusicBeatState
 				spr.scale.x *= 1.5;
 				spr.scale.y *= 1.5;
 			});
-
 			notes.forEachAlive(function(spr:Note)
 			{
 				if (spr.mustPress)
@@ -3303,6 +3293,11 @@ class PlayState extends MusicBeatState
 		coolText.screenCenter();
 		coolText.x = FlxG.width * 0.55;
 		coolText.y -= 350;
+		if (ratingOnCamera && middlescroll)
+		{
+			coolText.x += 350;
+			coolText.y -= 200;
+		}
 		var ratingFolder:String = 'ui/ratings';
 		var rating:FlxSprite = new FlxSprite();
 
@@ -4476,8 +4471,7 @@ class PlayState extends MusicBeatState
 						defaultCamZoom = 0.8;
 						threedeez.active = threedeez.visible = true;
 						removeStatics();
-						if (!middlescroll)
-							generateStaticArrows(0, false);
+						generateStaticArrows(0, false);
 						generateStaticArrows(1, false);
 					case 128:
 						FlxG.camera.flash(FlxColor.WHITE, 1);
@@ -4493,8 +4487,7 @@ class PlayState extends MusicBeatState
 						defaultCamZoom = 1;
 						threedeez.active = threedeez.visible = false;
 						removeStatics();
-						if (!middlescroll)
-							generateStaticArrows(0, false);
+						generateStaticArrows(0, false);
 						generateStaticArrows(1, false);
 					case 256: // dave and bg turn 3d
 						swapDad('insane-dave-3d');
@@ -4503,8 +4496,7 @@ class PlayState extends MusicBeatState
 						defaultCamZoom = 0.85;
 						threedeez.active = threedeez.visible = true;
 						removeStatics();
-						if (!middlescroll)
-							generateStaticArrows(0, false);
+						generateStaticArrows(0, false);
 						generateStaticArrows(1, false);
 					case 312:
 						FlxTween.tween(FlxG.camera, {zoom: 0.5}, 0.8, {ease: FlxEase.circOut});
@@ -4520,8 +4512,7 @@ class PlayState extends MusicBeatState
 						defaultCamZoom = 0.8;
 						threedeez.active = threedeez.visible = false;
 						removeStatics();
-						if (!middlescroll)
-							generateStaticArrows(0, false);
+						generateStaticArrows(0, false);
 						generateStaticArrows(1, false);
 					case 336:
 						defaultCamZoom = 1;
@@ -4536,8 +4527,7 @@ class PlayState extends MusicBeatState
 						defaultCamZoom = 1;
 						threedeez.active = threedeez.visible = true;
 						removeStatics();
-						if (!middlescroll)
-							generateStaticArrows(0, false);
+						generateStaticArrows(0, false);
 						generateStaticArrows(1, false);
 					case 448: // dave and bg turn 2d
 						camZoomIntensity = 3;
@@ -4547,8 +4537,7 @@ class PlayState extends MusicBeatState
 						defaultCamZoom = 1.1;
 						threedeez.active = threedeez.visible = false;
 						removeStatics();
-						if (!middlescroll)
-							generateStaticArrows(0, false);
+						generateStaticArrows(0, false);
 						generateStaticArrows(1, false);
 					case 464:
 						defaultCamZoom = 1;
@@ -4560,8 +4549,7 @@ class PlayState extends MusicBeatState
 						defaultCamZoom = 0.8;
 						threedeez.active = threedeez.visible = true;
 						removeStatics();
-						if (!middlescroll)
-							generateStaticArrows(0, false);
+						generateStaticArrows(0, false);
 						generateStaticArrows(1, false);
 					case 512: // dave and bg turn 2d for the fimal time..
 						FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
@@ -4571,8 +4559,7 @@ class PlayState extends MusicBeatState
 						defaultCamZoom = 1.2;
 						threedeez.active = threedeez.visible = false;
 						removeStatics();
-						if (!middlescroll)
-							generateStaticArrows(0, false);
+						generateStaticArrows(0, false);
 						generateStaticArrows(1, false);
 					case 544:
 						thunderBlack.alpha = 0;
