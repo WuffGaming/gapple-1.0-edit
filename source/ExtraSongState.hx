@@ -113,31 +113,35 @@ class ExtraSongState extends MusicBeatState
 
 		if (FlxG.keys.pressed.ENTER)
 		{
-			switch (songs[curSelected].songName.toLowerCase())
-			{
-				case 'unknown' | 'no-song-found' | 'data-is-null':
-					FlxG.sound.play(Paths.sound('cancelMenu'), 0.5);
-				default:
-					var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), 1);
+			if (!Assets.exists(Paths.chart('${songs[curSelected].songName.toLowerCase()}/info'))
+				&& Assets.exists(Paths.chart('${songs[curSelected].songName.toLowerCase()}/${songs[curSelected].songName.toLowerCase()}'))) // failsafe
+				FlxG.sound.play(Paths.sound('cancelMenu'), 0.5);
+			else
+				switch (songs[curSelected].songName.toLowerCase())
+				{
+					case 'unknown' | 'no-song-found' | 'data-is-null':
+						FlxG.sound.play(Paths.sound('cancelMenu'), 0.5);
+					default:
+						var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), 1);
 
-					trace(poop);
+						trace(poop);
 
-					PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
-					PlayState.isStoryMode = false;
-					PlayState.storyDifficulty = 1;
-					PlayState.xtraSong = true;
+						PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
+						PlayState.isStoryMode = false;
+						PlayState.storyDifficulty = 1;
+						PlayState.xtraSong = true;
 
-					PlayState.formoverride = 'none';
+						PlayState.formoverride = 'none';
 
-					if (songs[curSelected].songName.toLowerCase() == 'origin')
-					{
-						LoadingState.loadAndSwitchState(new PlayState());
-					}
-					else
-					{
-						LoadingState.loadAndSwitchState(new CharacterSelectState());
-					}
-			}
+						if (songs[curSelected].songName.toLowerCase() == 'origin')
+						{
+							LoadingState.loadAndSwitchState(new PlayState());
+						}
+						else
+						{
+							LoadingState.loadAndSwitchState(new CharacterSelectState());
+						}
+				}
 		}
 	}
 
@@ -152,14 +156,24 @@ class ExtraSongState extends MusicBeatState
 		if (curSelected >= songs.length)
 			curSelected = 0;
 
-		switch (songs[curSelected].songName.toLowerCase())
+		if (!Assets.exists(Paths.chart('${songs[curSelected].songName.toLowerCase()}/info'))
+			&& Assets.exists(Paths.chart('${songs[curSelected].songName.toLowerCase()}/${songs[curSelected].songName.toLowerCase()}')))
 		{
-			case 'unknown':
-				swagText.text = 'A secret is required to unlock this song!';
-				swagText.visible = true;
-			default:
-				swagText.visible = false;
+			swagText.text = 'No info file exists but chart does!';
+			swagText.visible = true;
 		}
+		else
+			switch (songs[curSelected].songName.toLowerCase())
+			{
+				case 'data-is-null':
+					swagText.text = "Song file doesn't exist!";
+					swagText.visible = true;
+				case 'unknown':
+					swagText.text = 'A secret is required to unlock this song!';
+					swagText.visible = true;
+				default:
+					swagText.visible = false;
+			}
 		var bullShit:Int = 0;
 
 		for (i in 0...iconArray.length)
@@ -203,20 +217,21 @@ class ExtraSongState extends MusicBeatState
 						{
 							if ((songName.toLowerCase() == 'dave-x-bambi-shipping-cute' && !FlxG.save.data.shipUnlocked)
 								|| (songName.toLowerCase() == 'recovered-project' && !FlxG.save.data.foundRecoveredProject))
-							{
 								addSong('unknown', [0, 0, 0], data.songIcon, true);
-							}
-							else
-							{
+							else if (data.songName == songList[i])
 								addSong(data.songName, data.bgColor, data.songIcon, false);
-							}
+							else
+								addSong(songList[i], data.bgColor, data.songIcon, false);
 						}
 					}
 				}
-				else
+				else if (Assets.exists(Paths.chart('${songList[i]}/${songList[i]}')))
 				{
-					addSong('data-is-null', [0, 0, 0], 'dave-3d', true); // incase song is null
+					trace(songList[i]);
+					addSong(songList[i], [255, 255, 255], 'dave-3d', true); // incase only info is null
 				}
+				else
+					addSong('data-is-null', [0, 0, 0], 'dave-3d', true); // incase entire song is null
 			}
 		}
 		else

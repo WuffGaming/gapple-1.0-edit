@@ -546,14 +546,10 @@ class PlayState extends MusicBeatState
 				case 'basement':
 					boyfriend.x += 125;
 				case 'sugar':
-					if (formoverride == "radical")
-					{
-						gf.x += 35;
-					}
-					else if (formoverride == "bf")
-					{
+					if (formoverride == 'none' || formoverride == 'bf')
 						gf.setPosition(751, 300);
-					}
+					else
+						gf.x += 35;
 				case 'algebra':
 					boyfriend.y += 80;
 			}
