@@ -53,6 +53,8 @@ class ExtraSongState extends MusicBeatState
 		bg.color = 0xFF4965FF;
 		add(bg);
 
+		songList.push('tutorial'); // add tutorial as the final song no matter what
+
 		getSongs();
 
 		grpSongs = new FlxTypedGroup<Alphabet>();
@@ -198,43 +200,36 @@ class ExtraSongState extends MusicBeatState
 
 	function getSongs() // thank john
 	{
-		if (Assets.exists(Paths.txt('songList'))) // check if songlist exists
+		trace(songList); // trace all songs in songlist
+		for (i in 0...songList.length)
 		{
-			trace(songList); // trace all songs in songlist
-			for (i in 0...songList.length)
+			if (Assets.exists(Paths.chart('${songList[i]}/info'))) // check if the song exists
 			{
-				if (Assets.exists(Paths.chart('${songList[i]}/info'))) // check if the song exists
-				{
-					var jsonData:SongInfo = Paths.loadSongJson('${songList[i]}/info');
-					var data:SongInfo = cast jsonData;
-					trace(songList[i] + ' ' + data);
+				var jsonData:SongInfo = Paths.loadSongJson('${songList[i]}/info');
+				var data:SongInfo = cast jsonData;
+				trace(songList[i] + ' ' + data);
 
-					for (songName in songList)
+				for (songName in songList)
+				{
+					if (data.songName.toLowerCase() == songName)
 					{
-						if (data.songName.toLowerCase() == songName)
-						{
-							if ((songName.toLowerCase() == 'dave-x-bambi-shipping-cute' && !FlxG.save.data.shipUnlocked)
-								|| (songName.toLowerCase() == 'recovered-project' && !FlxG.save.data.foundRecoveredProject))
-								addSong('unknown', [0, 0, 0], data.songIcon, true);
-							else if (data.songName == songList[i])
-								addSong(data.songName, data.bgColor, data.songIcon, false);
-							else
-								addSong(songList[i], data.bgColor, data.songIcon, false);
-						}
+						if ((songName.toLowerCase() == 'dave-x-bambi-shipping-cute' && !FlxG.save.data.shipUnlocked)
+							|| (songName.toLowerCase() == 'recovered-project' && !FlxG.save.data.foundRecoveredProject))
+							addSong('unknown', [0, 0, 0], data.songIcon, true);
+						else if (data.songName == songList[i])
+							addSong(data.songName, data.bgColor, data.songIcon, false);
+						else
+							addSong(songList[i], data.bgColor, data.songIcon, false);
 					}
 				}
-				else if (Assets.exists(Paths.chart('${songList[i]}/${songList[i]}')))
-				{
-					trace(songList[i]);
-					addSong(songList[i], [255, 255, 255], 'dave-3d', true); // incase only info is null
-				}
-				else
-					addSong('data-is-null', [0, 0, 0], 'dave-3d', true); // incase entire song is null
 			}
-		}
-		else
-		{
-			addSong('no-songs-found', [0, 0, 0], 'dave-3d', true); // incase songlist is null somehow
+			else if (Assets.exists(Paths.chart('${songList[i]}/${songList[i]}')))
+			{
+				trace(songList[i]);
+				addSong(songList[i], [255, 255, 255], 'dave-3d', true); // incase only info is null
+			}
+			else
+				addSong('data-is-null', [0, 0, 0], 'dave-3d', true); // incase entire song is null
 		}
 	}
 }

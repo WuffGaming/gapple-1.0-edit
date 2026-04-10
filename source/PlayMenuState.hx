@@ -100,6 +100,7 @@ class PlayMenuState extends MusicBeatState
 		FlxG.camera.follow(camFollow, null, 0.6);
 
 		camFollow.setPosition(640, 150.5);
+		optionShit.push('extras');
 		for (i in 0...optionShit.length)
 		{
 			var menuItem:FlxSprite = new FlxSprite(0, FlxG.height * 1.6);
