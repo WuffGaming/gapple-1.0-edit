@@ -651,23 +651,6 @@ class PlayState extends MusicBeatState
 		strumLine = new FlxSprite(0, 50).makeGraphic(FlxG.width, 10);
 		strumLine.scrollFactor.set();
 
-		var showTime:Bool = true;
-		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 32);
-		timeTxt.setFormat("Comic Sans MS Bold", 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		timeTxt.scrollFactor.set();
-		timeTxt.alpha = 0;
-		timeTxt.borderSize = 2;
-		timeTxt.antialiasing = true;
-		timeTxt.visible = showTime;
-		if (FlxG.save.data.downscroll)
-			timeTxt.y = FlxG.height - 44;
-		if (curStage == 'algebra')
-		{
-			timeTxt.y = 5000000;
-		}
-
-		add(timeTxt);
-
 		if (SONG.song.toLowerCase() == 'applecore')
 		{
 			middlescroll = false; // we DONT want middlescroll on applecore
@@ -684,6 +667,23 @@ class PlayState extends MusicBeatState
 		dadStrums = new FlxTypedGroup<Strum>();
 
 		poopStrums = new FlxTypedGroup<Strum>();
+
+		var showTime:Bool = true;
+		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 32);
+		timeTxt.setFormat("Comic Sans MS Bold", 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		timeTxt.scrollFactor.set();
+		timeTxt.alpha = 0;
+		timeTxt.borderSize = 2;
+		timeTxt.antialiasing = true;
+		timeTxt.visible = showTime;
+		if (FlxG.save.data.downscroll)
+			timeTxt.y = FlxG.height - 44;
+		if (curStage == 'algebra')
+		{
+			timeTxt.y = 5000000;
+		}
+
+		add(timeTxt);
 
 		generateSong(SONG.song);
 
@@ -811,7 +811,7 @@ class PlayState extends MusicBeatState
 		var iconP1Flipped:Bool = false;
 		if (SONG.song.toLowerCase() == 'wireframe')
 		{
-			iconP1Flipped = false;
+			iconP1Flipped = true;
 		}
 		if (SONG.song.toLowerCase() == 'algebra')
 			iconBounce = 'algebra';
@@ -1578,7 +1578,7 @@ class PlayState extends MusicBeatState
 	var lastReportedPlayheadPosition:Int = 0;
 	var songTime:Float = 0;
 
-	function startSong():Void
+	function startSong():Void // everything that happens the second the song starts. woww
 	{
 		startingSong = false;
 
@@ -1588,8 +1588,13 @@ class PlayState extends MusicBeatState
 		if (!paused)
 			FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
 		vocals.play();
-		if (SONG.song.toLowerCase() == 'disruption')
-			FlxG.sound.music.volume = 1; // WEIRD BUG!!! WTF!!!
+		switch (SONG.song.toLowerCase())
+		{
+			case 'disruption':
+				FlxG.sound.music.volume = 1; // WEIRD BUG!!! WTF!!!
+			case 'recovered-project':
+				thunderBlack.alpha = 0;
+		}
 
 		songLength = FlxG.sound.music.length;
 
@@ -3059,7 +3064,7 @@ class PlayState extends MusicBeatState
 		canPause = false;
 		updateTime = false;
 
-		FlxG.sound.music.volume = 0;
+		FlxG.sound.music.stop; // we dont need anymore music!
 		vocals.volume = 0;
 		if (SONG.validScore)
 		{
@@ -3080,7 +3085,6 @@ class PlayState extends MusicBeatState
 				{
 					case 'applecore':
 						canPause = false;
-						FlxG.sound.music.volume = 0;
 						vocals.volume = 0;
 						generatedMusic = false; // stop the game from trying to generate anymore music and to just cease attempting to play the music in general
 						boyfriend.stunned = true;
@@ -4136,11 +4140,10 @@ class PlayState extends MusicBeatState
 							}
 						});
 				}
-			case 'recovered-project': // i discovered how to do shit so i can do better event funniesss
+			case 'recovered-project': // i wonder if i discovered how to do events better... hmm....
 				switch (curBeat)
 				{
 					case 1:
-						FlxTween.tween(thunderBlack, {alpha: 0}, Conductor.stepCrochet / 500);
 						camZoomIntensity = 0;
 					case 16:
 						FlxG.camera.flash(FlxColor.WHITE, 1);
@@ -4691,10 +4694,6 @@ class PlayState extends MusicBeatState
 				opponent.setPosition(gf.x, gf.y);
 				gf.visible = false;
 				tweenCamIn();
-			case 'recovered_project' | 'recovered_project_2' | 'recovered_project_3':
-				opponent.setPosition(-307, 10);
-				opponent.x += opponent.gameOffset[0];
-				opponent.y += opponent.gameOffset[1];
 			default:
 				opponent.x += opponent.gameOffset[0];
 				opponent.y += opponent.gameOffset[1];

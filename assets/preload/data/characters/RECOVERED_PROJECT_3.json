@@ -7,8 +7,8 @@
     	183
     ],
   "globalOffset": [0, 0],
-  "gameOffset": [-307, -125],
-  "camOffset": [0, 0],
+  "gameOffset": [-714, -400],
+  "camOffset": [200, 130],
   "antialiasing": false,
   "icon": "recover-irreversible",
   "scale": 0.7,

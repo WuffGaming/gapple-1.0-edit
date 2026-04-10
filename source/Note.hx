@@ -103,8 +103,7 @@ class Note extends FlxSprite
 		this.noteData = noteData;
 
 		if (((CharactersWith3D.contains(PlayState.dadChar) && !musthit) || (CharactersWith3D.contains(PlayState.bfChar) && musthit))
-			|| ((CharactersWith3D.contains(PlayState.SONG.player2) || CharactersWith3D.contains(PlayState.SONG.player1))
-				&& ((this.strumTime / 50) % 20 > 10)))
+			|| ((CharactersWith3D.contains(PlayState.SONG.player2) || CharactersWith3D.contains(PlayState.SONG.player1))))
 		{
 			switch (PlayState.curStage)
 			{
