@@ -122,13 +122,11 @@ class ExtraSongState extends MusicBeatState
 					case 'unknown' | 'no-song-found' | 'data-is-null':
 						FlxG.sound.play(Paths.sound('cancelMenu'), 0.5);
 					default:
-						var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), 1);
+						var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase());
 
 						trace(poop);
 
 						PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
-						PlayState.isStoryMode = false;
-						PlayState.storyDifficulty = 1;
 						PlayState.xtraSong = true;
 
 						PlayState.formoverride = 'none';

@@ -90,15 +90,11 @@ class GameOverSubstate extends MusicBeatSubstate
 
 				FlxG.save.data.foundRecoveredProject = true;
 
-				var poop:String = Highscore.formatSong('recovered-project', 1);
+				var poop:String = Highscore.formatSong('recovered-project');
 
 				trace(poop);
 
 				PlayState.SONG = Song.loadFromJson(poop, 'recovered-project');
-				PlayState.isStoryMode = false;
-				PlayState.storyDifficulty = 1;
-
-				PlayState.storyWeek = 1;
 				LoadingState.loadAndSwitchState(new PlayState());
 			}
 			else

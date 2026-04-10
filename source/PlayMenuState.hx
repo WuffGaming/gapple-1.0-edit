@@ -210,30 +210,18 @@ class PlayMenuState extends MusicBeatState
 								case 'extras':
 									FlxG.switchState(() -> new ExtraSongState());
 								case 'algebra':
-									var poop:String = Highscore.formatSong(daChoice, 1);
-
+									var poop:String = Highscore.formatSong(daChoice);
 									trace(poop);
-
 									PlayState.SONG = Song.loadFromJson(poop, daChoice);
-									PlayState.isStoryMode = false;
-									PlayState.storyDifficulty = 1;
 									PlayState.xtraSong = false;
-
-									PlayState.storyWeek = 1;
 									PlayState.characteroverride = 'none';
 									PlayState.formoverride = 'none';
 									LoadingState.loadAndSwitchState(new VideoState('assets/videos/algebracutscene.webm', new PlayState()), true);
 								default:
-									var poop:String = Highscore.formatSong(daChoice, 1);
-
+									var poop:String = Highscore.formatSong(daChoice);
 									trace(poop);
-
 									PlayState.SONG = Song.loadFromJson(poop, daChoice);
-									PlayState.isStoryMode = false;
-									PlayState.storyDifficulty = 1;
 									PlayState.xtraSong = false;
-
-									PlayState.storyWeek = 1;
 									PlayState.characteroverride = 'none';
 									PlayState.formoverride = 'none';
 									LoadingState.loadAndSwitchState(new PlayState());

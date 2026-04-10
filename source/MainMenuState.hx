@@ -229,18 +229,16 @@ class MainMenuState extends MusicBeatState
 								case 'play':
 									FlxG.switchState(() -> new PlayMenuState());
 								case 'dave x bambi shipping cute':
-									var poop:String = Highscore.formatSong('dave-x-bambi-shipping-cute', 1);
+									var poop:String = Highscore.formatSong('dave-x-bambi-shipping-cute');
 
 									trace(poop);
 
 									FlxG.save.data.shipUnlocked = true;
 
 									PlayState.SONG = Song.loadFromJson(poop, 'dave-x-bambi-shipping-cute');
-									PlayState.isStoryMode = false;
-									PlayState.storyDifficulty = 1;
 									PlayState.xtraSong = false;
-
-									PlayState.storyWeek = 1;
+									PlayState.characteroverride = 'none';
+									PlayState.formoverride = 'none';
 									LoadingState.loadAndSwitchState(new PlayState());
 							}
 						});
