@@ -1328,10 +1328,12 @@ class PlayState extends MusicBeatState
 					if (prop.wavy != null && prop.wavy == true)
 					{
 						var shader:Shaders.GlitchEffect = new Shaders.GlitchEffect();
-						shader.waveAmplitude = 0.25;
-						shader.waveFrequency = 10;
-						shader.waveSpeed = 3;
+						shader.waveAmplitude = 0.1;
+						shader.waveFrequency = 5;
+						shader.waveSpeed = 2;
 						theprop.shader = shader.shader;
+						theprop.active = true;
+						curbg = theprop; // you should avoid having more than one wavybg, as to not cause issues
 					}
 
 					if (prop.flipX != null)
