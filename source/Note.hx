@@ -307,87 +307,83 @@ class Note extends FlxSprite
 		}
 	}
 
-	public function swapType()
+	public function swapType(type)
 	{
 		var cachedCurrentAnimation = animation.curAnim.name;
 
 		animation.destroyAnimations();
 
-		if (((CharactersWith3D.contains(PlayState.dadChar) || CharactersWith3D.contains(PlayState.bfChar))
-			&& ((this.strumTime / 50) % 20 > 10)))
+		switch (type)
 		{
-			frames = Paths.getSparrowAtlas(dumb3dpath);
+			case '3d':
+				frames = Paths.getSparrowAtlas(dumb3dpath);
 
-			animation.addByPrefix('greenScroll', 'green0');
-			animation.addByPrefix('redScroll', 'red0');
-			animation.addByPrefix('blueScroll', 'blue0');
-			animation.addByPrefix('purpleScroll', 'purple0');
+				animation.addByPrefix('greenScroll', 'green0');
+				animation.addByPrefix('redScroll', 'red0');
+				animation.addByPrefix('blueScroll', 'blue0');
+				animation.addByPrefix('purpleScroll', 'purple0');
 
-			animation.addByPrefix('purpleholdend', 'pruple end hold');
-			animation.addByPrefix('greenholdend', 'green hold end');
-			animation.addByPrefix('redholdend', 'red hold end');
-			animation.addByPrefix('blueholdend', 'blue hold end');
+				animation.addByPrefix('purpleholdend', 'pruple end hold');
+				animation.addByPrefix('greenholdend', 'green hold end');
+				animation.addByPrefix('redholdend', 'red hold end');
+				animation.addByPrefix('blueholdend', 'blue hold end');
 
-			animation.addByPrefix('purplehold', 'purple hold piece');
-			animation.addByPrefix('greenhold', 'green hold piece');
-			animation.addByPrefix('redhold', 'red hold piece');
-			animation.addByPrefix('bluehold', 'blue hold piece');
+				animation.addByPrefix('purplehold', 'purple hold piece');
+				animation.addByPrefix('greenhold', 'green hold piece');
+				animation.addByPrefix('redhold', 'red hold piece');
+				animation.addByPrefix('bluehold', 'blue hold piece');
 
-			setGraphicSize(Std.int(width * 0.7));
-			updateHitbox();
-			antialiasing = false;
-		}
-		else if (((CharactersWithPixel.contains(PlayState.dadChar)) || (CharactersWithPixel.contains(PlayState.bfChar))))
-		{
-			frames = Paths.getSparrowAtlas(dumbpixelpath);
+				setGraphicSize(Std.int(width * 0.7));
+				updateHitbox();
+				antialiasing = false;
+			case 'pixel':
+				frames = Paths.getSparrowAtlas(dumbpixelpath);
 
-			loadGraphic(Paths.image(dumbpixelpath), true, 17, 17);
+				loadGraphic(Paths.image(dumbpixelpath), true, 17, 17);
 
-			animation.add('greenScroll', [6]);
-			animation.add('redScroll', [7]);
-			animation.add('blueScroll', [5]);
-			animation.add('purpleScroll', [4]);
+				animation.add('greenScroll', [6]);
+				animation.add('redScroll', [7]);
+				animation.add('blueScroll', [5]);
+				animation.add('purpleScroll', [4]);
 
-			if (isSustainNote)
-			{
-				loadGraphic(Paths.image(dumbpixelpath + '-ENDS'), true, 7, 6);
+				if (isSustainNote)
+				{
+					loadGraphic(Paths.image(dumbpixelpath + '-ENDS'), true, 7, 6);
 
-				animation.add('purpleholdend', [4]);
-				animation.add('greenholdend', [6]);
-				animation.add('redholdend', [7]);
-				animation.add('blueholdend', [5]);
+					animation.add('purpleholdend', [4]);
+					animation.add('greenholdend', [6]);
+					animation.add('redholdend', [7]);
+					animation.add('blueholdend', [5]);
 
-				animation.add('purplehold', [0]);
-				animation.add('greenhold', [2]);
-				animation.add('redhold', [3]);
-				animation.add('bluehold', [1]);
-			}
+					animation.add('purplehold', [0]);
+					animation.add('greenhold', [2]);
+					animation.add('redhold', [3]);
+					animation.add('bluehold', [1]);
+				}
 
-			setGraphicSize(Std.int(width * PlayState.daPixelZoom));
-			updateHitbox();
-		}
-		else
-		{
-			frames = Paths.getSparrowAtlas('ui/notes/NOTE_assets');
+				setGraphicSize(Std.int(width * PlayState.daPixelZoom));
+				updateHitbox();
+			default:
+				frames = Paths.getSparrowAtlas('ui/notes/NOTE_assets');
 
-			animation.addByPrefix('greenScroll', 'green0');
-			animation.addByPrefix('redScroll', 'red0');
-			animation.addByPrefix('blueScroll', 'blue0');
-			animation.addByPrefix('purpleScroll', 'purple0');
+				animation.addByPrefix('greenScroll', 'green0');
+				animation.addByPrefix('redScroll', 'red0');
+				animation.addByPrefix('blueScroll', 'blue0');
+				animation.addByPrefix('purpleScroll', 'purple0');
 
-			animation.addByPrefix('purpleholdend', 'pruple end hold');
-			animation.addByPrefix('greenholdend', 'green hold end');
-			animation.addByPrefix('redholdend', 'red hold end');
-			animation.addByPrefix('blueholdend', 'blue hold end');
+				animation.addByPrefix('purpleholdend', 'pruple end hold');
+				animation.addByPrefix('greenholdend', 'green hold end');
+				animation.addByPrefix('redholdend', 'red hold end');
+				animation.addByPrefix('blueholdend', 'blue hold end');
 
-			animation.addByPrefix('purplehold', 'purple hold piece');
-			animation.addByPrefix('greenhold', 'green hold piece');
-			animation.addByPrefix('redhold', 'red hold piece');
-			animation.addByPrefix('bluehold', 'blue hold piece');
+				animation.addByPrefix('purplehold', 'purple hold piece');
+				animation.addByPrefix('greenhold', 'green hold piece');
+				animation.addByPrefix('redhold', 'red hold piece');
+				animation.addByPrefix('bluehold', 'blue hold piece');
 
-			setGraphicSize(Std.int(width * 0.7));
-			updateHitbox();
-			antialiasing = true;
+				setGraphicSize(Std.int(width * 0.7));
+				updateHitbox();
+				antialiasing = true;
 		}
 
 		animation.play(cachedCurrentAnimation, true);

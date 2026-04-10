@@ -4318,6 +4318,16 @@ class PlayState extends MusicBeatState
 						removeStatics();
 						generateStaticArrows(0, false);
 						generateStaticArrows(1, false);
+						for (note in notes.members)
+						{
+							if (!note.mustPress)
+								note.swapType('3d');
+						}
+						for (note in unspawnNotes)
+						{
+							if (!note.mustPress)
+								note.swapType('3d');
+						}
 					case 128:
 						FlxG.camera.flash(FlxColor.WHITE, 1);
 						defaultCamZoom = 0.9;
@@ -4334,6 +4344,16 @@ class PlayState extends MusicBeatState
 						removeStatics();
 						generateStaticArrows(0, false);
 						generateStaticArrows(1, false);
+						for (note in notes.members)
+						{
+							if (!note.mustPress)
+								note.swapType('2d');
+						}
+						for (note in unspawnNotes)
+						{
+							if (!note.mustPress)
+								note.swapType('2d');
+						}
 					case 256: // dave and bg turn 3d
 						swapDad('insane-dave-3d');
 						iconP2.changeIcon(opponent.iconName);
@@ -4343,6 +4363,16 @@ class PlayState extends MusicBeatState
 						removeStatics();
 						generateStaticArrows(0, false);
 						generateStaticArrows(1, false);
+						for (note in notes.members)
+						{
+							if (!note.mustPress)
+								note.swapType('3d');
+						}
+						for (note in unspawnNotes)
+						{
+							if (!note.mustPress)
+								note.swapType('3d');
+						}
 					case 312:
 						FlxTween.tween(FlxG.camera, {zoom: 0.5}, 0.8, {ease: FlxEase.circOut});
 						defaultCamZoom = 0.5;
@@ -4359,6 +4389,16 @@ class PlayState extends MusicBeatState
 						removeStatics();
 						generateStaticArrows(0, false);
 						generateStaticArrows(1, false);
+						for (note in notes.members)
+						{
+							if (!note.mustPress)
+								note.swapType('2d');
+						}
+						for (note in unspawnNotes)
+						{
+							if (!note.mustPress)
+								note.swapType('2d');
+						}
 					case 336:
 						defaultCamZoom = 1;
 					case 352:
@@ -4374,6 +4414,16 @@ class PlayState extends MusicBeatState
 						removeStatics();
 						generateStaticArrows(0, false);
 						generateStaticArrows(1, false);
+						for (note in notes.members)
+						{
+							if (!note.mustPress)
+								note.swapType('3d');
+						}
+						for (note in unspawnNotes)
+						{
+							if (!note.mustPress)
+								note.swapType('3d');
+						}
 					case 448: // dave and bg turn 2d
 						camZoomIntensity = 3;
 						swapDad('dave-insane');
@@ -4384,6 +4434,16 @@ class PlayState extends MusicBeatState
 						removeStatics();
 						generateStaticArrows(0, false);
 						generateStaticArrows(1, false);
+						for (note in notes.members)
+						{
+							if (!note.mustPress)
+								note.swapType('2d');
+						}
+						for (note in unspawnNotes)
+						{
+							if (!note.mustPress)
+								note.swapType('2d');
+						}
 					case 464:
 						defaultCamZoom = 1;
 					case 480: // dave and bg turn 3d
@@ -4396,6 +4456,16 @@ class PlayState extends MusicBeatState
 						removeStatics();
 						generateStaticArrows(0, false);
 						generateStaticArrows(1, false);
+						for (note in notes.members)
+						{
+							if (!note.mustPress)
+								note.swapType('3d');
+						}
+						for (note in unspawnNotes)
+						{
+							if (!note.mustPress)
+								note.swapType('3d');
+						}
 					case 512: // dave and bg turn 2d for the fimal time..
 						FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
 						swapDad('dave'); // keep normie house dave btw... he must be average
@@ -4406,6 +4476,16 @@ class PlayState extends MusicBeatState
 						removeStatics();
 						generateStaticArrows(0, false);
 						generateStaticArrows(1, false);
+						for (note in notes.members)
+						{
+							if (!note.mustPress)
+								note.swapType('2d');
+						}
+						for (note in unspawnNotes)
+						{
+							if (!note.mustPress)
+								note.swapType('2d');
+						}
 					case 544:
 						thunderBlack.alpha = 0;
 						FlxG.camera.flash(FlxColor.WHITE, 1);
