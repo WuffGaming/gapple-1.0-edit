@@ -2,9 +2,9 @@
   "name": "3D Dave (Suited)",
   "asset": "characters/dave/tunnel_chase_dave",
   "barColor": [
-    	230,
-    	62,
-    	61
+    	255,
+    	0,
+    	0
     ],
   "globalOffset": [0, 0],
   "gameOffset": [0, 0],

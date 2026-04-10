@@ -532,6 +532,15 @@ class PlayState extends MusicBeatState
 					opponent.x -= 100;
 				case 'basement':
 					boyfriend.x += 125;
+				case 'warehouse':
+					if (formoverride == "radical")
+						boyfriend.y -= 120;
+					gf.y -= 120;
+				case 'redTunnel':
+					opponent.x -= 150;
+					opponent.y -= 100;
+					boyfriend.x -= 150;
+					boyfriend.y -= 150;
 				case 'sugar':
 					if (formoverride == 'none' || formoverride == 'bf')
 						gf.setPosition(751, 300);
@@ -539,6 +548,9 @@ class PlayState extends MusicBeatState
 						gf.x += 35;
 				case 'algebra':
 					boyfriend.y += 80;
+				case 'origin':
+					opponent.x -= 35;
+					boyfriend.y += 150;
 			}
 		}
 		else
@@ -595,24 +607,6 @@ class PlayState extends MusicBeatState
 		{
 			add(opponent2);
 			opponent2.visible = false;
-		}
-
-		if (curStage == 'redTunnel')
-		{
-			opponent.x -= 150;
-			opponent.y -= 100;
-			boyfriend.x -= 150;
-			boyfriend.y -= 150;
-		}
-
-		if (curStage == 'warehouse' && formoverride == "radical")
-			boyfriend.y -= 120;
-		gf.y -= 120;
-
-		if (curStage == 'origin')
-		{
-			opponent.x -= 35;
-			boyfriend.y += 150;
 		}
 
 		dadChar = opponent.curCharacter;
@@ -1202,6 +1196,7 @@ class PlayState extends MusicBeatState
 				daveFuckingDies.visible = false;
 			case 'warehouse':
 				defaultCamZoom = 0.6;
+				scriptedStages.push(stage);
 
 				add(new FlxSprite(-1350, -1111).loadGraphic(Paths.image('backgrounds/warehouse/bg')));
 			case 'out':
