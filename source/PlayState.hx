@@ -807,8 +807,13 @@ class PlayState extends MusicBeatState
 		{
 			iconP1Flipped = true;
 		}
-		if (SONG.song.toLowerCase() == 'algebra')
-			iconBounce = 'algebra';
+		switch (SONG.song.toLowerCase())
+		{
+			case 'algebra':
+				iconBounce = 'algebra';
+			default:
+				iconBounce = 'gapple';
+		}
 
 		switch (iconBounce)
 		{
