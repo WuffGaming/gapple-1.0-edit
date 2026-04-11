@@ -9,5 +9,13 @@
     "hasDialogue": true,
     "dialogue": "coreDialogue",
     "introMusic": "DaveDialogue",
-    "box": "3d"
+    "box": "3d",
+    "credits": [
+        {
+            "composers": "SkyFactorial",
+            "artists": "WuffGaming, Lancey170",
+            "charters": "BezieAnims",
+            "coders": "SkyFactorial, Jaduplex"
+        }
+    ]
 }

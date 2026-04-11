@@ -3,6 +3,7 @@ package;
 import Controls.Control;
 import flixel.FlxG;
 import flixel.FlxSprite;
+import ExtraSongState.SongInfo;
 import flixel.FlxSubState;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -17,6 +18,7 @@ class PauseSubState extends MusicBeatSubstate
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
+	var credits:Array<String> = [];
 	var menuItems:Array<String> = ['Resume', 'Restart Song', 'Exit to menu'];
 	var curSelected:Int = 0;
 
@@ -25,6 +27,28 @@ class PauseSubState extends MusicBeatSubstate
 	public function new(x:Float, y:Float)
 	{
 		super();
+
+		var songInfoData:SongInfo = Paths.loadSongJson('${PlayState.SONG.song.toLowerCase()}/info');
+		var songInfo:SongInfo = cast songInfoData;
+
+		if (songInfo.credits != null)
+		{
+			for (credit in songInfo.credits)
+			{
+				if (credit.artists != null)
+					credits.push('Artists: ' + credit.artists);
+				if (credit.composers != null)
+					credits.push('Composers: ' + credit.composers);
+				if (credit.coders != null)
+					credits.push('Coders: ' + credit.coders);
+				if (credit.charters != null)
+					credits.push('Charters: ' + credit.charters);
+				if (credit.contributors != null)
+					credits.push('Contributors: ' + credit.contributors);
+				if (credit.misc != null)
+					credits.push('Misc: ' + credit.misc);
+			}
+		}
 
 		pauseMusic = new FlxSound().loadEmbedded(Paths.music('breakfast'), true, true);
 		pauseMusic.volume = 0;
@@ -37,7 +61,8 @@ class PauseSubState extends MusicBeatSubstate
 		bg.scrollFactor.set();
 		add(bg);
 
-		var levelInfo:FlxText = new FlxText(20, 15, 0, "", 32);
+		var levelInfo:FlxText = new FlxText(20, 20, 0, "", 32);
+		levelInfo.alpha = 0;
 		levelInfo.text += CoolUtil.formatString(PlayState.SONG.song);
 		levelInfo.scrollFactor.set();
 		levelInfo.antialiasing = true;
@@ -45,10 +70,25 @@ class PauseSubState extends MusicBeatSubstate
 		levelInfo.updateHitbox();
 		add(levelInfo);
 
+		var creditsInfo:FlxText = new FlxText(20, 40, 0, "", 32);
+		creditsInfo.scale.set(0.65, 0.65);
+		creditsInfo.alpha = 0;
+		for (c in credits)
+		{
+			creditsInfo.text += c + '\n';
+		}
+		creditsInfo.scrollFactor.set();
+		creditsInfo.antialiasing = true;
+		creditsInfo.setFormat(Paths.font("comic.ttf"), 32, FlxColor.WHITE, RIGHT);
+		creditsInfo.updateHitbox();
+		add(creditsInfo);
+
 		levelInfo.x = FlxG.width - (levelInfo.width + 20);
+		creditsInfo.x = FlxG.width - (creditsInfo.width + 20);
 
 		FlxTween.tween(bg, {alpha: 0.6}, 0.4, {ease: FlxEase.quartInOut});
 		FlxTween.tween(levelInfo, {alpha: 1, y: 20}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.3});
+		FlxTween.tween(creditsInfo, {alpha: 1, y: 60}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.6});
 
 		grpMenuShit = new FlxTypedGroup<Alphabet>();
 		add(grpMenuShit);

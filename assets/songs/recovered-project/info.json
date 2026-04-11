@@ -8,5 +8,17 @@
     "songIcon": "recover",
     "hasDialogue": true,
     "dialogue": "NULLDialogue",
-    "introMusic": "scaryAmbience"
+    "introMusic": "scaryAmbience",
+    "credits": [
+        {
+            "composers": "SkyFactorial",
+            "artists": "WuffGaming, Lancey170",
+            "charters": "SkyFactorial, Jaduplex",
+            "coders": "WuffGaming"
+        }
+    ],
+    "preloadGraphics": [
+        "characters/recover/recovered_project_2",
+        "characters/recover/recovered_project_3"
+    ]
 }

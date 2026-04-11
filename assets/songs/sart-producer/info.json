@@ -5,5 +5,10 @@
         0,
         0
     ],
-    "songIcon": "silly-sally"
+    "songIcon": "silly-sally",
+    "credits": [
+        {
+            "misc": "THIS SONG IS TEMPORARY\nIT WILL BE REMOVED\nPLEASE MUSIC ME"
+        }
+    ]
 }

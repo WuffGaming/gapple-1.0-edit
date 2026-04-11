@@ -9,5 +9,16 @@
     "hasDialogue": true,
     "dialogue": "wireDialogue",
     "introMusic": "scaryAmbience",
-    "box": "3d"
+    "box": "3d",
+    "credits": [
+        {
+            "composers": "Jaduplex",
+            "artists": "Lancey170",
+            "charters": "Jaduplex",
+            "coders": "Jaduplex"
+        }
+    ],
+    "preloadGraphics": [
+        "characters/bandu/badai"
+    ]
 }

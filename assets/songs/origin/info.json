@@ -5,5 +5,13 @@
         181,
         21
     ],
-    "songIcon": "bandu-origin"
+    "songIcon": "bandu-origin",
+    "credits": [
+        {
+            "composers": "unixversal",
+            "artists": "Lancey170, WuffGaming",
+            "charters": "Pananabread",
+            "coders": "Jaduplex"
+        }
+    ]
 }

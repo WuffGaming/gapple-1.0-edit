@@ -5,5 +5,14 @@
         181,
         21
     ],
-    "songIcon": "bambom"
+    "songIcon": "bambom",
+    "credits": [
+        {
+            "composers": "Sr.Wiliam",
+            "artists": "WuffGaming",
+            "charters": "Pananabread",
+            "coders": "WuffGaming",
+            "misc": "Miko (Bambom)"
+        }
+    ]
 }

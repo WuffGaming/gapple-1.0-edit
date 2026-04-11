@@ -8,5 +8,13 @@
     "songIcon": "dave-3d",
     "hasDialogue": true,
     "dialogue": "blitzDialogue",
-    "introMusic": "DaveDialogue"
+    "introMusic": "DaveDialogue",
+    "credits": [
+        {
+            "composers": "AadstaPinwheel",
+            "artists": "WuffGaming",
+            "charters": "Pananabread",
+            "coders": "WuffGaming"
+        }
+    ]
 }

@@ -5,5 +5,13 @@
         101,
         205
     ],
-    "songIcon": "dave"
+    "songIcon": "dave",
+    "credits": [
+        {
+            "composers": "Saruky, SkyFactorial (Cover)",
+            "artists": "Lancey170",
+            "charters": "SkyFactorial",
+            "coders": "Jaduplex"
+        }
+    ]
 }

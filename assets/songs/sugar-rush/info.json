@@ -5,5 +5,13 @@
         181,
         21
     ],
-    "songIcon": "bandu-sugar"
+    "songIcon": "bandu-sugar",
+    "credits": [
+        {
+            "composers": "SkyFactorial",
+            "artists": "Lancey170",
+            "charters": "Pananabread",
+            "coders": "Jaduplex"
+        }
+    ]
 }

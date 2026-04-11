@@ -22,6 +22,27 @@ typedef SongInfo =
 	var introMusic:String;
 
 	var box:String;
+
+	var addedText:String;
+
+	var preloadGraphics:Array<String>;
+
+	var credits:Array<Credit>;
+}
+
+typedef Credit =
+{
+	var composers:String;
+
+	var artists:String;
+
+	var coders:String;
+
+	var charters:String;
+
+	var contributors:String;
+
+	var misc:String;
 }
 
 class ExtraSongState extends MusicBeatState

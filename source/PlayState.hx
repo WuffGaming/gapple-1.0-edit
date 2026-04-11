@@ -360,7 +360,7 @@ class PlayState extends MusicBeatState
 	var threedeez:FlxSprite;
 	var thirdimension:FlxSprite;
 
-	var creditsWatermark:FlxText;
+	var bonusShit:FlxText;
 	var kadeEngineWatermark:FlxText;
 
 	var thunderBlack:FlxSprite;
@@ -740,29 +740,14 @@ class PlayState extends MusicBeatState
 		healthBarThing.scrollFactor.set();
 		add(healthBarThing);
 
-		var credits:String;
-		switch (SONG.song.toLowerCase())
-		{
-			case 'disruption':
-				credits = 'Screw you!';
-			case 'duper':
-				credits = 'What the FUCK?';
-			case 'thunderstorm':
-				credits = 'Original song made by Saruky for Vs. Shaggy!';
-			case 'tantalum':
-				credits = 'OC created by Dragolii!';
-			case 'jam':
-				credits = 'OC created by Emiko!';
-			case 'keyboard':
-				credits = 'OC created by DanWiki!';
-			case 'bambi-666-level':
-				credits = 'Bambi 666 Level';
-			default:
-				credits = '';
-		}
-		var creditsText:Bool = credits != '';
+		var addedText:String;
+		if (songInfo.addedText != null)
+			addedText = songInfo.addedText;
+		else
+			addedText = '';
+		var additionalText:Bool = addedText != '';
 		var textYPos:Float = healthBarBG.y + 50;
-		if (creditsText)
+		if (additionalText)
 		{
 			textYPos = healthBarBG.y + 30;
 		}
@@ -778,27 +763,20 @@ class PlayState extends MusicBeatState
 		}
 		add(kadeEngineWatermark);
 
-		creditsWatermark = new FlxText(4, healthBarBG.y + 50, 0, credits, 16);
-		creditsWatermark.setFormat(Paths.font("comic.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		creditsWatermark.scrollFactor.set();
-		creditsWatermark.borderSize = 1.25;
-		creditsWatermark.antialiasing = true;
-		add(creditsWatermark);
+		bonusShit = new FlxText(4, healthBarBG.y + 50, 0, addedText, 16);
+		bonusShit.setFormat(Paths.font("comic.ttf"), 16, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		bonusShit.scrollFactor.set();
+		bonusShit.borderSize = 1.25;
+		bonusShit.antialiasing = true;
+		add(bonusShit);
 
-		switch (curSong.toLowerCase())
+		if (songInfo.preloadGraphics != null)
 		{
-			case 'wireframe':
-				preload('characters/bandu/badai');
-			case 'algebra':
-				preload('characters/algebra/HALL_MONITOR');
-				preload('characters/algebra/diamondMan');
-				preload('characters/algebra/playrobot');
-				preload('characters/algebra/ohshit');
-				preload('characters/algebra/spike_algebra');
-				preload('characters/algebra/og_dave_angey');
-			case 'recovered-project':
-				preload('characters/recover/recovered_project_2');
-				preload('characters/recover/recovered_project_3');
+			for (p in songInfo.preloadGraphics)
+			{
+				trace(p);
+				preloadGraphic(p);
+			}
 		}
 
 		var iconP2Flipped:Bool = false;
@@ -873,7 +851,7 @@ class PlayState extends MusicBeatState
 		iconP2.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
 		kadeEngineWatermark.cameras = [camHUD];
-		creditsWatermark.cameras = [camHUD];
+		bonusShit.cameras = [camHUD];
 		timeTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
 		algebraTxt.cameras = [camHUD];
@@ -4013,7 +3991,7 @@ class PlayState extends MusicBeatState
 							spr.animation.addByPrefix('hi', 'poip', 12, true);
 							spr.animation.play('hi');
 						});
-						creditsWatermark.text = 'Screw you!';
+						bonusShit.text = 'Screw you!';
 						kadeEngineWatermark.y -= 20;
 						camHUD.flash(FlxColor.WHITE, 1);
 
@@ -4061,7 +4039,7 @@ class PlayState extends MusicBeatState
 						add(dumbStupid);
 						dumbStupid.cameras = [camHUD];
 						dumbStupid.color = FlxColor.BLACK;
-						creditsWatermark.text = "Ghost tapping is forced off! Screw you!";
+						bonusShit.text = "Ghost tapping is forced off! Screw you!";
 						health = 2;
 						theFunne = false;
 						poopStrums.visible = false;
@@ -4207,7 +4185,7 @@ class PlayState extends MusicBeatState
 						});
 					// FlxTween.tween(opponent, {x: 1500, y: 1500}, Conductor.crochet / 1000, {ease: FlxEase.cubeIn});
 					case 256:
-						creditsWatermark.text = 'Screw you!';
+						bonusShit.text = 'Screw you!';
 						kadeEngineWatermark.y -= 20;
 						opponent.visible = false;
 						var baldiBasic:FlxSprite = new FlxSprite(opponent.x, opponent.y);
@@ -4503,7 +4481,7 @@ class PlayState extends MusicBeatState
 						FlxG.camera.flash(FlxColor.WHITE, 1);
 						defaultCamZoom = 0.75;
 						thirdimension.active = thirdimension.visible = true;
-						creditsWatermark.text = "Screw You!";
+						bonusShit.text = "Screw You!";
 					case 320:
 						thirdimension.active = thirdimension.visible = false;
 						FlxG.camera.flash(FlxColor.WHITE, 1);
@@ -4728,7 +4706,7 @@ class PlayState extends MusicBeatState
 			iconP2.y = healthBar.y - (iconP2.height / 2);
 	}
 
-	public function preload(graphic:String) // preload assets
+	public function preloadGraphic(graphic:String) // preload assets
 	{
 		if (boyfriend != null)
 		{

@@ -6,7 +6,16 @@
         21
     ],
     "songIcon": "bandu-sugar",
+    "addedText": "What the FUCK!?!",
     "hasDialogue": true,
     "dialogue": "duperDialogue",
-    "introMusic": "scaryAmbience"
+    "introMusic": "scaryAmbience",
+    "credits": [
+        {
+            "composers": "AadstaPinwheel",
+            "artists": "WuffGaming, Rapparep",
+            "charters": "Diduilitm",
+            "coders": "WuffGaming"
+        }
+    ]
 }

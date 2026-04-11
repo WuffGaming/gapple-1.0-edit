@@ -5,5 +5,13 @@
         101,
         205
     ],
-    "songIcon": "dave"
+    "songIcon": "dave",
+    "credits": [
+        {
+            "composers": "SkyFactorial",
+            "artists": "Rapparep",
+            "charters": "SkyFactorial",
+            "coders": "SkyFactorial"
+        }
+    ]
 }

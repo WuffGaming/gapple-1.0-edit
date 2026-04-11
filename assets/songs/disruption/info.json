@@ -9,5 +9,14 @@
     "hasDialogue": true,
     "dialogue": "disruptDialogue",
     "introMusic": "scaryAmbience",
-    "box": "3d"
+    "addedText": "Screw You!",
+    "box": "3d",
+    "credits": [
+        {
+            "composers": "SkyFactorial",
+            "artists": "WuffGaming",
+            "charters": "BezieAnims",
+            "coders": "SkyFactorial"
+        }
+    ]
 }

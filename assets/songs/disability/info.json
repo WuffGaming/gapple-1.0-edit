@@ -9,5 +9,13 @@
     "hasDialogue": true,
     "dialogue": "disableDialogue",
     "introMusic": "DaveDialogue",
-    "box": "3d"
+    "box": "3d",
+    "credits": [
+        {
+            "composers": "SkyFactorial",
+            "artists": "WuffGaming",
+            "charters": "T5mpler",
+            "coders": "SkyFactorial"
+        }
+    ]
 }

@@ -5,5 +5,13 @@
         31,
         111
     ],
-    "songIcon": "gf"
+    "songIcon": "gf",
+    "credits": [
+        {
+            "composers": "KawaiSprite",
+            "artists": "PhantomArcade",
+            "charters": "ninjamuffin99",
+            "coders": "ninjamuffin99"
+        }
+    ]
 }

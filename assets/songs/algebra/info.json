@@ -7,5 +7,21 @@
     ],
     "songIcon": "og-dave",
     "introMusic": "Algebrah",
-    "box": "baldi"
+    "box": "baldi",
+    "credits": [
+        {
+            "composers": "SkyFactorial",
+            "artists": "WuffGaming, Lancey170, MoldyGH",
+            "charters": "BezieAnims",
+            "coders": "SkyFactorial, Jaduplex, WuffGaming"
+        }
+    ],
+    "preloadGraphics": [
+        "characters/algebra/HALL_MONITOR",
+        "characters/algebra/diamondMan",
+        "characters/algebra/playrobot",
+        "characters/algebra/ohshit",
+        "characters/algebra/spike_algebra",
+        "characters/algebra/og_dave_angey"
+    ]
 }
