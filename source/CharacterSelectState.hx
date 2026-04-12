@@ -54,19 +54,11 @@ class CharacterSelectState extends MusicBeatState
 
 	public var funnyIconMan:HealthIcon;
 
-	var notestuffs:Array<String> = ['LEFT', 'DOWN', 'UP', 'RIGHT'];
-
 	var order:Array<String> = CoolUtil.coolTextFile(Paths.txt('forms/order'));
-
-	public var isDebug:Bool = false; // CHANGE THIS TO FALSE BEFORE YOU COMMIT RETARDS
-
-	public var PressedTheFunny:Bool = false;
 
 	var selectedCharacter:Bool = false;
 
 	var currentSelectedCharacter:CharacterInSelect;
-
-	var noteMsTexts:FlxTypedGroup<FlxText> = new FlxTypedGroup<FlxText>();
 
 	// it goes left,right,up,down
 	public var characters:Array<CharacterInSelect> = []; // dependency
@@ -100,7 +92,6 @@ class CharacterSelectState extends MusicBeatState
 				new CharacterInSelect(['dave-good', 'split-dave-3d', 'tunnel-dave', 'og-dave'],
 					['Dave (Dave x Bambi)', 'Disability Dave', 'Wireframe Dave', 'Algebra Dave'])
 			];
-			starterChar = 'dave-good';
 		}
 
 		super();
@@ -112,8 +103,6 @@ class CharacterSelectState extends MusicBeatState
 		Conductor.changeBPM(110);
 		currentSelectedCharacter = characters[current];
 		// if(PlayState.SONG.song.toLowerCase() == 'dave-x-bambi-shipping-cute')
-
-		FlxG.save.data.unlockedcharacters = [true, true, true, true, true, true, true, true]; // unlock everyone hi
 
 		var end:FlxSprite = new FlxSprite(0, 0);
 		FlxG.sound.playMusic(Paths.music("goodEnding"), 1, true);
@@ -190,6 +179,8 @@ class CharacterSelectState extends MusicBeatState
 		tutorialThing.setGraphicSize(Std.int(tutorialThing.width * 1.5));
 		tutorialThing.antialiasing = true;
 		add(tutorialThing);
+
+		UpdateBF();
 	}
 
 	override public function update(elapsed:Float):Void
@@ -197,52 +188,21 @@ class CharacterSelectState extends MusicBeatState
 		super.update(elapsed);
 		// FlxG.camera.focusOn(FlxG.ce);
 
-		if (FlxG.keys.justPressed.ESCAPE)
+		if (FlxG.keys.justPressed.ESCAPE || FlxG.keys.justPressed.BACKSPACE)
 		{
+			FlxG.sound.music.stop;
 			LoadingState.loadAndSwitchState(new ExtraSongState());
-		}
-
-		if (controls.LEFT_P && !PressedTheFunny)
-		{
-			if (!char.nativelyPlayable)
-			{
-				char.playAnim('singRIGHT', true);
-			}
-			else
-			{
-				char.playAnim('singLEFT', true);
-			}
-		}
-		if (controls.RIGHT_P && !PressedTheFunny)
-		{
-			if (!char.nativelyPlayable)
-			{
-				char.playAnim('singLEFT', true);
-			}
-			else
-			{
-				char.playAnim('singRIGHT', true);
-			}
-		}
-		if (controls.UP_P && !PressedTheFunny)
-		{
-			char.playAnim('singUP', true);
-		}
-		if (controls.DOWN_P && !PressedTheFunny)
-		{
-			char.playAnim('singDOWN', true);
 		}
 		if (controls.ACCEPT)
 		{
-			if (PressedTheFunny)
+			if (selectedCharacter)
 			{
 				return;
 			}
 			else
 			{
-				PressedTheFunny = true;
+				selectedCharacter = true;
 			}
-			selectedCharacter = true;
 			var heyAnimation:Bool = char.animation.getByName("hey") != null;
 			char.playAnim(heyAnimation ? 'hey' : 'singUP', true);
 			FlxG.sound.music.stop();

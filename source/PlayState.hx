@@ -294,6 +294,7 @@ class PlayState extends MusicBeatState
 	private var camDialogue:FlxCamera;
 	private var camGame:FlxCamera;
 
+	var talking:Bool = true;
 	var dialogue:Array<String> = ['blah blah blah', 'coolswag'];
 
 	var notestuffs:Array<String> = ['LEFT', 'DOWN', 'UP', 'RIGHT'];
@@ -301,11 +302,12 @@ class PlayState extends MusicBeatState
 
 	var wiggleShit:WiggleEffect = new WiggleEffect();
 
-	var talking:Bool = true;
 	var songScore:Int = 0; // controls actual score
 	var score:Float = 0; // controls score earned per rating
 	var scoreMultiplier:Float = 3.251; // controls how much score is multiplied (combo / scoreMultiplier)
-	var sustainScore:Float = 11; // controls score earned while holding on sustain. Gives the illusion of randomness while being predetermined.
+	var sustainCount:Int = 0; // how many sustains have been hit?
+	var sustainLimit:Int = 6; // there HAS to be a hard cap.
+	var sustainScore:Float = 3; // controls score earned while holding on sustain. Is multiplied by sustainCount
 	var ratingstype:String = "normal"; // what type of ratings asset to use?
 	var ratingOnCamera:Bool = FlxG.save.data.ratingsOnCamera; // should ratings be represented on camhud?
 
@@ -2654,10 +2656,6 @@ class PlayState extends MusicBeatState
 				screenshader.shader.uampmul.value[0] = 0;
 				screenshader.Enabled = false;
 			}
-			if (shakeCam)
-			{
-				FlxG.save.data.unlockedcharacters[7] = true;
-			}
 			if (!shakeCam)
 			{
 				if (deathEnabled)
@@ -3607,6 +3605,7 @@ class PlayState extends MusicBeatState
 		{
 			if (!note.isSustainNote)
 			{
+				sustainCount = 0;
 				popUpScore(note);
 				if (FlxG.save.data.donoteclick)
 				{
@@ -3620,7 +3619,9 @@ class PlayState extends MusicBeatState
 			if (note.isSustainNote)
 			{
 				health += 0.01;
-				songScore += Std.int(sustainScore);
+				if (sustainCount <= sustainLimit)
+					sustainCount += 1;
+				songScore += Std.int(sustainScore * sustainCount);
 			}
 			else
 			{
