@@ -2887,18 +2887,18 @@ class PlayState extends MusicBeatState
 						if (unfairPart)
 						{
 							daNote.y = ((daNote.mustPress ? noteJunksPlayer[daNote.noteData] : noteJunksDad[daNote.noteData])
-								- (Conductor.songPosition - daNote.strumTime) * (FlxG.save.data.downscroll ? -0.45 : 0.45 * FlxMath.roundDecimal(1 * daNote.LocalScrollSpeed,
+								- (Conductor.songPosition - daNote.strumTime) * ((FlxG.save.data.downscroll ? -0.45 : 0.45) * FlxMath.roundDecimal(1 * daNote.LocalScrollSpeed,
 									2))); // couldnt figure out this stupid mystrum thing
 						}
 						else
 						{
 							daNote.y = (strumLine.y
-								- (Conductor.songPosition - daNote.strumTime) * (FlxG.save.data.downscroll ? -0.45 : 0.45 * FlxMath.roundDecimal(songSpeed * daNote.LocalScrollSpeed,
+								- (Conductor.songPosition - daNote.strumTime) * ((FlxG.save.data.downscroll ? -0.45 : 0.45) * FlxMath.roundDecimal(songSpeed * 1,
 									2)));
 						}
 					default:
 						daNote.y = (strumLine.y
-							- (Conductor.songPosition - daNote.strumTime) * (FlxG.save.data.downscroll ? -0.45 : 0.45 * FlxMath.roundDecimal(songSpeed * daNote.LocalScrollSpeed,
+							- (Conductor.songPosition - daNote.strumTime) * ((FlxG.save.data.downscroll ? -0.45 : 0.45) * FlxMath.roundDecimal(songSpeed * daNote.LocalScrollSpeed,
 								2)));
 				}
 				// trace(daNote.y);
