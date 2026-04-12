@@ -4163,7 +4163,6 @@ class PlayState extends MusicBeatState
 						{
 							FlxTween.tween(opponent2, {x: -300, y: 100}, (Conductor.crochet / 1000) * 1.5, {ease: FlxEase.cubeIn});
 						});
-					// FlxTween.tween(opponent, {x: 1500, y: 1500}, Conductor.crochet / 1000, {ease: FlxEase.cubeIn});
 					case 256:
 						bonusShit.text = 'Screw you!';
 						kadeEngineWatermark.y -= 20;
@@ -4184,14 +4183,9 @@ class PlayState extends MusicBeatState
 								baldiBasic.destroy();
 							}
 						});
-						// this transition was lazy and dumb lets do it better
+
 						FlxG.camera.flash(FlxColor.WHITE, 1);
-						/*
-							remove(opponent);
-							//badai time
-							opponent = new Character(-300, 100, 'badai', false);
-							add(opponent);
-							daveFuckingDies.visible = true; */ camMoveAllowed = false;
+						camMoveAllowed = false;
 						badaiTime = true;
 						// boyfriend.canDance = false;
 						// boyfriend.playAnim('turn', true);
@@ -4200,14 +4194,8 @@ class PlayState extends MusicBeatState
 							camMoveAllowed = true;
 							var position = boyfriend.getPosition();
 							var width = boyfriend.width;
-							/*
-								remove(boyfriend);
-								boyfriend = new Boyfriend(position.x, position.y, 'tunnel-bf-flipped');
-								add(boyfriend);
-							 */
-							// boyfriendOldIcon = 'bf-old-flipped';
-							// iconP1.animation.play('tunnel-bf-flipped');
 							iconP2.changeIcon('badai');
+							healthBar.createFilledBar(opponent2.barColor, boyfriend.barColor);
 							iconRPC = 'icon_badai';
 							daveFuckingDies.visible = true;
 							FlxTween.tween(daveFuckingDies, {y: -300}, 2.5, {ease: FlxEase.cubeInOut});
