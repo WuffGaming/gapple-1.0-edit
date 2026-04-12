@@ -261,7 +261,6 @@ class Note extends FlxSprite
 		if (isSustainNote && prevNote != null)
 		{
 			noteScore * 0.2;
-			alpha = 0.6;
 
 			x += width / 2;
 
@@ -298,7 +297,7 @@ class Note extends FlxSprite
 						prevNote.animation.play('redhold');
 				}
 
-				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.8 * PlayState.SONG.speed;
+				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.8 * PlayState.songSpeed;
 				prevNote.updateHitbox();
 				// prevNote.setGraphicSize();
 			}
@@ -388,8 +387,6 @@ class Note extends FlxSprite
 
 		if (isSustainNote && prevNote != null)
 		{
-			alpha = 0.6;
-
 			updateHitbox();
 
 			if (prevNote.isSustainNote)
@@ -406,7 +403,7 @@ class Note extends FlxSprite
 						prevNote.animation.play('redhold');
 				}
 
-				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.8 * PlayState.SONG.speed;
+				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.8 * PlayState.songSpeed;
 				prevNote.updateHitbox();
 			}
 		}

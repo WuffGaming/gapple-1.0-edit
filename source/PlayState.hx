@@ -193,7 +193,7 @@ class PlayState extends MusicBeatState
 	var detailsText:String = "";
 	var detailsPausedText:String = "";
 
-	private var swagSpeed:Float;
+	public static var songSpeed:Float;
 
 	var daveJunk:FlxSprite;
 	var davePiss:FlxSprite;
@@ -381,6 +381,8 @@ class PlayState extends MusicBeatState
 		shits = 0;
 		goods = 0;
 		misses = 0;
+
+		songSpeed = SONG.speed; // speed of song that can be modified
 
 		var songInfoData:SongInfo = Paths.loadSongJson('${SONG.song.toLowerCase()}/info');
 		var songInfo:SongInfo = cast songInfoData;
@@ -647,7 +649,6 @@ class PlayState extends MusicBeatState
 
 		if (SONG.song.toLowerCase() == 'applecore')
 		{
-			middlescroll = false; // we DONT want middlescroll on applecore
 			altStrumLine = new FlxSprite(0, -100);
 		}
 		if (FlxG.save.data.downscroll)
@@ -1067,7 +1068,7 @@ class PlayState extends MusicBeatState
 			case 'algebra':
 				scriptedStages.push(stage);
 				defaultCamZoom = 0.85;
-				swagSpeed = 1.6;
+				songSpeed = 1.6;
 				var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('backgrounds/algebra/algebraBg'));
 				bg.setGraphicSize(Std.int(bg.width * 1.35), Std.int(bg.height * 1.35));
 				bg.updateHitbox();
@@ -2718,7 +2719,7 @@ class PlayState extends MusicBeatState
 						daNote.active = true;
 					}
 
-					daNote.y = (altStrumLine.y - (Conductor.songPosition - daNote.strumTime) * (0.45 * FlxMath.roundDecimal((SONG.speed + 1) * 1, 2)));
+					daNote.y = (altStrumLine.y - (Conductor.songPosition - daNote.strumTime) * (0.45 * FlxMath.roundDecimal((songSpeed + 1) * 1, 2)));
 
 					if (daNote.wasGoodHit)
 					{
@@ -2886,34 +2887,23 @@ class PlayState extends MusicBeatState
 						if (unfairPart)
 						{
 							daNote.y = ((daNote.mustPress ? noteJunksPlayer[daNote.noteData] : noteJunksDad[daNote.noteData])
-								- (Conductor.songPosition - daNote.strumTime) * (-0.45 * FlxMath.roundDecimal(1 * daNote.LocalScrollSpeed,
+								- (Conductor.songPosition - daNote.strumTime) * (FlxG.save.data.downscroll ? -0.45 : 0.45 * FlxMath.roundDecimal(1 * daNote.LocalScrollSpeed,
 									2))); // couldnt figure out this stupid mystrum thing
 						}
 						else
 						{
-							if (FlxG.save.data.downscroll)
-								daNote.y = (strumLine.y - (Conductor.songPosition - daNote.strumTime) * (-0.45 * FlxMath.roundDecimal(SONG.speed * 1, 2)));
-							else
-								daNote.y = (strumLine.y - (Conductor.songPosition - daNote.strumTime) * (0.45 * FlxMath.roundDecimal(SONG.speed * 1, 2)));
+							daNote.y = (strumLine.y
+								- (Conductor.songPosition - daNote.strumTime) * (FlxG.save.data.downscroll ? -0.45 : 0.45 * FlxMath.roundDecimal(songSpeed * daNote.LocalScrollSpeed,
+									2)));
 						}
-					case 'algebra':
-						if (FlxG.save.data.downscroll)
-							daNote.y = (strumLine.y
-								- (Conductor.songPosition - daNote.strumTime) * (-0.45 * FlxMath.roundDecimal(swagSpeed * daNote.LocalScrollSpeed, 2)));
-						else
-							daNote.y = (strumLine.y
-								- (Conductor.songPosition - daNote.strumTime) * (0.45 * FlxMath.roundDecimal(swagSpeed * daNote.LocalScrollSpeed, 2)));
 					default:
-						if (FlxG.save.data.downscroll)
-							daNote.y = (strumLine.y
-								- (Conductor.songPosition - daNote.strumTime) * (-0.45 * FlxMath.roundDecimal(SONG.speed * daNote.LocalScrollSpeed, 2)));
-						else
-							daNote.y = (strumLine.y
-								- (Conductor.songPosition - daNote.strumTime) * (0.45 * FlxMath.roundDecimal(SONG.speed * daNote.LocalScrollSpeed, 2)));
+						daNote.y = (strumLine.y
+							- (Conductor.songPosition - daNote.strumTime) * (FlxG.save.data.downscroll ? -0.45 : 0.45 * FlxMath.roundDecimal(songSpeed * daNote.LocalScrollSpeed,
+								2)));
 				}
 				// trace(daNote.y);
 				// WIP interpolation shit? Need to fix the pause issue
-				// daNote.y = (strumLine.y - (songTime - daNote.strumTime) * (0.45 * PlayState.SONG.speed));
+				// daNote.y = (strumLine.y - (songTime - daNote.strumTime) * (0.45 * PlayState.songSpeed));
 
 				var strumliney = daNote.MyStrum != null ? daNote.MyStrum.y : strumLine.y;
 
@@ -3839,7 +3829,7 @@ class PlayState extends MusicBeatState
 					case 8:
 						algebraTxt.alpha = 0;
 					case 160:
-						swagSpeed = SONG.speed - 0.5;
+						songSpeed = SONG.speed - 0.5;
 						// SPIKE TURN 1!!
 						swapDad('spike');
 						iconP2.changeIcon(opponent.iconName);
@@ -3854,7 +3844,7 @@ class PlayState extends MusicBeatState
 						iconP2.changeIcon(opponent.iconName);
 						daveJunk.visible = false;
 						spikeJunk.visible = true;
-						swagSpeed = SONG.speed - 0.3;
+						songSpeed = SONG.speed - 0.3;
 					case 424:
 						algebraTxt.alpha = 0;
 					case 536:
@@ -3883,7 +3873,7 @@ class PlayState extends MusicBeatState
 						davePiss.visible = true;
 						diamondJunk.visible = true;
 						diamondJunk.x += 800;
-						swagSpeed = 2;
+						songSpeed = 2;
 						iconP2.changeIcon(opponent.iconName);
 					case 704:
 						FlxTween.tween(diamondJunk, {x: diamondJunk.x - 800}, 0.5, {ease: FlxEase.quadOut});
@@ -3896,7 +3886,7 @@ class PlayState extends MusicBeatState
 						robotJunk.visible = true;
 						robotJunk.x -= 800;
 						diamondJunk.visible = false;
-						swagSpeed = SONG.speed;
+						songSpeed = SONG.speed;
 						iconP2.changeIcon(opponent.iconName);
 					case 1400:
 						FlxTween.tween(robotJunk, {x: robotJunk.x + 800}, 1, {ease: FlxEase.quadOut});
@@ -3905,7 +3895,7 @@ class PlayState extends MusicBeatState
 						robotJunk.visible = false;
 						swapDad('playrobot');
 						health = 1;
-						swagSpeed = 1.6;
+						songSpeed = 1.6;
 						iconP2.changeIcon(opponent.iconName);
 					case 1852:
 						FlxTween.tween(davePiss, {x: davePiss.x - 250}, 0.5, {ease: FlxEase.quadOut});
@@ -3914,7 +3904,7 @@ class PlayState extends MusicBeatState
 						// SCARY PLAYROBOT TURN
 						swapDad('playrobot-crazy');
 						health = 1;
-						swagSpeed = SONG.speed;
+						songSpeed = SONG.speed;
 						iconP2.changeIcon(opponent.iconName);
 					case 1996:
 						// ANGEY DAVE TURN 2!!
@@ -3924,7 +3914,7 @@ class PlayState extends MusicBeatState
 						davePiss.visible = false;
 						iconP2.changeIcon(opponent.iconName);
 					case 2140:
-						swagSpeed = SONG.speed + 0.9;
+						songSpeed = SONG.speed + 0.9;
 				}
 			case 'sugar-rush':
 				switch (curBeat)
