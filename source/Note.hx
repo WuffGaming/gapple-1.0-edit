@@ -237,18 +237,6 @@ class Note extends FlxSprite
 						animation.play('redScroll');
 				}
 		}
-		if (PlayState.SONG.song.toLowerCase() == 'applecore')
-		{
-			var rng:FlxRandom = new FlxRandom();
-			if (rng.int(0, 120) == 1)
-			{
-				LocalScrollSpeed = 0.1;
-			}
-			else
-			{
-				LocalScrollSpeed = rng.float(1, 3);
-			}
-		}
 
 		// trace(prevNote);
 

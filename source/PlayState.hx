@@ -2149,13 +2149,19 @@ class PlayState extends MusicBeatState
 			{
 				playerStrums.forEach(function(spr:Strum)
 				{
-					spr.x = ((FlxG.width / 2) - (spr.width / 2)) + (Math.sin(elapsedtime + (spr.ID)) * 300);
-					spr.y = ((FlxG.height / 2) - (spr.height / 2)) + (Math.cos(elapsedtime + (spr.ID)) * 300);
+					spr.x = ((((FlxG.width / 2)) + ((spr.ID) * 75)) - 200) + (Math.sin(elapsedtime + (spr.ID)) * 75);
+					spr.y += (Math.cos(elapsedtime + (spr.ID)) / 5);
 				});
 				dadStrums.forEach(function(spr:Strum)
 				{
+					spr.alpha = 0.5;
 					spr.x = ((FlxG.width / 2) - (spr.width / 2)) + (Math.sin((elapsedtime + (spr.ID)) * 2) * 300);
 					spr.y = ((FlxG.height / 2) - (spr.height / 2)) + (Math.cos((elapsedtime + (spr.ID)) * 2) * 300);
+				});
+				notes.forEachAlive(function(spr:Note)
+				{
+					if (!spr.mustPress)
+						spr.alpha = 0.5;
 				});
 			}
 			if (SONG.notes[Math.floor(curStep / 16)] != null)
@@ -2885,7 +2891,7 @@ class PlayState extends MusicBeatState
 						if (unfairPart)
 						{
 							daNote.y = ((daNote.mustPress ? noteJunksPlayer[daNote.noteData] : noteJunksDad[daNote.noteData])
-								- (Conductor.songPosition - daNote.strumTime) * ((FlxG.save.data.downscroll ? -0.45 : 0.45) * FlxMath.roundDecimal(1 * daNote.LocalScrollSpeed,
+								- (Conductor.songPosition - daNote.strumTime) * ((FlxG.save.data.downscroll ? -0.45 : 0.45) * FlxMath.roundDecimal(songSpeed * daNote.LocalScrollSpeed,
 									2))); // couldnt figure out this stupid mystrum thing
 						}
 						else
@@ -2905,25 +2911,8 @@ class PlayState extends MusicBeatState
 
 				var strumliney = daNote.MyStrum != null ? daNote.MyStrum.y : strumLine.y;
 
-				if (SONG.song.toLowerCase() == 'applecore')
+				if ((daNote.y < -daNote.height && !FlxG.save.data.downscroll || daNote.y >= strumliney + 106 && FlxG.save.data.downscroll))
 				{
-					if (unfairPart)
-						strumliney = daNote.MyStrum != null ? daNote.MyStrum.y : strumLine.y;
-					else
-						strumliney = strumLine.y;
-				}
-
-				if (((daNote.y < -daNote.height && !FlxG.save.data.downscroll || daNote.y >= strumliney + 106 && FlxG.save.data.downscroll)
-					&& SONG.song.toLowerCase() != 'applecore')
-					|| (SONG.song.toLowerCase() == 'applecore' && unfairPart && daNote.y >= strumliney + 106)
-					|| (SONG.song.toLowerCase() == 'applecore'
-						&& !unfairPart
-						&& (daNote.y < -daNote.height && !FlxG.save.data.downscroll || daNote.y >= strumliney + 106 && FlxG.save.data.downscroll)))
-				{
-					/*
-						trace((SONG.song.toLowerCase() == 'applecore' && unfairPart && daNote.y >= strumliney + 106) );
-						trace(daNote.y);
-					 */
 					if (daNote.isSustainNote && daNote.wasGoodHit)
 					{
 						daNote.kill();
