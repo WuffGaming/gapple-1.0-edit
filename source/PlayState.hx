@@ -138,18 +138,13 @@ typedef Events =
 	// SPECIFICS that very little events will have
 	var character:String; // Character value for character events
 	var changeColor:Bool; // Optional icon color change
+	var force:Bool; // Should specific event be forced
 	var flash:Bool; // Optional flash parameter
 	var hud:Bool; // Optional do hud instead
 	var bump:Bool; // Optional Bump
+	var alt:Bool; // Alternate?
 }
 
-/**
-	* UNIMPLEMENTED EVENTS:
-
-		Play Animation Event
-		Screen Bump event
-
- */
 class PlayState extends MusicBeatState
 {
 	public static var STRUM_X = 42;
@@ -3836,7 +3831,7 @@ class PlayState extends MusicBeatState
 			FlxG.camera.zoom += (0.015 * camZoomIntensity);
 			camHUD.zoom += (0.03 * camZoomIntensity);
 		}
-		if (Assets.exists(Paths.chart('${curSong.toLowerCase()}/events')))
+		if (Assets.exists(Paths.chart('${curSong.toLowerCase()}/events'))) // json events that can be changed or removed
 		{
 			var eventDataInfo:EventData = Paths.loadSongJson('${SONG.song.toLowerCase()}/events');
 			var eventData:EventData = cast eventDataInfo;
@@ -3846,6 +3841,21 @@ class PlayState extends MusicBeatState
 				{
 					switch (event.name)
 					{
+						case 'Set Alt Idle':
+							idleAlt = event.alt;
+						case 'Play Animation':
+							switch (event.character)
+							{
+								case 'opponent':
+									opponent.playAnim(event.text, event.force);
+									opponentmirror.playAnim(event.text, event.force);
+								case 'girlfriend':
+									gf.playAnim(event.text, event.force);
+								case 'boyfriend':
+									boyfriend.playAnim(event.text, event.force);
+								case 'opponent2':
+									opponent2.playAnim(event.text, event.force);
+							}
 						case 'Play Sound':
 							var sound = new FlxSound().loadEmbedded(Paths.sound(event.name));
 							sound.play();
@@ -3874,7 +3884,7 @@ class PlayState extends MusicBeatState
 								healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
 						case 'Swap Boyfriend':
 							swapBf(event.character, event.flash);
-							iconP2.changeIcon(opponent.iconName);
+							iconP2.changeIcon(boyfriend.iconName);
 							updateIcons();
 							if (event.changeColor != false)
 								healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
@@ -3884,696 +3894,691 @@ class PlayState extends MusicBeatState
 				}
 			}
 		}
-		else
+		switch (curSong.toLowerCase()) // the much more powerful scripted events that can be done alongside json events now
 		{
-			switch (curSong.toLowerCase()) // the much more powerful scripted events
-			{
-				case 'algebra':
-					switch (curBeat)
-					{
-						case 1:
-							algebraTxt.text = 'House';
-							algebraTxt.alpha = 1;
-						case 8:
-							algebraTxt.alpha = 0;
-						case 160:
-							songSpeed = SONG.speed - 0.5;
-							// SPIKE TURN 1!!
-							swapDad('spike');
-							iconP2.changeIcon(opponent.iconName);
-							health = 1;
-							daveJunk.visible = true;
-						case 416: //
-							// EVIL INSANE WOO
-							algebraTxt.text = 'Insanity';
-							algebraTxt.alpha = 1;
-							swapDad('og-dave');
-							health = 1;
-							iconP2.changeIcon(opponent.iconName);
-							daveJunk.visible = false;
-							spikeJunk.visible = true;
-							songSpeed = SONG.speed - 0.3;
-						case 424:
-							algebraTxt.alpha = 0;
-						case 536:
-							// SPIKE TURN 2
-							swapDad('spike');
-							health = 1;
-							davePiss.visible = true;
-							spikeJunk.visible = false;
-							iconP2.changeIcon(opponent.iconName);
-						case 552:
-							// ANGEY DAVE TURN 1!!
-							algebraTxt.text = 'Furiosity';
-							algebraTxt.alpha = 1;
-							swapDad('og-dave-angey');
-							health = 0.79;
-							davePiss.visible = false;
-							spikeJunk.visible = true;
-							iconP2.changeIcon(opponent.iconName);
-						case 568:
-							algebraTxt.alpha = 0;
-						case 696:
-							// GREENY GUY TURN
-							swapDad('hall-monitor');
-							health = 1;
-							UsingNewCam = true;
-							davePiss.visible = true;
-							diamondJunk.visible = true;
-							diamondJunk.x += 800;
-							songSpeed = 2;
-							iconP2.changeIcon(opponent.iconName);
-						case 704:
-							FlxTween.tween(diamondJunk, {x: diamondJunk.x - 800}, 0.5, {ease: FlxEase.quadOut});
-						case 1344:
-							// DIAMOND MAN TURN
-							UsingNewCam = false;
-							swapDad('diamond-man');
-							health = 1;
-							monitorJunk.visible = true;
-							robotJunk.visible = true;
-							robotJunk.x -= 800;
-							diamondJunk.visible = false;
-							songSpeed = SONG.speed;
-							iconP2.changeIcon(opponent.iconName);
-						case 1400:
-							FlxTween.tween(robotJunk, {x: robotJunk.x + 800}, 1, {ease: FlxEase.quadOut});
-						case 1696:
-							// PLAYROBOT TURN
-							robotJunk.visible = false;
-							swapDad('playrobot');
-							health = 1;
-							songSpeed = 1.6;
-							iconP2.changeIcon(opponent.iconName);
-						case 1852:
-							FlxTween.tween(davePiss, {x: davePiss.x - 250}, 0.5, {ease: FlxEase.quadOut});
-							davePiss.animation.play('d');
-						case 1856:
-							// SCARY PLAYROBOT TURN
-							swapDad('playrobot-crazy');
-							health = 1;
-							songSpeed = SONG.speed;
-							iconP2.changeIcon(opponent.iconName);
-						case 1996:
-							// ANGEY DAVE TURN 2!!
-							swapDad('og-dave-angey');
-							health = 1;
-							robotUsb.visible = true;
-							davePiss.visible = false;
-							iconP2.changeIcon(opponent.iconName);
-						case 2140:
-							songSpeed = SONG.speed + 0.9;
-					}
-				case 'tantalum':
-					switch (curBeat)
-					{
-						case 32 | 160 | 288:
-							FlxG.camera.flash(FlxColor.WHITE, 1);
-						case 96:
-							FlxG.camera.flash(FlxColor.WHITE, 1);
-							defaultCamZoom = 0.9;
-						case 112 | 368:
-							defaultCamZoom = 0.8;
-						case 128 | 384:
-							FlxG.camera.flash(FlxColor.WHITE, 1);
-							defaultCamZoom = 0.7;
-						case 220:
-							idleAlt = true;
-							opponent.playAnim('catappear', true);
-							defaultCamZoom = 1;
-						case 224:
-							FlxG.camera.flash(FlxColor.WHITE, 1);
-							iconP2.changeIcon('ringi-toio');
-							defaultCamZoom = 0.7;
-						case 352:
-							idleAlt = false;
-							iconP2.changeIcon('ringi');
-							FlxG.camera.flash(FlxColor.WHITE, 1);
-							defaultCamZoom = 0.9;
-						case 416:
-							defaultCamZoom = 1;
-							FlxTween.tween(thunderBlack, {alpha: 0.35}, Conductor.stepCrochet / 500);
-						case 480:
-							defaultCamZoom = 0.6;
-							FlxG.camera.flash(FlxColor.WHITE, 1);
-							FlxTween.tween(thunderBlack, {alpha: 0}, Conductor.stepCrochet / 500);
-					}
-				case 'thunderstorm':
-					switch (curBeat)
-					{
-						case 272 | 304:
-							FlxTween.tween(thunderBlack, {alpha: 0.35}, Conductor.stepCrochet / 500);
-						case 300 | 332:
-							FlxTween.tween(thunderBlack, {alpha: 0}, Conductor.stepCrochet / 500);
-					}
-				case 'applecore':
-					switch (curBeat)
-					{
-						case 160 | 436 | 684:
-							gfSpeed = 2;
-						case 240:
-							gfSpeed = 1;
-						case 223:
-							wtfThing = true;
-							what.forEach(function(spr:FlxSprite)
-							{
-								spr.frames = Paths.getSparrowAtlas('backgrounds/applecore/minion');
-								spr.animation.addByPrefix('hi', 'poip', 12, true);
-								spr.animation.play('hi');
-							});
-							bonusShit.text = 'Screw you!';
-							kadeEngineWatermark.y -= 20;
-							camHUD.flash(FlxColor.WHITE, 1);
+			case 'algebra':
+				switch (curBeat)
+				{
+					case 1:
+						algebraTxt.text = 'House';
+						algebraTxt.alpha = 1;
+					case 8:
+						algebraTxt.alpha = 0;
+					case 160:
+						songSpeed = SONG.speed - 0.5;
+						// SPIKE TURN 1!!
+						swapDad('spike');
+						iconP2.changeIcon(opponent.iconName);
+						health = 1;
+						daveJunk.visible = true;
+					case 416: //
+						// EVIL INSANE WOO
+						algebraTxt.text = 'Insanity';
+						algebraTxt.alpha = 1;
+						swapDad('og-dave');
+						health = 1;
+						iconP2.changeIcon(opponent.iconName);
+						daveJunk.visible = false;
+						spikeJunk.visible = true;
+						songSpeed = SONG.speed - 0.3;
+					case 424:
+						algebraTxt.alpha = 0;
+					case 536:
+						// SPIKE TURN 2
+						swapDad('spike');
+						health = 1;
+						davePiss.visible = true;
+						spikeJunk.visible = false;
+						iconP2.changeIcon(opponent.iconName);
+					case 552:
+						// ANGEY DAVE TURN 1!!
+						algebraTxt.text = 'Furiosity';
+						algebraTxt.alpha = 1;
+						swapDad('og-dave-angey');
+						health = 0.79;
+						davePiss.visible = false;
+						spikeJunk.visible = true;
+						iconP2.changeIcon(opponent.iconName);
+					case 568:
+						algebraTxt.alpha = 0;
+					case 696:
+						// GREENY GUY TURN
+						swapDad('hall-monitor');
+						health = 1;
+						UsingNewCam = true;
+						davePiss.visible = true;
+						diamondJunk.visible = true;
+						diamondJunk.x += 800;
+						songSpeed = 2;
+						iconP2.changeIcon(opponent.iconName);
+					case 704:
+						FlxTween.tween(diamondJunk, {x: diamondJunk.x - 800}, 0.5, {ease: FlxEase.quadOut});
+					case 1344:
+						// DIAMOND MAN TURN
+						UsingNewCam = false;
+						swapDad('diamond-man');
+						health = 1;
+						monitorJunk.visible = true;
+						robotJunk.visible = true;
+						robotJunk.x -= 800;
+						diamondJunk.visible = false;
+						songSpeed = SONG.speed;
+						iconP2.changeIcon(opponent.iconName);
+					case 1400:
+						FlxTween.tween(robotJunk, {x: robotJunk.x + 800}, 1, {ease: FlxEase.quadOut});
+					case 1696:
+						// PLAYROBOT TURN
+						robotJunk.visible = false;
+						swapDad('playrobot');
+						health = 1;
+						songSpeed = 1.6;
+						iconP2.changeIcon(opponent.iconName);
+					case 1852:
+						FlxTween.tween(davePiss, {x: davePiss.x - 250}, 0.5, {ease: FlxEase.quadOut});
+						davePiss.animation.play('d');
+					case 1856:
+						// SCARY PLAYROBOT TURN
+						swapDad('playrobot-crazy');
+						health = 1;
+						songSpeed = SONG.speed;
+						iconP2.changeIcon(opponent.iconName);
+					case 1996:
+						// ANGEY DAVE TURN 2!!
+						swapDad('og-dave-angey');
+						health = 1;
+						robotUsb.visible = true;
+						davePiss.visible = false;
+						iconP2.changeIcon(opponent.iconName);
+					case 2140:
+						songSpeed = SONG.speed + 0.9;
+				}
+			case 'tantalum':
+				switch (curBeat)
+				{
+					case 32 | 160 | 288:
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+					case 96:
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 0.9;
+					case 112 | 368:
+						defaultCamZoom = 0.8;
+					case 128 | 384:
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 0.7;
+					case 220:
+						idleAlt = true;
+						opponent.playAnim('catappear', true);
+						defaultCamZoom = 1;
+					case 224:
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						iconP2.changeIcon('ringi-toio');
+						defaultCamZoom = 0.7;
+					case 352:
+						idleAlt = false;
+						iconP2.changeIcon('ringi');
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 0.9;
+					case 416:
+						defaultCamZoom = 1;
+						FlxTween.tween(thunderBlack, {alpha: 0.35}, Conductor.stepCrochet / 500);
+					case 480:
+						defaultCamZoom = 0.6;
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						FlxTween.tween(thunderBlack, {alpha: 0}, Conductor.stepCrochet / 500);
+				}
+			case 'thunderstorm':
+				switch (curBeat)
+				{
+					case 272 | 304:
+						FlxTween.tween(thunderBlack, {alpha: 0.35}, Conductor.stepCrochet / 500);
+					case 300 | 332:
+						FlxTween.tween(thunderBlack, {alpha: 0}, Conductor.stepCrochet / 500);
+				}
+			case 'applecore':
+				switch (curBeat)
+				{
+					case 160 | 436 | 684:
+						gfSpeed = 2;
+					case 240:
+						gfSpeed = 1;
+					case 223:
+						wtfThing = true;
+						what.forEach(function(spr:FlxSprite)
+						{
+							spr.frames = Paths.getSparrowAtlas('backgrounds/applecore/minion');
+							spr.animation.addByPrefix('hi', 'poip', 12, true);
+							spr.animation.play('hi');
+						});
+						bonusShit.text = 'Screw you!';
+						kadeEngineWatermark.y -= 20;
+						camHUD.flash(FlxColor.WHITE, 1);
 
-							iconRPC = 'icon_the_two_dunkers';
-							iconP2.changeIcon('junkers');
-							updateIcons();
-							opponent.playAnim('NOOMYPHONES', true);
-							opponentmirror.playAnim('NOOMYPHONES', true);
-							opponent.POOP = true; // WORK WORK WOKR< WOKRMKIEPATNOLIKSEHGO:"IKSJRHDLG"H
-							opponentmirror.POOP = true; // :))))))))))
-							poopStrums.visible = true; // ??????
-							new FlxTimer().start(3.5, function(deez:FlxTimer)
+						iconRPC = 'icon_the_two_dunkers';
+						iconP2.changeIcon('junkers');
+						updateIcons();
+						opponent.playAnim('NOOMYPHONES', true);
+						opponentmirror.playAnim('NOOMYPHONES', true);
+						opponent.POOP = true; // WORK WORK WOKR< WOKRMKIEPATNOLIKSEHGO:"IKSJRHDLG"H
+						opponentmirror.POOP = true; // :))))))))))
+						poopStrums.visible = true; // ??????
+						new FlxTimer().start(3.5, function(deez:FlxTimer)
+						{
+							swagThings.forEach(function(spr:FlxSprite)
 							{
-								swagThings.forEach(function(spr:FlxSprite)
-								{
-									FlxTween.tween(spr, {y: spr.y + 1010}, 1.2, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * spr.ID)});
-								});
-								poopStrums.forEach(function(spr:Strum)
-								{
-									FlxTween.tween(spr, {alpha: 1}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * spr.ID)});
-								});
-								FlxTween.tween(swagger, {y: swagger.y + 1000}, 1.05, {ease: FlxEase.cubeInOut});
+								FlxTween.tween(spr, {y: spr.y + 1010}, 1.2, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * spr.ID)});
 							});
-							unswagBG.active = unswagBG.visible = true;
-							curbg = unswagBG;
-							swagBG.visible = swagBG.active = false;
-						case 636:
-							unfairPart = true;
-							gfSpeed = 1;
-							playerStrums.forEach(function(spr:Strum)
+							poopStrums.forEach(function(spr:Strum)
 							{
-								spr.scale.set(0.7, 0.7);
+								FlxTween.tween(spr, {alpha: 1}, 1, {ease: FlxEase.circOut, startDelay: 0.5 + (0.2 * spr.ID)});
 							});
-							what.forEach(function(spr:FlxSprite)
+							FlxTween.tween(swagger, {y: swagger.y + 1000}, 1.05, {ease: FlxEase.cubeInOut});
+						});
+						unswagBG.active = unswagBG.visible = true;
+						curbg = unswagBG;
+						swagBG.visible = swagBG.active = false;
+					case 636:
+						unfairPart = true;
+						gfSpeed = 1;
+						playerStrums.forEach(function(spr:Strum)
+						{
+							spr.scale.set(0.7, 0.7);
+						});
+						what.forEach(function(spr:FlxSprite)
+						{
+							spr.alpha = 0;
+						});
+						gfSpeed = 1;
+						wtfThing = false;
+						var dumbStupid = new FlxSprite().loadGraphic(Paths.image('backgrounds/applecore/poop'));
+						dumbStupid.scrollFactor.set();
+						dumbStupid.screenCenter();
+						littleIdiot.alpha = 0;
+						littleIdiot.visible = true;
+						add(dumbStupid);
+						dumbStupid.cameras = [camHUD];
+						dumbStupid.color = FlxColor.BLACK;
+						bonusShit.text = "Ghost tapping is forced off! Screw you!";
+						health = 2;
+						theFunne = false;
+						poopStrums.visible = false;
+						FlxTween.tween(dumbStupid, {alpha: 1}, 0.2, {
+							onComplete: function(twn:FlxTween)
 							{
-								spr.alpha = 0;
-							});
-							gfSpeed = 1;
-							wtfThing = false;
-							var dumbStupid = new FlxSprite().loadGraphic(Paths.image('backgrounds/applecore/poop'));
-							dumbStupid.scrollFactor.set();
-							dumbStupid.screenCenter();
-							littleIdiot.alpha = 0;
-							littleIdiot.visible = true;
-							add(dumbStupid);
-							dumbStupid.cameras = [camHUD];
-							dumbStupid.color = FlxColor.BLACK;
-							bonusShit.text = "Ghost tapping is forced off! Screw you!";
-							health = 2;
-							theFunne = false;
-							poopStrums.visible = false;
-							FlxTween.tween(dumbStupid, {alpha: 1}, 0.2, {
-								onComplete: function(twn:FlxTween)
-								{
-									scaryBG.active = true;
-									curbg = scaryBG;
-									unswagBG.visible = unswagBG.active = false;
-									FlxTween.tween(dumbStupid, {alpha: 0}, 1.2, {
-										onComplete: function(twn:FlxTween)
-										{
-											trace('hi'); // i actually forgot what i was going to put here
-										}
-									});
-								}
-							});
-						case 231:
-							vocals.volume = 1;
-						case 659:
-							FlxTween.tween(littleIdiot, {alpha: 1}, 1.4, {ease: FlxEase.circOut});
-						case 667:
-							FlxTween.tween(littleIdiot, {"scale.x": littleIdiot.scale.x + 2.1, "scale.y": littleIdiot.scale.y + 2.1}, 1.35, {
-								ease: FlxEase.cubeInOut,
-								onComplete: function(twn:FlxTween)
-								{
-									iconP2.changeIcon('expunged');
-									updateIcons();
-									healthBar.createFilledBar(littleIdiot.barColor, boyfriend.barColor);
-									orbit = false;
-									opponent.visible = opponentmirror.visible = swagger.visible = false;
-									var derez = new FlxSprite(opponent.getMidpoint().x,
-										opponent.getMidpoint().y).loadGraphic(Paths.image('backgrounds/applecore/monkey_guy'));
-									derez.setPosition(derez.x - derez.width / 2, derez.y - derez.height / 2);
-									derez.antialiasing = false;
-									add(derez);
-									var deez = new FlxSprite(swagger.getMidpoint().x,
-										swagger.getMidpoint().y).loadGraphic(Paths.image('backgrounds/applecore/monkey_person'));
-									deez.setPosition(deez.x - deez.width / 2, deez.y - deez.height / 2);
-									deez.antialiasing = false;
-									add(deez);
-									var swagsnd = new FlxSound().loadEmbedded(Paths.sound('suck'));
-									swagsnd.play(true);
-									var whatthejunk = new FlxSound().loadEmbedded(Paths.sound('suckEnd'));
-									littleIdiot.playAnim('inhale');
-									littleIdiot.animation.finishCallback = function(d:String)
+								scaryBG.active = true;
+								curbg = scaryBG;
+								unswagBG.visible = unswagBG.active = false;
+								FlxTween.tween(dumbStupid, {alpha: 0}, 1.2, {
+									onComplete: function(twn:FlxTween)
 									{
-										swagsnd.stop();
-										whatthejunk.play(true);
-										littleIdiot.animation.finishCallback = null;
-									};
-									new FlxTimer().start(0.2, function(tmr:FlxTimer)
-									{
-										FlxTween.tween(deez, {
-											"scale.x": 0.1,
-											"scale.y": 0.1,
-											x: littleIdiot.getMidpoint().x - deez.width / 2,
-											y: littleIdiot.getMidpoint().y - deez.width / 2 - 400
-										}, 0.65, {ease: FlxEase.quadIn});
-										FlxTween.angle(deez, 0, 360, 0.65, {ease: FlxEase.quadIn, onComplete: function(twn:FlxTween) deez.kill()});
-
-										FlxTween.tween(derez, {
-											"scale.x": 0.1,
-											"scale.y": 0.1,
-											x: littleIdiot.getMidpoint().x - derez.width / 2 - 100,
-											y: littleIdiot.getMidpoint().y - derez.width / 2 - 500
-										}, 0.65, {ease: FlxEase.quadIn});
-										FlxTween.angle(derez, 0, 360, 0.65, {ease: FlxEase.quadIn, onComplete: function(twn:FlxTween) derez.kill()});
-
-										new FlxTimer().start(1, function(tmr:FlxTimer)
-										{
-											poipInMahPahntsIsGud = true;
-											iconRPC = 'icon_unfair_junker';
-										});
-									});
-								}
-							});
-					}
-				case 'recovered-project': // i wonder if i discovered how to do events better... hmm....
-					switch (curBeat)
-					{
-						case 1:
-							camZoomIntensity = 0;
-						case 16:
-							FlxG.camera.flash(FlxColor.WHITE, 1);
-							defaultCamZoom = 0.85;
-						case 80:
-							FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
-							defaultCamZoom = 1.3;
-							camZoomIntensity = 1;
-						case 112:
-							thunderBlack.alpha = 0;
-							FlxG.camera.flash(FlxColor.WHITE, 1);
-							defaultCamZoom = 0.85;
-						case 208:
-							camZoomIntensity = 0;
-							FlxTween.tween(thunderBlack, {alpha: 0.7}, Conductor.stepCrochet / 500);
-							defaultCamZoom = 1;
-						case 256:
-							camZoomIntensity = 1;
-							thunderBlack.alpha = 0;
-							swapDad('RECOVERED_PROJECT_2');
-							defaultCamZoom = 0.85;
-							iconP2.changeIcon('recover-2d');
-						case 388:
-							defaultCamZoom = 1;
-						case 404:
-							defaultCamZoom = 0.85;
-						case 452:
-							FlxTween.tween(thunderBlack, {alpha: 0.7}, Conductor.stepCrochet / 500);
-							defaultCamZoom = 1;
-						case 468:
-							defaultCamZoom = 1.2;
-						case 476:
-							FlxTween.tween(thunderBlack, {alpha: 0}, Conductor.stepCrochet / 500);
-							defaultCamZoom = 0.85;
-						case 480:
-							camZoomIntensity = 0;
-							defaultCamZoom = 1.1;
-							gf.visible = false;
-							thunderBlack.alpha = 1;
-							swapDad("RECOVERED_PROJECT_3");
-						case 484:
-							FlxTween.tween(thunderBlack, {alpha: 0}, 1);
-							iconP2.changeIcon('recover-irreversible');
-						case 532:
-							camZoomIntensity = 1;
-							defaultCamZoom = 0.85;
-							FlxG.camera.flash(FlxColor.WHITE, 1);
-							curbar = 'corruptedBar';
-							kadeEngineWatermark.text = "CORRUPTED FILE";
-							theFunne = false;
-					}
-				case 'wireframe':
-					FlxG.camera.shake(0.005, Conductor.crochet / 1000);
-					switch (curBeat)
-					{
-						case 254:
-							opponent2.visible = true;
-							new FlxTimer().start((Conductor.crochet / 1000) * 0.5, function(tmr:FlxTimer)
-							{
-								FlxTween.tween(opponent2, {x: -300, y: 100}, (Conductor.crochet / 1000) * 1.5, {ease: FlxEase.cubeIn});
-							});
-						case 256:
-							bonusShit.text = 'Screw you!';
-							kadeEngineWatermark.y -= 20;
-							opponent.visible = false;
-							var baldiBasic:FlxSprite = new FlxSprite(opponent.x, opponent.y);
-							baldiBasic.frames = daveFuckingDies.frames;
-							baldiBasic.animation.addByPrefix('HI', 'IDLE', 24, false);
-							baldiBasic.animation.play("HI");
-							baldiBasic.x = opponent.getMidpoint().x - baldiBasic.width / 2;
-							baldiBasic.y = opponent.getMidpoint().y - baldiBasic.height / 2;
-							add(baldiBasic);
-							FlxTween.tween(baldiBasic, {x: baldiBasic.x + 100, y: baldiBasic.y + 500}, 0.15, {
-								ease: FlxEase.cubeOut,
-								onComplete: function(twn:FlxTween)
-								{
-									baldiBasic.kill();
-									remove(baldiBasic);
-									baldiBasic.destroy();
-								}
-							});
-
-							FlxG.camera.flash(FlxColor.WHITE, 1);
-							camMoveAllowed = false;
-							badaiTime = true;
-							// boyfriend.canDance = false;
-							// boyfriend.playAnim('turn', true);
-							new FlxTimer().start(1, function(tmr:FlxTimer)
-							{
-								camMoveAllowed = true;
-								var position = boyfriend.getPosition();
-								var width = boyfriend.width;
-								iconP2.changeIcon('badai');
-								healthBar.createFilledBar(opponent2.barColor, boyfriend.barColor);
-								iconRPC = 'icon_badai';
-								daveFuckingDies.visible = true;
-								FlxTween.tween(daveFuckingDies, {y: -300}, 2.5, {ease: FlxEase.cubeInOut});
-								new FlxTimer().start(2.5, function(tmr:FlxTimer)
-								{
-									daveFuckingDies.inCutscene = false;
+										trace('hi'); // i actually forgot what i was going to put here
+									}
 								});
+							}
+						});
+					case 231:
+						vocals.volume = 1;
+					case 659:
+						FlxTween.tween(littleIdiot, {alpha: 1}, 1.4, {ease: FlxEase.circOut});
+					case 667:
+						FlxTween.tween(littleIdiot, {"scale.x": littleIdiot.scale.x + 2.1, "scale.y": littleIdiot.scale.y + 2.1}, 1.35, {
+							ease: FlxEase.cubeInOut,
+							onComplete: function(twn:FlxTween)
+							{
+								iconP2.changeIcon('expunged');
+								updateIcons();
+								healthBar.createFilledBar(littleIdiot.barColor, boyfriend.barColor);
+								orbit = false;
+								opponent.visible = opponentmirror.visible = swagger.visible = false;
+								var derez = new FlxSprite(opponent.getMidpoint().x,
+									opponent.getMidpoint().y).loadGraphic(Paths.image('backgrounds/applecore/monkey_guy'));
+								derez.setPosition(derez.x - derez.width / 2, derez.y - derez.height / 2);
+								derez.antialiasing = false;
+								add(derez);
+								var deez = new FlxSprite(swagger.getMidpoint().x,
+									swagger.getMidpoint().y).loadGraphic(Paths.image('backgrounds/applecore/monkey_person'));
+								deez.setPosition(deez.x - deez.width / 2, deez.y - deez.height / 2);
+								deez.antialiasing = false;
+								add(deez);
+								var swagsnd = new FlxSound().loadEmbedded(Paths.sound('suck'));
+								swagsnd.play(true);
+								var whatthejunk = new FlxSound().loadEmbedded(Paths.sound('suckEnd'));
+								littleIdiot.playAnim('inhale');
+								littleIdiot.animation.finishCallback = function(d:String)
+								{
+									swagsnd.stop();
+									whatthejunk.play(true);
+									littleIdiot.animation.finishCallback = null;
+								};
+								new FlxTimer().start(0.2, function(tmr:FlxTimer)
+								{
+									FlxTween.tween(deez, {
+										"scale.x": 0.1,
+										"scale.y": 0.1,
+										x: littleIdiot.getMidpoint().x - deez.width / 2,
+										y: littleIdiot.getMidpoint().y - deez.width / 2 - 400
+									}, 0.65, {ease: FlxEase.quadIn});
+									FlxTween.angle(deez, 0, 360, 0.65, {ease: FlxEase.quadIn, onComplete: function(twn:FlxTween) deez.kill()});
+
+									FlxTween.tween(derez, {
+										"scale.x": 0.1,
+										"scale.y": 0.1,
+										x: littleIdiot.getMidpoint().x - derez.width / 2 - 100,
+										y: littleIdiot.getMidpoint().y - derez.width / 2 - 500
+									}, 0.65, {ease: FlxEase.quadIn});
+									FlxTween.angle(derez, 0, 360, 0.65, {ease: FlxEase.quadIn, onComplete: function(twn:FlxTween) derez.kill()});
+
+									new FlxTimer().start(1, function(tmr:FlxTimer)
+									{
+										poipInMahPahntsIsGud = true;
+										iconRPC = 'icon_unfair_junker';
+									});
+								});
+							}
+						});
+				}
+			case 'recovered-project': // i wonder if i discovered how to do events better... hmm....
+				switch (curBeat)
+				{
+					case 1:
+						camZoomIntensity = 0;
+					case 16:
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 0.85;
+					case 80:
+						FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
+						defaultCamZoom = 1.3;
+						camZoomIntensity = 1;
+					case 112:
+						thunderBlack.alpha = 0;
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 0.85;
+					case 208:
+						camZoomIntensity = 0;
+						FlxTween.tween(thunderBlack, {alpha: 0.7}, Conductor.stepCrochet / 500);
+						defaultCamZoom = 1;
+					case 256:
+						camZoomIntensity = 1;
+						thunderBlack.alpha = 0;
+						swapDad('RECOVERED_PROJECT_2');
+						defaultCamZoom = 0.85;
+						iconP2.changeIcon('recover-2d');
+					case 388:
+						defaultCamZoom = 1;
+					case 404:
+						defaultCamZoom = 0.85;
+					case 452:
+						FlxTween.tween(thunderBlack, {alpha: 0.7}, Conductor.stepCrochet / 500);
+						defaultCamZoom = 1;
+					case 468:
+						defaultCamZoom = 1.2;
+					case 476:
+						FlxTween.tween(thunderBlack, {alpha: 0}, Conductor.stepCrochet / 500);
+						defaultCamZoom = 0.85;
+					case 480:
+						camZoomIntensity = 0;
+						defaultCamZoom = 1.1;
+						gf.visible = false;
+						thunderBlack.alpha = 1;
+						swapDad("RECOVERED_PROJECT_3");
+					case 484:
+						FlxTween.tween(thunderBlack, {alpha: 0}, 1);
+						iconP2.changeIcon('recover-irreversible');
+					case 532:
+						camZoomIntensity = 1;
+						defaultCamZoom = 0.85;
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						curbar = 'corruptedBar';
+						kadeEngineWatermark.text = "CORRUPTED FILE";
+						theFunne = false;
+				}
+			case 'wireframe':
+				FlxG.camera.shake(0.005, Conductor.crochet / 1000);
+				switch (curBeat)
+				{
+					case 254:
+						opponent2.visible = true;
+						new FlxTimer().start((Conductor.crochet / 1000) * 0.5, function(tmr:FlxTimer)
+						{
+							FlxTween.tween(opponent2, {x: -300, y: 100}, (Conductor.crochet / 1000) * 1.5, {ease: FlxEase.cubeIn});
+						});
+					case 256:
+						bonusShit.text = 'Screw you!';
+						kadeEngineWatermark.y -= 20;
+						opponent.visible = false;
+						var baldiBasic:FlxSprite = new FlxSprite(opponent.x, opponent.y);
+						baldiBasic.frames = daveFuckingDies.frames;
+						baldiBasic.animation.addByPrefix('HI', 'IDLE', 24, false);
+						baldiBasic.animation.play("HI");
+						baldiBasic.x = opponent.getMidpoint().x - baldiBasic.width / 2;
+						baldiBasic.y = opponent.getMidpoint().y - baldiBasic.height / 2;
+						add(baldiBasic);
+						FlxTween.tween(baldiBasic, {x: baldiBasic.x + 100, y: baldiBasic.y + 500}, 0.15, {
+							ease: FlxEase.cubeOut,
+							onComplete: function(twn:FlxTween)
+							{
+								baldiBasic.kill();
+								remove(baldiBasic);
+								baldiBasic.destroy();
+							}
+						});
+
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						camMoveAllowed = false;
+						badaiTime = true;
+						// boyfriend.canDance = false;
+						// boyfriend.playAnim('turn', true);
+						new FlxTimer().start(1, function(tmr:FlxTimer)
+						{
+							camMoveAllowed = true;
+							var position = boyfriend.getPosition();
+							var width = boyfriend.width;
+							iconP2.changeIcon('badai');
+							healthBar.createFilledBar(opponent2.barColor, boyfriend.barColor);
+							iconRPC = 'icon_badai';
+							daveFuckingDies.visible = true;
+							FlxTween.tween(daveFuckingDies, {y: -300}, 2.5, {ease: FlxEase.cubeInOut});
+							new FlxTimer().start(2.5, function(tmr:FlxTimer)
+							{
+								daveFuckingDies.inCutscene = false;
 							});
-					}
-				case 'keyboard':
-					switch (curBeat)
-					{
-						case 324:
-							FlxG.camera.flash(FlxColor.WHITE, 1);
-							defaultCamZoom = 1.1;
-							FlxTween.tween(thunderBlack, {alpha: 0.7}, Conductor.stepCrochet / 500);
-							swapDad('little-bandu');
-							iconP2.changeIcon('bandu');
-							healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
-						case 386:
-							FlxG.camera.flash(FlxColor.WHITE, 1);
-							defaultCamZoom = 0.9;
-							thunderBlack.alpha = 0;
-							swapDad('bendu');
-							iconP2.changeIcon('bendu');
-							healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
-					}
-				case 'jam':
-					switch (curBeat)
-					{
-						case 64:
-							defaultCamZoom = 1.1;
-							FlxTween.tween(thunderBlack, {alpha: 0.65}, Conductor.stepCrochet / 500);
-						case 96:
-							FlxG.camera.flash(FlxColor.WHITE, 1);
-							defaultCamZoom = 0.7;
-							thunderBlack.alpha = 0;
-						case 104:
-							defaultCamZoom = 0.95;
-						case 128:
-							defaultCamZoom = 0.9;
-					}
-				case 'disability':
-					switch (curBeat)
-					{
-						case 16:
-							defaultCamZoom = 1.4;
-						case 32:
-							FlxG.camera.flash(FlxColor.WHITE, 1);
-							defaultCamZoom = 0.9;
-						case 176 | 224 | 364 | 384:
-							gfSpeed = 2;
-						case 208 | 256 | 372 | 392:
-							gfSpeed = 1;
-					}
-				case 'blitz':
-					switch (curBeat)
-					{
-						case 60:
-							FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
-							defaultCamZoom = 1.2;
-						case 64: // dave and bg turn 3d
-							thunderBlack.alpha = 0;
-							swapDad('insane-dave-3d');
-							iconP2.changeIcon(opponent.iconName);
-							healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
-							defaultCamZoom = 0.8;
-							threedeez.active = threedeez.visible = true;
-							removeStatics();
-							generateStaticArrows(0, false);
-							generateStaticArrows(1, false);
-							for (note in notes.members)
-							{
-								if (!note.mustPress)
-									note.swapType('3d');
-							}
-							for (note in unspawnNotes)
-							{
-								if (!note.mustPress)
-									note.swapType('3d');
-							}
-						case 128:
-							FlxG.camera.flash(FlxColor.WHITE, 1);
-							defaultCamZoom = 0.9;
-						case 188:
-							FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
-							defaultCamZoom = 1.1;
-						case 192: // dave and bg turn 2d, dave switches to insanity sprites.
-							thunderBlack.alpha = 0;
-							swapDad('dave-insane');
-							iconP2.changeIcon(opponent.iconName);
-							healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
-							defaultCamZoom = 1;
-							threedeez.active = threedeez.visible = false;
-							removeStatics();
-							generateStaticArrows(0, false);
-							generateStaticArrows(1, false);
-							for (note in notes.members)
-							{
-								if (!note.mustPress)
-									note.swapType('2d');
-							}
-							for (note in unspawnNotes)
-							{
-								if (!note.mustPress)
-									note.swapType('2d');
-							}
-						case 256: // dave and bg turn 3d
-							swapDad('insane-dave-3d');
-							iconP2.changeIcon(opponent.iconName);
-							healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
-							defaultCamZoom = 0.85;
-							threedeez.active = threedeez.visible = true;
-							removeStatics();
-							generateStaticArrows(0, false);
-							generateStaticArrows(1, false);
-							for (note in notes.members)
-							{
-								if (!note.mustPress)
-									note.swapType('3d');
-							}
-							for (note in unspawnNotes)
-							{
-								if (!note.mustPress)
-									note.swapType('3d');
-							}
-						case 312:
-							FlxTween.tween(FlxG.camera, {zoom: 0.5}, 0.8, {ease: FlxEase.circOut});
-							defaultCamZoom = 0.5;
-						case 316:
-							FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
-							defaultCamZoom = 1.1;
-						case 320: // dave and bg turn 2d
-							thunderBlack.alpha = 0;
-							swapDad('dave-insane');
-							iconP2.changeIcon(opponent.iconName);
-							healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
-							defaultCamZoom = 0.8;
-							threedeez.active = threedeez.visible = false;
-							removeStatics();
-							generateStaticArrows(0, false);
-							generateStaticArrows(1, false);
-							for (note in notes.members)
-							{
-								if (!note.mustPress)
-									note.swapType('2d');
-							}
-							for (note in unspawnNotes)
-							{
-								if (!note.mustPress)
-									note.swapType('2d');
-							}
-						case 336:
-							defaultCamZoom = 1;
-						case 352:
-							FlxG.camera.flash(FlxColor.WHITE, 1);
-							defaultCamZoom = 0.9;
-						case 384: // dave and bg turn 3d
-							thunderBlack.alpha = 0;
-							swapDad('insane-dave-3d');
-							iconP2.changeIcon(opponent.iconName);
-							healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
-							defaultCamZoom = 1;
-							threedeez.active = threedeez.visible = true;
-							removeStatics();
-							generateStaticArrows(0, false);
-							generateStaticArrows(1, false);
-							for (note in notes.members)
-							{
-								if (!note.mustPress)
-									note.swapType('3d');
-							}
-							for (note in unspawnNotes)
-							{
-								if (!note.mustPress)
-									note.swapType('3d');
-							}
-						case 448: // dave and bg turn 2d
-							camZoomIntensity = 3;
-							swapDad('dave-insane');
-							iconP2.changeIcon(opponent.iconName);
-							healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
-							defaultCamZoom = 1.1;
-							threedeez.active = threedeez.visible = false;
-							removeStatics();
-							generateStaticArrows(0, false);
-							generateStaticArrows(1, false);
-							for (note in notes.members)
-							{
-								if (!note.mustPress)
-									note.swapType('2d');
-							}
-							for (note in unspawnNotes)
-							{
-								if (!note.mustPress)
-									note.swapType('2d');
-							}
-						case 464:
-							defaultCamZoom = 1;
-						case 480: // dave and bg turn 3d
-							camZoomIntensity = 1;
-							swapDad('insane-dave-3d');
-							iconP2.changeIcon(opponent.iconName);
-							healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
-							defaultCamZoom = 0.8;
-							threedeez.active = threedeez.visible = true;
-							removeStatics();
-							generateStaticArrows(0, false);
-							generateStaticArrows(1, false);
-							for (note in notes.members)
-							{
-								if (!note.mustPress)
-									note.swapType('3d');
-							}
-							for (note in unspawnNotes)
-							{
-								if (!note.mustPress)
-									note.swapType('3d');
-							}
-						case 512: // dave and bg turn 2d for the fimal time..
-							FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
-							swapDad('dave'); // keep normie house dave btw... he must be average
-							iconP2.changeIcon(opponent.iconName);
-							healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
-							defaultCamZoom = 1.2;
-							threedeez.active = threedeez.visible = false;
-							removeStatics();
-							generateStaticArrows(0, false);
-							generateStaticArrows(1, false);
-							for (note in notes.members)
-							{
-								if (!note.mustPress)
-									note.swapType('2d');
-							}
-							for (note in unspawnNotes)
-							{
-								if (!note.mustPress)
-									note.swapType('2d');
-							}
-						case 544:
-							thunderBlack.alpha = 0;
-							FlxG.camera.flash(FlxColor.WHITE, 1);
-							defaultCamZoom = 1.1;
-						case 576:
-							thunderBlack.alpha = 1;
-					}
-				case 'duper':
-					switch (curBeat)
-					{
-						case 256:
-							FlxG.camera.flash(FlxColor.WHITE, 1);
-							defaultCamZoom = 0.75;
-							thirdimension.active = thirdimension.visible = true;
-							bonusShit.text = "Screw You!";
-						case 320:
-							thirdimension.active = thirdimension.visible = false;
-							FlxG.camera.flash(FlxColor.WHITE, 1);
-							defaultCamZoom = 0.9;
-						case 384:
-							FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
-							defaultCamZoom = 1.3;
-						case 445:
-							defaultCamZoom = 1.2;
-						case 448:
-							thunderBlack.alpha = 0;
-							FlxG.camera.flash(FlxColor.WHITE, 1);
-							defaultCamZoom = 0.85;
-						case 480:
-							defaultCamZoom = 0.9;
-						case 508:
-							FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
-							defaultCamZoom = 1.2;
-						case 512:
-							thunderBlack.alpha = 0;
-							FlxG.camera.flash(FlxColor.WHITE, 1);
-							defaultCamZoom = 0.9;
-						case 576:
-							FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
-							defaultCamZoom = 1.2;
-						case 592:
-							FlxTween.tween(thunderBlack, {alpha: 0}, Conductor.stepCrochet / 500);
-							defaultCamZoom = 0.9;
-						case 636:
-							FlxTween.tween(thunderBlack, {alpha: 0.6}, Conductor.stepCrochet / 500);
-							defaultCamZoom = 1.2;
-						case 640:
-							thirdimension.active = thirdimension.visible = true;
-							thunderBlack.alpha = 0;
-							FlxG.camera.flash(FlxColor.WHITE, 1);
-							defaultCamZoom = 1;
-						case 696:
-							FlxTween.tween(thunderBlack, {alpha: 0.6}, Conductor.stepCrochet / 500);
-							defaultCamZoom = 1.3;
-						case 700:
-							FlxTween.tween(thunderBlack, {alpha: 0}, Conductor.stepCrochet / 500);
-							defaultCamZoom = 0.75;
-						case 704:
-							FlxG.camera.flash(FlxColor.WHITE, 1);
-							defaultCamZoom = 0.9;
-					}
-			}
+						});
+				}
+			case 'keyboard':
+				switch (curBeat)
+				{
+					case 324:
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 1.1;
+						FlxTween.tween(thunderBlack, {alpha: 0.7}, Conductor.stepCrochet / 500);
+						swapDad('little-bandu');
+						iconP2.changeIcon('bandu');
+						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
+					case 386:
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 0.9;
+						thunderBlack.alpha = 0;
+						swapDad('bendu');
+						iconP2.changeIcon('bendu');
+						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
+				}
+			case 'jam':
+				switch (curBeat)
+				{
+					case 64:
+						defaultCamZoom = 1.1;
+						FlxTween.tween(thunderBlack, {alpha: 0.65}, Conductor.stepCrochet / 500);
+					case 96:
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 0.7;
+						thunderBlack.alpha = 0;
+					case 104:
+						defaultCamZoom = 0.95;
+					case 128:
+						defaultCamZoom = 0.9;
+				}
+			case 'disability':
+				switch (curBeat)
+				{
+					case 16:
+						defaultCamZoom = 1.4;
+					case 32:
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 0.9;
+					case 176 | 224 | 364 | 384:
+						gfSpeed = 2;
+					case 208 | 256 | 372 | 392:
+						gfSpeed = 1;
+				}
+			case 'blitz':
+				switch (curBeat)
+				{
+					case 60:
+						FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
+						defaultCamZoom = 1.2;
+					case 64: // dave and bg turn 3d
+						thunderBlack.alpha = 0;
+						swapDad('insane-dave-3d');
+						iconP2.changeIcon(opponent.iconName);
+						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
+						defaultCamZoom = 0.8;
+						threedeez.active = threedeez.visible = true;
+						removeStatics();
+						generateStaticArrows(0, false);
+						generateStaticArrows(1, false);
+						for (note in notes.members)
+						{
+							if (!note.mustPress)
+								note.swapType('3d');
+						}
+						for (note in unspawnNotes)
+						{
+							if (!note.mustPress)
+								note.swapType('3d');
+						}
+					case 128:
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 0.9;
+					case 188:
+						FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
+						defaultCamZoom = 1.1;
+					case 192: // dave and bg turn 2d, dave switches to insanity sprites.
+						thunderBlack.alpha = 0;
+						swapDad('dave-insane');
+						iconP2.changeIcon(opponent.iconName);
+						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
+						defaultCamZoom = 1;
+						threedeez.active = threedeez.visible = false;
+						removeStatics();
+						generateStaticArrows(0, false);
+						generateStaticArrows(1, false);
+						for (note in notes.members)
+						{
+							if (!note.mustPress)
+								note.swapType('2d');
+						}
+						for (note in unspawnNotes)
+						{
+							if (!note.mustPress)
+								note.swapType('2d');
+						}
+					case 256: // dave and bg turn 3d
+						swapDad('insane-dave-3d');
+						iconP2.changeIcon(opponent.iconName);
+						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
+						defaultCamZoom = 0.85;
+						threedeez.active = threedeez.visible = true;
+						removeStatics();
+						generateStaticArrows(0, false);
+						generateStaticArrows(1, false);
+						for (note in notes.members)
+						{
+							if (!note.mustPress)
+								note.swapType('3d');
+						}
+						for (note in unspawnNotes)
+						{
+							if (!note.mustPress)
+								note.swapType('3d');
+						}
+					case 312:
+						FlxTween.tween(FlxG.camera, {zoom: 0.5}, 0.8, {ease: FlxEase.circOut});
+						defaultCamZoom = 0.5;
+					case 316:
+						FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
+						defaultCamZoom = 1.1;
+					case 320: // dave and bg turn 2d
+						thunderBlack.alpha = 0;
+						swapDad('dave-insane');
+						iconP2.changeIcon(opponent.iconName);
+						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
+						defaultCamZoom = 0.8;
+						threedeez.active = threedeez.visible = false;
+						removeStatics();
+						generateStaticArrows(0, false);
+						generateStaticArrows(1, false);
+						for (note in notes.members)
+						{
+							if (!note.mustPress)
+								note.swapType('2d');
+						}
+						for (note in unspawnNotes)
+						{
+							if (!note.mustPress)
+								note.swapType('2d');
+						}
+					case 336:
+						defaultCamZoom = 1;
+					case 352:
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 0.9;
+					case 384: // dave and bg turn 3d
+						thunderBlack.alpha = 0;
+						swapDad('insane-dave-3d');
+						iconP2.changeIcon(opponent.iconName);
+						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
+						defaultCamZoom = 1;
+						threedeez.active = threedeez.visible = true;
+						removeStatics();
+						generateStaticArrows(0, false);
+						generateStaticArrows(1, false);
+						for (note in notes.members)
+						{
+							if (!note.mustPress)
+								note.swapType('3d');
+						}
+						for (note in unspawnNotes)
+						{
+							if (!note.mustPress)
+								note.swapType('3d');
+						}
+					case 448: // dave and bg turn 2d
+						camZoomIntensity = 3;
+						swapDad('dave-insane');
+						iconP2.changeIcon(opponent.iconName);
+						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
+						defaultCamZoom = 1.1;
+						threedeez.active = threedeez.visible = false;
+						removeStatics();
+						generateStaticArrows(0, false);
+						generateStaticArrows(1, false);
+						for (note in notes.members)
+						{
+							if (!note.mustPress)
+								note.swapType('2d');
+						}
+						for (note in unspawnNotes)
+						{
+							if (!note.mustPress)
+								note.swapType('2d');
+						}
+					case 464:
+						defaultCamZoom = 1;
+					case 480: // dave and bg turn 3d
+						camZoomIntensity = 1;
+						swapDad('insane-dave-3d');
+						iconP2.changeIcon(opponent.iconName);
+						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
+						defaultCamZoom = 0.8;
+						threedeez.active = threedeez.visible = true;
+						removeStatics();
+						generateStaticArrows(0, false);
+						generateStaticArrows(1, false);
+						for (note in notes.members)
+						{
+							if (!note.mustPress)
+								note.swapType('3d');
+						}
+						for (note in unspawnNotes)
+						{
+							if (!note.mustPress)
+								note.swapType('3d');
+						}
+					case 512: // dave and bg turn 2d for the fimal time..
+						FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
+						swapDad('dave'); // keep normie house dave btw... he must be average
+						iconP2.changeIcon(opponent.iconName);
+						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
+						defaultCamZoom = 1.2;
+						threedeez.active = threedeez.visible = false;
+						removeStatics();
+						generateStaticArrows(0, false);
+						generateStaticArrows(1, false);
+						for (note in notes.members)
+						{
+							if (!note.mustPress)
+								note.swapType('2d');
+						}
+						for (note in unspawnNotes)
+						{
+							if (!note.mustPress)
+								note.swapType('2d');
+						}
+					case 544:
+						thunderBlack.alpha = 0;
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 1.1;
+					case 576:
+						thunderBlack.alpha = 1;
+				}
+			case 'duper':
+				switch (curBeat)
+				{
+					case 256:
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 0.75;
+						thirdimension.active = thirdimension.visible = true;
+						bonusShit.text = "Screw You!";
+					case 320:
+						thirdimension.active = thirdimension.visible = false;
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 0.9;
+					case 384:
+						FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
+						defaultCamZoom = 1.3;
+					case 445:
+						defaultCamZoom = 1.2;
+					case 448:
+						thunderBlack.alpha = 0;
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 0.85;
+					case 480:
+						defaultCamZoom = 0.9;
+					case 508:
+						FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
+						defaultCamZoom = 1.2;
+					case 512:
+						thunderBlack.alpha = 0;
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 0.9;
+					case 576:
+						FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
+						defaultCamZoom = 1.2;
+					case 592:
+						FlxTween.tween(thunderBlack, {alpha: 0}, Conductor.stepCrochet / 500);
+						defaultCamZoom = 0.9;
+					case 636:
+						FlxTween.tween(thunderBlack, {alpha: 0.6}, Conductor.stepCrochet / 500);
+						defaultCamZoom = 1.2;
+					case 640:
+						thirdimension.active = thirdimension.visible = true;
+						thunderBlack.alpha = 0;
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 1;
+					case 696:
+						FlxTween.tween(thunderBlack, {alpha: 0.6}, Conductor.stepCrochet / 500);
+						defaultCamZoom = 1.3;
+					case 700:
+						FlxTween.tween(thunderBlack, {alpha: 0}, Conductor.stepCrochet / 500);
+						defaultCamZoom = 0.75;
+					case 704:
+						FlxG.camera.flash(FlxColor.WHITE, 1);
+						defaultCamZoom = 0.9;
+				}
 		}
-
 		if (shakeCam || GFScared)
 		{
 			gf.playAnim('scared', true);
 		}
-
 		// health icon bounce but epic-er
 		if (curBeat % gfSpeed == 0)
 		{
@@ -4599,7 +4604,6 @@ class PlayState extends MusicBeatState
 							iconP2.scale.set(1.05, 1.15);
 						else
 							iconP2.scale.set(1.1, 1.3);
-
 						if (!iconP1.losing)
 							FlxTween.angle(iconP1, -15, 0, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut});
 						if (!iconP2.losing)
@@ -4613,21 +4617,17 @@ class PlayState extends MusicBeatState
 							iconP2.scale.set(1.05, 0.9);
 						else
 							iconP2.scale.set(1.1, 0.8);
-
 						if (!iconP2.losing)
 							FlxTween.angle(iconP2, -15, 0, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut});
 						if (!iconP1.losing)
 							FlxTween.angle(iconP1, 15, 0, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut});
 						}
 			}
-
 			FlxTween.tween(iconP1, {'scale.x': 1, 'scale.y': 1}, Conductor.crochet / 1250 * gfSpeed, {ease: FlxEase.quadOut});
 			FlxTween.tween(iconP2, {'scale.x': 1, 'scale.y': 1}, Conductor.crochet / 1250 * gfSpeed, {ease: FlxEase.quadOut});
-
 			iconP1.updateHitbox();
 			iconP2.updateHitbox();
 		}
-
 		if (curBeat % danceBeatSnap == 0)
 		{
 			if (iconP1.charPublic == 'bandu-origin')
@@ -4639,7 +4639,6 @@ class PlayState extends MusicBeatState
 				iconP2.animation.play(iconP2.charPublic, true);
 			}
 		}
-
 		if (curBeat % gfSpeed == 0)
 		{
 			if (!shakeCam)
@@ -4647,7 +4646,6 @@ class PlayState extends MusicBeatState
 				gf.dance();
 			}
 		}
-
 		if (!boyfriend.animation.curAnim.name.startsWith("sing") && boyfriend.canDance && curBeat % danceBeatSnap == 0)
 		{
 			boyfriend.dance();
@@ -4664,7 +4662,6 @@ class PlayState extends MusicBeatState
 				boyfriend.color = FlxColor.WHITE;
 			}
 		}
-
 		if (curBeat % 8 == 7 && SONG.song == 'Tutorial' && opponent.curCharacter == 'gf') // fixed your stupid fucking code ninjamuffin this is literally the easiest shit to fix like come on seriously why are you so dumb
 		{
 			opponent.playAnim('cheer', true);
