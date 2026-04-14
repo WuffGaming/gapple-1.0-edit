@@ -3051,34 +3051,33 @@ class PlayState extends MusicBeatState
 			Highscore.saveScore(SONG.song, songScore, characteroverride == "none" || characteroverride == "bf" ? "bf" : characteroverride);
 			#end
 		}
-		if (xtraSong)
+		if (FlxG.save.data.freeplayCuts)
 		{
-			FlxG.switchState(() -> new ExtraSongState());
+			switch (SONG.song.toLowerCase())
+			{
+				case 'applecore':
+					canPause = false;
+					vocals.volume = 0;
+					generatedMusic = false; // stop the game from trying to generate anymore music and to just cease attempting to play the music in general
+					boyfriend.stunned = true;
+					var doof:DialogueBox = new DialogueBox(false, CoolUtil.coolTextFile(Paths.txt('dialogue/dialogue/coreDialogueEnd')));
+					doof.scrollFactor.set();
+					doof.finishThing = ughWhyDoesThisHaveToFuckingExist;
+					doof.cameras = [camDialogue];
+					schoolIntro(doof, false);
+				default:
+					if (xtraSong)
+						FlxG.switchState(() -> new ExtraSongState());
+					else
+						FlxG.switchState(() -> new PlayMenuState());
+			}
 		}
 		else
 		{
-			if (FlxG.save.data.freeplayCuts)
-			{
-				switch (SONG.song.toLowerCase())
-				{
-					case 'applecore':
-						canPause = false;
-						vocals.volume = 0;
-						generatedMusic = false; // stop the game from trying to generate anymore music and to just cease attempting to play the music in general
-						boyfriend.stunned = true;
-						var doof:DialogueBox = new DialogueBox(false, CoolUtil.coolTextFile(Paths.txt('dialogue/dialogue/coreDialogueEnd')));
-						doof.scrollFactor.set();
-						doof.finishThing = ughWhyDoesThisHaveToFuckingExist;
-						doof.cameras = [camDialogue];
-						schoolIntro(doof, false);
-					default:
-						FlxG.switchState(() -> new PlayMenuState());
-				}
-			}
+			if (xtraSong)
+				FlxG.switchState(() -> new ExtraSongState());
 			else
-			{
 				FlxG.switchState(() -> new PlayMenuState());
-			}
 		}
 	}
 
@@ -4024,14 +4023,6 @@ class PlayState extends MusicBeatState
 					case 480:
 						defaultCamZoom = 0.6;
 						FlxG.camera.flash(FlxColor.WHITE, 1);
-						FlxTween.tween(thunderBlack, {alpha: 0}, Conductor.stepCrochet / 500);
-				}
-			case 'thunderstorm':
-				switch (curBeat)
-				{
-					case 272 | 304:
-						FlxTween.tween(thunderBlack, {alpha: 0.35}, Conductor.stepCrochet / 500);
-					case 300 | 332:
 						FlxTween.tween(thunderBlack, {alpha: 0}, Conductor.stepCrochet / 500);
 				}
 			case 'applecore':

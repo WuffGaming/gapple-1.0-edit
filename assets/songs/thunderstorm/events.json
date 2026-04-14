@@ -1,0 +1,28 @@
+{
+"events": [
+    {
+        "name": "Change Darkness",
+        "step": 1088,
+        "value": 0.35,
+        "time": 0.2
+    },
+    {
+        "name": "Change Darkness",
+        "step": 1216,
+        "value": 0.35,
+        "time": 0.2
+    },
+    {
+        "name": "Change Darkness",
+        "step": 1200,
+        "value": 0,
+        "time": 0.2
+    },
+    {
+        "name": "Change Darkness",
+        "step": 1328,
+        "value": 0,
+        "time": 0.2
+    }
+]
+}
