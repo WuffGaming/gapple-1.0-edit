@@ -264,22 +264,18 @@ class Character extends FlxSprite
 	function parseDataFile() // kadedev i love you i will do anything for you
 	{
 		// Load the data from JSON and cast it to a struct we can easily read.
+		var formerChar = curCharacter;
 		var path:String = Paths.json('characters/${curCharacter}');
-		trace(curCharacter);
-		trace(path);
 		if (!Assets.exists(path))
 			curCharacter = 'bf';
-		trace(curCharacter);
-		trace(path);
+		trace('${formerChar} path: ${path}');
 		var rawJson = Assets.getText(Paths.json('characters/${curCharacter}'));
 		var jsonData:CharacterData = cast Json.parse(rawJson);
-		trace(jsonData);
 
 		var data:CharacterData = cast jsonData;
 		trace(data.name, curCharacter);
 
 		barColorArray = (data.barColor != null && data.barColor.length > 2) ? data.barColor : [161, 161, 161];
-		trace(data.name, barColorArray, barColorArray[0], barColorArray[1], barColorArray[2], '1');
 		var tex:FlxAtlasFrames;
 		tex = Paths.getSparrowAtlas(data.asset);
 		frames = tex;
@@ -335,11 +331,8 @@ class Character extends FlxSprite
 			}
 			Note.CharactersWithPixel.push(curCharacter);
 		}
-		trace(data.name, noteStyle);
 
 		iconName = data.icon;
-
-		trace(data.name, iconName);
 
 		switch (curCharacter) // TODO: make scaling work for the life of me
 		{
@@ -349,9 +342,6 @@ class Character extends FlxSprite
 				else
 					setGraphicSize(Std.int(width * charScale), Std.int(height * charScale)); // setGraphicSize cannot
 		}
-		trace(data.scaleSize);
-		trace(charScale);
-		trace(Std.int(width * charScale), Std.int(height * charScale));
 		updateHitbox();
 		globaloffset = data.globalOffset; // mostly dependency for tha cores
 		gameOffset = data.gameOffset;
