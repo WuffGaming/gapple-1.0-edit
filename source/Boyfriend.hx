@@ -1,12 +1,5 @@
 package;
 
-import flixel.FlxG;
-import flixel.FlxSprite;
-import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.util.FlxTimer;
-
-using StringTools;
-
 class Boyfriend extends Character
 {
 	public var stunned:Bool = false;
@@ -20,7 +13,7 @@ class Boyfriend extends Character
 	{
 		if (!debugMode)
 		{
-			if (animation.curAnim.name.startsWith('sing'))
+			if (animation.curAnim.name.startsWith('sing') && canSing)
 			{
 				holdTimer += elapsed;
 			}

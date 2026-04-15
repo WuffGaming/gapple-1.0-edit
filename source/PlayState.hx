@@ -78,6 +78,8 @@ typedef PropData =
 
 	var animations:Array<AnimatedPropData>;
 
+	var visible:Null<Bool>; // Is prop visible?
+
 	var flipX:Null<Bool>; // Is prop flipped by X?
 
 	var flipY:Null<Bool>; // Is prop flipped by Y?
@@ -1322,6 +1324,9 @@ class PlayState extends MusicBeatState
 						curbg = theprop; // you should avoid having more than one wavybg, as to not cause issues
 					}
 
+					if (prop.visible != null)
+						theprop.visible = prop.visible;
+
 					if (prop.flipX != null)
 						theprop.flipX = prop.flipX;
 
@@ -1481,7 +1486,7 @@ class PlayState extends MusicBeatState
 
 		startTimer = new FlxTimer().start(Conductor.crochet / (1000 * startSpeed), function(tmr:FlxTimer)
 		{
-			opponent.dance();
+			opponent.dance(idleAlt);
 			gf.dance();
 			boyfriend.dance();
 
@@ -1490,8 +1495,8 @@ class PlayState extends MusicBeatState
 				// SO THEIR ANIMATIONS DONT START OFF-SYNCED
 				opponent.playAnim('singUP');
 				opponentmirror.playAnim('singUP');
-				opponent.dance();
-				opponentmirror.dance();
+				opponent.dance(idleAlt);
+				opponentmirror.dance(idleAlt);
 			}
 
 			var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();

@@ -75,6 +75,7 @@ class Character extends FlxSprite
 
 	public var holdTimer:Float = 0;
 	public var canDance:Bool = true;
+	public var canSing:Bool = true;
 
 	public var nativelyPlayable:Bool = false;
 	public var barColor:FlxColor;
@@ -103,31 +104,7 @@ class Character extends FlxSprite
 		if (curCharacter == null)
 			curCharacter = 'bf';
 
-		switch (curCharacter)
-		{
-			/**
-				case 'your-hardcoded-character':
-					tex = Paths.getSparrowAtlas('characters/your/path');
-					frames = tex;
-					animation.addByPrefix('idle', 'IDLE', 24, false);
-					animation.addByPrefix('singUP', 'UP', 24, false);
-					animation.addByPrefix('singRIGHT', 'RIGHT', 24, false);
-					animation.addByPrefix('singDOWN', 'DOWN', 24, false);
-					animation.addByPrefix('singLEFT', 'LEFT', 24, false);
-					animation.addByPrefix('stand', 'STAND', 24, false);
-
-					loadOffsetFile(curCharacter);
-
-					updateHitbox();
-					antialiasing = false;
-					iconName = 'icon';
-					barColor = FlxColor.fromRGB(255, 255, 255);
-
-					playAnim('idle');
-			**/
-			default:
-				parseDataFile();
-		}
+		parseDataFile();
 		dance();
 
 		if (isPlayer)
@@ -166,12 +143,6 @@ class Character extends FlxSprite
 			}
 		}
 
-		if (bopDance)
-		{
-			if (animation.curAnim.name == 'hairFall' && animation.curAnim.finished)
-				playAnim('danceRight');
-		}
-
 		super.update(elapsed);
 	}
 
@@ -187,15 +158,12 @@ class Character extends FlxSprite
 			var poopInPants:String = alt ? '-alt' : '';
 			if (bopDance)
 			{
-				if (!animation.curAnim.name.startsWith('hair'))
-				{
-					danced = !danced;
+				danced = !danced;
 
-					if (danced)
-						playAnim('danceRight' + poopInPants, true);
-					else
-						playAnim('danceLeft' + poopInPants, true);
-				}
+				if (danced)
+					playAnim('danceRight' + poopInPants, true);
+				else
+					playAnim('danceLeft' + poopInPants, true);
 			}
 			else
 				playAnim('idle' + poopInPants, true);
@@ -209,6 +177,10 @@ class Character extends FlxSprite
 			return;
 		}
 		if (AnimName.toLowerCase().startsWith('idle') && !canDance)
+		{
+			return;
+		}
+		if (AnimName.toLowerCase().startsWith('sing') && !canSing)
 		{
 			return;
 		}
