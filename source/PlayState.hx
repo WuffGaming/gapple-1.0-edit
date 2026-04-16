@@ -2828,7 +2828,7 @@ class PlayState extends MusicBeatState
 								swagRect.y = daNote.frameHeight - swagRect.height;
 								daNote.clipRect = swagRect;
 							}
-							if (daNote.y - daNote.offset.y * daNote.scale.y + daNote.height <= strumLineMid)
+							if (daNote.y - daNote.offset.y * daNote.scale.y + daNote.height <= strumLineMid - 20)
 							{
 								daNote.visible = false;
 							}
@@ -2845,9 +2845,8 @@ class PlayState extends MusicBeatState
 							swagRect.height -= swagRect.y;
 							daNote.clipRect = swagRect;
 						}
-						if (daNote.y + daNote.offset.y * daNote.scale.y + daNote.height <= strumLineMid)
+						if (daNote.y + daNote.offset.y * daNote.scale.y + daNote.height <= strumLineMid + 20)
 						{
-							daNote.active = false;
 							daNote.visible = false;
 						}
 					}
