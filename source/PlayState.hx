@@ -2566,7 +2566,6 @@ class PlayState extends MusicBeatState
 			persistentUpdate = false;
 			persistentDraw = true;
 			paused = true;
-			trace('PAULSCODE ' + paused);
 			// 1 / 1000 chance for Gitaroo Man easter egg
 			if (FlxG.random.bool(100 / gitarooManChance))
 			{
@@ -2797,15 +2796,61 @@ class PlayState extends MusicBeatState
 			}
 			notes.forEachAlive(function(daNote:Note)
 			{
-				if (daNote.y > FlxG.height)
+				var strumLineMid = strumLine.y + Note.swagWidth / 2;
+				if (FlxG.save.data.downscroll ? (daNote.y > FlxG.height) : (daNote.y < -FlxG.height))
 				{
-					// daNote.active = false;
+					daNote.active = false;
 					daNote.visible = false;
 				}
 				else
 				{
 					daNote.visible = true;
 					daNote.active = true;
+				}
+				if (daNote.isSustainNote)
+				{
+					if (FlxG.save.data.downscroll)
+					{
+						daNote.y = (strumLine.y + 0.45 * (Conductor.songPosition - daNote.strumTime) * FlxMath.roundDecimal(songSpeed, 2));
+						if (daNote.isSustainNote)
+						{
+							if (daNote.animation.curAnim.name.endsWith("end") && daNote.prevNote != null)
+								daNote.y += daNote.prevNote.height;
+							else
+								daNote.y += daNote.height / 2;
+
+							if (daNote.y - daNote.offset.y * daNote.scale.y + daNote.height >= strumLineMid)
+							{
+								// clipRect is applied to graphic itself so use frame Heights
+								var swagRect:FlxRect = new FlxRect(0, 0, daNote.frameWidth, daNote.frameHeight);
+
+								swagRect.height = (strumLineMid - daNote.y) / daNote.scale.y;
+								swagRect.y = daNote.frameHeight - swagRect.height;
+								daNote.clipRect = swagRect;
+							}
+							if (daNote.y - daNote.offset.y * daNote.scale.y + daNote.height <= strumLineMid)
+							{
+								daNote.visible = false;
+							}
+						}
+					}
+					else
+					{
+						daNote.y = (strumLine.y - 0.45 * (Conductor.songPosition - daNote.strumTime) * FlxMath.roundDecimal(songSpeed, 2));
+						if (daNote.y + daNote.offset.y * daNote.scale.y + daNote.height >= strumLineMid)
+						{
+							var swagRect:FlxRect = new FlxRect(0, 0, daNote.width / daNote.scale.x, daNote.height / daNote.scale.y);
+
+							swagRect.y = (strumLineMid - daNote.y) / daNote.scale.y;
+							swagRect.height -= swagRect.y;
+							daNote.clipRect = swagRect;
+						}
+						if (daNote.y + daNote.offset.y * daNote.scale.y + daNote.height <= strumLineMid)
+						{
+							daNote.active = false;
+							daNote.visible = false;
+						}
+					}
 				}
 
 				if (!daNote.mustPress && daNote.wasGoodHit)
@@ -2939,20 +2984,43 @@ class PlayState extends MusicBeatState
 
 				var strumliney = daNote.MyStrum != null ? daNote.MyStrum.y : strumLine.y;
 
-				if ((daNote.y < -daNote.height && !FlxG.save.data.downscroll || daNote.y >= strumliney + 106 && FlxG.save.data.downscroll))
-				{
-					if (daNote.isSustainNote && daNote.wasGoodHit)
+				/*
+					if ((daNote.y < -daNote.height && !FlxG.save.data.downscroll || daNote.y >= strumliney + 106 && FlxG.save.data.downscroll))
 					{
+						if (!daNote.isSustainNote && !daNote.wasGoodHit)
+						{
+							if (daNote.mustPress && daNote.finishedGenerating)
+								noteMiss(daNote.noteData);
+							health -= 0.075;
+							vocals.volume = 0;
+						}
+
+						daNote.active = false;
+						daNote.visible = false;
+
 						daNote.kill();
 						notes.remove(daNote, true);
 						daNote.destroy();
 					}
-					else
+				 */
+				if (daNote.isSustainNote && daNote.wasGoodHit)
+				{
+					if (FlxG.save.data.downscroll ? (daNote.y < -FlxG.height) : (daNote.y > FlxG.height))
 					{
-						if (daNote.mustPress && daNote.finishedGenerating)
-							noteMiss(daNote.noteData);
+						daNote.active = false;
+						daNote.visible = false;
+
+						daNote.kill();
+						notes.remove(daNote, true);
+						daNote.destroy();
+					}
+				}
+				else if (daNote.tooLate || daNote.wasGoodHit)
+				{
+					if (daNote.tooLate)
+					{
+						noteMiss(daNote.noteData);
 						health -= 0.075;
-						// trace("miss note");
 						vocals.volume = 0;
 					}
 
@@ -3644,19 +3712,6 @@ class PlayState extends MusicBeatState
 				health += 0.023;
 			}
 
-			if (darkLevels.contains(curStage))
-			{
-				boyfriend.color = nightColor;
-			}
-			else if (sunsetLevels.contains(curStage))
-			{
-				boyfriend.color = sunsetColor;
-			}
-			else
-			{
-				boyfriend.color = FlxColor.WHITE;
-			}
-
 			// 'LEFT', 'DOWN', 'UP', 'RIGHT'
 			var fuckingDumbassBullshitFuckYou:String;
 			fuckingDumbassBullshitFuckYou = notestuffs[Math.round(Math.abs(note.noteData)) % 4];
@@ -3694,9 +3749,12 @@ class PlayState extends MusicBeatState
 			note.wasGoodHit = true;
 			vocals.volume = 1;
 
-			note.kill();
-			notes.remove(note, true);
-			note.destroy();
+			if (!note.isSustainNote)
+			{
+				note.kill();
+				notes.remove(note, true);
+				note.destroy();
+			}
 
 			updateAccuracy();
 		}
@@ -3712,8 +3770,6 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-	var lightningStrikeBeat:Int = 0;
-	var lightningOffset:Int = 8;
 	var cool:Int = 0;
 
 	override function beatHit()

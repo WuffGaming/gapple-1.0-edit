@@ -254,11 +254,6 @@ class Note extends FlxSprite
 
 			x += width / 2;
 
-			if (FlxG.save.data.downscroll)
-				flipY = true;
-			else
-				flipY = false;
-
 			switch (noteData)
 			{
 				case 2:
@@ -291,16 +286,9 @@ class Note extends FlxSprite
 					case 3:
 						prevNote.animation.play('redhold');
 				}
-				prevNote.updateHitbox();
 
-				prevNote.scale.y *= ((0.45 * Conductor.stepCrochet) * FlxMath.roundDecimal(PlayState.songSpeed, 2)) / prevNote.height;
-				if (prevNote.flipY = false)
-					flipY = true;
-				else
-					flipY = false;
+				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * PlayState.songSpeed;
 				prevNote.updateHitbox();
-				if (antialiasing)
-					prevNote.scale.y *= 1.0 + (1.0 / prevNote.frameHeight);
 			}
 		}
 	}
@@ -406,7 +394,7 @@ class Note extends FlxSprite
 						prevNote.animation.play('redhold');
 				}
 
-				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.8 * PlayState.songSpeed;
+				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * PlayState.songSpeed;
 				prevNote.updateHitbox();
 			}
 		}
