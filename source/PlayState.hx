@@ -2956,16 +2956,7 @@ class PlayState extends MusicBeatState
 
 				if (FlxG.save.data.downscroll ? (daNote.y > daNote.height) : (daNote.y < -daNote.height))
 				{
-					if (daNote.isSustainNote && daNote.wasGoodHit)
-					{
-						daNote.active = false;
-						daNote.visible = false;
-
-						daNote.kill();
-						notes.remove(daNote, true);
-						daNote.destroy();
-					}
-					else if (daNote.tooLate || !daNote.wasGoodHit)
+					if (daNote.tooLate || !daNote.wasGoodHit)
 					{
 						noteMiss(daNote.noteData);
 						health -= 0.075;
@@ -3371,7 +3362,7 @@ class PlayState extends MusicBeatState
 		var controlArray:Array<Bool> = [leftP, downP, upP, rightP];
 
 		// FlxG.watch.addQuick('asdfa', upP);
-		if ((upP || rightP || downP || leftP) && !boyfriend.stunned && generatedMusic)
+		if ((upP || rightP || downP || leftP) && generatedMusic)
 		{
 			boyfriend.holdTimer = 0;
 
@@ -3427,13 +3418,6 @@ class PlayState extends MusicBeatState
 						lasthitnotetime = note.strumTime;
 						goodNoteHit(note);
 					}
-				}
-
-				if (daNote.wasGoodHit)
-				{
-					daNote.kill();
-					notes.remove(daNote, true);
-					daNote.destroy();
 				}
 			}
 			else if (!theFunne)
