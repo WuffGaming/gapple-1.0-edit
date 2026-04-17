@@ -2737,7 +2737,7 @@ class PlayState extends MusicBeatState
 		{
 			if (isFunnySong)
 			{
-				altNotes.forEachAlive(function(daNote:Note)
+				altNotes.forEachAlive(function(daNote:Note) // DISRUPTION APPLECORE BULLSHIT
 				{
 					if (daNote.y > FlxG.height * 2)
 					{
@@ -2797,7 +2797,7 @@ class PlayState extends MusicBeatState
 			notes.forEachAlive(function(daNote:Note)
 			{
 				var strumLineMid = strumLine.y + Note.swagWidth / 2;
-				if (FlxG.save.data.downscroll ? (daNote.y > FlxG.height) : (daNote.y < -FlxG.height))
+				if (FlxG.save.data.downscroll ? (daNote.y < -FlxG.height) : (daNote.y > FlxG.height))
 				{
 					daNote.active = false;
 					daNote.visible = false;
@@ -2807,36 +2807,31 @@ class PlayState extends MusicBeatState
 					daNote.visible = true;
 					daNote.active = true;
 				}
+				if (FlxG.save.data.downscroll)
+					daNote.y = (strumLine.y + 0.45 * (Conductor.songPosition - daNote.strumTime) * FlxMath.roundDecimal(songSpeed, 2));
+				else
+					daNote.y = (strumLine.y - 0.45 * (Conductor.songPosition - daNote.strumTime) * FlxMath.roundDecimal(songSpeed, 2));
 				if (daNote.isSustainNote)
 				{
 					if (FlxG.save.data.downscroll)
 					{
-						daNote.y = (strumLine.y + 0.45 * (Conductor.songPosition - daNote.strumTime) * FlxMath.roundDecimal(songSpeed, 2));
-						if (daNote.isSustainNote)
+						if (daNote.animation.curAnim.name.endsWith("end") && daNote.prevNote != null)
+							daNote.y += daNote.prevNote.height;
+						else
+							daNote.y += daNote.height / 2;
+
+						if (daNote.y - daNote.offset.y * daNote.scale.y + daNote.height >= strumLineMid)
 						{
-							if (daNote.animation.curAnim.name.endsWith("end") && daNote.prevNote != null)
-								daNote.y += daNote.prevNote.height;
-							else
-								daNote.y += daNote.height / 2;
+							// clipRect is applied to graphic itself so use frame Heights
+							var swagRect:FlxRect = new FlxRect(0, 0, daNote.frameWidth, daNote.frameHeight);
 
-							if (daNote.y - daNote.offset.y * daNote.scale.y + daNote.height >= strumLineMid)
-							{
-								// clipRect is applied to graphic itself so use frame Heights
-								var swagRect:FlxRect = new FlxRect(0, 0, daNote.frameWidth, daNote.frameHeight);
-
-								swagRect.height = (strumLineMid - daNote.y) / daNote.scale.y;
-								swagRect.y = daNote.frameHeight - swagRect.height;
-								daNote.clipRect = swagRect;
-							}
-							if (daNote.y - daNote.offset.y * daNote.scale.y + daNote.height <= strumLineMid - 20)
-							{
-								daNote.visible = false;
-							}
+							swagRect.height = (strumLineMid - daNote.y) / daNote.scale.y;
+							swagRect.y = daNote.frameHeight - swagRect.height;
+							daNote.clipRect = swagRect;
 						}
 					}
 					else
 					{
-						daNote.y = (strumLine.y - 0.45 * (Conductor.songPosition - daNote.strumTime) * FlxMath.roundDecimal(songSpeed, 2));
 						if (daNote.y + daNote.offset.y * daNote.scale.y + daNote.height >= strumLineMid)
 						{
 							var swagRect:FlxRect = new FlxRect(0, 0, daNote.width / daNote.scale.x, daNote.height / daNote.scale.y);
@@ -2844,10 +2839,6 @@ class PlayState extends MusicBeatState
 							swagRect.y = (strumLineMid - daNote.y) / daNote.scale.y;
 							swagRect.height -= swagRect.y;
 							daNote.clipRect = swagRect;
-						}
-						if (daNote.y + daNote.offset.y * daNote.scale.y + daNote.height <= strumLineMid + 20)
-						{
-							daNote.visible = false;
 						}
 					}
 				}
@@ -2957,54 +2948,15 @@ class PlayState extends MusicBeatState
 					notes.remove(daNote, true);
 					daNote.destroy();
 				}
-				switch (SONG.song.toLowerCase())
-				{
-					case 'applecore':
-						if (unfairPart)
-						{
-							daNote.y = ((daNote.mustPress ? noteJunksPlayer[daNote.noteData] : noteJunksDad[daNote.noteData])
-								- (Conductor.songPosition - daNote.strumTime) * ((FlxG.save.data.downscroll ? -0.45 : 0.45) * FlxMath.roundDecimal(songSpeed * daNote.LocalScrollSpeed,
-									2))); // couldnt figure out this stupid mystrum thing
-						}
-						else
-						{
-							daNote.y = (strumLine.y
-								- (Conductor.songPosition - daNote.strumTime) * ((FlxG.save.data.downscroll ? -0.45 : 0.45) * FlxMath.roundDecimal(songSpeed * 1,
-									2)));
-						}
-					default:
-						daNote.y = (strumLine.y
-							- (Conductor.songPosition - daNote.strumTime) * ((FlxG.save.data.downscroll ? -0.45 : 0.45) * FlxMath.roundDecimal(songSpeed * daNote.LocalScrollSpeed,
-								2)));
-				}
 				// trace(daNote.y);
 				// WIP interpolation shit? Need to fix the pause issue
 				// daNote.y = (strumLine.y - (songTime - daNote.strumTime) * (0.45 * PlayState.songSpeed));
 
 				var strumliney = daNote.MyStrum != null ? daNote.MyStrum.y : strumLine.y;
 
-				/*
-					if ((daNote.y < -daNote.height && !FlxG.save.data.downscroll || daNote.y >= strumliney + 106 && FlxG.save.data.downscroll))
-					{
-						if (!daNote.isSustainNote && !daNote.wasGoodHit)
-						{
-							if (daNote.mustPress && daNote.finishedGenerating)
-								noteMiss(daNote.noteData);
-							health -= 0.075;
-							vocals.volume = 0;
-						}
-
-						daNote.active = false;
-						daNote.visible = false;
-
-						daNote.kill();
-						notes.remove(daNote, true);
-						daNote.destroy();
-					}
-				 */
-				if (daNote.isSustainNote && daNote.wasGoodHit)
+				if (FlxG.save.data.downscroll ? (daNote.y > daNote.height) : (daNote.y < -daNote.height))
 				{
-					if (FlxG.save.data.downscroll ? (daNote.y < -FlxG.height) : (daNote.y > FlxG.height))
+					if (daNote.isSustainNote && daNote.wasGoodHit)
 					{
 						daNote.active = false;
 						daNote.visible = false;
@@ -3013,16 +2965,12 @@ class PlayState extends MusicBeatState
 						notes.remove(daNote, true);
 						daNote.destroy();
 					}
-				}
-				else if (daNote.tooLate || daNote.wasGoodHit)
-				{
-					if (daNote.tooLate)
+					else if (daNote.tooLate || !daNote.wasGoodHit)
 					{
 						noteMiss(daNote.noteData);
 						health -= 0.075;
 						vocals.volume = 0;
 					}
-
 					daNote.active = false;
 					daNote.visible = false;
 
