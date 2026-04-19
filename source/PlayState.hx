@@ -2817,8 +2817,7 @@ class PlayState extends MusicBeatState
 			}
 			notes.forEachAlive(function(daNote:Note)
 			{
-				var strumLineMid = strumLine.y + Note.swagWidth / 2;
-				if (daNote.y > FlxG.height)
+				if (downscroll ? (daNote.y < -FlxG.height) : (daNote.y > FlxG.height))
 				{
 					daNote.active = false;
 					daNote.visible = false;
@@ -2828,6 +2827,7 @@ class PlayState extends MusicBeatState
 					daNote.visible = true;
 					daNote.active = true;
 				}
+				var strumLineMid = strumLine.y + Note.swagWidth / 2;
 				switch (SONG.song.toLowerCase())
 				{
 					case 'applecore':
@@ -2848,15 +2848,41 @@ class PlayState extends MusicBeatState
 								2)));
 				}
 				// still aallll stolen from funkincrew's old commits! credits to MtH
-				if (daNote.isSustainNote
-					&& ((downscroll ? (daNote.y - daNote.offset.y) : (daNote.y + daNote.offset.y))) <= strumLineMid
-						&& (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
+				if (downscroll)
 				{
-					var swagRect = new FlxRect(0, strumLineMid - daNote.y, daNote.width * 2, daNote.height * 2);
-					swagRect.y /= daNote.scale.y;
-					swagRect.height -= swagRect.y;
+					if (daNote.isSustainNote)
+					{
+						if (daNote.animation.curAnim.name.endsWith("end") && daNote.prevNote != null)
+							daNote.y += daNote.prevNote.height;
+						else
+							daNote.y += daNote.height / 2;
 
-					daNote.clipRect = swagRect;
+						if ((!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit)))
+							&& daNote.y - daNote.offset.y * daNote.scale.y + daNote.height >= strumLineMid)
+						{
+							// clipRect is applied to graphic itself so use frame Heights
+							var swagRect:FlxRect = new FlxRect(0, 0, daNote.frameWidth, daNote.frameHeight);
+
+							swagRect.height = (strumLineMid - daNote.y) / daNote.scale.y;
+							swagRect.y = daNote.frameHeight - swagRect.height;
+							daNote.clipRect = swagRect;
+						}
+					}
+				}
+				else
+				{
+					if (daNote.isSustainNote)
+					{
+						if ((daNote.y + daNote.offset.y) <= strumLineMid
+							&& (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
+						{
+							var swagRect:FlxRect = new FlxRect(0, 0, daNote.width / daNote.scale.x, daNote.height / daNote.scale.y);
+
+							swagRect.y = (strumLineMid - daNote.y) / daNote.scale.y;
+							swagRect.height -= swagRect.y;
+							daNote.clipRect = swagRect;
+						}
+					}
 				}
 
 				if (!daNote.mustPress && daNote.wasGoodHit)
