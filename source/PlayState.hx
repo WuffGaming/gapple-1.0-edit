@@ -194,6 +194,7 @@ class PlayState extends MusicBeatState
 	var note:Note;
 
 	public var middlescroll:Bool = FlxG.save.data.middlescroll;
+	public var downscroll:Bool = FlxG.save.data.downscroll;
 
 	var jsonStage:Bool = false;
 
@@ -698,7 +699,7 @@ class PlayState extends MusicBeatState
 		{
 			altStrumLine = new FlxSprite(0, -100);
 		}
-		if (FlxG.save.data.downscroll)
+		if (downscroll)
 			strumLine.y = FlxG.height - 165;
 
 		strumLineNotes = new FlxTypedGroup<Strum>();
@@ -718,7 +719,7 @@ class PlayState extends MusicBeatState
 		timeTxt.borderSize = 2;
 		timeTxt.antialiasing = true;
 		timeTxt.visible = showTime;
-		if (FlxG.save.data.downscroll)
+		if (downscroll)
 			timeTxt.y = FlxG.height - 44;
 		if (curStage == 'algebra')
 		{
@@ -758,7 +759,7 @@ class PlayState extends MusicBeatState
 			curbar = 'retroBar';
 		}
 		healthBarBG = new FlxSprite(0, FlxG.height * 0.9).loadGraphic(Paths.image('ui/bar/' + curbar));
-		if (FlxG.save.data.downscroll)
+		if (downscroll)
 			healthBarBG.y = 50;
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
@@ -781,7 +782,7 @@ class PlayState extends MusicBeatState
 		add(healthBar);
 
 		healthBarThing = new FlxSprite(0, FlxG.height * 0.9).loadGraphic(Paths.image('ui/bar/' + curThing));
-		if (FlxG.save.data.downscroll)
+		if (downscroll)
 			healthBarThing.y = 50;
 
 		healthBarThing.screenCenter(X);
@@ -2833,23 +2834,22 @@ class PlayState extends MusicBeatState
 						if (unfairPart)
 						{
 							daNote.y = ((daNote.mustPress ? noteJunksPlayer[daNote.noteData] : noteJunksDad[daNote.noteData])
-								- (Conductor.songPosition - daNote.strumTime) * ((FlxG.save.data.downscroll ? -0.45 : 0.45) * FlxMath.roundDecimal(songSpeed * daNote.LocalScrollSpeed,
+								- (Conductor.songPosition - daNote.strumTime) * ((downscroll ? -0.45 : 0.45) * FlxMath.roundDecimal(songSpeed * daNote.LocalScrollSpeed,
 									2))); // couldnt figure out this stupid mystrum thing
 						}
 						else
 						{
 							daNote.y = (strumLine.y
-								- (Conductor.songPosition - daNote.strumTime) * ((FlxG.save.data.downscroll ? -0.45 : 0.45) * FlxMath.roundDecimal(songSpeed * 1,
-									2)));
+								- (Conductor.songPosition - daNote.strumTime) * ((downscroll ? -0.45 : 0.45) * FlxMath.roundDecimal(songSpeed * 1, 2)));
 						}
 					default:
 						daNote.y = (strumLine.y
-							- (Conductor.songPosition - daNote.strumTime) * ((FlxG.save.data.downscroll ? -0.45 : 0.45) * FlxMath.roundDecimal(songSpeed * daNote.LocalScrollSpeed,
+							- (Conductor.songPosition - daNote.strumTime) * ((downscroll ? -0.45 : 0.45) * FlxMath.roundDecimal(songSpeed * daNote.LocalScrollSpeed,
 								2)));
 				}
 				// still aallll stolen from funkincrew's old commits! credits to MtH
 				if (daNote.isSustainNote
-					&& ((FlxG.save.data.downscroll ? (daNote.y - daNote.offset.y) : (daNote.y + daNote.offset.y))) <= strumLineMid
+					&& ((downscroll ? (daNote.y - daNote.offset.y) : (daNote.y + daNote.offset.y))) <= strumLineMid
 						&& (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
 				{
 					var swagRect = new FlxRect(0, strumLineMid - daNote.y, daNote.width * 2, daNote.height * 2);
@@ -2970,7 +2970,7 @@ class PlayState extends MusicBeatState
 
 				var strumliney = daNote.MyStrum != null ? daNote.MyStrum.y : strumLine.y;
 
-				if (FlxG.save.data.downscroll ? (daNote.y >= strumliney + 106) : (daNote.y < -daNote.height))
+				if (downscroll ? (daNote.y >= strumliney + 106) : (daNote.y < -daNote.height))
 				{
 					if (daNote.isSustainNote && daNote.wasGoodHit)
 					{
