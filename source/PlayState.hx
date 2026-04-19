@@ -2807,10 +2807,26 @@ class PlayState extends MusicBeatState
 					daNote.visible = true;
 					daNote.active = true;
 				}
-				if (FlxG.save.data.downscroll)
-					daNote.y = (strumLine.y - 0.45 * (Conductor.songPosition - daNote.strumTime) * FlxMath.roundDecimal(songSpeed, 2));
-				else
-					daNote.y = (strumLine.y + 0.45 * (Conductor.songPosition - daNote.strumTime) * FlxMath.roundDecimal(songSpeed, 2));
+				switch (SONG.song.toLowerCase())
+				{
+					case 'applecore':
+						if (unfairPart)
+						{
+							daNote.y = ((daNote.mustPress ? noteJunksPlayer[daNote.noteData] : noteJunksDad[daNote.noteData])
+								- (Conductor.songPosition - daNote.strumTime) * ((FlxG.save.data.downscroll ? -0.45 : 0.45) * FlxMath.roundDecimal(songSpeed * daNote.LocalScrollSpeed,
+									2))); // couldnt figure out this stupid mystrum thing
+						}
+						else
+						{
+							daNote.y = (strumLine.y
+								- (Conductor.songPosition - daNote.strumTime) * ((FlxG.save.data.downscroll ? -0.45 : 0.45) * FlxMath.roundDecimal(songSpeed * 1,
+									2)));
+						}
+					default:
+						daNote.y = (strumLine.y
+							- (Conductor.songPosition - daNote.strumTime) * ((FlxG.save.data.downscroll ? -0.45 : 0.45) * FlxMath.roundDecimal(songSpeed * daNote.LocalScrollSpeed,
+								2)));
+				}
 				// still aallll stolen from funkincrew's old commits! credits to MtH
 				if (daNote.isSustainNote
 					&& (FlxG.save.data.downscroll ? (daNote.y - daNote.offset.y) : (daNote.y + daNote.offset.y)) <= strumLineMid
