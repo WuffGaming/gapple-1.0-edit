@@ -2817,7 +2817,7 @@ class PlayState extends MusicBeatState
 			notes.forEachAlive(function(daNote:Note)
 			{
 				var strumLineMid = strumLine.y + Note.swagWidth / 2;
-				if (FlxG.save.data.downscroll ? (daNote.y < -FlxG.height) : (daNote.y > FlxG.height))
+				if (daNote.y > FlxG.height)
 				{
 					daNote.active = false;
 					daNote.visible = false;
@@ -2849,7 +2849,7 @@ class PlayState extends MusicBeatState
 				}
 				// still aallll stolen from funkincrew's old commits! credits to MtH
 				if (daNote.isSustainNote
-					&& (FlxG.save.data.downscroll ? (daNote.y - daNote.offset.y) : (daNote.y + daNote.offset.y)) <= strumLineMid
+					&& ((FlxG.save.data.downscroll ? (daNote.y - daNote.offset.y) : (daNote.y + daNote.offset.y))) <= strumLineMid
 						&& (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
 				{
 					var swagRect = new FlxRect(0, strumLineMid - daNote.y, daNote.width * 2, daNote.height * 2);
@@ -2970,7 +2970,7 @@ class PlayState extends MusicBeatState
 
 				var strumliney = daNote.MyStrum != null ? daNote.MyStrum.y : strumLine.y;
 
-				if (FlxG.save.data.downscroll ? (daNote.y > daNote.height) : (daNote.y < -daNote.height))
+				if (FlxG.save.data.downscroll ? (daNote.y >= strumliney + 106) : (daNote.y < -daNote.height))
 				{
 					if (daNote.isSustainNote && daNote.wasGoodHit)
 					{
