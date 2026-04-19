@@ -57,16 +57,19 @@ typedef StageData =
 	var cameraZoom:Float; // Path to the character's asset.
 
 	// Offsets are added into the current character positions.
-	var bfOffset:Array<Int>;
-	var gfOffset:Array<Int>;
-	var opponentOffset:Array<Int>;
+	var bfOffset:Array<Float>;
+	var gfOffset:Array<Float>;
+	var opponentOffset:Array<Float>;
+	var bfScroll:Array<Float>;
+	var gfScroll:Array<Float>;
+	var opponentScroll:Array<Float>;
 
 	var props:Array<PropData>; // Array of all props.
 }
 
 typedef PropData =
 {
-	var position:Array<Int>; // Where is prop located?
+	var position:Array<Float>; // Where is prop located?
 
 	var scale:Array<Float>; // How big or small is the prop?
 
@@ -586,6 +589,7 @@ class PlayState extends MusicBeatState
 		{
 			var jsonData:StageData = Paths.loadJSON('stages/${curStage}');
 			var data:StageData = cast jsonData;
+			// positioning for scripted stages
 			if (data.bfOffset != null)
 			{
 				boyfriend.x += data.bfOffset[0];
@@ -600,6 +604,22 @@ class PlayState extends MusicBeatState
 			{
 				opponent.x += data.opponentOffset[0];
 				opponent.y += data.opponentOffset[1];
+			}
+			// scroll overrides
+			if (data.bfScroll != null)
+			{
+				boyfriend.scrollFactor.x = data.bfScroll[0];
+				boyfriend.scrollFactor.x = data.bfScroll[1];
+			}
+			if (data.gfScroll != null)
+			{
+				gf.scrollFactor.x = data.gfScroll[0];
+				gf.scrollFactor.x = data.gfScroll[1];
+			}
+			if (data.opponentScroll != null)
+			{
+				opponent.scrollFactor.x = data.opponentScroll[0];
+				opponent.scrollFactor.x = data.opponentScroll[1];
 			}
 		}
 
