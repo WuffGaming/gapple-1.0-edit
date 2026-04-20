@@ -198,9 +198,6 @@ class PlayState extends MusicBeatState
 
 	var jsonStage:Bool = false;
 
-	public var darkLevels:Array<String> = ['disabled'];
-	public var sunsetLevels:Array<String> = [];
-
 	var howManyPlayerNotes:Int = 0;
 	var howManyEnemyNotes:Int = 0;
 
@@ -275,8 +272,6 @@ class PlayState extends MusicBeatState
 	public var badaiTime:Bool = false;
 
 	private var updateTime:Bool = true;
-
-	public var sunsetColor:FlxColor = FlxColor.fromRGB(255, 143, 178);
 
 	private var strumLineNotes:FlxTypedGroup<Strum>;
 
@@ -388,8 +383,6 @@ class PlayState extends MusicBeatState
 	var normalDaveBG:FlxTypedGroup<FlxSprite> = new FlxTypedGroup<FlxSprite>();
 	var canFloat:Bool = true;
 
-	var nightColor:FlxColor = 0xFF878787;
-
 	var swagBG:FlxSprite;
 	var unswagBG:FlxSprite;
 
@@ -489,31 +482,41 @@ class PlayState extends MusicBeatState
 		screenshader.waveFrequency = 2;
 		screenshader.waveSpeed = 1;
 		screenshader.shader.uTime.value[0] = new flixel.math.FlxRandom().float(-100000, 100000);
-		var gfVersion = SONG.gf;
-		if (formoverride == "radical")
+		if (formoverride == "none" || formoverride == "bf") // add temporary bf
 		{
-			gfVersion = 'gamingtastic';
+			boyfriend = new Boyfriend(770, 450, SONG.player1);
 		}
-		else if (formoverride == "3d-bf")
+		else
 		{
-			gfVersion = '3d-gf';
+			boyfriend = new Boyfriend(770, 450, formoverride);
+		}
+		var gfVersion:String = 'gf';
+		if (SONG.gf == 'gf' && boyfriend.gfForm != 'none') // is gf a basic gf type?
+		{
+			gfVersion = boyfriend.gfForm;
+		}
+		else if (boyfriend.gfForm == 'none' && SONG.song != "Tutorial")
+		{
+			if (SONG.song != "Tutorial")
+			{
+				gf.visible = false;
+				gf.y = 130;
+			}
+			else
+			{
+				gfVersion = 'gf';
+			}
+		}
+		else
+		{
+			gfVersion = SONG.gf; // gf should be overwritten with the song gf
 		}
 		gf = new Character(400, 130, gfVersion);
 		gf.scrollFactor.set(0.95, 0.95);
 		gf.visible = SONG.gf_visible;
 		gf.x += gf.gameOffset[0];
 		gf.y += gf.gameOffset[1];
-
-		if (!(formoverride == "bf" || formoverride == "none" || formoverride == "bf-pixel" || formoverride == "3d-bf" || formoverride == "radical")
-			&& SONG.song != "Tutorial")
-		{
-			gf.visible = false;
-			gf.y = 130;
-		}
-		else if (SONG.song.toLowerCase() == 'sugar-rush' && formoverride == "radical") // hotboy
-		{
-			gf.y = 130;
-		}
+		remove(boyfriend); // remove for layering
 
 		opponent = new Character(100, 100, SONG.player2);
 
@@ -541,19 +544,11 @@ class PlayState extends MusicBeatState
 			boyfriend = new Boyfriend(770, 450, formoverride);
 		}
 
-		// Boyfriend Form Positions
-		switch (boyfriend.curCharacter)
-		{
-			case '3d-bf':
-				boyfriendOldIcon = '3d-bf-old';
-				boyfriend.x += boyfriend.gameOffset[0];
-				boyfriend.y += boyfriend.gameOffset[1];
-			default:
-				boyfriend.x += boyfriend.gameOffset[0];
-				boyfriend.y += boyfriend.gameOffset[1];
-		}
+		boyfriend.x += boyfriend.gameOffset[0];
+		boyfriend.y += boyfriend.gameOffset[1];
 
 		// Stage Positions
+		// TODO: Move to JSON
 		if (scriptedStages.contains(curStage))
 		{
 			switch (curStage)
@@ -565,20 +560,11 @@ class PlayState extends MusicBeatState
 					opponent.x -= 100;
 				case 'basement':
 					boyfriend.x += 125;
-				case 'warehouse':
-					if (formoverride == "radical")
-						boyfriend.y -= 120;
-					gf.y -= 120;
 				case 'redTunnel':
 					opponent.x -= 150;
 					opponent.y -= 100;
 					boyfriend.x -= 150;
 					boyfriend.y -= 150;
-				case 'sugar':
-					if (formoverride == 'none' || formoverride == 'bf')
-						gf.setPosition(751, 300);
-					else
-						gf.x += 35;
 				case 'algebra':
 					boyfriend.y += 80;
 				case 'origin':
@@ -622,20 +608,6 @@ class PlayState extends MusicBeatState
 				opponent.scrollFactor.x = data.opponentScroll[0];
 				opponent.scrollFactor.x = data.opponentScroll[1];
 			}
-		}
-
-		if (darkLevels.contains(curStage))
-		{
-			opponent.color = nightColor;
-			gf.color = nightColor;
-			boyfriend.color = nightColor;
-		}
-
-		if (sunsetLevels.contains(curStage))
-		{
-			opponent.color = sunsetColor;
-			gf.color = sunsetColor;
-			boyfriend.color = sunsetColor;
 		}
 
 		add(gf);
@@ -1492,17 +1464,13 @@ class PlayState extends MusicBeatState
 
 		var swagCounter:Int = 0;
 
-		if (formoverride == "radical")
+		if (curStage != 'algebra')
 		{
-			ratingstype = 'radical';
+			ratingstype = boyfriend.rating;
 		}
-		if (curStage == 'algebra')
+		else
 		{
 			ratingstype = 'baldi';
-		}
-		if (Note.CharactersWithPixel.contains(dadChar) || Note.CharactersWithPixel.contains(bfChar))
-		{
-			ratingstype = 'pixel';
 		}
 
 		startTimer = new FlxTimer().start(Conductor.crochet / (1000 * startSpeed), function(tmr:FlxTimer)
@@ -4689,18 +4657,8 @@ class PlayState extends MusicBeatState
 		if (!boyfriend.animation.curAnim.name.startsWith("sing") && boyfriend.canDance && curBeat % danceBeatSnap == 0)
 		{
 			boyfriend.dance();
-			if (darkLevels.contains(curStage))
-			{
-				boyfriend.color = nightColor;
-			}
-			else if (sunsetLevels.contains(curStage))
-			{
-				boyfriend.color = sunsetColor;
-			}
-			else
-			{
-				boyfriend.color = FlxColor.WHITE;
-			}
+
+			boyfriend.color = FlxColor.WHITE;
 		}
 		if (curBeat % 8 == 7 && SONG.song == 'Tutorial' && opponent.curCharacter == 'gf') // fixed your stupid fucking code ninjamuffin this is literally the easiest shit to fix like come on seriously why are you so dumb
 		{

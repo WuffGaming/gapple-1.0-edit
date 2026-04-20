@@ -11,6 +11,7 @@
   "camOffset": [0, 0],
   "antialiasing": true,
   "icon": "bf",
+  "gf": "gf",
   "nativelyPlayable": true,
   "flipX": true,
   "animations": [

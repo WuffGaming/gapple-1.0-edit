@@ -39,6 +39,10 @@ typedef CharacterData =
 
 	var icon:String; // What icon should be used?
 
+	var gf:String; // What Girlfriend should be used?
+
+	var rating:String; // What type of rating should this character use?
+
 	var animations:Array<AnimationData>; // Array of all animations. Offsets are handled in the data/offsets
 }
 
@@ -72,6 +76,9 @@ class Character extends FlxSprite
 	public var isPlayer:Bool = false;
 	public var curCharacter:String = 'bf';
 	public var iconName:String = 'face';
+	public var rating:String = 'normal';
+
+	public var gfForm:String = 'gf';
 
 	public var holdTimer:Float = 0;
 	public var canDance:Bool = true;
@@ -286,6 +293,10 @@ class Character extends FlxSprite
 		charScale = data.scale == null ? 1 : data.scale; // add normal
 
 		noteStyle = data.noteStyle == null ? '2D' : data.noteStyle; // add hard
+
+		rating = data.rating == null ? 'normal' : data.rating; // add hard
+
+		gfForm = data.gf == null ? 'none' : data.gf; // add hard
 
 		if (noteStyle == '3D')
 		{
