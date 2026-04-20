@@ -40,15 +40,7 @@ class MainMenuState extends MusicBeatState
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
 
-	public static var bgPaths:Array<String> = [
-		'ui/backgrounds/SUSSUS AMOGUS',
-		'ui/backgrounds/SwagnotrllyTheMod',
-		'ui/backgrounds/Olyantwo',
-		'ui/backgrounds/morie',
-		'ui/backgrounds/mantis',
-		'ui/backgrounds/mamakotomi',
-		'ui/backgrounds/T5mpler'
-	];
+	public static var bgPaths:Array<String> = [];
 
 	override function create()
 	{
@@ -62,6 +54,18 @@ class MainMenuState extends MusicBeatState
 		if (FlxG.save.data.eyesores == null)
 		{
 			FlxG.save.data.eyesores = true;
+		}
+
+		for (bg in bgPaths) // clear bgpaths so it doesnt overflow and shit. this should theoretically prevent memory leaks
+			bgPaths.remove(bg);
+		var bgs = FileSystem.readDirectory('assets/images/ui/backgrounds/');
+
+		for (bg in bgs)
+		{
+			if (bg.endsWith('.png'))
+			{
+				bgPaths.push(bg.replace('.png', ''));
+			}
 		}
 
 		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(randomizeBG());
@@ -277,6 +281,6 @@ class MainMenuState extends MusicBeatState
 	public static function randomizeBG():flixel.system.FlxAssets.FlxGraphicAsset
 	{
 		var chance:Int = FlxG.random.int(0, bgPaths.length - 1);
-		return Paths.image(bgPaths[chance]);
+		return Paths.image('ui/backgrounds/' + bgPaths[chance]);
 	}
 }
