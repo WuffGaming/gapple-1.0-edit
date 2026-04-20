@@ -3086,6 +3086,7 @@ class PlayState extends MusicBeatState
 					doof.cameras = [camDialogue];
 					schoolIntro(doof, false);
 				default:
+					FlxG.sound.playMusic(Paths.music('freakyMenu')); // play freakymusic because we're going to the menus!
 					if (xtraSong)
 						FlxG.switchState(() -> new ExtraSongState());
 					else
@@ -3094,6 +3095,7 @@ class PlayState extends MusicBeatState
 		}
 		else
 		{
+			FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			if (xtraSong)
 				FlxG.switchState(() -> new ExtraSongState());
 			else
