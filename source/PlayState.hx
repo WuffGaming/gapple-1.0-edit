@@ -497,14 +497,11 @@ class PlayState extends MusicBeatState
 		}
 		else if (boyfriend.gfForm == 'none' && SONG.song != "Tutorial")
 		{
+			gfVersion = 'gf';
 			if (SONG.song != "Tutorial")
 			{
 				gf.visible = false;
 				gf.y = 130;
-			}
-			else
-			{
-				gfVersion = 'gf';
 			}
 		}
 		else
