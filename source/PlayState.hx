@@ -2853,7 +2853,7 @@ class PlayState extends MusicBeatState
 					if (daNote.isSustainNote)
 					{
 						if (daNote.animation.curAnim.name.endsWith("end") && daNote.prevNote != null)
-							daNote.y += daNote.prevNote.height;
+							daNote.y += daNote.prevNote.height + (daNote.prevNote.height / 5.5);
 						else
 							daNote.y += daNote.height / 2;
 
@@ -2996,7 +2996,7 @@ class PlayState extends MusicBeatState
 
 				var strumliney = daNote.MyStrum != null ? daNote.MyStrum.y : strumLine.y;
 
-				if (downscroll ? (daNote.y >= strumliney + 106) : (daNote.y < -daNote.height))
+				if (downscroll ? (daNote.y >= strumliney * 1.5) : (daNote.y < -daNote.height))
 				{
 					if (daNote.isSustainNote && daNote.wasGoodHit)
 					{
