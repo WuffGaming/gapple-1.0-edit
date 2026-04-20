@@ -491,18 +491,9 @@ class PlayState extends MusicBeatState
 			boyfriend = new Boyfriend(770, 450, formoverride);
 		}
 		var gfVersion:String = 'gf';
-		if (SONG.gf == 'gf' && boyfriend.gfForm != 'none') // is gf a basic gf type?
+		if (SONG.gf == 'gf' && boyfriend.gfForm != 'none') // is gf a basic gf type or none?
 		{
 			gfVersion = boyfriend.gfForm;
-		}
-		else if (boyfriend.gfForm == 'none' && SONG.song != "Tutorial")
-		{
-			gfVersion = 'gf';
-			if (SONG.song != "Tutorial")
-			{
-				gf.visible = false;
-				gf.y = 130;
-			}
 		}
 		else
 		{
@@ -511,6 +502,8 @@ class PlayState extends MusicBeatState
 		gf = new Character(400, 130, gfVersion);
 		gf.scrollFactor.set(0.95, 0.95);
 		gf.visible = SONG.gf_visible;
+		if (boyfriend.gfForm == 'none' && SONG.song.toLowerCase() != "Tutorial") // is gf none?
+			gf.visible = false;
 		gf.x += gf.gameOffset[0];
 		gf.y += gf.gameOffset[1];
 		remove(boyfriend); // remove for layering

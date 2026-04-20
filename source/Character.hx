@@ -70,6 +70,8 @@ typedef AnimationData =
 
 class Character extends FlxSprite
 {
+	public var name:String = 'Boyfriend';
+
 	public var animOffsets:Map<String, Array<Dynamic>>;
 	public var debugMode:Bool = false;
 
@@ -253,6 +255,8 @@ class Character extends FlxSprite
 
 		var data:CharacterData = cast jsonData;
 		trace(data.name, curCharacter);
+
+		name = data.name;
 
 		barColorArray = (data.barColor != null && data.barColor.length > 2) ? data.barColor : [161, 161, 161];
 		var tex:FlxAtlasFrames;
