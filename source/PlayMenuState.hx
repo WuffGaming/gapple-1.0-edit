@@ -43,16 +43,6 @@ class PlayMenuState extends MusicBeatState
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
 
-	public static var bgPaths:Array<String> = [
-		'ui/backgrounds/SUSSUS AMOGUS',
-		'ui/backgrounds/SwagnotrllyTheMod',
-		'ui/backgrounds/Olyantwo',
-		'ui/backgrounds/morie',
-		'ui/backgrounds/mantis',
-		'ui/backgrounds/mamakotomi',
-		'ui/backgrounds/T5mpler'
-	];
-
 	override function create()
 	{
 		if (!FlxG.sound.music.playing)
@@ -65,11 +55,6 @@ class PlayMenuState extends MusicBeatState
 		if (FlxG.save.data.eyesores == null)
 		{
 			FlxG.save.data.eyesores = true;
-		}
-
-		if (FlxG.save.data.unlockedcharacters == null)
-		{
-			FlxG.save.data.unlockedcharacters = [true, true, false, false, false, false];
 		}
 
 		bg = new FlxSprite(-80).loadGraphic(Paths.image('ui/songbackgrounds/${optionShit[0]}'));
@@ -279,11 +264,5 @@ class PlayMenuState extends MusicBeatState
 		bg.setGraphicSize(1280);
 		bg.updateHitbox();
 		bg.screenCenter();
-	}
-
-	public static function randomizeBG():flixel.system.FlxAssets.FlxGraphicAsset
-	{
-		var chance:Int = FlxG.random.int(0, bgPaths.length - 1);
-		return Paths.image(bgPaths[chance]);
 	}
 }

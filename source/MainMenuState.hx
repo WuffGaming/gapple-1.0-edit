@@ -64,11 +64,6 @@ class MainMenuState extends MusicBeatState
 			FlxG.save.data.eyesores = true;
 		}
 
-		if (FlxG.save.data.unlockedcharacters == null)
-		{
-			FlxG.save.data.unlockedcharacters = [true, true, false, false, false, false];
-		}
-
 		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(randomizeBG());
 		bg.scrollFactor.set();
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
