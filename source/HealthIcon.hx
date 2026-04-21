@@ -3,6 +3,15 @@ package;
 import flixel.FlxSprite;
 import flixel.math.FlxMath;
 
+typedef IconData =
+{
+	var size:Null<Int>;
+
+	var solo:Null<Bool>;
+
+	var antialiasing:Null<Bool>;
+}
+
 class HealthIcon extends FlxSprite
 {
 	/**
@@ -71,23 +80,20 @@ class HealthIcon extends FlxSprite
 			frames = Paths.getSparrowAtlas(iconPath + 'bandu_origin_icon');
 			animation.addByPrefix(char, char, 24, false, isPlayer, false);
 		}
-		else if (char == 'gf' || char.endsWith('-single'))
+		else if (Assets.exists(Paths.json('icons/${char}')))
 		{
-			loadGraphic(Paths.image(iconPath + char), true, 150, 150);
+			var jsonData:IconData = Paths.loadJSON('icons/${char}');
+			var data:IconData = cast jsonData;
+			var size = data.size == null ? 150 : data.size;
+			var solo = data.solo == null ? false : data.solo;
+			var anti = data.antialiasing == null ? true : data.antialiasing;
+			trace('${char} is a JSON icon and you win!');
+			if (anti != true)
+				noAaChars.push(char);
 
-			addIcon(char, 0, true);
-		}
-		else if (char == 'junkers')
-		{
-			loadGraphic(Paths.image(iconPath + char), true, 200, 200);
+			loadGraphic(Paths.image(iconPath + char), true, size, size);
 
-			addIcon(char, 0);
-		}
-		else if (char == 'expunged')
-		{
-			loadGraphic(Paths.image(iconPath + char), true, 300, 300);
-
-			addIcon(char, 0);
+			addIcon(char, 0, solo);
 		}
 		else
 		{
@@ -95,6 +101,32 @@ class HealthIcon extends FlxSprite
 
 			addIcon(char, 0);
 		}
+		/*
+			else if (char == 'gf' || char.endsWith('-single'))
+			{
+				loadGraphic(Paths.image(iconPath + char), true, 150, 150);
+
+				addIcon(char, 0, true);
+			}
+			else if (char == 'junkers')
+			{
+				loadGraphic(Paths.image(iconPath + char), true, 200, 200);
+
+				addIcon(char, 0);
+			}
+			else if (char == 'expunged')
+			{
+				loadGraphic(Paths.image(iconPath + char), true, 300, 300);
+
+				addIcon(char, 0);
+			}
+			else
+			{
+				loadGraphic(Paths.image(iconPath + char), true, 150, 150);
+
+				addIcon(char, 0);
+			}
+		 */
 
 		if (charPublic.endsWith('-3d') || charPublic.endsWith('-pixel')) // allows for json chars to have aliased icons
 			antialiasing = false;
