@@ -265,13 +265,13 @@ class AlphaCharacter extends FlxSprite
 		{
 			createBoldNumber(letter);
 		}
-		else if (alphabet.contains(letter))
+		else if (symbols.contains(letter))
 		{
-			createBoldLetter(letter);
+			createBoldSymbol(letter);
 		}
 		else
 		{
-			createBoldSymbol(letter);
+			createBoldLetter(letter);
 		}
 	}
 
