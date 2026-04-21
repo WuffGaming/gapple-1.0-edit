@@ -235,8 +235,6 @@ class PlayState extends MusicBeatState
 	var robotUsb:FlxSprite;
 	var diamondJunk:FlxSprite;
 
-	var boyfriendOldIcon:String = 'bf-old';
-
 	private var vocals:FlxSound;
 	var healthLerp:Float = 1;
 	var scoreLerp:Float = 1;
@@ -2519,9 +2517,9 @@ class PlayState extends MusicBeatState
 			screenshader.shader.uampmul.value[0] -= (elapsed / 2);
 		}
 		screenshader.Enabled = shakeCam && eyesoreson;
-		if (FlxG.keys.justPressed.NINE)
+		if (FlxG.keys.justPressed.NINE) // Alternate Icon
 		{
-			if (iconP1.charPublic == boyfriendOldIcon)
+			if (iconP1.charPublic == boyfriend.altIcon)
 			{
 				iconP1.changeIcon(boyfriend.iconName);
 				if (SONG.song.toLowerCase() != 'algebra')
@@ -2532,7 +2530,7 @@ class PlayState extends MusicBeatState
 			}
 			else
 			{
-				iconP1.changeIcon(boyfriendOldIcon);
+				iconP1.changeIcon(boyfriend.altIcon);
 				if (SONG.song.toLowerCase() != 'algebra')
 				{
 					healthBar.createFilledBar(iconP2.barColor, iconP1.barColor);

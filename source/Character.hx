@@ -36,6 +36,8 @@ typedef CharacterData =
 
 	var noteStyle:String; // What style of notes should the character use?
 
+	var altIcon:String; // Easter egg icon when you press 9 on the keyboard
+
 	var icon:String; // What icon should be used?
 
 	var gf:String; // What Girlfriend should be used?
@@ -94,6 +96,8 @@ class Character extends FlxSprite
 	public var floater:String = 'false';
 	public var noteStyle:String = '2D';
 	public var charScale:Float = 1;
+
+	public var altIcon:String = 'bf-old';
 
 	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:Bool = false)
 	{
@@ -290,9 +294,11 @@ class Character extends FlxSprite
 
 		noteStyle = data.noteStyle == null ? '2D' : data.noteStyle; // add hard
 
-		rating = data.rating == null ? 'normal' : data.rating; // add hard
+		rating = data.rating == null ? 'normal' : data.rating; // add insane
 
-		gfForm = data.gf == null ? 'none' : data.gf; // add hard
+		altIcon = data.altIcon == null ? 'bf-old' : data.altIcon; // add extreme
+
+		gfForm = data.gf == null ? 'none' : data.gf; // add impossible
 
 		if (noteStyle == '3D')
 		{
