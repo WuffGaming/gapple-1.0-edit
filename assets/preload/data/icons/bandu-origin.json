@@ -2,6 +2,11 @@
   "size": 150,
   "solo": true,
   "antialiasing": false,
+  "barColor": [
+    	255,
+    	255,
+    	179
+    ],
   "animations": [
     {
         "name": "normal",

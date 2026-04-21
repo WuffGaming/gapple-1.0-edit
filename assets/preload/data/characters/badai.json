@@ -1,11 +1,6 @@
 {
   "name": "Badai",
   "asset": "characters/bandu/badai",
-  "barColor": [
-    	218,
-    	46,
-    	138
-    ],
   "globalOffset": [0, 0],
   "gameOffset": [0, 0],
   "camOffset": [0, 0],

@@ -1,11 +1,6 @@
 {
   "name": "Bambom",
   "asset": "characters/oc/bambom",
-  "barColor": [
-    	255,
-    	0,
-    	0
-    ],
   "globalOffset": [0, 0],
   "gameOffset": [50, 10],
   "camOffset": [100, 0],

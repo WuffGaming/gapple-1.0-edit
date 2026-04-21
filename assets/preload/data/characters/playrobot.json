@@ -1,11 +1,6 @@
 {
   "name": "Playrobot (DFAC)",
   "asset": "characters/algebra/playrobot",
-  "barColor": [
-    	162,
-    	150,
-    	188
-    ],
   "globalOffset": [0, 0],
   "gameOffset": [-100, 420],
   "camOffset": [0, 0],

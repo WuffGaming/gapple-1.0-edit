@@ -1,11 +1,6 @@
 {
   "name": "Silly Sally",
   "asset": "characters/warehouse/sillysally",
-  "barColor": [
-    	131,
-    	246,
-    	50
-    ],
   "globalOffset": [0, 0],
   "gameOffset": [-300, -230],
   "camOffset": [-100, 0],

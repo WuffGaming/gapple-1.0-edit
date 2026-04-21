@@ -1,11 +1,6 @@
 {
   "name": "3D Dave (Insanity)",
   "asset": "characters/dave/insane_dave_3d",
-  "barColor": [
-    	255,
-    	203,
-    	230
-    ],
   "globalOffset": [0, 0],
   "gameOffset": [-350, -40],
   "camOffset": [0, 0],

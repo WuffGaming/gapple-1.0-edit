@@ -1,5 +1,10 @@
 {
   "size": 150,
   "solo": false,
-  "antialiasing": false
+  "antialiasing": false,
+  "barColor": [
+    	218,
+    	46,
+    	138
+    ]
 }

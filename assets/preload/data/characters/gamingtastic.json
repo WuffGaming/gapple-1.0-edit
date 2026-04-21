@@ -1,11 +1,6 @@
 {
   "name": "Gamingtastic",
   "asset": "characters/radical/newgaming",
-  "barColor": [
-    	51,
-    	222,
-    	57
-    ],
   "globalOffset": [0, 0],
   "gameOffset": [100, 50],
   "camOffset": [0, 0],

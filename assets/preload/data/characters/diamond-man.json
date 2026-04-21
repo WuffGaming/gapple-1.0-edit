@@ -1,11 +1,6 @@
 {
   "name": "Diamond Man (DFAC)",
   "asset": "characters/algebra/diamondMan",
-  "barColor": [
-    	129,
-    	180,
-    	227
-    ],
   "globalOffset": [0, 0],
   "gameOffset": [0, 45],
   "camOffset": [0, 0],

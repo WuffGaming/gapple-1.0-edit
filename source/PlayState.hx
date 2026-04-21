@@ -726,6 +726,7 @@ class PlayState extends MusicBeatState
 		healthBarBG.screenCenter(X);
 		healthBarBG.scrollFactor.set();
 		add(healthBarBG);
+
 		switch (curbar)
 		{
 			case 'retroBar':
@@ -733,14 +734,25 @@ class PlayState extends MusicBeatState
 					this, 'health', 0, 2);
 				healthBar.scrollFactor.set();
 				healthBar.createFilledBar(0xFFFF0000, 0xFF66FF33);
+				healthBar.value = health;
 				curThing = 'healthBarBaldi';
 			default:
+				// temporary icons
+				iconP1 = new HealthIcon(boyfriend.iconName);
+				iconP2 = new HealthIcon(opponent.iconName);
+				add(iconP1);
+				add(iconP2);
 				healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8),
 					this, 'healthLerp', 0, 2);
 				healthBar.scrollFactor.set();
-				healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
+				healthBar.createFilledBar(iconP2.barColor, iconP1.barColor);
+				healthBar.value = healthLerp;
+				// remove for layering
+				remove(iconP2);
+				remove(iconP1);
 				curThing = 'healthBarThing';
 		}
+
 		add(healthBar);
 
 		healthBarThing = new FlxSprite(0, FlxG.height * 0.9).loadGraphic(Paths.image('ui/bar/' + curThing));
@@ -2507,15 +2519,25 @@ class PlayState extends MusicBeatState
 			screenshader.shader.uampmul.value[0] -= (elapsed / 2);
 		}
 		screenshader.Enabled = shakeCam && eyesoreson;
-		if (FlxG.keys.justPressed.NINE && iconP1.charPublic != 'bandu-origin')
+		if (FlxG.keys.justPressed.NINE)
 		{
 			if (iconP1.charPublic == boyfriendOldIcon)
 			{
 				iconP1.changeIcon(boyfriend.iconName);
+				if (SONG.song.toLowerCase() != 'algebra')
+				{
+					healthBar.createFilledBar(iconP2.barColor, iconP1.barColor);
+					healthBar.value = healthLerp;
+				}
 			}
 			else
 			{
 				iconP1.changeIcon(boyfriendOldIcon);
+				if (SONG.song.toLowerCase() != 'algebra')
+				{
+					healthBar.createFilledBar(iconP2.barColor, iconP1.barColor);
+					healthBar.value = healthLerp;
+				}
 			}
 		}
 		var lerpVal:Float = CoolUtil.boundTo(elapsed * 2.4 * cameraSpeed, 0, 1);
@@ -3898,13 +3920,19 @@ class PlayState extends MusicBeatState
 							iconP2.changeIcon(opponent.iconName);
 							updateIcons();
 							if (event.changeColor != false)
-								healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
+							{
+								healthBar.createFilledBar(iconP2.barColor, iconP1.barColor);
+								healthBar.value = healthLerp;
+							}
 						case 'Swap Boyfriend':
 							swapBf(event.character, event.flash);
 							iconP2.changeIcon(boyfriend.iconName);
 							updateIcons();
 							if (event.changeColor != false)
-								healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
+							{
+								healthBar.createFilledBar(iconP2.barColor, iconP1.barColor);
+								healthBar.value = healthLerp;
+							}
 						case 'Swap Girlfriend':
 							swapGf(event.character, event.flash);
 					}
@@ -4135,7 +4163,8 @@ class PlayState extends MusicBeatState
 							{
 								iconP2.changeIcon('expunged');
 								updateIcons();
-								healthBar.createFilledBar(littleIdiot.barColor, boyfriend.barColor);
+								healthBar.createFilledBar(iconP2.barColor, iconP1.barColor);
+								healthBar.value = healthLerp;
 								orbit = false;
 								opponent.visible = opponentmirror.visible = swagger.visible = false;
 								var derez = new FlxSprite(opponent.getMidpoint().x,
@@ -4282,7 +4311,8 @@ class PlayState extends MusicBeatState
 							var position = boyfriend.getPosition();
 							var width = boyfriend.width;
 							iconP2.changeIcon('badai');
-							healthBar.createFilledBar(opponent2.barColor, boyfriend.barColor);
+							healthBar.createFilledBar(iconP2.barColor, iconP1.barColor);
+							healthBar.value = healthLerp;
 							iconRPC = 'icon_badai';
 							daveFuckingDies.visible = true;
 							FlxTween.tween(daveFuckingDies, {y: -300}, 2.5, {ease: FlxEase.cubeInOut});
@@ -4301,14 +4331,16 @@ class PlayState extends MusicBeatState
 						FlxTween.tween(thunderBlack, {alpha: 0.7}, Conductor.stepCrochet / 500);
 						swapDad('little-bandu');
 						iconP2.changeIcon('bandu');
-						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
+						healthBar.createFilledBar(iconP2.barColor, iconP1.barColor);
+						healthBar.value = healthLerp;
 					case 386:
 						FlxG.camera.flash(FlxColor.WHITE, 1);
 						defaultCamZoom = 0.9;
 						thunderBlack.alpha = 0;
 						swapDad('bendu');
 						iconP2.changeIcon('bendu');
-						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
+						healthBar.createFilledBar(iconP2.barColor, iconP1.barColor);
+						healthBar.value = healthLerp;
 				}
 			case 'jam':
 				switch (curBeat)
@@ -4348,7 +4380,8 @@ class PlayState extends MusicBeatState
 						thunderBlack.alpha = 0;
 						swapDad('insane-dave-3d');
 						iconP2.changeIcon(opponent.iconName);
-						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
+						healthBar.createFilledBar(iconP2.barColor, iconP1.barColor);
+						healthBar.value = healthLerp;
 						defaultCamZoom = 0.8;
 						threedeez.active = threedeez.visible = true;
 						removeStatics();
@@ -4374,7 +4407,8 @@ class PlayState extends MusicBeatState
 						thunderBlack.alpha = 0;
 						swapDad('dave-insane');
 						iconP2.changeIcon(opponent.iconName);
-						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
+						healthBar.createFilledBar(iconP2.barColor, iconP1.barColor);
+						healthBar.value = healthLerp;
 						defaultCamZoom = 1;
 						threedeez.active = threedeez.visible = false;
 						removeStatics();
@@ -4393,7 +4427,8 @@ class PlayState extends MusicBeatState
 					case 256: // dave and bg turn 3d
 						swapDad('insane-dave-3d');
 						iconP2.changeIcon(opponent.iconName);
-						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
+						healthBar.createFilledBar(iconP2.barColor, iconP1.barColor);
+						healthBar.value = healthLerp;
 						defaultCamZoom = 0.85;
 						threedeez.active = threedeez.visible = true;
 						removeStatics();
@@ -4419,7 +4454,8 @@ class PlayState extends MusicBeatState
 						thunderBlack.alpha = 0;
 						swapDad('dave-insane');
 						iconP2.changeIcon(opponent.iconName);
-						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
+						healthBar.createFilledBar(iconP2.barColor, iconP1.barColor);
+						healthBar.value = healthLerp;
 						defaultCamZoom = 0.8;
 						threedeez.active = threedeez.visible = false;
 						removeStatics();
@@ -4444,7 +4480,8 @@ class PlayState extends MusicBeatState
 						thunderBlack.alpha = 0;
 						swapDad('insane-dave-3d');
 						iconP2.changeIcon(opponent.iconName);
-						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
+						healthBar.createFilledBar(iconP2.barColor, iconP1.barColor);
+						healthBar.value = healthLerp;
 						defaultCamZoom = 1;
 						threedeez.active = threedeez.visible = true;
 						removeStatics();
@@ -4464,7 +4501,8 @@ class PlayState extends MusicBeatState
 						camZoomIntensity = 3;
 						swapDad('dave-insane');
 						iconP2.changeIcon(opponent.iconName);
-						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
+						healthBar.createFilledBar(iconP2.barColor, iconP1.barColor);
+						healthBar.value = healthLerp;
 						defaultCamZoom = 1.1;
 						threedeez.active = threedeez.visible = false;
 						removeStatics();
@@ -4486,7 +4524,8 @@ class PlayState extends MusicBeatState
 						camZoomIntensity = 1;
 						swapDad('insane-dave-3d');
 						iconP2.changeIcon(opponent.iconName);
-						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
+						healthBar.createFilledBar(iconP2.barColor, iconP1.barColor);
+						healthBar.value = healthLerp;
 						defaultCamZoom = 0.8;
 						threedeez.active = threedeez.visible = true;
 						removeStatics();
@@ -4506,7 +4545,8 @@ class PlayState extends MusicBeatState
 						FlxTween.tween(thunderBlack, {alpha: 0.55}, Conductor.stepCrochet / 500);
 						swapDad('dave'); // keep normie house dave btw... he must be average
 						iconP2.changeIcon(opponent.iconName);
-						healthBar.createFilledBar(opponent.barColor, boyfriend.barColor);
+						healthBar.createFilledBar(iconP2.barColor, iconP1.barColor);
+						healthBar.value = healthLerp;
 						defaultCamZoom = 1.2;
 						threedeez.active = threedeez.visible = false;
 						removeStatics();

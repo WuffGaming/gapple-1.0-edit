@@ -1,11 +1,6 @@
 {
   "name": "Playrobot (Crazy) (DFAC)",
   "asset": "characters/algebra/ohshit",
-  "barColor": [
-    	162,
-    	150,
-    	188
-    ],
   "globalOffset": [0, 0],
   "gameOffset": [165, 365],
   "camOffset": [-160, -20],

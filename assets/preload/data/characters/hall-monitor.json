@@ -1,11 +1,6 @@
 {
   "name": "Green Hall Monitor (DFAC)",
   "asset": "characters/algebra/HALL_MONITOR",
-  "barColor": [
-    	37,
-    	191,
-    	55
-    ],
   "globalOffset": [0, 0],
   "gameOffset": [45, 185],
   "camOffset": [-200, -180],

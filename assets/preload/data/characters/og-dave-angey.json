@@ -1,11 +1,6 @@
 {
   "name": "Angey Dave (DFAC)",
   "asset": "characters/algebra/og_dave_angey",
-  "barColor": [
-    	181,
-    	255,
-    	255
-    ],
   "globalOffset": [0, 0],
   "gameOffset": [-190, 50],
   "camOffset": [0, 0],

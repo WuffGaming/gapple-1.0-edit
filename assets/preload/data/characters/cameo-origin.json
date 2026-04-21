@@ -1,11 +1,6 @@
 {
   "name": "Cameo (Origin)",
   "asset": "characters/bandu/cameo_origin",
-  "barColor": [
-    	251,
-    	247,
-    	50
-    ],
   "globalOffset": [0, 0],
   "gameOffset": [-60, -120],
   "camOffset": [0, 0],

@@ -1,11 +1,6 @@
 {
   "name": "Bendu",
   "asset": "characters/oc/bendu",
-  "barColor": [
-    	253,
-    	253,
-    	63
-    ],
   "globalOffset": [0, 0],
   "gameOffset": [50, 10],
   "camOffset": [0, 0],

@@ -1,11 +1,6 @@
 {
   "name": "Boyfriend (Tunnel)",
   "asset": "characters/dave/tunnel_bf",
-  "barColor": [
-    	49,
-    	176,
-    	209
-    ],
   "globalOffset": [0, 0],
   "gameOffset": [0, -350],
   "camOffset": [0, 0],

@@ -1,11 +1,6 @@
 {
   "name": "Radical",
   "asset": "characters/radical/radical",
-  "barColor": [
-    	188,
-    	70,
-    	70
-    ],
   "globalOffset": [0, 0],
   "gameOffset": [0, -130],
   "camOffset": [0, 0],

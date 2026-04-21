@@ -1,11 +1,6 @@
 {
   "name": "Girlfriend",
   "asset": "characters/main/GF_assets",
-  "barColor": [
-    	181,
-    	1,
-    	84
-    ],
   "globalOffset": [0, 0],
   "gameOffset": [0, 0],
   "camOffset": [0, 0],

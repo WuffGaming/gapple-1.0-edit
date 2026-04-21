@@ -1,11 +1,6 @@
 {
   "name": "Spike (DFAC)",
   "asset": "characters/algebra/spike_algebra",
-  "barColor": [
-    	253,
-    	253,
-    	63
-    ],
   "globalOffset": [0, 0],
   "gameOffset": [-160, 65],
   "camOffset": [0, 0],

@@ -1,11 +1,6 @@
 {
   "name": "Disruption Bambi",
   "asset": "characters/bambi/bambi_pissyboy",
-  "barColor": [
-    	37,
-    	191,
-    	55
-    ],
   "globalOffset": [60, 450],
   "gameOffset": [0, 100],
   "camOffset": [0, 0],

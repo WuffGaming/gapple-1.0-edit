@@ -1,11 +1,6 @@
 {
   "name": "RECOVERED_PROJECT_2",
   "asset": "characters/recover/recovered_project_2",
-  "barColor": [
-    	201,
-    	191,
-    	183
-    ],
   "globalOffset": [0, 0],
   "gameOffset": [-407, -250],
   "camOffset": [0, 0],

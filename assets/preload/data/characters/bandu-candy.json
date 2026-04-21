@@ -1,11 +1,6 @@
 {
   "name": "Bandu (Crazy)",
   "asset": "characters/bandu/bandu_crazy",
-  "barColor": [
-    	72,
-    	254,
-    	45
-    ],
   "globalOffset": [0, 0],
   "gameOffset": [0, 0],
   "camOffset": [0, 0],

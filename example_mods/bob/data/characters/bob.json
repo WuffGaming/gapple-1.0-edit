@@ -1,11 +1,6 @@
 {
   "name": "Bob",
   "asset": "characters/bob",
-  "barColor": [
-    	255,
-    	255,
-    	255
-    ],
   "globalOffset": [0, 0],
   "gameOffset": [-100, -45],
   "camOffset": [0, -40],

@@ -1,11 +1,6 @@
 {
   "name": "Boyfriend",
   "asset": "characters/main/Boyfriend_Main",
-  "barColor": [
-    	49,
-    	176,
-    	209
-    ],
   "globalOffset": [0, 0],
   "gameOffset": [0, 0],
   "camOffset": [0, 0],

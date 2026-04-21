@@ -1,11 +1,6 @@
 {
   "name": "Bandu (Origin)",
   "asset": "characters/bandu/bandu_origin",
-  "barColor": [
-    	255,
-    	255,
-    	179
-    ],
   "globalOffset": [0, 0],
   "gameOffset": [-250, -350],
   "camOffset": [0, 0],

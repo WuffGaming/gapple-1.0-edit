@@ -1,11 +1,6 @@
 {
   "name": "Dave (Image)",
   "asset": "characters/dave/dave-png",
-  "barColor": [
-    	15,
-    	95,
-    	255
-    ],
   "globalOffset": [0, 0],
   "gameOffset": [81, 108],
   "camOffset": [0, 0],

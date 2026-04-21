@@ -14,7 +14,6 @@ typedef CharacterData =
 	var name:String; // Visual name of the character.
 	var asset:String; // Path to the character's asset.
 
-	var barColor:Array<Int>; // Character's healthbar color.
 	var globalOffset:Array<Float>; // Offsets added directly to the pre-existing offset. Kept in for compatability reasons.
 	var gameOffset:Array<Float>; // Proper offset
 	var camOffset:Array<Float>; // Camera offset
@@ -87,7 +86,6 @@ class Character extends FlxSprite
 	public var canSing:Bool = true;
 
 	public var nativelyPlayable:Bool = false;
-	public var barColor:FlxColor;
 	public var bopDance:Bool = false;
 
 	public var globaloffset:Array<Float> = [0, 0];
@@ -97,8 +95,6 @@ class Character extends FlxSprite
 	public var noteStyle:String = '2D';
 	public var charScale:Float = 1;
 
-	public var barColorArray:Array<Int> = [0, 0, 0];
-
 	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:Bool = false)
 	{
 		super(x, y);
@@ -106,9 +102,6 @@ class Character extends FlxSprite
 		animOffsets = new Map<String, Array<Dynamic>>();
 		curCharacter = character;
 		this.isPlayer = isPlayer;
-
-		antialiasing = true;
-		barColor = FlxColor.fromRGB(255, 255, 255);
 
 		if (curCharacter == null)
 			curCharacter = 'bf';
@@ -258,7 +251,6 @@ class Character extends FlxSprite
 
 		name = data.name;
 
-		barColorArray = (data.barColor != null && data.barColor.length > 2) ? data.barColor : [161, 161, 161];
 		var tex:FlxAtlasFrames;
 		tex = Paths.getSparrowAtlas(data.asset);
 		frames = tex;
@@ -333,7 +325,6 @@ class Character extends FlxSprite
 		globaloffset = data.globalOffset; // mostly dependency for tha cores
 		gameOffset = data.gameOffset;
 		camOffset = data.camOffset;
-		barColor = FlxColor.fromRGB(barColorArray[0], barColorArray[1], barColorArray[2]);
 
 		playAnim(data.bopDance ? 'danceRight' : 'idle');
 	}

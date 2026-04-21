@@ -1,11 +1,6 @@
 {
   "name": "Girlfriend (No Boombox)",
   "asset": "characters/main/GF_ONLY",
-  "barColor": [
-    	181,
-    	1,
-    	84
-    ],
   "globalOffset": [0, 0],
   "gameOffset": [250, 78],
   "camOffset": [0, 0],

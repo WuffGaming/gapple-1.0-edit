@@ -1,11 +1,6 @@
 {
   "name": "Little Bandu",
   "asset": "characters/bandu/litt le bandu",
-  "barColor": [
-    	72,
-    	254,
-    	45
-    ],
   "globalOffset": [0, 0],
   "gameOffset": [0, 0],
   "camOffset": [0, 0],

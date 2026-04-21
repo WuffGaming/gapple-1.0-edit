@@ -2,6 +2,7 @@ package;
 
 import flixel.FlxSprite;
 import flixel.math.FlxMath;
+import flixel.util.FlxColor;
 
 typedef IconData =
 {
@@ -10,6 +11,8 @@ typedef IconData =
 	var solo:Null<Bool>;
 
 	var antialiasing:Null<Bool>;
+
+	var barColor:Array<Int>;
 
 	var animations:Array<IconAnimationData>;
 }
@@ -53,6 +56,8 @@ class HealthIcon extends FlxSprite
 
 	public var singleIcon:Bool = false;
 
+	public var barColor:FlxColor;
+
 	public function new(char:String = 'bf', isPlayer:Bool = false)
 	{
 		super();
@@ -81,12 +86,15 @@ class HealthIcon extends FlxSprite
 			var size = data.size == null ? 150 : data.size;
 			var solo = data.solo == null ? false : data.solo;
 			var anti = data.antialiasing == null ? true : data.antialiasing;
+			var barColorArray = (data.barColor != null && data.barColor.length > 2) ? data.barColor : [161, 161, 161];
 			trace('${char} is a JSON icon and you win!');
 			if (anti != true)
 				noAaChars.push(char);
 
 			if (solo == true)
 				singleIcon = true;
+
+			barColor = FlxColor.fromRGB(barColorArray[0], barColorArray[1], barColorArray[2]);
 
 			if (data.animations != null)
 			{
