@@ -8,7 +8,7 @@ import modding.PolymodErrorHandler;
 
 /**
  * A class for interacting with Polymod, the atomic modding framework for Haxe.
- * This is practically all skidded from FunkinCrew https://github.com/FunkinCrew/Funkin/blob/main/source/funkin/modding/PolymodHandler.hx with minor changes.
+ * This is practically all stolen from FunkinCrew https://github.com/FunkinCrew/Funkin/blob/main/source/funkin/modding/PolymodHandler.hx with minor changes.
  */
 class PolymodHandler
 {

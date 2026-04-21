@@ -175,7 +175,7 @@ class CharacterSelectState extends MusicBeatState
 		funnyIconMan.visible = false;
 		add(funnyIconMan);
 
-		var tutorialThing:FlxSprite = new FlxSprite(-100, -80).loadGraphic(Paths.image('ui/charSelect/charSelectGuide'));
+		var tutorialThing:FlxSprite = new FlxSprite(-100, -80).loadGraphic(Paths.image('ui/charSelectGuide'));
 		tutorialThing.setGraphicSize(Std.int(tutorialThing.width * 1.5));
 		tutorialThing.antialiasing = true;
 		add(tutorialThing);

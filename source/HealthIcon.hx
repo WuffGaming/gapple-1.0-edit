@@ -62,35 +62,36 @@ class HealthIcon extends FlxSprite
 
 	public function changeIcon(char:String = 'face')
 	{
+		var iconPath = 'icons/';
 		charPublic = char;
 
 		if (char == 'bandu-origin')
 		{
 			animatedIcon = true;
-			frames = Paths.getSparrowAtlas('ui/icons/bandu_origin_icon');
+			frames = Paths.getSparrowAtlas(iconPath + 'bandu_origin_icon');
 			animation.addByPrefix(char, char, 24, false, isPlayer, false);
 		}
 		else if (char == 'gf' || char.endsWith('-single'))
 		{
-			loadGraphic(Paths.image('ui/icons/' + char), true, 150, 150);
+			loadGraphic(Paths.image(iconPath + char), true, 150, 150);
 
 			addIcon(char, 0, true);
 		}
 		else if (char == 'junkers')
 		{
-			loadGraphic(Paths.image('ui/icons/' + char), true, 200, 200);
+			loadGraphic(Paths.image(iconPath + char), true, 200, 200);
 
 			addIcon(char, 0);
 		}
 		else if (char == 'expunged')
 		{
-			loadGraphic(Paths.image('ui/icons/' + char), true, 300, 300);
+			loadGraphic(Paths.image(iconPath + char), true, 300, 300);
 
 			addIcon(char, 0);
 		}
 		else
 		{
-			loadGraphic(Paths.image('ui/icons/' + char), true, 150, 150);
+			loadGraphic(Paths.image(iconPath + char), true, 150, 150);
 
 			addIcon(char, 0);
 		}

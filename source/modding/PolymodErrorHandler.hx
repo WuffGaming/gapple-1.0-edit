@@ -9,7 +9,7 @@ class PolymodErrorHandler
 	 * This displays a system popup, it WILL interrupt the game.
 	 * Make sure to only use this when it's important, like when there's a script error.
 	 * 
-	 * This is practically all skidded from FunkinCrew https://github.com/FunkinCrew/Funkin/blob/main/source/funkin/modding/PolymodHandler.hx with minor changes.
+	 * This is practically all stolen from FunkinCrew https://github.com/FunkinCrew/Funkin/blob/main/source/funkin/modding/PolymodHandler.hx with minor changes.
 	 *
 	 * @param name The name at the top of the popup.
 	 * @param desc The body text of the popup.
