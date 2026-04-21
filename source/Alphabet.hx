@@ -71,21 +71,13 @@ class Alphabet extends FlxSpriteGroup
 		var xPos:Float = 0;
 		for (character in splitWords)
 		{
-			// if (character.fastCodeAt() == " ")
-			// {
-			// }
-
 			if (character == " " || character == "-")
 			{
 				lastWasSpace = true;
 			}
 
-			var isNumber:Bool = AlphaCharacter.numbers.indexOf(character) != -1;
-			var isSymbol:Bool = AlphaCharacter.symbols.indexOf(character) != -1;
-			var isAlphabet:Bool = AlphaCharacter.alphabet.indexOf(character.toLowerCase()) != -1;
-
-			if (AlphaCharacter.alphabet.indexOf(character.toLowerCase()) != -1)
-				// if (AlphaCharacter.alphabet.contains(character.toLowerCase()))
+			if (AlphaCharacter.alphabet.indexOf(character.toLowerCase()) != -1
+				|| AlphaCharacter.numbers.indexOf(character.toLowerCase()) != -1)
 			{
 				if (lastSprite != null)
 				{
@@ -102,22 +94,9 @@ class Alphabet extends FlxSpriteGroup
 				var letter:AlphaCharacter = new AlphaCharacter(xPos, 0);
 
 				if (isBold)
-					if (isNumber)
-					{
-						letter.createBoldNumber(character);
-					}
-					else if (isSymbol)
-					{
-						letter.createBoldSymbol(character);
-					}
-					else
-					{
-						letter.createBold(character);
-					}
+					letter.createBold(character);
 				else
-				{
 					letter.createLetter(character);
-				}
 
 				add(letter);
 
@@ -198,18 +177,7 @@ class Alphabet extends FlxSpriteGroup
 				letter.row = curRow;
 				if (isBold)
 				{
-					if (isNumber)
-					{
-						letter.createBoldNumber(splitWords[loopNum]);
-					}
-					else if (isSymbol)
-					{
-						letter.createBoldSymbol(splitWords[loopNum]);
-					}
-					else
-					{
-						letter.createBold(splitWords[loopNum]);
-					}
+					letter.createBold(splitWords[loopNum]);
 				}
 				else
 				{
@@ -293,14 +261,30 @@ class AlphaCharacter extends FlxSprite
 
 	public function createBold(letter:String)
 	{
-		animation.addByPrefix(letter, letter.toUpperCase() + " bold", 24);
-		animation.play(letter);
-		updateHitbox();
+		if (numbers.contains(letter))
+		{
+			createBoldNumber(letter);
+		}
+		else if (alphabet.contains(letter))
+		{
+			createBoldLetter(letter);
+		}
+		else
+		{
+			createBoldSymbol(letter);
+		}
 	}
 
 	public function createBoldNumber(letter:String):Void
 	{
 		animation.addByPrefix(letter, "bold" + letter, 24);
+		animation.play(letter);
+		updateHitbox();
+	}
+
+	public function createBoldLetter(letter:String):Void
+	{
+		animation.addByPrefix(letter, letter.toUpperCase() + " bold", 24);
 		animation.play(letter);
 		updateHitbox();
 	}

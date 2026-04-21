@@ -81,11 +81,6 @@ class ExtraSongState extends MusicBeatState
 		grpSongs = new FlxTypedGroup<Alphabet>();
 		add(grpSongs);
 
-		swagText.setFormat(Paths.font("comic.ttf"), 47, FlxColor.BLACK, LEFT);
-		swagText.screenCenter(X);
-		swagText.y += 50;
-		add(swagText);
-
 		for (i in 0...songs.length)
 		{
 			var songText:Alphabet = new Alphabet(0, (70 * i) + 30, songs[i].songName, true, false);
@@ -105,6 +100,10 @@ class ExtraSongState extends MusicBeatState
 		}
 
 		changeSelection();
+
+		swagText.setFormat(Paths.font("comic.ttf"), 47, FlxColor.BLACK, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.WHITE);
+		swagText.y += 50;
+		add(swagText);
 
 		super.create();
 	}
@@ -177,6 +176,7 @@ class ExtraSongState extends MusicBeatState
 		if (curSelected >= songs.length)
 			curSelected = 0;
 
+		swagText.screenCenter(X);
 		if (!Assets.exists(Paths.chart('${songs[curSelected].songName.toLowerCase()}/info'))
 			&& Assets.exists(Paths.chart('${songs[curSelected].songName.toLowerCase()}/${songs[curSelected].songName.toLowerCase()}')))
 		{
