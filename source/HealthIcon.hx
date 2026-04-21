@@ -10,6 +10,28 @@ typedef IconData =
 	var solo:Null<Bool>;
 
 	var antialiasing:Null<Bool>;
+
+	var animations:Array<IconAnimationData>;
+}
+
+typedef IconAnimationData = // taken from character.hx
+{
+	var name:String; // Name of animation. Should be something like "Normal" or "Losing"
+	var prefix:String; // Name of animation in XML
+
+	/**
+	 * Whether this animation is looped.
+	 * @default false
+	 */
+	var ?looped:Bool;
+
+	/**
+	 * The frame rate of this animation.
+	 * @default 24
+	 */
+	var ?frameRate:Int; // Framerate of this specific animation.
+
+	var ?frameIndices:Array<Int>; // If using indices, specify said indices. Plays full animation if null.
 }
 
 class HealthIcon extends FlxSprite
@@ -21,37 +43,15 @@ class HealthIcon extends FlxSprite
 
 	public var isPlayer:Bool = false;
 
-	public var noAaChars:Array<String> = [
-		'bambi-disrupt',
-		'expunged',
-		'bandu',
-		'junkers',
-		'dave-3d',
-		'dave-3d-suit',
-		'badai',
-		'bf-3d',
-		'bf-3d-old',
-		'recover',
-		'recover-2d',
-		'recover-irreversible',
-		'bandu-sugar',
-		'bandu-origin',
-		'silly-sally',
-		'bambom',
-		'ringi',
-		'ringi-toio',
-		'bendu',
-		'cameo',
-		'og-dave',
-		'og-dave-angey',
-		'spike',
-	];
+	public var noAaChars:Array<String> = [];
 
 	public var charPublic:String = 'bf';
 
 	public var animatedIcon:Bool = false;
 
 	public var losing:Bool = false;
+
+	public var singleIcon:Bool = false;
 
 	public function new(char:String = 'bf', isPlayer:Bool = false)
 	{
@@ -74,13 +74,7 @@ class HealthIcon extends FlxSprite
 		var iconPath = 'icons/';
 		charPublic = char;
 
-		if (char == 'bandu-origin')
-		{
-			animatedIcon = true;
-			frames = Paths.getSparrowAtlas(iconPath + 'bandu_origin_icon');
-			animation.addByPrefix(char, char, 24, false, isPlayer, false);
-		}
-		else if (Assets.exists(Paths.json('icons/${char}')))
+		if (Assets.exists(Paths.json('icons/${char}')))
 		{
 			var jsonData:IconData = Paths.loadJSON('icons/${char}');
 			var data:IconData = cast jsonData;
@@ -91,9 +85,39 @@ class HealthIcon extends FlxSprite
 			if (anti != true)
 				noAaChars.push(char);
 
-			loadGraphic(Paths.image(iconPath + char), true, size, size);
+			if (solo == true)
+				singleIcon = true;
 
-			addIcon(char, 0, solo);
+			if (data.animations != null)
+			{
+				trace('${char} is an animated icon! Wow!');
+				animatedIcon = true;
+				frames = Paths.getSparrowAtlas(iconPath + char);
+				for (anim in data.animations)
+				{
+					var frameRate = anim.frameRate == null ? 24 : anim.frameRate;
+					var looped = anim.looped == null ? false : anim.looped;
+
+					if (anim.frameIndices != null)
+					{
+						animation.addByIndices(anim.name, anim.prefix, anim.frameIndices, "", frameRate, looped, isPlayer);
+					}
+					else
+					{
+						animation.addByPrefix(anim.name, anim.prefix, frameRate, looped, isPlayer);
+					}
+				}
+				animation.play('normal', true);
+				if (size != null)
+				{
+					scale.set(size / 150, size / 150); // this might work
+				}
+			}
+			else
+			{
+				loadGraphic(Paths.image(iconPath + char), true, size, size);
+				addIcon(char, 0, solo);
+			}
 		}
 		else
 		{
@@ -101,37 +125,8 @@ class HealthIcon extends FlxSprite
 
 			addIcon(char, 0);
 		}
-		/*
-			else if (char == 'gf' || char.endsWith('-single'))
-			{
-				loadGraphic(Paths.image(iconPath + char), true, 150, 150);
 
-				addIcon(char, 0, true);
-			}
-			else if (char == 'junkers')
-			{
-				loadGraphic(Paths.image(iconPath + char), true, 200, 200);
-
-				addIcon(char, 0);
-			}
-			else if (char == 'expunged')
-			{
-				loadGraphic(Paths.image(iconPath + char), true, 300, 300);
-
-				addIcon(char, 0);
-			}
-			else
-			{
-				loadGraphic(Paths.image(iconPath + char), true, 150, 150);
-
-				addIcon(char, 0);
-			}
-		 */
-
-		if (charPublic.endsWith('-3d') || charPublic.endsWith('-pixel')) // allows for json chars to have aliased icons
-			antialiasing = false;
-		else
-			antialiasing = !noAaChars.contains(char);
+		antialiasing = !noAaChars.contains(char);
 
 		animation.play(char);
 	}

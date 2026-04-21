@@ -1,0 +1,11 @@
+{
+  "size": 150,
+  "solo": true,
+  "antialiasing": false,
+  "animations": [
+    {
+        "name": "normal",
+        "prefix": "bandu-origin"
+    }
+  ]
+}

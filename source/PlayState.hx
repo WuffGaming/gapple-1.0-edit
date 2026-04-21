@@ -2576,6 +2576,7 @@ class PlayState extends MusicBeatState
 		iconP2.x = healthBar.x + (healthBar.width * (FlxMath.remapToRange(healthBar.percent, 0, 100, 100, 0) * 0.01)) - (iconP2.width - iconOffset);
 		if (health > 2)
 			health = 2;
+		// take a look at my spaghetti code
 		if (iconP1.animatedIcon != true)
 		{
 			healthBar.percent < 20 ? {iconP1.animation.curAnim.curFrame = 1; iconP1.losing = true;} : {iconP1.animation.curAnim.curFrame = 0; iconP1.losing = false;};
@@ -2583,6 +2584,14 @@ class PlayState extends MusicBeatState
 		if (iconP2.animatedIcon != true)
 		{
 			healthBar.percent > 80 ? {iconP2.animation.curAnim.curFrame = 1; iconP2.losing = true;} : {iconP2.animation.curAnim.curFrame = 0; iconP2.losing = false;};
+		}
+		if (iconP1.animatedIcon == true)
+		{
+			healthBar.percent < 20 ? iconP1.losing = true : iconP1.losing = false;
+		}
+		if (iconP2.animatedIcon != true)
+		{
+			healthBar.percent > 80 ? iconP2.losing = true : iconP2.losing = false;
 		}
 		// iconP2.animation.curAnim.curFrame = 0;
 		/* if (FlxG.keys.justPressed.NINE)
@@ -4630,13 +4639,19 @@ class PlayState extends MusicBeatState
 		}
 		if (curBeat % danceBeatSnap == 0)
 		{
-			if (iconP1.charPublic == 'bandu-origin')
+			if (iconP1.animatedIcon)
 			{
-				iconP1.animation.play(iconP1.charPublic, true);
+				if (iconP1.losing && !iconP1.singleIcon)
+					iconP1.animation.play('losing', true);
+				else
+					iconP1.animation.play('normal', true);
 			}
-			if (iconP2.charPublic == 'bandu-origin')
+			if (iconP2.animatedIcon)
 			{
-				iconP2.animation.play(iconP2.charPublic, true);
+				if (iconP2.losing && !iconP2.singleIcon)
+					iconP2.animation.play('losing', true);
+				else
+					iconP2.animation.play('normal', true);
 			}
 		}
 		if (curBeat % gfSpeed == 0)
