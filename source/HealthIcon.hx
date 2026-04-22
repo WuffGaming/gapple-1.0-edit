@@ -8,6 +8,8 @@ typedef IconData =
 {
 	var size:Null<Int>;
 
+	var scale:Array<Float>;
+
 	var solo:Null<Bool>;
 
 	var antialiasing:Null<Bool>;
@@ -40,7 +42,7 @@ typedef IconAnimationData = // taken from character.hx
 class HealthIcon extends FlxSprite
 {
 	/**
-	 * Used for FreeplayState! If you use it elsewhere, prob gonna annoying
+	 * Used to represent character icons & the color on the healthbar.
 	 */
 	public var sprTracker:FlxSprite;
 
@@ -57,6 +59,8 @@ class HealthIcon extends FlxSprite
 	public var singleIcon:Bool = false;
 
 	public var barColor:FlxColor;
+
+	public var iconScale:Array<Float> = [1, 1];
 
 	public function new(char:String = 'bf', isPlayer:Bool = false)
 	{
@@ -83,10 +87,11 @@ class HealthIcon extends FlxSprite
 		{
 			var jsonData:IconData = Paths.loadJSON('icons/${char}');
 			var data:IconData = cast jsonData;
-			var size = data.size == null ? 150 : data.size;
-			var solo = data.solo == null ? false : data.solo;
-			var anti = data.antialiasing == null ? true : data.antialiasing;
-			var barColorArray = (data.barColor != null && data.barColor.length > 2) ? data.barColor : [161, 161, 161];
+			var size:Int = data.size == null ? 150 : data.size;
+			var solo:Bool = data.solo == null ? false : data.solo;
+			var anti:Bool = data.antialiasing == null ? true : data.antialiasing;
+			var barColorArray:Array<Int> = (data.barColor != null && data.barColor.length > 2) ? data.barColor : [161, 161, 161];
+			iconScale = data.scale == null ? [1, 1] : [data.scale[0], data.scale[1]];
 			trace('${char} is a JSON icon and you win!');
 			if (anti != true)
 				noAaChars.push(char);
@@ -116,10 +121,6 @@ class HealthIcon extends FlxSprite
 					}
 				}
 				animation.play('normal', true);
-				if (size != null)
-				{
-					scale.set(size / 150, size / 150); // this might work
-				}
 			}
 			else
 			{
@@ -133,6 +134,9 @@ class HealthIcon extends FlxSprite
 
 			addIcon(char, 0);
 		}
+
+		setGraphicSize(width * iconScale[0], height * iconScale[1]);
+		updateHitbox();
 
 		antialiasing = !noAaChars.contains(char);
 

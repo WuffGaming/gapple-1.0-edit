@@ -1509,7 +1509,7 @@ class PlayState extends MusicBeatState
 					ready.scrollFactor.set();
 					ready.updateHitbox();
 
-					if (Note.CharactersWithPixel.contains(dadChar) || Note.CharactersWithPixel.contains(bfChar))
+					if (ratingstype == 'pixel')
 						ready.setGraphicSize(Std.int(ready.width * daPixelZoom));
 
 					ready.screenCenter();
@@ -1528,7 +1528,7 @@ class PlayState extends MusicBeatState
 					var set:FlxSprite = new FlxSprite().loadGraphic(Paths.image(introAlts[1]));
 					set.scrollFactor.set();
 
-					if (Note.CharactersWithPixel.contains(dadChar) || Note.CharactersWithPixel.contains(bfChar))
+					if (ratingstype == 'pixel')
 						set.setGraphicSize(Std.int(set.width * daPixelZoom));
 
 					set.screenCenter();
@@ -1547,7 +1547,7 @@ class PlayState extends MusicBeatState
 					var go:FlxSprite = new FlxSprite().loadGraphic(Paths.image(introAlts[2]));
 					go.scrollFactor.set();
 
-					if (Note.CharactersWithPixel.contains(dadChar) || Note.CharactersWithPixel.contains(bfChar))
+					if (ratingstype == 'pixel')
 						go.setGraphicSize(Std.int(go.width * daPixelZoom));
 
 					go.updateHitbox();
@@ -3265,7 +3265,7 @@ class PlayState extends MusicBeatState
 			comboSpr.velocity.x += FlxG.random.int(1, 10);
 			add(rating);
 
-			if (Note.CharactersWithPixel.contains(dadChar) || Note.CharactersWithPixel.contains(bfChar))
+			if (ratingstype == 'pixel')
 			{
 				rating.setGraphicSize(Std.int(rating.width * daPixelZoom * 0.7));
 				comboSpr.setGraphicSize(Std.int(comboSpr.width * daPixelZoom * 0.7));
@@ -3312,7 +3312,7 @@ class PlayState extends MusicBeatState
 					numScore.cameras = [camHUD];
 				}
 
-				if (Note.CharactersWithPixel.contains(dadChar) || Note.CharactersWithPixel.contains(bfChar))
+				if (ratingstype == 'pixel')
 				{
 					numScore.setGraphicSize(Std.int(numScore.width * daPixelZoom));
 				}
@@ -4634,44 +4634,46 @@ class PlayState extends MusicBeatState
 				case 'algebra':
 					{
 						curBeat % (gfSpeed * 2) == 0 ? {
-							iconP1.scale.set(0.9, 0.9);
-							iconP2.scale.set(1.1, 1.1);
+							iconP1.scale.set(0.9 * iconP1.iconScale[0], 0.9 * iconP1.iconScale[1]);
+							iconP2.scale.set(1.1 * iconP2.iconScale[0], 1.1 * iconP2.iconScale[1]);
 						} : {
-							iconP1.scale.set(1.1, 1.1);
-							iconP2.scale.set(0.9, 0.9);
+							iconP1.scale.set(1.1 * iconP1.iconScale[0], 1.1 * iconP1.iconScale[1]);
+							iconP2.scale.set(0.9 * iconP2.iconScale[0], 0.9 * iconP2.iconScale[1]);
 							}
 					}
 				default:
 					curBeat % (gfSpeed * 2) == 0 ? {
 						if (iconP1.losing)
-							iconP1.scale.set(1.05, 0.9);
+							iconP1.scale.set(1.05 * iconP1.iconScale[0], 0.9 * iconP1.iconScale[1]);
 						else
-							iconP1.scale.set(1.1, 0.8);
+							iconP1.scale.set(1.1 * iconP1.iconScale[0], 0.8 * iconP1.iconScale[1]);
 						if (iconP2.losing)
-							iconP2.scale.set(1.05, 1.15);
+							iconP2.scale.set(1.05 * iconP2.iconScale[0], 1.15 * iconP2.iconScale[1]);
 						else
-							iconP2.scale.set(1.1, 1.3);
+							iconP2.scale.set(1.1 * iconP2.iconScale[0], 1.3 * iconP2.iconScale[1]);
 						if (!iconP1.losing)
 							FlxTween.angle(iconP1, -15, 0, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut});
 						if (!iconP2.losing)
 							FlxTween.angle(iconP2, 15, 0, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut});
 					} : {
 						if (iconP1.losing)
-							iconP1.scale.set(1.05, 1.15);
+							iconP1.scale.set(1.05 * iconP1.iconScale[0], 1.15 * iconP1.iconScale[1]);
 						else
-							iconP1.scale.set(1.1, 1.3);
+							iconP1.scale.set(1.1 * iconP1.iconScale[0], 1.3 * iconP1.iconScale[1]);
 						if (iconP2.losing)
-							iconP2.scale.set(1.05, 0.9);
+							iconP2.scale.set(1.05 * iconP2.iconScale[0], 0.9 * iconP2.iconScale[1]);
 						else
-							iconP2.scale.set(1.1, 0.8);
+							iconP2.scale.set(1.1 * iconP2.iconScale[0], 0.8 * iconP2.iconScale[1]);
 						if (!iconP2.losing)
 							FlxTween.angle(iconP2, -15, 0, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut});
 						if (!iconP1.losing)
 							FlxTween.angle(iconP1, 15, 0, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut});
 						}
 			}
-			FlxTween.tween(iconP1, {'scale.x': 1, 'scale.y': 1}, Conductor.crochet / 1250 * gfSpeed, {ease: FlxEase.quadOut});
-			FlxTween.tween(iconP2, {'scale.x': 1, 'scale.y': 1}, Conductor.crochet / 1250 * gfSpeed, {ease: FlxEase.quadOut});
+			FlxTween.tween(iconP1, {'scale.x': iconP1.iconScale[0], 'scale.y': iconP1.iconScale[1]}, Conductor.crochet / 1250 * gfSpeed,
+				{ease: FlxEase.quadOut});
+			FlxTween.tween(iconP2, {'scale.x': iconP2.iconScale[0], 'scale.y': iconP2.iconScale[1]}, Conductor.crochet / 1250 * gfSpeed,
+				{ease: FlxEase.quadOut});
 			iconP1.updateHitbox();
 			iconP2.updateHitbox();
 		}

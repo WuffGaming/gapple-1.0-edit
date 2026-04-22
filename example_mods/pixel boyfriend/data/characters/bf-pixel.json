@@ -1,0 +1,53 @@
+{
+  "name": "Boyfriend (Pixel)",
+  "asset": "characters/bfPixel",
+  "globalOffset": [0, 0],
+  "gameOffset": [180, 180],
+  "camOffset": [-100, -100],
+  "antialiasing": false,
+  "icon": "bf-pixel",
+  "scale": 6,
+  "gf": "gf-pixel",
+  "nativelyPlayable": true,
+  "noteStyle": "pixel",
+  "rating": "pixel",
+  "flipX": true,
+  "animations": [
+    {
+      "name": "idle",
+      "prefix": "BF IDLE instance"
+    },
+    {
+      "name": "singUP",
+      "prefix": "BF UP NOTE instance"
+    },
+    {
+      "name": "singLEFT",
+      "prefix": "BF LEFT NOTE instance"
+    },
+    {
+      "name": "singRIGHT",
+      "prefix": "BF RIGHT NOTE instance"
+    },
+    {
+      "name": "singDOWN",
+      "prefix": "BF DOWN NOTE instance"
+    },
+    {
+      "name": "singUPmiss",
+      "prefix": "BF UP MISS instance"
+    },
+    {
+      "name": "singLEFTmiss",
+      "prefix": "BF LEFT MISS instance"
+    },
+    {
+      "name": "singRIGHTmiss",
+      "prefix": "BF RIGHT MISS instance"
+    },
+    {
+      "name": "singDOWNmiss",
+      "prefix": "BF DOWN MISS instance"
+    }
+  ]
+}

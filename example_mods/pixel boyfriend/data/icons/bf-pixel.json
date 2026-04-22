@@ -1,0 +1,11 @@
+{
+  "size": 32,
+  "solo": false,
+  "scale": [5, 5],
+  "antialiasing": false,
+  "barColor": [
+    	123,
+    	214,
+    	246
+    ]
+}
