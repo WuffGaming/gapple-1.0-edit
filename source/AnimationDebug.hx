@@ -3,6 +3,7 @@ package;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
+import flixel.FlxCamera;
 import flixel.FlxState;
 import flixel.addons.display.FlxGridOverlay;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -10,7 +11,8 @@ import flixel.text.FlxText;
 import flixel.util.FlxColor;
 
 /**
-	*DEBUG MODE
+ * State that allows you to set character's offsets.
+ * Saving will come in the future.
  */
 class AnimationDebug extends MusicBeatState
 {
@@ -24,6 +26,7 @@ class AnimationDebug extends MusicBeatState
 	var isDad:Bool = true;
 	var daAnim:String = 'gf';
 	var camFollow:FlxObject;
+	var camHUD:FlxCamera;
 
 	public function new(daAnim:String = 'gf')
 	{
@@ -36,6 +39,10 @@ class AnimationDebug extends MusicBeatState
 		FlxG.sound.music.stop();
 
 		FlxG.mouse.visible = true;
+
+		camHUD = new FlxCamera();
+		camHUD.bgColor.alpha = 0;
+		FlxG.cameras.add(camHUD, false);
 
 		var gridBG:FlxSprite = FlxGridOverlay.create(10, 10);
 		gridBG.scrollFactor.set(0.5, 0.5);
@@ -64,6 +71,7 @@ class AnimationDebug extends MusicBeatState
 			char = bf;
 			bf.flipX = false;
 		}
+		char.playAnim(animList[curAnim]);
 
 		dumbTexts = new FlxTypedGroup<FlxText>();
 		add(dumbTexts);
@@ -80,6 +88,15 @@ class AnimationDebug extends MusicBeatState
 		add(camFollow);
 
 		FlxG.camera.follow(camFollow);
+
+		var shownControls:FlxSprite = new FlxSprite().loadGraphic(Paths.image('ui/editors/animationDebugControls'));
+		shownControls.screenCenter();
+		shownControls.x += 500;
+		shownControls.y += 200;
+		add(shownControls);
+
+		dumbTexts.cameras = [camHUD];
+		shownControls.cameras = [camHUD];
 
 		super.create();
 	}

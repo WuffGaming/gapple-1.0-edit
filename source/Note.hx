@@ -237,12 +237,6 @@ class Note extends FlxSprite
 						animation.play('redScroll');
 				}
 		}
-
-		// trace(prevNote);
-
-		// we make sure its downscroll and its a SUSTAIN NOTE (aka a trail, not a note)
-		// and flip it so it doesn't look weird.
-		// THIS DOESN'T FUCKING FLIP THE NOTE, CONTRIBUTERS DON'T JUST COMMENT THIS OUT JESUS
 		if (FlxG.save.data.downscroll && sustainNote)
 			flipY = true;
 
@@ -271,7 +265,7 @@ class Note extends FlxSprite
 			x -= width / 2;
 
 			if (CharactersWithPixel.contains(PlayState.dadChar) || CharactersWithPixel.contains(PlayState.bfChar))
-				x += 30;
+				x -= 50;
 
 			if (prevNote.isSustainNote)
 			{

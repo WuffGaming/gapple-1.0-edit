@@ -1820,41 +1820,37 @@ class PlayState extends MusicBeatState
 			}
 			else
 			{
-				switch (curStage)
+				babyArrow.frames = Paths.getSparrowAtlas('ui/notes/NOTE_assets');
+				babyArrow.animation.addByPrefix('green', 'arrowUP');
+				babyArrow.animation.addByPrefix('blue', 'arrowDOWN');
+				babyArrow.animation.addByPrefix('purple', 'arrowLEFT');
+				babyArrow.animation.addByPrefix('red', 'arrowRIGHT');
+
+				babyArrow.antialiasing = true;
+				babyArrow.setGraphicSize(Std.int(babyArrow.width * 0.7));
+
+				switch (Math.abs(i))
 				{
-					default:
-						babyArrow.frames = Paths.getSparrowAtlas('ui/notes/NOTE_assets');
-						babyArrow.animation.addByPrefix('green', 'arrowUP');
-						babyArrow.animation.addByPrefix('blue', 'arrowDOWN');
-						babyArrow.animation.addByPrefix('purple', 'arrowLEFT');
-						babyArrow.animation.addByPrefix('red', 'arrowRIGHT');
-
-						babyArrow.antialiasing = true;
-						babyArrow.setGraphicSize(Std.int(babyArrow.width * 0.7));
-
-						switch (Math.abs(i))
-						{
-							case 0:
-								babyArrow.x += Note.swagWidth * 0;
-								babyArrow.animation.addByPrefix('static', 'arrowLEFT');
-								babyArrow.animation.addByPrefix('pressed', 'left press', 24, false);
-								babyArrow.animation.addByPrefix('confirm', 'left confirm', 24, false);
-							case 1:
-								babyArrow.x += Note.swagWidth * 1;
-								babyArrow.animation.addByPrefix('static', 'arrowDOWN');
-								babyArrow.animation.addByPrefix('pressed', 'down press', 24, false);
-								babyArrow.animation.addByPrefix('confirm', 'down confirm', 24, false);
-							case 2:
-								babyArrow.x += Note.swagWidth * 2;
-								babyArrow.animation.addByPrefix('static', 'arrowUP');
-								babyArrow.animation.addByPrefix('pressed', 'up press', 24, false);
-								babyArrow.animation.addByPrefix('confirm', 'up confirm', 24, false);
-							case 3:
-								babyArrow.x += Note.swagWidth * 3;
-								babyArrow.animation.addByPrefix('static', 'arrowRIGHT');
-								babyArrow.animation.addByPrefix('pressed', 'right press', 24, false);
-								babyArrow.animation.addByPrefix('confirm', 'right confirm', 24, false);
-						}
+					case 0:
+						babyArrow.x += Note.swagWidth * 0;
+						babyArrow.animation.addByPrefix('static', 'arrowLEFT');
+						babyArrow.animation.addByPrefix('pressed', 'left press', 24, false);
+						babyArrow.animation.addByPrefix('confirm', 'left confirm', 24, false);
+					case 1:
+						babyArrow.x += Note.swagWidth * 1;
+						babyArrow.animation.addByPrefix('static', 'arrowDOWN');
+						babyArrow.animation.addByPrefix('pressed', 'down press', 24, false);
+						babyArrow.animation.addByPrefix('confirm', 'down confirm', 24, false);
+					case 2:
+						babyArrow.x += Note.swagWidth * 2;
+						babyArrow.animation.addByPrefix('static', 'arrowUP');
+						babyArrow.animation.addByPrefix('pressed', 'up press', 24, false);
+						babyArrow.animation.addByPrefix('confirm', 'up confirm', 24, false);
+					case 3:
+						babyArrow.x += Note.swagWidth * 3;
+						babyArrow.animation.addByPrefix('static', 'arrowRIGHT');
+						babyArrow.animation.addByPrefix('pressed', 'right press', 24, false);
+						babyArrow.animation.addByPrefix('confirm', 'right confirm', 24, false);
 				}
 			}
 			babyArrow.updateHitbox();
@@ -2613,9 +2609,7 @@ class PlayState extends MusicBeatState
 		{
 			healthBar.percent > 80 ? iconP2.losing = true : iconP2.losing = false;
 		}
-		// iconP2.animation.curAnim.curFrame = 0;
-		/* if (FlxG.keys.justPressed.NINE)
-			FlxG.switchState(new Charting()); */
+		#if debug
 		if (FlxG.keys.justPressed.EIGHT)
 		{
 			PlayState.characteroverride = 'none';
@@ -2634,6 +2628,7 @@ class PlayState extends MusicBeatState
 			PlayState.formoverride = 'none';
 			FlxG.switchState(() -> new AnimationDebug(gf.curCharacter));
 		}
+		#end
 		if (startingSong)
 		{
 			if (startedCountdown)
@@ -3544,7 +3539,9 @@ class PlayState extends MusicBeatState
 					}
 			}
 
-			if (spr.animation.curAnim.name == 'confirm' && (SONG.song.toLowerCase() != 'disability'))
+			if (spr.animation.curAnim.name == 'confirm'
+				&& (SONG.song.toLowerCase() != 'disability')
+				&& !(Note.CharactersWithPixel.contains(boyfriend.curCharacter)))
 			{
 				spr.centerOffsets();
 				spr.offset.x -= 13;
