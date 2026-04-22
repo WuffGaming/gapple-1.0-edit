@@ -3019,7 +3019,7 @@ class PlayState extends MusicBeatState
 		#end
 	}
 
-	function ZoomCam(focusondad:Bool):Void
+	function ZoomCam(focusondad:Bool):Void // this means who focus who is being focused on ok?
 	{
 		var bfplaying:Bool = false;
 		if (focusondad)
@@ -3051,7 +3051,7 @@ class PlayState extends MusicBeatState
 
 		if (!focusondad)
 		{
-			camFollow.set(boyfriend.getMidpoint().x - 100, boyfriend.getMidpoint().y - 100);
+			focusOnChar(boyfriend);
 
 			if (SONG.song.toLowerCase() == 'applecore')
 				defaultCamZoom = 0.5;
@@ -3067,8 +3067,10 @@ class PlayState extends MusicBeatState
 
 	function focusOnChar(char:Character)
 	{
-		camFollow.set(char.getMidpoint().x + 150, char.getMidpoint().y - 100);
-		// camFollow.setPosition(lucky.getMidpoint().x - 120, lucky.getMidpoint().y + 210);
+		if (char != boyfriend)
+			camFollow.set(char.getMidpoint().x + 150, char.getMidpoint().y - 100);
+		else
+			camFollow.set(char.getMidpoint().x - 100, char.getMidpoint().y - 100);
 
 		switch (char.curCharacter)
 		{
