@@ -264,8 +264,9 @@ class Note extends FlxSprite
 
 			x -= width / 2;
 
-			if (CharactersWithPixel.contains(PlayState.dadChar) || CharactersWithPixel.contains(PlayState.bfChar))
-				x -= 50;
+			if ((CharactersWithPixel.contains(PlayState.dadChar) && !musthit)
+				|| (CharactersWithPixel.contains(PlayState.bfChar) && musthit))
+				x -= 100;
 
 			if (prevNote.isSustainNote)
 			{
