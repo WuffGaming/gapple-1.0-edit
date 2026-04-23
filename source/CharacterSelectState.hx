@@ -37,7 +37,6 @@ class CharacterInSelect
 class CharacterSelectState extends MusicBeatState
 {
 	public var char:Boyfriend;
-	public var starterChar:String = 'bf';
 	public var current:Int = 0;
 	public var curForm:Int = 0;
 	public var characterText:FlxText;
@@ -51,11 +50,11 @@ class CharacterSelectState extends MusicBeatState
 	var currentSelectedCharacter:CharacterInSelect;
 
 	// it goes left,right,up,down
-	public var characters:Array<CharacterInSelect> = []; // dependency
+	public var characters:Array<CharacterInSelect> = [];
 
 	public function new()
 	{
-		trace('CharSelectOrder is ', order);
+		trace('CharSelectOrder is ' + order);
 		if (PlayState.SONG.song.toLowerCase() != 'dave-x-bambi-shipping-cute')
 		{
 			for (i in 0...order.length)
@@ -77,7 +76,6 @@ class CharacterSelectState extends MusicBeatState
 		super.create();
 		Conductor.changeBPM(110);
 		currentSelectedCharacter = characters[current];
-		// if(PlayState.SONG.song.toLowerCase() == 'dave-x-bambi-shipping-cute')
 
 		var end:FlxSprite = new FlxSprite(0, 0);
 		FlxG.sound.playMusic(Paths.music("goodEnding"), 1, true);
@@ -130,10 +128,8 @@ class CharacterSelectState extends MusicBeatState
 
 		FlxG.camera.zoom = 0.75;
 
-		// create character
-		char = new Boyfriend(FlxG.width / 2, 100, starterChar);
-		char.screenCenter();
-		char.y = 350;
+		// create character for layering
+		char = new Boyfriend(FlxG.width / 2, FlxG.height / 2, 'bf');
 		add(char);
 
 		characterText = new FlxText((FlxG.width / 9) - 50, (FlxG.height / 8) - 225, "Boyfriend");
@@ -155,7 +151,8 @@ class CharacterSelectState extends MusicBeatState
 		tutorialThing.antialiasing = true;
 		add(tutorialThing);
 
-		UpdateBF();
+		// make sure the character is who we want!
+		UpdateCharacter();
 	}
 
 	override public function update(elapsed:Float):Void
@@ -165,7 +162,7 @@ class CharacterSelectState extends MusicBeatState
 
 		if (FlxG.keys.justPressed.ESCAPE || FlxG.keys.justPressed.BACKSPACE)
 		{
-			FlxG.sound.music.stop;
+			FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			LoadingState.loadAndSwitchState(new ExtraSongState());
 		}
 		if (controls.ACCEPT)
@@ -192,7 +189,7 @@ class CharacterSelectState extends MusicBeatState
 			{
 				current = characters.length - 1;
 			}
-			UpdateBF();
+			UpdateCharacter();
 			FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 		}
 
@@ -204,52 +201,43 @@ class CharacterSelectState extends MusicBeatState
 			{
 				current = 0;
 			}
-			UpdateBF();
+			UpdateCharacter();
 			FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 		}
 		if (FlxG.keys.justPressed.DOWN && !selectedCharacter)
 		{
-			curForm++;
+			curForm--;
 			if (curForm < 0)
 			{
 				curForm = characters[current].names.length - 1;
 			}
-			UpdateBF();
+			UpdateCharacter();
 			FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 		}
 
 		if (FlxG.keys.justPressed.UP && !selectedCharacter)
 		{
-			curForm--;
+			curForm++;
 			if (curForm > characters[current].names.length - 1)
 			{
 				curForm = 0;
 			}
-			UpdateBF();
+			UpdateCharacter();
 			FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 		}
 	}
 
-	public function UpdateBF()
+	public function UpdateCharacter()
 	{
 		funnyIconMan.color = FlxColor.WHITE;
 		currentSelectedCharacter = characters[current];
 		char.destroy();
-		char = new Boyfriend(0, FlxG.height / 2, currentSelectedCharacter.names[curForm]);
-		char.screenCenter(X);
-		if (char.nativelyPlayable)
-		{
-			char.x += char.gameOffset[0];
-			char.y += char.gameOffset[1];
-		}
-		else
-		{
-			char.x -= char.gameOffset[0];
-			char.y -= char.gameOffset[1];
-		}
+		char = new Boyfriend(0, 0, currentSelectedCharacter.names[curForm]);
+		char.screenCenter();
 		char.updateHitbox();
-		characterText.text = char.name;
+		char.y += 300;
 		add(char);
+		characterText.text = char.name;
 		funnyIconMan.animation.play(char.curCharacter);
 		characterText.screenCenter(X);
 	}
@@ -259,7 +247,7 @@ class CharacterSelectState extends MusicBeatState
 		super.beatHit();
 		if (char != null && !selectedCharacter)
 		{
-			char.playAnim('idle');
+			char.dance(false);
 		}
 	}
 
