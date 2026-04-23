@@ -22,25 +22,15 @@ import flixel.util.FlxStringUtil;
 /**
 
 	hi
-
+	hellmo
 **/
-using StringTools;
-
-typedef CharacterList =
-{
-	var names:Array<String>;
-	var polished:Array<String>;
-}
-
 class CharacterInSelect
 {
 	public var names:Array<String>;
-	public var polishedNames:Array<String>;
 
-	public function new(names:Array<String>, polishedNames:Array<String>)
+	public function new(names:Array<String>)
 	{
 		this.names = names;
-		this.polishedNames = polishedNames;
 	}
 }
 
@@ -70,28 +60,13 @@ class CharacterSelectState extends MusicBeatState
 		{
 			for (i in 0...order.length)
 			{
-				var charPath:String = 'forms/${order[i]}';
-				var path:String = Paths.json(charPath);
-				trace(path);
-				var rawJson = Assets.getText(path);
-				var jsonData:CharacterList = cast Json.parse(rawJson);
-				trace(jsonData);
-				if (jsonData == null)
-				{
-					trace('Failed to parse JSON data for list ${order[i]}');
-					characters.push(new CharacterInSelect(['bf'], ['ERROR']));
-					return;
-				}
-				var data:CharacterList = cast jsonData;
-				characters.push(new CharacterInSelect(data.names, data.polished));
+				var characterList:Array<String> = CoolUtil.coolTextFile(Paths.txt('forms/${order[i]}'));
+				characters.push(new CharacterInSelect(characterList));
 			}
 		}
 		else
 		{
-			characters = [
-				new CharacterInSelect(['dave-good', 'split-dave-3d', 'tunnel-dave', 'og-dave'],
-					['Dave (Dave x Bambi)', 'Disability Dave', 'Wireframe Dave', 'Algebra Dave'])
-			];
+			characters = [new CharacterInSelect(['dave-good', 'split-dave-3d', 'tunnel-dave', 'og-dave'])];
 		}
 
 		super();
@@ -234,7 +209,7 @@ class CharacterSelectState extends MusicBeatState
 		}
 		if (FlxG.keys.justPressed.DOWN && !selectedCharacter)
 		{
-			curForm--;
+			curForm++;
 			if (curForm < 0)
 			{
 				curForm = characters[current].names.length - 1;
@@ -245,7 +220,7 @@ class CharacterSelectState extends MusicBeatState
 
 		if (FlxG.keys.justPressed.UP && !selectedCharacter)
 		{
-			curForm++;
+			curForm--;
 			if (curForm > characters[current].names.length - 1)
 			{
 				curForm = 0;
@@ -259,25 +234,21 @@ class CharacterSelectState extends MusicBeatState
 	{
 		funnyIconMan.color = FlxColor.WHITE;
 		currentSelectedCharacter = characters[current];
-		characterText.text = currentSelectedCharacter.polishedNames[curForm];
 		char.destroy();
-		char = new Boyfriend(FlxG.width / 2, FlxG.height / 2, currentSelectedCharacter.names[curForm]);
-		char.screenCenter();
-		char.y = 450;
-
-		switch (char.curCharacter)
+		char = new Boyfriend(0, FlxG.height / 2, currentSelectedCharacter.names[curForm]);
+		char.screenCenter(X);
+		if (char.nativelyPlayable)
 		{
-			case 'bandu' | 'bandu-candy' | 'unfair-junker':
-				char.y = 100 + 350;
-			case 'radical':
-				char.y = 100 + 125;
-			case '3d-bf':
-				char.y = 100 + 20;
-			case 'bf' | 'bf-pixel' | 'bf-christmas' | 'afnfg-boyfriend' | 'cameo':
-				// dont do anything
-			default:
-				char.y = 100;
+			char.x += char.gameOffset[0];
+			char.y += char.gameOffset[1];
 		}
+		else
+		{
+			char.x -= char.gameOffset[0];
+			char.y -= char.gameOffset[1];
+		}
+		char.updateHitbox();
+		characterText.text = char.name;
 		add(char);
 		funnyIconMan.animation.play(char.curCharacter);
 		characterText.screenCenter(X);

@@ -22,7 +22,10 @@ class Boyfriend extends Character
 
 			if (animation.curAnim.name.endsWith('miss') && animation.curAnim.finished && !debugMode)
 			{
-				playAnim('idle', true, false, 10);
+				if (bopDance)
+					playAnim('danceLeft', true, false, 10);
+				else
+					playAnim('idle', true, false, 10);
 			}
 
 			if (animation.curAnim.name == 'firstDeath' && animation.curAnim.finished)

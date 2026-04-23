@@ -300,33 +300,29 @@ class Character extends FlxSprite
 
 		gfForm = data.gf == null ? 'none' : data.gf; // add impossible
 
-		if (noteStyle == '3D')
+		switch (noteStyle)
 		{
-			if (Note.CharactersWith3D.contains(curCharacter))
-			{
-				Note.CharactersWith3D.remove(curCharacter);
-			}
-			Note.CharactersWith3D.push(curCharacter);
-		}
-		if (noteStyle == 'pixel')
-		{
-			if (Note.CharactersWithPixel.contains(curCharacter))
-			{
-				Note.CharactersWithPixel.remove(curCharacter);
-			}
-			Note.CharactersWithPixel.push(curCharacter);
+			case 'pixel':
+				if (Note.CharactersWithPixel.contains(curCharacter))
+				{
+					Note.CharactersWithPixel.remove(curCharacter);
+				}
+				Note.CharactersWithPixel.push(curCharacter);
+			case '3D':
+				if (Note.CharactersWith3D.contains(curCharacter))
+				{
+					Note.CharactersWith3D.remove(curCharacter);
+				}
+				Note.CharactersWith3D.push(curCharacter);
 		}
 
 		iconName = data.icon;
 
-		switch (curCharacter) // TODO: make scaling work for the life of me
-		{
-			default: // furiosityScale has been deprecated!
-				if (data.scaleSize)
-					scale.set(charScale, charScale); // scale can be a float
-				else
-					setGraphicSize(Std.int(width * charScale), Std.int(height * charScale)); // setGraphicSize cannot
-		}
+		if (data.scaleSize)
+			scale.set(charScale, charScale); // scale can be a float
+		else
+			setGraphicSize(Std.int(width * charScale), Std.int(height * charScale)); // setGraphicSize cannot
+
 		updateHitbox();
 		globaloffset = data.globalOffset; // mostly dependency for tha cores
 		gameOffset = data.gameOffset;
