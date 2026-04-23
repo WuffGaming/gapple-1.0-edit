@@ -563,9 +563,13 @@ class PlayState extends MusicBeatState
 					boyfriend.y -= 150;
 				case 'algebra':
 					boyfriend.y += 80;
-				case 'origin':
-					opponent.x -= 35;
-					boyfriend.y += 150;
+				case '3dbg':
+					switch (SONG.song.toLowerCase()) // TODO: MOVE TO SEPARATE STAGES!!
+					{
+						case 'origin':
+							opponent.x -= 200;
+							opponent.y -= 200;
+					}
 			}
 		}
 		else
@@ -654,7 +658,7 @@ class PlayState extends MusicBeatState
 		thunderBlack = new FlxSprite().makeGraphic(FlxG.width * 4, FlxG.height * 4, FlxColor.BLACK);
 		thunderBlack.screenCenter();
 		thunderBlack.alpha = 0;
-		if (SONG.song.toLowerCase() == 'recovered-project')
+		if (SONG.song.toLowerCase() == 'recovered-project' || SONG.song.toLowerCase() == 'origin')
 		{
 			thunderBlack.alpha = 1;
 		}
@@ -898,7 +902,7 @@ class PlayState extends MusicBeatState
 				switch (curSong.toLowerCase())
 				{
 					case 'origin':
-						originCutscene();
+						songSetup();
 					default:
 						startCountdown();
 				}
@@ -909,7 +913,7 @@ class PlayState extends MusicBeatState
 			switch (curSong.toLowerCase())
 			{
 				case 'origin':
-					originCutscene();
+					songSetup();
 				default:
 					startCountdown();
 			}
@@ -1405,47 +1409,7 @@ class PlayState extends MusicBeatState
 		});
 	}
 
-	function originCutscene():Void
-	{
-		inCutscene = true;
-		camHUD.visible = false;
-		opponent.alpha = 0;
-		opponent.canDance = false;
-		focusOnDadGlobal = false;
-		focusOnChar(boyfriend);
-		new FlxTimer().start(1.35, function(cockAndBalls:FlxTimer) // this code is either atrocious or VERY weird
-		{
-			focusOnDadGlobal = true;
-			focusOnChar(opponent);
-			new FlxTimer().start(0.5, function(ballsInJaws:FlxTimer)
-			{
-				opponent.alpha = 1;
-				opponent.playAnim('cutscene');
-				FlxG.sound.play(Paths.sound('origin_intro'));
-				new FlxTimer().start(1.5, function(deezCandies:FlxTimer)
-				{
-					FlxG.sound.play(Paths.sound('origin_bandu_talk'));
-					opponent.playAnim('singUP');
-					new FlxTimer().start(1.5, function(penisCockDick:FlxTimer)
-					{
-						opponent.canDance = true;
-						focusOnDadGlobal = false;
-						focusOnChar(boyfriend);
-						new FlxTimer().start(1.5, function(buttAssAnusGluteus:FlxTimer)
-						{
-							focusOnDadGlobal = true;
-							focusOnChar(opponent);
-							startCountdown();
-						});
-					});
-				});
-			});
-		});
-	}
-
-	var startTimer:FlxTimer;
-
-	function startCountdown():Void
+	function songSetup():Void
 	{
 		inCutscene = false;
 
@@ -1458,19 +1422,9 @@ class PlayState extends MusicBeatState
 		generateStaticArrows(0);
 		generateStaticArrows(1);
 
-		var startSpeed:Float = 1;
-
-		if (SONG.song.toLowerCase() == 'disruption')
-		{
-			startSpeed = 0.5; // WHATN THE JUNK!!!
-		}
-
 		talking = false;
 		startedCountdown = true;
 		Conductor.songPosition = 0;
-		Conductor.songPosition -= Conductor.crochet * 5 * (1 / startSpeed);
-
-		var swagCounter:Int = 0;
 
 		if (curStage != 'algebra')
 		{
@@ -1480,8 +1434,24 @@ class PlayState extends MusicBeatState
 		{
 			ratingstype = 'baldi';
 		}
+	}
 
-		startTimer = new FlxTimer().start(Conductor.crochet / (1000 * startSpeed), function(tmr:FlxTimer)
+	var startedStartTimer:Bool = false;
+	var startTimer:FlxTimer;
+
+	function startCountdown():Void
+	{
+		songSetup();
+
+		var startSpeed:Float = SONG.song.toLowerCase() == 'disruption' ? 0.5 : 1;
+
+		Conductor.songPosition -= Conductor.crochet * 5 * (1 / startSpeed);
+
+		var swagCounter:Int = 0;
+
+		startedStartTimer = true;
+
+		startTimer = new FlxTimer().start(Conductor.crochet / (1000 * startSpeed), function(tmr:FlxTimer) // counting down
 		{
 			opponent.dance(idleAlt);
 			gf.dance();
@@ -1598,6 +1568,14 @@ class PlayState extends MusicBeatState
 		{
 			case 'disruption':
 				FlxG.sound.music.volume = 1; // WEIRD BUG!!! WTF!!!
+			case 'origin':
+				opponent.x -= 1000;
+				FlxG.camera.zoom = 1.4;
+				camMoveAllowed = false;
+				camHUD.visible = false;
+				camFollowPos.setPosition(boyfriend.getMidpoint().x, boyfriend.getMidpoint().y);
+				FlxTween.tween(FlxG.camera, {zoom: 1}, 13, {ease: FlxEase.quadOut});
+				FlxTween.tween(thunderBlack, {alpha: 0}, 13);
 			case 'recovered-project':
 				thunderBlack.alpha = 0;
 		}
@@ -1977,8 +1955,11 @@ class PlayState extends MusicBeatState
 				FlxG.sound.music.pause();
 				vocals.pause();
 			}
-			if (!startTimer.finished)
-				startTimer.active = false;
+			if (startedStartTimer)
+			{
+				if (!startTimer.finished)
+					startTimer.active = false;
+			}
 		}
 
 		super.openSubState(SubState);
@@ -1993,8 +1974,11 @@ class PlayState extends MusicBeatState
 				resyncVocals();
 			}
 
-			if (!startTimer.finished)
-				startTimer.active = true;
+			if (startedStartTimer)
+			{
+				if (!startTimer.finished)
+					startTimer.active = true;
+			}
 			paused = false;
 		}
 
@@ -4346,6 +4330,17 @@ class PlayState extends MusicBeatState
 						iconP2.changeIcon('bendu');
 						healthBar.createFilledBar(iconP2.barColor, iconP1.barColor);
 						healthBar.value = healthLerp;
+				}
+			case 'origin':
+				switch (curBeat)
+				{
+					case 32:
+						camHUD.visible = true;
+						FlxTween.tween(camHUD, {alpha: 1}, 1);
+						FlxG.camera.zoom = defaultCamZoom;
+						FlxTween.tween(opponent, {x: opponent.x + 1000}, 1, {ease: FlxEase.cubeInOut});
+					case 33:
+						camMoveAllowed = true;
 				}
 			case 'jam':
 				switch (curBeat)

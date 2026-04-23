@@ -191,52 +191,26 @@ class Note extends FlxSprite
 			antialiasing = true;
 		}
 
-		switch (PlayState.SONG.song.toLowerCase())
+		switch (noteData)
 		{
-			case 'cheating':
-				switch (noteData)
-				{
-					case 0:
-						x += swagWidth * 3;
-						notetolookfor = 3;
-						animation.play('purpleScroll');
-					case 1:
-						x += swagWidth * 1;
-						notetolookfor = 1;
-						animation.play('blueScroll');
-					case 2:
-						x += swagWidth * 0;
-						notetolookfor = 0;
-						animation.play('greenScroll');
-					case 3:
-						notetolookfor = 2;
-						x += swagWidth * 2;
-						animation.play('redScroll');
-				}
-				flipY = (Math.round(Math.random()) == 0); // fuck you
-				flipX = (Math.round(Math.random()) == 1);
-
-			default:
-				switch (noteData)
-				{
-					case 0:
-						x += swagWidth * 0;
-						notetolookfor = 0;
-						animation.play('purpleScroll');
-					case 1:
-						notetolookfor = 1;
-						x += swagWidth * 1;
-						animation.play('blueScroll');
-					case 2:
-						notetolookfor = 2;
-						x += swagWidth * 2;
-						animation.play('greenScroll');
-					case 3:
-						notetolookfor = 3;
-						x += swagWidth * 3;
-						animation.play('redScroll');
-				}
+			case 0:
+				x += swagWidth * 0;
+				notetolookfor = 0;
+				animation.play('purpleScroll');
+			case 1:
+				notetolookfor = 1;
+				x += swagWidth * 1;
+				animation.play('blueScroll');
+			case 2:
+				notetolookfor = 2;
+				x += swagWidth * 2;
+				animation.play('greenScroll');
+			case 3:
+				notetolookfor = 3;
+				x += swagWidth * 3;
+				animation.play('redScroll');
 		}
+
 		if (FlxG.save.data.downscroll && sustainNote)
 			flipY = true;
 
@@ -266,7 +240,7 @@ class Note extends FlxSprite
 
 			if ((CharactersWithPixel.contains(PlayState.dadChar) && !musthit)
 				|| (CharactersWithPixel.contains(PlayState.bfChar) && musthit))
-				x -= 100;
+				x -= width / 4;
 
 			if (prevNote.isSustainNote)
 			{
