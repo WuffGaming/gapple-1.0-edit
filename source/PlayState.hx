@@ -489,24 +489,32 @@ class PlayState extends MusicBeatState
 			boyfriend = new Boyfriend(770, 450, formoverride);
 		}
 		var gfVersion:String = 'gf';
-		if (SONG.gf == 'gf' && boyfriend.gfForm != 'none') // is gf a basic gf type or none?
+		if (!SONG.forcedGF)
 		{
-			gfVersion = boyfriend.gfForm;
+			switch (boyfriend.gfForm)
+			{
+				case 'song.gf' | 'none':
+					gfVersion = SONG.gf;
+				default:
+					gfVersion = boyfriend.gfForm;
+			}
 		}
 		else
 		{
-			gfVersion = SONG.gf; // gf should be overwritten with the song gf
+			gfVersion = SONG.gf;
 		}
 		gf = new Character(400, 130, gfVersion);
-		gf.scrollFactor.set(0.95, 0.95);
-		gf.visible = SONG.gf_visible;
-		if (boyfriend.gfForm == 'none' && SONG.song.toLowerCase() != "Tutorial") // is gf none?
-			gf.visible = false;
+		gf.visible = SONG.forcedGF ? SONG.gf_visible : (boyfriend.gfForm != 'none' ? SONG.gf_visible : false);
 		gf.x += gf.gameOffset[0];
 		gf.y += gf.gameOffset[1];
 		remove(boyfriend); // remove for layering
 
 		opponent = new Character(100, 100, SONG.player2);
+		if (SONG.player2 == SONG.gf)
+		{
+			gf.visible = false;
+			opponent.setPosition(gf.x, gf.y);
+		}
 
 		if (SONG.song.toLowerCase() == 'wireframe')
 		{
@@ -4774,8 +4782,6 @@ class PlayState extends MusicBeatState
 		switch (opponent.curCharacter)
 		{
 			case 'gf':
-				opponent.setPosition(gf.x, gf.y);
-				gf.visible = false;
 				tweenCamIn();
 			default:
 				opponent.x += opponent.gameOffset[0];

@@ -8,15 +8,16 @@ typedef SwagSong =
 {
 	var song:String;
 	var bpm:Int;
-	var needsVoices:Bool;
-	var gf_visible:Bool;
+	var needsVoices:Null<Bool>;
+	var gf_visible:Null<Bool>;
+	var forcedGF:Null<Bool>;
 	var speed:Float;
 
 	var player1:String;
 	var player2:String;
 	var gf:String;
 	var curStage:String;
-	var validScore:Bool;
+	var validScore:Null<Bool>;
 
 	var notes:Array<SwagSection>;
 }
@@ -27,6 +28,7 @@ class Song
 	public var bpm:Int;
 	public var needsVoices:Bool = true;
 	public var gf_visible:Bool = true;
+	public var forcedGF:Bool = false;
 	public var speed:Float = 1;
 
 	public var player1:String = 'bf';

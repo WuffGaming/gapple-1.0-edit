@@ -6,7 +6,7 @@
   "camOffset": [0, 0],
   "antialiasing": true,
   "icon": "bf",
-  "gf": "gf",
+  "gf": "song.gf",
   "nativelyPlayable": true,
   "flipX": true,
   "animations": [

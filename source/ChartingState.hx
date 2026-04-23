@@ -114,6 +114,7 @@ class ChartingState extends MusicBeatState
 				bpm: 150,
 				needsVoices: true,
 				gf_visible: true,
+				forcedGF: false,
 				player1: 'bf',
 				player2: 'dave',
 				gf: 'gf',
@@ -201,7 +202,7 @@ class ChartingState extends MusicBeatState
 		check_voices.callback = function()
 		{
 			_song.needsVoices = check_voices.checked;
-			trace('CHECKED!');
+			trace('CHECKED!' + _song.needsVoices);
 		};
 
 		var check_mute_inst = new FlxUICheckBox(10, 200, null, null, "Mute Instrumental (in editor)", 100);
@@ -221,6 +222,15 @@ class ChartingState extends MusicBeatState
 		gf_visible.callback = function()
 		{
 			_song.gf_visible = gf_visible.checked;
+			trace('CHECKED!' + _song.gf_visible);
+		};
+
+		var forcedGF = new FlxUICheckBox(140, 220, null, null, "Should GF be enforced?", 100);
+		forcedGF.checked = _song.forcedGF; // bufg fix
+		forcedGF.callback = function()
+		{
+			_song.forcedGF = forcedGF.checked;
+			trace('CHECKED!' + _song.forcedGF);
 		};
 
 		var saveButton:FlxButton = new FlxButton(110, 8, "Save", function()
@@ -301,6 +311,7 @@ class ChartingState extends MusicBeatState
 		tab_group_song.add(check_voices);
 		tab_group_song.add(check_mute_inst);
 		tab_group_song.add(gf_visible);
+		tab_group_song.add(forcedGF);
 		tab_group_song.add(saveButton);
 		tab_group_song.add(reloadSong);
 		tab_group_song.add(reloadSongJson);

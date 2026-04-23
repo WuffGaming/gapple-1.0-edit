@@ -7,7 +7,7 @@
   "antialiasing": false,
   "icon": "bf-3d",
   "altIcon": "bf-3d-old",
-  "gf": "3dgf",
+  "gf": "3d-gf",
   "nativelyPlayable": true,
   "flipX": true,
   "noteStyle": "3D",
