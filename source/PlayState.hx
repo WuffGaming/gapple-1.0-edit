@@ -1871,6 +1871,7 @@ class PlayState extends MusicBeatState
 				arrowJunks.push([babyArrow.x, babyArrow.y]);
 
 			babyArrow.resetTrueCoords();
+			babyArrow.centerOffsets();
 		}
 
 		if (SONG.song.toLowerCase() == 'applecore')
@@ -4337,10 +4338,34 @@ class PlayState extends MusicBeatState
 					case 32:
 						camHUD.visible = true;
 						FlxTween.tween(camHUD, {alpha: 1}, 1);
+						defaultCamZoom = 0.7;
 						FlxG.camera.zoom = defaultCamZoom;
 						FlxTween.tween(opponent, {x: opponent.x + 1000}, 1, {ease: FlxEase.cubeInOut});
 					case 33:
 						camMoveAllowed = true;
+					case 96 | 208 | 288:
+						camBeatSnap = 1;
+					case 112 | 224 | 304 | 336:
+						defaultCamZoom = 0.9;
+					case 122 | 153 | 156 | 314 | 346 | 348:
+						defaultCamZoom += 0.1;
+					case 124 | 158 | 316 | 350:
+						defaultCamZoom -= 0.1;
+					case 128 | 320 | 352:
+						defaultCamZoom = 0.7;
+					case 160:
+						camBeatSnap = 4;
+						FlxTween.tween(FlxG.camera, {zoom: 1.2}, 2, {ease: FlxEase.cubeInOut});
+						defaultCamZoom = 1.2;
+					case 176:
+						defaultCamZoom = 1.1;
+					case 192:
+						defaultCamZoom = 0.7;
+						camBeatSnap = 1;
+					case 200 | 216:
+						camBeatSnap = 4;
+					case 256:
+						defaultCamZoom = 1;
 				}
 			case 'jam':
 				switch (curBeat)

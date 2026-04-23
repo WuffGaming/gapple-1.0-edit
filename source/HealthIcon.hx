@@ -92,7 +92,6 @@ class HealthIcon extends FlxSprite
 			var anti:Bool = data.antialiasing == null ? true : data.antialiasing;
 			var barColorArray:Array<Int> = (data.barColor != null && data.barColor.length > 2) ? data.barColor : [161, 161, 161];
 			iconScale = data.scale == null ? [1, 1] : [data.scale[0], data.scale[1]];
-			trace('${char} is a JSON icon and you win!');
 			if (anti != true)
 				noAaChars.push(char);
 
@@ -131,6 +130,10 @@ class HealthIcon extends FlxSprite
 		else
 		{
 			loadGraphic(Paths.image(iconPath + char), true, 150, 150);
+
+			barColor = FlxColor.fromRGB(161, 161, 161);
+
+			trace('${char} requires a JSON to have full potential');
 
 			addIcon(char, 0);
 		}
