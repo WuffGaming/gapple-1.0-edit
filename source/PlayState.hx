@@ -145,6 +145,7 @@ typedef Events =
 	var changeColor:Bool; // Optional icon color change
 	var force:Bool; // Should specific event be forced
 	var flash:Bool; // Optional flash parameter
+	var visible:Bool; // Optional visibility
 	var hud:Bool; // Optional do hud instead
 	var bump:Bool; // Optional Bump
 	var alt:Bool; // Alternate?
@@ -348,11 +349,11 @@ class PlayState extends MusicBeatState
 	public static var dadChar:String = 'bf';
 	public static var bfChar:String = 'bf';
 
-	var scaryBG:FlxSprite;
+	var scaryBG:BGSprite;
 
 	public static var campaignScore:Int = 0;
 
-	var poop:StupidDumbSprite;
+	var poop:BGSprite;
 
 	var defaultCamZoom:Float = 1.05;
 
@@ -360,7 +361,6 @@ class PlayState extends MusicBeatState
 
 	public static var theFunne:Bool = true;
 
-	var funneEffect:FlxSprite;
 	var inCutscene:Bool = false;
 
 	public static var timeCurrently:Float = 0;
@@ -370,23 +370,23 @@ class PlayState extends MusicBeatState
 
 	var timeTxt:FlxText;
 
-	public var redTunnel:FlxSprite;
+	public var redTunnel:BGSprite;
 
 	public var daveFuckingDies:PissBoy;
 
 	public var crazyBatch:String = "shutdown /r /t 0";
 
-	public var backgroundSprites:FlxTypedGroup<FlxSprite> = new FlxTypedGroup<FlxSprite>();
+	public var backgroundSprites:FlxTypedGroup<BGSprite> = new FlxTypedGroup<BGSprite>();
 
 	var normalDaveBG:FlxTypedGroup<FlxSprite> = new FlxTypedGroup<FlxSprite>();
 	var canFloat:Bool = true;
 
-	var swagBG:FlxSprite;
-	var unswagBG:FlxSprite;
+	var swagBG:BGSprite;
+	var unswagBG:BGSprite;
 
-	var farmsky:FlxSprite;
-	var threedeez:FlxSprite;
-	var thirdimension:FlxSprite;
+	var farmsky:BGSprite;
+	var threedeez:BGSprite;
+	var thirdimension:BGSprite;
 
 	var bonusShit:FlxText;
 	var kadeEngineWatermark:FlxText;
@@ -475,6 +475,11 @@ class PlayState extends MusicBeatState
 		if (curStage == null)
 			curStage = 'stage';
 		backgroundSprites = createBackgroundSprites(curStage);
+		for (prop in backgroundSprites)
+		{
+			trace(prop);
+			trace(prop.name);
+		}
 
 		screenshader.waveAmplitude = 1;
 		screenshader.waveFrequency = 2;
@@ -922,9 +927,9 @@ class PlayState extends MusicBeatState
 		super.create();
 	}
 
-	function createBackgroundSprites(stage:String):FlxTypedGroup<FlxSprite>
+	function createBackgroundSprites(stage:String):FlxTypedGroup<BGSprite>
 	{
-		var sprites:FlxTypedGroup<FlxSprite> = new FlxTypedGroup<FlxSprite>();
+		var sprites:FlxTypedGroup<BGSprite> = new FlxTypedGroup<BGSprite>();
 		switch (stage)
 		{
 			case 'sugar':
@@ -932,7 +937,8 @@ class PlayState extends MusicBeatState
 				defaultCamZoom = 0.85;
 				scriptedStages.push(stage);
 
-				var swag:FlxSprite = new FlxSprite(120, -35).loadGraphic(Paths.image('backgrounds/3dbg/pissing_too'));
+				var swag:BGSprite = new BGSprite(120, -35, 'swag');
+				swag.loadGraphic(Paths.image('backgrounds/3dbg/pissing_too'));
 				swag.x -= 250;
 				swag.setGraphicSize(Std.int(swag.width * 0.521814815));
 				swag.updateHitbox();
@@ -944,14 +950,14 @@ class PlayState extends MusicBeatState
 				defaultCamZoom = 0.9;
 				scriptedStages.push(stage);
 
-				var twodeez:FlxSprite = new FlxSprite(-1982, -707).loadGraphic(Paths.image('backgrounds/house/basement-2d'));
+				var twodeez:BGSprite = new BGSprite(-1982, -707, 'twodeez');
+				twodeez.loadGraphic(Paths.image('backgrounds/house/basement-2d'));
 				twodeez.updateHitbox();
-				sprites.add(twodeez);
-				threedeez = new FlxSprite(twodeez.x, twodeez.y).loadGraphic(Paths.image('backgrounds/house/basement-3d'));
+				threedeez = new BGSprite(twodeez.x, twodeez.y, 'threedeez');
+				threedeez.loadGraphic(Paths.image('backgrounds/house/basement-3d'));
 				threedeez.active = threedeez.visible = false;
 				threedeez.updateHitbox();
 				threedeez.antialiasing = false;
-				sprites.add(threedeez);
 
 				add(twodeez);
 				add(threedeez);
@@ -960,13 +966,14 @@ class PlayState extends MusicBeatState
 				defaultCamZoom = 0.9;
 				scriptedStages.push(stage);
 
-				farmsky = new FlxSprite(-700, 0).loadGraphic(Paths.image('backgrounds/farm/sky'));
+				farmsky = new BGSprite(-700, 0, 'sky');
+				farmsky.loadGraphic(Paths.image('backgrounds/farm/sky'));
 				farmsky.antialiasing = true;
 				farmsky.scrollFactor.set(0.9, 0.9);
 				farmsky.active = false;
-				sprites.add(farmsky);
 
-				thirdimension = new FlxSprite(-600, -200).loadGraphic(Paths.image('backgrounds/farm/3d'));
+				thirdimension = new BGSprite(-600, -200, '3dsky');
+				thirdimension.loadGraphic(Paths.image('backgrounds/farm/3d'));
 				thirdimension.active = thirdimension.visible = false;
 				thirdimension.antialiasing = false;
 				thirdimension.scrollFactor.set(0.1, 0.1);
@@ -976,44 +983,43 @@ class PlayState extends MusicBeatState
 				thirdhs.waveSpeed = 2;
 				thirdimension.shader = thirdhs.shader;
 				curbg = thirdimension;
-				sprites.add(thirdimension);
 
-				var hills:FlxSprite = new FlxSprite(-250, 200).loadGraphic(Paths.image('backgrounds/farm/orangey hills'));
+				var hills:BGSprite = new BGSprite(-250, 200, 'hills');
+				hills.loadGraphic(Paths.image('backgrounds/farm/orangey hills'));
 				hills.antialiasing = true;
 				hills.scrollFactor.set(0.9, 0.7);
 				hills.active = false;
-				sprites.add(hills);
 
-				var farm:FlxSprite = new FlxSprite(150, 250).loadGraphic(Paths.image('backgrounds/farm/funfarmhouse'));
+				var farm:BGSprite = new BGSprite(150, 250, 'farm');
+				farm.loadGraphic(Paths.image('backgrounds/farm/funfarmhouse'));
 				farm.antialiasing = true;
 				farm.scrollFactor.set(1.1, 0.9);
 				farm.active = false;
-				sprites.add(farm);
 
-				var foreground:FlxSprite = new FlxSprite(-400, 600).loadGraphic(Paths.image('backgrounds/farm/grass lands'));
+				var foreground:BGSprite = new BGSprite(-400, 600, 'foreground');
+				foreground.loadGraphic(Paths.image('backgrounds/farm/grass lands'));
 				foreground.antialiasing = true;
 				foreground.active = false;
-				sprites.add(foreground);
 
-				var cornSet:FlxSprite = new FlxSprite(-350, 325).loadGraphic(Paths.image('backgrounds/farm/Cornys'));
+				var cornSet:BGSprite = new BGSprite(-350, 325, 'cornSet');
+				cornSet.loadGraphic(Paths.image('backgrounds/farm/Cornys'));
 				cornSet.antialiasing = true;
 				cornSet.active = false;
-				sprites.add(cornSet);
 
-				var cornSet2:FlxSprite = new FlxSprite(1050, 325).loadGraphic(Paths.image('backgrounds/farm/Cornys'));
+				var cornSet2:BGSprite = new BGSprite(1050, 325, 'cornSet2');
+				cornSet2.loadGraphic(Paths.image('backgrounds/farm/Cornys'));
 				cornSet2.antialiasing = true;
 				cornSet2.active = false;
-				sprites.add(cornSet2);
 
-				var fence:FlxSprite = new FlxSprite(-350, 450).loadGraphic(Paths.image('backgrounds/farm/crazy fences'));
+				var fence:BGSprite = new BGSprite(-350, 450, 'fence');
+				fence.loadGraphic(Paths.image('backgrounds/farm/crazy fences'));
 				fence.antialiasing = true;
 				fence.active = false;
-				sprites.add(fence);
 
-				var sign:FlxSprite = new FlxSprite(0, 500).loadGraphic(Paths.image('backgrounds/farm/Sign'));
+				var sign:BGSprite = new BGSprite(0, 500, 'sign');
+				sign.loadGraphic(Paths.image('backgrounds/farm/Sign'));
 				sign.antialiasing = true;
 				sign.active = false;
-				sprites.add(sign);
 
 				add(farmsky);
 				add(thirdimension);
@@ -1028,10 +1034,10 @@ class PlayState extends MusicBeatState
 			case 'recover':
 				defaultCamZoom = 1.4;
 				scriptedStages.push(stage);
-				var yea = new FlxSprite(-641, -222).loadGraphic(Paths.image('backgrounds/RECOVER_assets/q'));
+				var yea = new BGSprite(-641, -222, 'yea');
+				yea.loadGraphic(Paths.image('backgrounds/RECOVER_assets/q'));
 				yea.setGraphicSize(2478);
 				yea.updateHitbox();
-				sprites.add(yea);
 				add(yea);
 			case 'POOP':
 				defaultCamZoom = 0.5;
@@ -1039,7 +1045,8 @@ class PlayState extends MusicBeatState
 				swagger = new Character(-300, 100 - 900 - 400, 'bambi-piss-3d');
 				altSong = Song.loadFromJson('alt-notes', 'applecore');
 
-				scaryBG = new FlxSprite(-350, -375).loadGraphic(Paths.image('backgrounds/applecore/yeah'));
+				scaryBG = new BGSprite(-350, -375, 'scaryBG');
+				scaryBG.loadGraphic(Paths.image('backgrounds/applecore/yeah'));
 				scaryBG.scale.set(2, 2);
 				var testshader3:Shaders.GlitchEffect = new Shaders.GlitchEffect();
 				testshader3.waveAmplitude = 0.25;
@@ -1047,11 +1054,11 @@ class PlayState extends MusicBeatState
 				testshader3.waveSpeed = 3;
 				scaryBG.shader = testshader3.shader;
 				scaryBG.alpha = 0.65;
-				sprites.add(scaryBG);
 				add(scaryBG);
 				scaryBG.active = false;
 
-				swagBG = new FlxSprite(-600, -200).loadGraphic(Paths.image('backgrounds/applecore/hi'));
+				swagBG = new BGSprite(-600, -200, 'swagBG');
+				swagBG.loadGraphic(Paths.image('backgrounds/applecore/hi'));
 				// swagBG.scrollFactor.set(0, 0);
 				swagBG.scale.set(1.75, 1.75);
 				// swagBG.updateHitbox();
@@ -1060,18 +1067,17 @@ class PlayState extends MusicBeatState
 				testshader.waveFrequency = 1;
 				testshader.waveSpeed = 2;
 				swagBG.shader = testshader.shader;
-				sprites.add(swagBG);
 				add(swagBG);
 				curbg = swagBG;
 
-				unswagBG = new FlxSprite(-600, -200).loadGraphic(Paths.image('backgrounds/applecore/poop'));
+				unswagBG = new BGSprite(-600, -200, 'unswagBG');
+				unswagBG.loadGraphic(Paths.image('backgrounds/applecore/poop'));
 				unswagBG.scale.set(1.75, 1.75);
 				var testshader2:Shaders.GlitchEffect = new Shaders.GlitchEffect();
 				testshader2.waveAmplitude = 0.1;
 				testshader2.waveFrequency = 5;
 				testshader2.waveSpeed = 2;
 				unswagBG.shader = testshader2.shader;
-				sprites.add(unswagBG);
 				add(unswagBG);
 				unswagBG.active = unswagBG.visible = false;
 
@@ -1101,15 +1107,14 @@ class PlayState extends MusicBeatState
 				scriptedStages.push(stage);
 				defaultCamZoom = 0.85;
 				songSpeed = 1.6;
-				var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('backgrounds/algebra/algebraBg'));
+				var bg = new BGSprite(0, 0, 'bg').loadGraphic(Paths.image('backgrounds/algebra/algebraBg'));
 				bg.setGraphicSize(Std.int(bg.width * 1.35), Std.int(bg.height * 1.35));
 				bg.updateHitbox();
 				bg.screenCenter();
-				sprites.add(bg);
 				add(bg);
 
-				daveJunk = new FlxSprite(424, 122).loadGraphic(bgImg('dave'));
-				davePiss = new FlxSprite(427, 94);
+				daveJunk = new BGSprite(424, 122, 'daveJunk').loadGraphic(bgImg('dave'));
+				davePiss = new BGSprite(427, 94, 'davePiss');
 				davePiss.frames = Paths.getSparrowAtlas('backgrounds/algebra/bgJunkers/davePiss');
 				davePiss.animation.addByIndices('idle', 'GRR', [0], '', 0, false);
 				davePiss.animation.addByPrefix('d', 'GRR', 24, false);
@@ -1117,23 +1122,23 @@ class PlayState extends MusicBeatState
 				davePiss.x += 200;
 				davePiss.y += 100;
 
-				spikeJunk = new FlxSprite(237, 59).loadGraphic(bgImg('spike'));
+				spikeJunk = new BGSprite(237, 59, 'spikeJunk').loadGraphic(bgImg('spike'));
 				spikeJunk.x -= 300;
 				spikeJunk.y += 120;
 
-				monitorJunk = new FlxSprite(960, 61).loadGraphic(bgImg('monitor'));
+				monitorJunk = new BGSprite(960, 61, 'monitorJunk').loadGraphic(bgImg('monitor'));
 				monitorJunk.x += 275;
 				monitorJunk.y += 75;
 
-				diamondJunk = new FlxSprite(645, 0).loadGraphic(bgImg('diamond'));
+				diamondJunk = new BGSprite(645, 0, 'diamondJunk').loadGraphic(bgImg('diamond'));
 				diamondJunk.x += 75;
 				diamondJunk.y += 20;
 
-				robotJunk = new FlxSprite(-160, 225).loadGraphic(bgImg('robot'));
+				robotJunk = new BGSprite(-160, 225, 'robotJunk').loadGraphic(bgImg('robot'));
 				robotJunk.x -= 250;
 				robotJunk.y += 75;
 
-				robotUsb = new FlxSprite(-160, 225).loadGraphic(bgImg('robot-usb'));
+				robotUsb = new BGSprite(-160, 225, 'robotUsb').loadGraphic(bgImg('robot-usb'));
 				robotUsb.x -= 250;
 				robotUsb.y += 75;
 
@@ -1142,14 +1147,13 @@ class PlayState extends MusicBeatState
 					i.scale.set(1.35, 1.35);
 					i.visible = false;
 					i.antialiasing = false;
-					sprites.add(i);
 					add(i);
 				}
 
 			case '3dbg':
 				defaultCamZoom = 0.9;
 				scriptedStages.push(stage);
-				var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('backgrounds/3dbg/disabled'));
+				var bg:BGSprite = new BGSprite(-600, -200, '3dbg');
 				bg.active = true;
 				bg.scrollFactor.set(0.1, 0.1);
 
@@ -1175,16 +1179,13 @@ class PlayState extends MusicBeatState
 					default:
 						bg.loadGraphic(Paths.image('backgrounds/3dbg/disabled'));
 				}
-
-				sprites.add(bg);
 				add(bg);
 
 				if (SONG.song.toLowerCase() == 'disruption')
 				{
-					poop = new StupidDumbSprite(-100, -100, 'lol');
+					poop = new BGSprite(-100, -100, 'lol');
 					poop.makeGraphic(Std.int(1280 * 1.4), Std.int(720 * 1.4), FlxColor.BLACK);
 					poop.scrollFactor.set(0, 0);
-					sprites.add(poop);
 					add(poop);
 				}
 				// below code assumes shaders are always enabled which is bad
@@ -1200,10 +1201,10 @@ class PlayState extends MusicBeatState
 				scriptedStages.push(stage);
 				var stupidFuckingRedBg = new FlxSprite().makeGraphic(9999, 9999, FlxColor.fromRGB(42, 0, 0)).screenCenter();
 				add(stupidFuckingRedBg);
-				redTunnel = new FlxSprite(-1000, -700).loadGraphic(Paths.image('backgrounds/3dbg/redTunnel'));
+				redTunnel = new BGSprite(-1000, -700, 'redTunnel');
+				redTunnel.loadGraphic(Paths.image('backgrounds/3dbg/redTunnel'));
 				redTunnel.setGraphicSize(Std.int(redTunnel.width * 1.15), Std.int(redTunnel.height * 1.15));
 				redTunnel.updateHitbox();
-				sprites.add(redTunnel);
 				add(redTunnel);
 				daveFuckingDies = new PissBoy(0, 0);
 				daveFuckingDies.screenCenter();
@@ -1214,7 +1215,7 @@ class PlayState extends MusicBeatState
 				defaultCamZoom = 0.6;
 				scriptedStages.push(stage);
 
-				add(new FlxSprite(-1350, -1111).loadGraphic(Paths.image('backgrounds/warehouse/bg')));
+				add(new BGSprite(-1350, -1111, 'warehouse').loadGraphic(Paths.image('backgrounds/warehouse/bg')));
 			case 'out':
 				defaultCamZoom = 0.8;
 				scriptedStages.push(stage);
@@ -1236,32 +1237,32 @@ class PlayState extends MusicBeatState
 			case 'stage':
 				defaultCamZoom = 0.9;
 				scriptedStages.push(stage);
-				var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('backgrounds/shared/stageback'));
+				var bg:BGSprite = new BGSprite(-600, -200, 'bg');
+				bg.loadGraphic(Paths.image('backgrounds/shared/stageback'));
 				bg.antialiasing = true;
 				bg.scrollFactor.set(0.9, 0.9);
 				bg.active = false;
 
-				sprites.add(bg);
 				add(bg);
 
-				var stageFront:FlxSprite = new FlxSprite(-650, 600).loadGraphic(Paths.image('backgrounds/shared/stagefront'));
+				var stageFront:BGSprite = new BGSprite(-650, 600, 'front');
+				stageFront.loadGraphic(Paths.image('backgrounds/shared/stagefront'));
 				stageFront.setGraphicSize(Std.int(stageFront.width * 1.1));
 				stageFront.updateHitbox();
 				stageFront.antialiasing = true;
 				stageFront.scrollFactor.set(0.9, 0.9);
 				stageFront.active = false;
 
-				sprites.add(stageFront);
 				add(stageFront);
 
-				var stageCurtains:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('backgrounds/shared/stagecurtains'));
+				var stageCurtains:BGSprite = new BGSprite(-500, -300, 'curtains');
+				stageCurtains.loadGraphic(Paths.image('backgrounds/shared/stagecurtains'));
 				stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.9));
 				stageCurtains.updateHitbox();
 				stageCurtains.antialiasing = true;
 				stageCurtains.scrollFactor.set(1.3, 1.3);
 				stageCurtains.active = false;
 
-				sprites.add(stageCurtains);
 				add(stageCurtains);
 			default:
 				var jsonData:StageData = Paths.loadJSON('stages/${curStage}');
@@ -1272,8 +1273,7 @@ class PlayState extends MusicBeatState
 				defaultCamZoom = data.cameraZoom;
 				for (prop in data.props)
 				{
-					var theprop:FlxSprite = new FlxSprite(prop.position[0], prop.position[1]);
-					trace(prop.name);
+					var theprop:BGSprite = new BGSprite(prop.position[0], prop.position[1], prop.name);
 					if (prop.animations != null)
 					{
 						var tex:FlxAtlasFrames = Paths.getSparrowAtlas(prop.assetPath);
@@ -3875,6 +3875,12 @@ class PlayState extends MusicBeatState
 				{
 					switch (event.name)
 					{
+						case 'Set Prop Visibility':
+							for (prop in backgroundSprites)
+							{
+								if (prop.name == event.text)
+									prop.visible = event.visible;
+							}
 						case 'Set Alt Idle':
 							idleAlt = event.alt;
 						case 'Play Animation':
