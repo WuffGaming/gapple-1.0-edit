@@ -9,3 +9,5 @@ haxelib run lime setup
 lime rebuild extension-webm windows
 
 You should be able to build with "Lime Test Windows" and enjoy!
+
+IF LIME RUNS INTO ISSUES: haxelib run lime rebuild cpp -clean
