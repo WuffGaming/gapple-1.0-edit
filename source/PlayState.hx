@@ -210,7 +210,7 @@ class PlayState extends MusicBeatState
 
 	public static var curmult:Array<Float> = [1, 1, 1, 1];
 
-	public var curbg:FlxSprite;
+	public var curbg:BGSprite;
 
 	public static var screenshader:Shaders.PulseEffect = new PulseEffect();
 
@@ -1199,14 +1199,14 @@ class PlayState extends MusicBeatState
 			case 'redTunnel':
 				defaultCamZoom = 0.67;
 				scriptedStages.push(stage);
-				var stupidFuckingRedBg = new FlxSprite().makeGraphic(9999, 9999, FlxColor.fromRGB(42, 0, 0)).screenCenter();
+				var stupidFuckingRedBg = new BGSprite(0, 0, 'redshit').makeGraphic(9999, 9999, FlxColor.fromRGB(42, 0, 0)).screenCenter();
 				add(stupidFuckingRedBg);
 				redTunnel = new BGSprite(-1000, -700, 'redTunnel');
 				redTunnel.loadGraphic(Paths.image('backgrounds/3dbg/redTunnel'));
 				redTunnel.setGraphicSize(Std.int(redTunnel.width * 1.15), Std.int(redTunnel.height * 1.15));
 				redTunnel.updateHitbox();
 				add(redTunnel);
-				daveFuckingDies = new PissBoy(0, 0);
+				daveFuckingDies = new PissBoy(0, 0, 'piss');
 				daveFuckingDies.screenCenter();
 				daveFuckingDies.y = 1500;
 				add(daveFuckingDies);

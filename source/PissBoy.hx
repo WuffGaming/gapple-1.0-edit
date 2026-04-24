@@ -1,9 +1,9 @@
 package;
 
-import flixel.FlxSprite;
+import BGSprite;
 import flixel.math.FlxMath;
 
-class PissBoy extends FlxSprite
+class PissBoy extends BGSprite
 {
 	public var bounceAnimState:Int = 0;
 
@@ -12,9 +12,9 @@ class PissBoy extends FlxSprite
 
 	public var inCutscene:Bool = true;
 
-	public function new(x:Float, y:Float)
+	public function new(x:Float, y:Float, name:String)
 	{
-		super(x, y);
+		super(x, y, name);
 
 		frames = Paths.getSparrowAtlas('characters/dave/pissBoy'); // fuck you
 		animation.addByPrefix('idle', 'IDLE', 24, false);
