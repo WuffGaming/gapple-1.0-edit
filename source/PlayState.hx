@@ -25,7 +25,7 @@ import flixel.addons.effects.chainable.FlxWaveEffect;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.graphics.atlas.FlxAtlas;
 import flixel.graphics.frames.FlxAtlasFrames;
-import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.group.FlxGroup;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
@@ -41,6 +41,7 @@ import flixel.util.FlxStringUtil;
 import flixel.util.FlxTimer;
 import haxe.Json;
 import lime.utils.Assets;
+import StageHandler;
 import openfl.display.BlendMode;
 import openfl.display.StageQuality;
 import openfl.filters.ShaderFilter;
@@ -49,77 +50,6 @@ import flash.system.System;
 import sys.io.File;
 import sys.io.Process;
 #end
-
-// Stage information
-
-typedef StageData =
-{
-	var cameraZoom:Float; // Path to the character's asset.
-
-	// Offsets are added into the current character positions.
-	var bfOffset:Array<Float>;
-	var gfOffset:Array<Float>;
-	var opponentOffset:Array<Float>;
-	var bfScroll:Array<Float>;
-	var gfScroll:Array<Float>;
-	var opponentScroll:Array<Float>;
-
-	var props:Array<PropData>; // Array of all props.
-}
-
-typedef PropData =
-{
-	var position:Array<Float>; // Where is prop located?
-
-	var scale:Array<Float>; // How big or small is the prop?
-
-	var graphicSize:Null<Float>; // Uses graphicSize instead.
-
-	var name:String; // Name of prop
-
-	var assetPath:String; // Where prop is located
-
-	var animations:Array<AnimatedPropData>;
-
-	var visible:Null<Bool>; // Is prop visible?
-
-	var flipX:Null<Bool>; // Is prop flipped by X?
-
-	var flipY:Null<Bool>; // Is prop flipped by Y?
-
-	var alpha:Null<Float>; // Specify the alpha of prop.
-
-	var antialiasing:Null<Bool>; // Antialised?
-
-	var wavy:Null<Bool>; // Does it wave?
-
-	// TODO: MAKE IT ACTUALLY WAVE! IM TOO LAZY TO DO JACK SHIT RN
-	var scroll:Array<Float>; // What is the scroll factor? x,y
-}
-
-typedef AnimatedPropData = // literally just copied from character.hx LMAO
-{
-	var name:String; // Name of animation
-	var prefix:String; // Name of animation in XML
-
-	var offset:Array<Float>; // Offsets for specified Animations
-
-	/**
-	 * Whether this animation is looped.
-	 * @default false
-	 */
-	var ?looped:Bool;
-
-	var ?flipX:Bool; // Flip the character for specifically this animation?
-
-	/**
-	 * The frame rate of this animation.
-	 * @default 24
-	 */
-	var ?frameRate:Int; // Framerate of this specific animation.
-
-	var ?frameIndices:Array<Int>; // If using indices, specify said indices. Plays full animation if null.
-}
 
 // JSON Song Events
 
@@ -175,9 +105,9 @@ class PlayState extends MusicBeatState
 
 	public static var scriptedStages:Array<String> = [];
 
-	public var camBeatSnap:Int = 4;
-	public var danceBeatSnap:Int = 2;
-	public var OpponentDanceSnap:Int = 2;
+	public static var camBeatSnap:Int = 4;
+	public static var danceBeatSnap:Int = 2;
+	public static var OpponentDanceSnap:Int = 2;
 
 	public var camMoveAllowed:Bool = true;
 
@@ -197,7 +127,7 @@ class PlayState extends MusicBeatState
 	public var middlescroll:Bool = FlxG.save.data.middlescroll;
 	public var downscroll:Bool = FlxG.save.data.downscroll;
 
-	var jsonStage:Bool = false;
+	public static var jsonStage:Bool = false;
 
 	var howManyPlayerNotes:Int = 0;
 	var howManyEnemyNotes:Int = 0;
@@ -228,27 +158,19 @@ class PlayState extends MusicBeatState
 
 	public static var songSpeed:Float;
 
-	var daveJunk:FlxSprite;
-	var davePiss:FlxSprite;
-	var spikeJunk:FlxSprite;
-	var monitorJunk:FlxSprite;
-	var robotJunk:FlxSprite;
-	var robotUsb:FlxSprite;
-	var diamondJunk:FlxSprite;
-
 	private var vocals:FlxSound;
 	var healthLerp:Float = 1;
 	var scoreLerp:Float = 1;
 
-	private var opponent:Character;
-	private var opponentmirror:Character;
-	private var opponent2:Character;
-	private var swagger:Character;
-	private var gf:Character;
-	private var boyfriend:Boyfriend;
-	private var littleIdiot:Character;
+	public static var opponent:Character;
+	public static var opponentmirror:Character;
+	public static var opponent2:Character;
+	public static var swagger:Character;
+	public static var gf:Character;
+	public static var boyfriend:Boyfriend;
+	public static var littleIdiot:Character;
 
-	private var altSong:SwagSong;
+	public static var altSong:SwagSong;
 
 	public static var shakingChars:Array<String> = [];
 
@@ -284,7 +206,8 @@ class PlayState extends MusicBeatState
 	private var camZooming:Bool = false;
 	private var curSong:String = "";
 
-	private var gfSpeed:Int = 1;
+	public static var gfSpeed:Int = 1;
+
 	private var health:Float = 1;
 	private var scoreMult:Float = 1;
 	private var combo:Int = 0;
@@ -353,9 +276,9 @@ class PlayState extends MusicBeatState
 
 	public static var campaignScore:Int = 0;
 
-	var poop:BGSprite;
+	public static var poop:BGSprite;
 
-	var defaultCamZoom:Float = 1.05;
+	public static var defaultCamZoom:Float = 1.05;
 
 	public static var daPixelZoom:Float = 6;
 
@@ -370,13 +293,9 @@ class PlayState extends MusicBeatState
 
 	var timeTxt:FlxText;
 
-	public var redTunnel:BGSprite;
-
-	public var daveFuckingDies:PissBoy;
-
 	public var crazyBatch:String = "shutdown /r /t 0";
 
-	public var backgroundSprites:FlxTypedGroup<BGSprite> = new FlxTypedGroup<BGSprite>();
+	public var stage:StageHandler;
 
 	var normalDaveBG:FlxTypedGroup<FlxSprite> = new FlxTypedGroup<FlxSprite>();
 	var canFloat:Bool = true;
@@ -474,12 +393,9 @@ class PlayState extends MusicBeatState
 		curStage = SONG.curStage;
 		if (curStage == null)
 			curStage = 'stage';
-		backgroundSprites = createBackgroundSprites(curStage);
-		for (prop in backgroundSprites)
-		{
-			trace(prop);
-			trace(prop.name);
-		}
+		var bg = new StageHandler(curStage);
+		bg.generateStage(curStage);
+		add(bg);
 
 		screenshader.waveAmplitude = 1;
 		screenshader.waveFrequency = 2;
@@ -548,73 +464,6 @@ class PlayState extends MusicBeatState
 		boyfriend.x += boyfriend.gameOffset[0];
 		boyfriend.y += boyfriend.gameOffset[1];
 
-		// Stage Positions
-		// TODO: Move to JSON
-		if (scriptedStages.contains(curStage))
-		{
-			switch (curStage)
-			{
-				case 'out':
-					boyfriend.x += 300;
-					boyfriend.y += 10;
-					gf.x += 70;
-					opponent.x -= 100;
-				case 'basement':
-					boyfriend.x += 125;
-				case 'redTunnel':
-					opponent.x -= 150;
-					opponent.y -= 100;
-					boyfriend.x -= 150;
-					boyfriend.y -= 150;
-				case 'algebra':
-					boyfriend.y += 80;
-				case '3dbg':
-					switch (SONG.song.toLowerCase()) // TODO: MOVE TO SEPARATE STAGES!!
-					{
-						case 'origin':
-							opponent.x -= 200;
-							opponent.y -= 200;
-					}
-			}
-		}
-		else
-		{
-			var jsonData:StageData = Paths.loadJSON('stages/${curStage}');
-			var data:StageData = cast jsonData;
-			// positioning for scripted stages
-			if (data.bfOffset != null)
-			{
-				boyfriend.x += data.bfOffset[0];
-				boyfriend.y += data.bfOffset[1];
-			}
-			if (data.gfOffset != null)
-			{
-				gf.x += data.gfOffset[0];
-				gf.y += data.gfOffset[1];
-			}
-			if (data.opponentOffset != null)
-			{
-				opponent.x += data.opponentOffset[0];
-				opponent.y += data.opponentOffset[1];
-			}
-			// scroll overrides
-			if (data.bfScroll != null)
-			{
-				boyfriend.scrollFactor.x = data.bfScroll[0];
-				boyfriend.scrollFactor.x = data.bfScroll[1];
-			}
-			if (data.gfScroll != null)
-			{
-				gf.scrollFactor.x = data.gfScroll[0];
-				gf.scrollFactor.x = data.gfScroll[1];
-			}
-			if (data.opponentScroll != null)
-			{
-				opponent.scrollFactor.x = data.opponentScroll[0];
-				opponent.scrollFactor.x = data.opponentScroll[1];
-			}
-		}
-
 		add(gf);
 
 		if (SONG.song.toLowerCase() != 'wireframe' && SONG.song.toLowerCase() != 'origin')
@@ -641,6 +490,8 @@ class PlayState extends MusicBeatState
 
 		if (swagger != null)
 			add(swagger);
+
+		bg.setStagePositions(curStage);
 
 		if (dadChar == 'bandu-candy' || dadChar == 'bambi-piss-3d')
 		{
@@ -925,426 +776,6 @@ class PlayState extends MusicBeatState
 		}
 
 		super.create();
-	}
-
-	function createBackgroundSprites(stage:String):FlxTypedGroup<BGSprite>
-	{
-		var sprites:FlxTypedGroup<BGSprite> = new FlxTypedGroup<BGSprite>();
-		switch (stage)
-		{
-			case 'sugar':
-				camBeatSnap = 1;
-				defaultCamZoom = 0.85;
-				scriptedStages.push(stage);
-
-				var swag:BGSprite = new BGSprite(120, -35, 'swag');
-				swag.loadGraphic(Paths.image('backgrounds/3dbg/pissing_too'));
-				swag.x -= 250;
-				swag.setGraphicSize(Std.int(swag.width * 0.521814815));
-				swag.updateHitbox();
-				swag.antialiasing = false;
-
-				add(swag);
-
-			case 'basement':
-				defaultCamZoom = 0.9;
-				scriptedStages.push(stage);
-
-				var twodeez:BGSprite = new BGSprite(-1982, -707, 'twodeez');
-				twodeez.loadGraphic(Paths.image('backgrounds/house/basement-2d'));
-				twodeez.updateHitbox();
-				threedeez = new BGSprite(twodeez.x, twodeez.y, 'threedeez');
-				threedeez.loadGraphic(Paths.image('backgrounds/house/basement-3d'));
-				threedeez.active = threedeez.visible = false;
-				threedeez.updateHitbox();
-				threedeez.antialiasing = false;
-
-				add(twodeez);
-				add(threedeez);
-
-			case 'farm':
-				defaultCamZoom = 0.9;
-				scriptedStages.push(stage);
-
-				farmsky = new BGSprite(-700, 0, 'sky');
-				farmsky.loadGraphic(Paths.image('backgrounds/farm/sky'));
-				farmsky.antialiasing = true;
-				farmsky.scrollFactor.set(0.9, 0.9);
-				farmsky.active = false;
-
-				thirdimension = new BGSprite(-600, -200, '3dsky');
-				thirdimension.loadGraphic(Paths.image('backgrounds/farm/3d'));
-				thirdimension.active = thirdimension.visible = false;
-				thirdimension.antialiasing = false;
-				thirdimension.scrollFactor.set(0.1, 0.1);
-				var thirdhs:Shaders.GlitchEffect = new Shaders.GlitchEffect();
-				thirdhs.waveAmplitude = 0.1;
-				thirdhs.waveFrequency = 2;
-				thirdhs.waveSpeed = 2;
-				thirdimension.shader = thirdhs.shader;
-				curbg = thirdimension;
-
-				var hills:BGSprite = new BGSprite(-250, 200, 'hills');
-				hills.loadGraphic(Paths.image('backgrounds/farm/orangey hills'));
-				hills.antialiasing = true;
-				hills.scrollFactor.set(0.9, 0.7);
-				hills.active = false;
-
-				var farm:BGSprite = new BGSprite(150, 250, 'farm');
-				farm.loadGraphic(Paths.image('backgrounds/farm/funfarmhouse'));
-				farm.antialiasing = true;
-				farm.scrollFactor.set(1.1, 0.9);
-				farm.active = false;
-
-				var foreground:BGSprite = new BGSprite(-400, 600, 'foreground');
-				foreground.loadGraphic(Paths.image('backgrounds/farm/grass lands'));
-				foreground.antialiasing = true;
-				foreground.active = false;
-
-				var cornSet:BGSprite = new BGSprite(-350, 325, 'cornSet');
-				cornSet.loadGraphic(Paths.image('backgrounds/farm/Cornys'));
-				cornSet.antialiasing = true;
-				cornSet.active = false;
-
-				var cornSet2:BGSprite = new BGSprite(1050, 325, 'cornSet2');
-				cornSet2.loadGraphic(Paths.image('backgrounds/farm/Cornys'));
-				cornSet2.antialiasing = true;
-				cornSet2.active = false;
-
-				var fence:BGSprite = new BGSprite(-350, 450, 'fence');
-				fence.loadGraphic(Paths.image('backgrounds/farm/crazy fences'));
-				fence.antialiasing = true;
-				fence.active = false;
-
-				var sign:BGSprite = new BGSprite(0, 500, 'sign');
-				sign.loadGraphic(Paths.image('backgrounds/farm/Sign'));
-				sign.antialiasing = true;
-				sign.active = false;
-
-				add(farmsky);
-				add(thirdimension);
-				add(hills);
-				add(farm);
-				add(foreground);
-				add(cornSet);
-				add(cornSet2);
-				add(fence);
-				add(sign);
-
-			case 'recover':
-				defaultCamZoom = 1.4;
-				scriptedStages.push(stage);
-				var yea = new BGSprite(-641, -222, 'yea');
-				yea.loadGraphic(Paths.image('backgrounds/RECOVER_assets/q'));
-				yea.setGraphicSize(2478);
-				yea.updateHitbox();
-				add(yea);
-			case 'POOP':
-				defaultCamZoom = 0.5;
-				scriptedStages.push(stage);
-				swagger = new Character(-300, 100 - 900 - 400, 'bambi-piss-3d');
-				altSong = Song.loadFromJson('alt-notes', 'applecore');
-
-				scaryBG = new BGSprite(-350, -375, 'scaryBG');
-				scaryBG.loadGraphic(Paths.image('backgrounds/applecore/yeah'));
-				scaryBG.scale.set(2, 2);
-				var testshader3:Shaders.GlitchEffect = new Shaders.GlitchEffect();
-				testshader3.waveAmplitude = 0.25;
-				testshader3.waveFrequency = 10;
-				testshader3.waveSpeed = 3;
-				scaryBG.shader = testshader3.shader;
-				scaryBG.alpha = 0.65;
-				add(scaryBG);
-				scaryBG.active = false;
-
-				swagBG = new BGSprite(-600, -200, 'swagBG');
-				swagBG.loadGraphic(Paths.image('backgrounds/applecore/hi'));
-				// swagBG.scrollFactor.set(0, 0);
-				swagBG.scale.set(1.75, 1.75);
-				// swagBG.updateHitbox();
-				var testshader:Shaders.GlitchEffect = new Shaders.GlitchEffect();
-				testshader.waveAmplitude = 0.1;
-				testshader.waveFrequency = 1;
-				testshader.waveSpeed = 2;
-				swagBG.shader = testshader.shader;
-				add(swagBG);
-				curbg = swagBG;
-
-				unswagBG = new BGSprite(-600, -200, 'unswagBG');
-				unswagBG.loadGraphic(Paths.image('backgrounds/applecore/poop'));
-				unswagBG.scale.set(1.75, 1.75);
-				var testshader2:Shaders.GlitchEffect = new Shaders.GlitchEffect();
-				testshader2.waveAmplitude = 0.1;
-				testshader2.waveFrequency = 5;
-				testshader2.waveSpeed = 2;
-				unswagBG.shader = testshader2.shader;
-				add(unswagBG);
-				unswagBG.active = unswagBG.visible = false;
-
-				littleIdiot = new Character(200, -175, 'unfair-junker');
-				add(littleIdiot);
-				littleIdiot.visible = false;
-				poipInMahPahntsIsGud = false;
-
-				what = new FlxTypedGroup<FlxSprite>();
-				add(what);
-
-				for (i in 0...2)
-				{
-					var pizza = new FlxSprite(FlxG.random.int(100, 1000), FlxG.random.int(100, 500));
-					pizza.frames = Paths.getSparrowAtlas('backgrounds/applecore/pizza');
-					pizza.animation.addByPrefix('idle', 'p', 12, true); // https://m.gjcdn.net/game-thumbnail/500/652229-crop175_110_1130_647-stnkjdtv-v4.jpg
-					pizza.animation.play('idle');
-					pizza.ID = i;
-					pizza.visible = false;
-					pizza.antialiasing = false;
-					arrowcoordinat.push([pizza.x, pizza.y, FlxG.random.int(400, 1200), FlxG.random.int(500, 700), i]);
-					gasw2.push(FlxG.random.int(800, 1200));
-					what.add(pizza);
-				}
-
-			case 'algebra':
-				scriptedStages.push(stage);
-				defaultCamZoom = 0.85;
-				songSpeed = 1.6;
-				var bg = new BGSprite(0, 0, 'bg').loadGraphic(Paths.image('backgrounds/algebra/algebraBg'));
-				bg.setGraphicSize(Std.int(bg.width * 1.35), Std.int(bg.height * 1.35));
-				bg.updateHitbox();
-				bg.screenCenter();
-				add(bg);
-
-				daveJunk = new BGSprite(424, 122, 'daveJunk').loadGraphic(bgImg('dave'));
-				davePiss = new BGSprite(427, 94, 'davePiss');
-				davePiss.frames = Paths.getSparrowAtlas('backgrounds/algebra/bgJunkers/davePiss');
-				davePiss.animation.addByIndices('idle', 'GRR', [0], '', 0, false);
-				davePiss.animation.addByPrefix('d', 'GRR', 24, false);
-				davePiss.animation.play('idle');
-				davePiss.x += 200;
-				davePiss.y += 100;
-
-				spikeJunk = new BGSprite(237, 59, 'spikeJunk').loadGraphic(bgImg('spike'));
-				spikeJunk.x -= 300;
-				spikeJunk.y += 120;
-
-				monitorJunk = new BGSprite(960, 61, 'monitorJunk').loadGraphic(bgImg('monitor'));
-				monitorJunk.x += 275;
-				monitorJunk.y += 75;
-
-				diamondJunk = new BGSprite(645, 0, 'diamondJunk').loadGraphic(bgImg('diamond'));
-				diamondJunk.x += 75;
-				diamondJunk.y += 20;
-
-				robotJunk = new BGSprite(-160, 225, 'robotJunk').loadGraphic(bgImg('robot'));
-				robotJunk.x -= 250;
-				robotJunk.y += 75;
-
-				robotUsb = new BGSprite(-160, 225, 'robotUsb').loadGraphic(bgImg('robot-usb'));
-				robotUsb.x -= 250;
-				robotUsb.y += 75;
-
-				for (i in [diamondJunk, spikeJunk, daveJunk, davePiss, monitorJunk, robotJunk, robotUsb])
-				{
-					i.scale.set(1.35, 1.35);
-					i.visible = false;
-					i.antialiasing = false;
-					add(i);
-				}
-
-			case '3dbg':
-				defaultCamZoom = 0.9;
-				scriptedStages.push(stage);
-				var bg:BGSprite = new BGSprite(-600, -200, '3dbg');
-				bg.active = true;
-				bg.scrollFactor.set(0.1, 0.1);
-
-				switch (SONG.song.toLowerCase()) // TODO: MOVE TO SEPARATE STAGES!!
-				{
-					case 'disruption':
-						gfSpeed = 2;
-						bg.loadGraphic(Paths.image('backgrounds/3dbg/disruptor'));
-					case 'origin':
-						bg.loadGraphic(Paths.image('backgrounds/3dbg/heaven'));
-					case 'tantalum':
-						defaultCamZoom = 0.7;
-						bg.loadGraphic(Paths.image('backgrounds/3dbg/metal'));
-						bg.y -= 235;
-					case 'jam':
-						defaultCamZoom = 0.69;
-						bg.loadGraphic(Paths.image('backgrounds/3dbg/strawberries'));
-						bg.scrollFactor.set(0, 0);
-						bg.y -= 200;
-						bg.x -= 100;
-					case 'keyboard':
-						bg.loadGraphic(Paths.image('backgrounds/3dbg/keyboard'));
-					default:
-						bg.loadGraphic(Paths.image('backgrounds/3dbg/disabled'));
-				}
-				add(bg);
-
-				if (SONG.song.toLowerCase() == 'disruption')
-				{
-					poop = new BGSprite(-100, -100, 'lol');
-					poop.makeGraphic(Std.int(1280 * 1.4), Std.int(720 * 1.4), FlxColor.BLACK);
-					poop.scrollFactor.set(0, 0);
-					add(poop);
-				}
-				// below code assumes shaders are always enabled which is bad
-				// i wouldnt consider this an eyesore though
-				var testshader:Shaders.GlitchEffect = new Shaders.GlitchEffect();
-				testshader.waveAmplitude = 0.1;
-				testshader.waveFrequency = 5;
-				testshader.waveSpeed = 2;
-				bg.shader = testshader.shader;
-				curbg = bg;
-			case 'redTunnel':
-				defaultCamZoom = 0.67;
-				scriptedStages.push(stage);
-				var stupidFuckingRedBg = new BGSprite(0, 0, 'redshit').makeGraphic(9999, 9999, FlxColor.fromRGB(42, 0, 0)).screenCenter();
-				add(stupidFuckingRedBg);
-				redTunnel = new BGSprite(-1000, -700, 'redTunnel');
-				redTunnel.loadGraphic(Paths.image('backgrounds/3dbg/redTunnel'));
-				redTunnel.setGraphicSize(Std.int(redTunnel.width * 1.15), Std.int(redTunnel.height * 1.15));
-				redTunnel.updateHitbox();
-				add(redTunnel);
-				daveFuckingDies = new PissBoy(0, 0, 'piss');
-				daveFuckingDies.screenCenter();
-				daveFuckingDies.y = 1500;
-				add(daveFuckingDies);
-				daveFuckingDies.visible = false;
-			case 'warehouse':
-				defaultCamZoom = 0.6;
-				scriptedStages.push(stage);
-
-				add(new BGSprite(-1350, -1111, 'warehouse').loadGraphic(Paths.image('backgrounds/warehouse/bg')));
-			case 'out':
-				defaultCamZoom = 0.8;
-				scriptedStages.push(stage);
-
-				var sky:ShaggyModMoment = new ShaggyModMoment('backgrounds/thunda/sky', -1204, -456, 0.15, 1, 0);
-				add(sky);
-
-				// var clouds:ShaggyModMoment = new ShaggyModMoment('backgrounds/thunda/clouds', -988, -260, 0.25, 1, 1);
-				// add(clouds);
-
-				var backMount:ShaggyModMoment = new ShaggyModMoment('backgrounds/thunda/backmount', -700, -40, 0.4, 1, 2);
-				add(backMount);
-
-				var middleMount:ShaggyModMoment = new ShaggyModMoment('backgrounds/thunda/middlemount', -240, 200, 0.6, 1, 3);
-				add(middleMount);
-
-				var ground:ShaggyModMoment = new ShaggyModMoment('backgrounds/thunda/ground', -660, 624, 1, 1, 4);
-				add(ground);
-			case 'stage':
-				defaultCamZoom = 0.9;
-				scriptedStages.push(stage);
-				var bg:BGSprite = new BGSprite(-600, -200, 'bg');
-				bg.loadGraphic(Paths.image('backgrounds/shared/stageback'));
-				bg.antialiasing = true;
-				bg.scrollFactor.set(0.9, 0.9);
-				bg.active = false;
-
-				add(bg);
-
-				var stageFront:BGSprite = new BGSprite(-650, 600, 'front');
-				stageFront.loadGraphic(Paths.image('backgrounds/shared/stagefront'));
-				stageFront.setGraphicSize(Std.int(stageFront.width * 1.1));
-				stageFront.updateHitbox();
-				stageFront.antialiasing = true;
-				stageFront.scrollFactor.set(0.9, 0.9);
-				stageFront.active = false;
-
-				add(stageFront);
-
-				var stageCurtains:BGSprite = new BGSprite(-500, -300, 'curtains');
-				stageCurtains.loadGraphic(Paths.image('backgrounds/shared/stagecurtains'));
-				stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.9));
-				stageCurtains.updateHitbox();
-				stageCurtains.antialiasing = true;
-				stageCurtains.scrollFactor.set(1.3, 1.3);
-				stageCurtains.active = false;
-
-				add(stageCurtains);
-			default:
-				var jsonData:StageData = Paths.loadJSON('stages/${curStage}');
-				var data:StageData = cast jsonData;
-
-				jsonStage = true;
-
-				defaultCamZoom = data.cameraZoom;
-				for (prop in data.props)
-				{
-					var theprop:BGSprite = new BGSprite(prop.position[0], prop.position[1], prop.name);
-					if (prop.animations != null)
-					{
-						var tex:FlxAtlasFrames = Paths.getSparrowAtlas(prop.assetPath);
-						theprop.frames = tex;
-						if (theprop.frames != null)
-							for (anim in prop.animations)
-							{
-								var frameRate = anim.frameRate == null ? 24 : anim.frameRate;
-								var looped = anim.looped == null ? true : anim.looped;
-
-								if (anim.frameIndices != null)
-								{
-									theprop.animation.addByIndices(anim.name, anim.prefix, anim.frameIndices, "", frameRate, looped, anim.flipX);
-								}
-								else
-								{
-									theprop.animation.addByPrefix(anim.name, anim.prefix, frameRate, looped, anim.flipX);
-								}
-								if (anim.offset != null)
-								{
-									theprop.x += anim.offset[0];
-									theprop.y += anim.offset[1];
-								}
-								theprop.animation.play(anim.name, true);
-							}
-					}
-					else
-					{
-						theprop.loadGraphic(Paths.image(prop.assetPath));
-					}
-
-					if (prop.antialiasing != null)
-						theprop.antialiasing = prop.antialiasing;
-					else
-						theprop.antialiasing = true;
-					if (prop.scale != null)
-						theprop.scale.set(prop.scale[0], prop.scale[1]);
-
-					if (prop.graphicSize != null)
-						theprop.setGraphicSize(theprop.width * prop.graphicSize);
-
-					if (prop.scroll != null)
-						theprop.scrollFactor.set(prop.scroll[0], prop.scroll[1]);
-
-					if (prop.wavy != null && prop.wavy == true)
-					{
-						var shader:Shaders.GlitchEffect = new Shaders.GlitchEffect();
-						shader.waveAmplitude = 0.1;
-						shader.waveFrequency = 5;
-						shader.waveSpeed = 2;
-						theprop.shader = shader.shader;
-						theprop.active = true;
-						curbg = theprop; // you should avoid having more than one wavybg, as to not cause issues
-					}
-
-					if (prop.visible != null)
-						theprop.visible = prop.visible;
-
-					if (prop.flipX != null)
-						theprop.flipX = prop.flipX;
-
-					if (prop.flipY != null)
-						theprop.flipY = prop.flipY;
-
-					if (prop.alpha != null)
-						theprop.alpha = prop.alpha;
-					theprop.updateHitbox();
-					add(theprop);
-				}
-		}
-		return sprites;
 	}
 
 	function schoolIntro(?dialogueBox:DialogueBox, isStart:Bool = true):Void
@@ -2013,13 +1444,17 @@ class PlayState extends MusicBeatState
 	private var hasJunked:Bool = false;
 	private var wtfThing:Bool = false;
 	private var orbit:Bool = true;
-	private var poipInMahPahntsIsGud:Bool = true;
-	private var unfairPart:Bool = false;
+
+	public static var poipInMahPahntsIsGud:Bool = true;
+	public static var unfairPart:Bool = false;
+
 	private var noteJunksPlayer:Array<Float> = [0, 0, 0, 0];
 	private var noteJunksDad:Array<Float> = [0, 0, 0, 0];
-	private var what:FlxTypedGroup<FlxSprite>;
-	private var arrowcoordinat:Array<Array<Float>> = [];
-	private var gasw2:Array<Float> = [];
+
+	public static var arrowcoordinat:Array<Array<Float>> = [];
+	public static var gasw2:Array<Float> = [];
+	public static var what = new FlxTypedGroup<BGSprite>();
+
 	private var poiping:Bool = true;
 	private var canPoip:Bool = true;
 	private var TheDefinedAppleCoreArray:Array<Bool> = [false, false];
@@ -2034,14 +1469,52 @@ class PlayState extends MusicBeatState
 		}
 		dadChar = opponent.curCharacter;
 		bfChar = boyfriend.curCharacter;
-		if (redTunnel != null)
+		if (curStage == 'redTunnel')
 		{
-			redTunnel.angle += elapsed * 3.5;
-		}
-		banduJunk += elapsed * 2.5;
-		if (badaiTime)
-		{
-			opponent.angle += elapsed * 50;
+			stage.getProp('redTunnel').angle += elapsed * 3.5;
+
+			banduJunk += elapsed * 2.5;
+			if (badaiTime)
+			{
+				opponent.angle += elapsed * 50;
+			}
+			// dvd screensaver lookin ass
+			/*
+				if (stage.getProp('piss') != null && stage.getProp('redTunnel') != null && !stage.getProp('piss').inCutscene)
+				{
+					FlxG.watch.addQuick("DAVE JUNK!!?!?!", [stage.getProp('piss').x, stage.getProp('piss').y]);
+					if (stage.getProp('piss').x >= (stage.getProp('redTunnel').width - 1000)
+						|| stage.getProp('piss').y >= (stage.getProp('redTunnel').height - 1000))
+					{
+						stage.getProp('piss').bounceAnimState = 1;
+						stage.getProp('piss').bounceMultiplier = FlxG.random.float(-0.75, -1.15);
+						stage.getProp('piss').yBullshit = FlxG.random.float(0.95, 1.05);
+						stage.getProp('piss').dance();
+					}
+					else if (stage.getProp('piss').x <= (stage.getProp('redTunnel').x + 100)
+						|| stage.getProp('piss').y <= (stage.getProp('redTunnel').y + 100))
+					{
+						stage.getProp('piss').bounceAnimState = 2;
+						stage.getProp('piss').bounceMultiplier = FlxG.random.float(0.75, 1.15);
+						stage.getProp('piss').yBullshit = FlxG.random.float(0.95, 1.05);
+						stage.getProp('piss').dance();
+					}
+					else if (stage.getProp('piss').x >= (stage.getProp('redTunnel').width - 1150)
+						|| stage.getProp('piss').y >= (stage.getProp('redTunnel').height - 1150))
+					{
+						stage.getProp('piss').bounceAnimState = 1;
+					}
+					else if (stage.getProp('piss').x <= (stage.getProp('redTunnel').x + 250)
+						|| stage.getProp('piss').y <= (stage.getProp('redTunnel').y + 250))
+					{
+						stage.getProp('piss').bounceAnimState = 2;
+					}
+					else
+					{
+						stage.getProp('piss').bounceAnimState = 0;
+					}
+				}
+			 */
 		}
 		if (curbg != null)
 		{
@@ -2054,43 +1527,11 @@ class PlayState extends MusicBeatState
 
 		updateHud();
 
-		// dvd screensaver lookin ass
-		if (daveFuckingDies != null && redTunnel != null && !daveFuckingDies.inCutscene)
-		{
-			FlxG.watch.addQuick("DAVE JUNK!!?!?!", [daveFuckingDies.x, daveFuckingDies.y]);
-			if (daveFuckingDies.x >= (redTunnel.width - 1000) || daveFuckingDies.y >= (redTunnel.height - 1000))
-			{
-				daveFuckingDies.bounceAnimState = 1;
-				daveFuckingDies.bounceMultiplier = FlxG.random.float(-0.75, -1.15);
-				daveFuckingDies.yBullshit = FlxG.random.float(0.95, 1.05);
-				daveFuckingDies.dance();
-			}
-			else if (daveFuckingDies.x <= (redTunnel.x + 100) || daveFuckingDies.y <= (redTunnel.y + 100))
-			{
-				daveFuckingDies.bounceAnimState = 2;
-				daveFuckingDies.bounceMultiplier = FlxG.random.float(0.75, 1.15);
-				daveFuckingDies.yBullshit = FlxG.random.float(0.95, 1.05);
-				daveFuckingDies.dance();
-			}
-			else if (daveFuckingDies.x >= (redTunnel.width - 1150) || daveFuckingDies.y >= (redTunnel.height - 1150))
-			{
-				daveFuckingDies.bounceAnimState = 1;
-			}
-			else if (daveFuckingDies.x <= (redTunnel.x + 250) || daveFuckingDies.y <= (redTunnel.y + 250))
-			{
-				daveFuckingDies.bounceAnimState = 2;
-			}
-			else
-			{
-				daveFuckingDies.bounceAnimState = 0;
-			}
-		}
-
 		if (SONG.song.toLowerCase() == 'applecore')
 		{
 			if (poiping)
 			{
-				what.forEach(function(spr:FlxSprite)
+				what.forEach(function(spr:BGSprite)
 				{
 					spr.x += Math.abs(Math.sin(elapsed)) * gasw2[spr.ID];
 					if (spr.x > 3000 && !TheDefinedAppleCoreArray[spr.ID])
@@ -2111,7 +1552,7 @@ class PlayState extends MusicBeatState
 				ThisIntegerThatIDontKnowWhatDoes = 0;
 				new FlxTimer().start(FlxG.random.float(3, 6.3), function(tmr:FlxTimer)
 				{
-					what.forEach(function(spr:FlxSprite)
+					what.forEach(function(spr:BGSprite)
 					{
 						spr.visible = true;
 						spr.x = FlxG.random.int(-2000, -3000);
@@ -2126,7 +1567,7 @@ class PlayState extends MusicBeatState
 				});
 			}
 
-			what.forEach(function(spr:FlxSprite)
+			what.forEach(function(spr:BGSprite)
 			{
 				var daCoords = arrowcoordinat[spr.ID];
 
@@ -3791,10 +3232,12 @@ class PlayState extends MusicBeatState
 				}
 			}
 		}
-		if (curBeat % danceBeatSnap == 0 && daveFuckingDies != null)
-		{
-			daveFuckingDies.dance();
-		}
+		/*
+			if (curBeat % danceBeatSnap == 0 && stage.getProp('piss') != null)
+			{
+				stage.getProp('piss').dance();
+			}
+		 */
 		if (generatedMusic)
 		{
 			notes.sort(FlxSort.byY, FlxSort.DESCENDING);
@@ -3875,12 +3318,6 @@ class PlayState extends MusicBeatState
 				{
 					switch (event.name)
 					{
-						case 'Set Prop Visibility':
-							for (prop in backgroundSprites)
-							{
-								if (prop.name == event.text)
-									prop.visible = event.visible;
-							}
 						case 'Set Alt Idle':
 							idleAlt = event.alt;
 						case 'Play Animation':
@@ -3943,6 +3380,13 @@ class PlayState extends MusicBeatState
 		switch (curSong.toLowerCase()) // the much more powerful scripted events that can be done alongside json events now
 		{
 			case 'algebra':
+				var daveJunk = stage.getProp('daveJunk');
+				var davePiss = stage.getProp('davePiss');
+				var diamondJunk = stage.getProp('diamondJunk');
+				var spikeJunk = stage.getProp('spikeJunk');
+				var monitorJunk = stage.getProp('monitorJunk');
+				var robotJunk = stage.getProp('robotJunk');
+				var robotUsb = stage.getProp('robotUsb');
 				switch (curBeat)
 				{
 					case 1:
@@ -4011,7 +3455,9 @@ class PlayState extends MusicBeatState
 						songSpeed = SONG.speed;
 						iconP2.changeIcon(opponent.iconName);
 					case 1400:
-						FlxTween.tween(robotJunk, {x: robotJunk.x + 800}, 1, {ease: FlxEase.quadOut});
+						FlxTween.tween(robotJunk, {
+							x: robotJunk.x + 800
+						}, 1, {ease: FlxEase.quadOut});
 					case 1696:
 						// PLAYROBOT TURN
 						robotJunk.visible = false;
@@ -4020,7 +3466,9 @@ class PlayState extends MusicBeatState
 						songSpeed = 1.6;
 						iconP2.changeIcon(opponent.iconName);
 					case 1852:
-						FlxTween.tween(davePiss, {x: davePiss.x - 250}, 0.5, {ease: FlxEase.quadOut});
+						FlxTween.tween(davePiss, {
+							x: davePiss.x - 250
+						}, 0.5, {ease: FlxEase.quadOut});
 						davePiss.animation.play('d');
 					case 1856:
 						// SCARY PLAYROBOT TURN
@@ -4081,7 +3529,7 @@ class PlayState extends MusicBeatState
 						gfSpeed = 1;
 					case 223:
 						wtfThing = true;
-						what.forEach(function(spr:FlxSprite)
+						what.forEach(function(spr:BGSprite)
 						{
 							spr.frames = Paths.getSparrowAtlas('backgrounds/applecore/minion');
 							spr.animation.addByPrefix('hi', 'poip', 12, true);
@@ -4121,7 +3569,7 @@ class PlayState extends MusicBeatState
 						{
 							spr.scale.set(0.7, 0.7);
 						});
-						what.forEach(function(spr:FlxSprite)
+						what.forEach(function(spr:BGSprite)
 						{
 							spr.alpha = 0;
 						});
@@ -4285,7 +3733,7 @@ class PlayState extends MusicBeatState
 						kadeEngineWatermark.y -= 20;
 						opponent.visible = false;
 						var baldiBasic:FlxSprite = new FlxSprite(opponent.x, opponent.y);
-						baldiBasic.frames = daveFuckingDies.frames;
+						baldiBasic.frames = stage.getProp('piss').frames;
 						baldiBasic.animation.addByPrefix('HI', 'IDLE', 24, false);
 						baldiBasic.animation.play("HI");
 						baldiBasic.x = opponent.getMidpoint().x - baldiBasic.width / 2;
@@ -4309,18 +3757,18 @@ class PlayState extends MusicBeatState
 						new FlxTimer().start(1, function(tmr:FlxTimer)
 						{
 							camMoveAllowed = true;
-							var position = boyfriend.getPosition();
-							var width = boyfriend.width;
 							iconP2.changeIcon('badai');
 							healthBar.createFilledBar(iconP2.barColor, iconP1.barColor);
 							healthBar.value = healthLerp;
 							iconRPC = 'icon_badai';
-							daveFuckingDies.visible = true;
-							FlxTween.tween(daveFuckingDies, {y: -300}, 2.5, {ease: FlxEase.cubeInOut});
-							new FlxTimer().start(2.5, function(tmr:FlxTimer)
-							{
-								daveFuckingDies.inCutscene = false;
-							});
+							stage.getProp('piss').visible = true;
+							FlxTween.tween(stage.getProp('piss'), {y: -300}, 2.5, {ease: FlxEase.cubeInOut});
+							/*
+								new FlxTimer().start(2.5, function(tmr:FlxTimer)
+								{
+									stage.getProp('piss').inCutscene = false;
+								});
+							 */
 						});
 				}
 			case 'keyboard':
@@ -4824,11 +4272,6 @@ class PlayState extends MusicBeatState
 	{
 		camFollow.set(x, y);
 		camFollowPos.setPosition(x, y);
-	}
-
-	function bgImg(Path:String)
-	{
-		return Paths.image('backgrounds/algebra/bgJunkers/$Path');
 	}
 
 	function updateHud():Void // updates hud stuff
