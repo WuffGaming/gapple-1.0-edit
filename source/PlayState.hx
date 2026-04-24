@@ -116,6 +116,8 @@ class PlayState extends MusicBeatState
 	public var hallMonitorStand:Character;
 	public var playRobotStand:Character;
 
+	public var bg:StageHandler;
+
 	public var strumOffset:Int = 0;
 
 	var songPercent:Float = 0;
@@ -295,8 +297,6 @@ class PlayState extends MusicBeatState
 
 	public var crazyBatch:String = "shutdown /r /t 0";
 
-	public var stage:StageHandler;
-
 	var normalDaveBG:FlxTypedGroup<FlxSprite> = new FlxTypedGroup<FlxSprite>();
 	var canFloat:Bool = true;
 
@@ -393,7 +393,7 @@ class PlayState extends MusicBeatState
 		curStage = SONG.curStage;
 		if (curStage == null)
 			curStage = 'stage';
-		var bg = new StageHandler(curStage);
+		bg = new StageHandler(curStage);
 		bg.generateStage(curStage);
 		add(bg);
 
@@ -1471,7 +1471,7 @@ class PlayState extends MusicBeatState
 		bfChar = boyfriend.curCharacter;
 		if (curStage == 'redTunnel')
 		{
-			stage.getProp('redTunnel').angle += elapsed * 3.5;
+			bg.getProp('redTunnel').angle += elapsed * 3.5;
 
 			banduJunk += elapsed * 2.5;
 			if (badaiTime)
@@ -1480,38 +1480,38 @@ class PlayState extends MusicBeatState
 			}
 			// dvd screensaver lookin ass
 			/*
-				if (stage.getProp('piss') != null && stage.getProp('redTunnel') != null && !stage.getProp('piss').inCutscene)
+				if (bg.getProp('piss') != null && bg.getProp('redTunnel') != null && !bg.getProp('piss').inCutscene)
 				{
-					FlxG.watch.addQuick("DAVE JUNK!!?!?!", [stage.getProp('piss').x, stage.getProp('piss').y]);
-					if (stage.getProp('piss').x >= (stage.getProp('redTunnel').width - 1000)
-						|| stage.getProp('piss').y >= (stage.getProp('redTunnel').height - 1000))
+					FlxG.watch.addQuick("DAVE JUNK!!?!?!", [bg.getProp('piss').x, bg.getProp('piss').y]);
+					if (bg.getProp('piss').x >= (bg.getProp('redTunnel').width - 1000)
+						|| bg.getProp('piss').y >= (bg.getProp('redTunnel').height - 1000))
 					{
-						stage.getProp('piss').bounceAnimState = 1;
-						stage.getProp('piss').bounceMultiplier = FlxG.random.float(-0.75, -1.15);
-						stage.getProp('piss').yBullshit = FlxG.random.float(0.95, 1.05);
-						stage.getProp('piss').dance();
+						bg.getProp('piss').bounceAnimState = 1;
+						bg.getProp('piss').bounceMultiplier = FlxG.random.float(-0.75, -1.15);
+						bg.getProp('piss').yBullshit = FlxG.random.float(0.95, 1.05);
+						bg.getProp('piss').dance();
 					}
-					else if (stage.getProp('piss').x <= (stage.getProp('redTunnel').x + 100)
-						|| stage.getProp('piss').y <= (stage.getProp('redTunnel').y + 100))
+					else if (bg.getProp('piss').x <= (bg.getProp('redTunnel').x + 100)
+						|| bg.getProp('piss').y <= (bg.getProp('redTunnel').y + 100))
 					{
-						stage.getProp('piss').bounceAnimState = 2;
-						stage.getProp('piss').bounceMultiplier = FlxG.random.float(0.75, 1.15);
-						stage.getProp('piss').yBullshit = FlxG.random.float(0.95, 1.05);
-						stage.getProp('piss').dance();
+						bg.getProp('piss').bounceAnimState = 2;
+						bg.getProp('piss').bounceMultiplier = FlxG.random.float(0.75, 1.15);
+						bg.getProp('piss').yBullshit = FlxG.random.float(0.95, 1.05);
+						bg.getProp('piss').dance();
 					}
-					else if (stage.getProp('piss').x >= (stage.getProp('redTunnel').width - 1150)
-						|| stage.getProp('piss').y >= (stage.getProp('redTunnel').height - 1150))
+					else if (bg.getProp('piss').x >= (bg.getProp('redTunnel').width - 1150)
+						|| bg.getProp('piss').y >= (bg.getProp('redTunnel').height - 1150))
 					{
-						stage.getProp('piss').bounceAnimState = 1;
+						bg.getProp('piss').bounceAnimState = 1;
 					}
-					else if (stage.getProp('piss').x <= (stage.getProp('redTunnel').x + 250)
-						|| stage.getProp('piss').y <= (stage.getProp('redTunnel').y + 250))
+					else if (bg.getProp('piss').x <= (bg.getProp('redTunnel').x + 250)
+						|| bg.getProp('piss').y <= (bg.getProp('redTunnel').y + 250))
 					{
-						stage.getProp('piss').bounceAnimState = 2;
+						bg.getProp('piss').bounceAnimState = 2;
 					}
 					else
 					{
-						stage.getProp('piss').bounceAnimState = 0;
+						bg.getProp('piss').bounceAnimState = 0;
 					}
 				}
 			 */
@@ -3233,9 +3233,9 @@ class PlayState extends MusicBeatState
 			}
 		}
 		/*
-			if (curBeat % danceBeatSnap == 0 && stage.getProp('piss') != null)
+			if (curBeat % danceBeatSnap == 0 && bg.getProp('piss') != null)
 			{
-				stage.getProp('piss').dance();
+				bg.getProp('piss').dance();
 			}
 		 */
 		if (generatedMusic)
@@ -3380,13 +3380,13 @@ class PlayState extends MusicBeatState
 		switch (curSong.toLowerCase()) // the much more powerful scripted events that can be done alongside json events now
 		{
 			case 'algebra':
-				var daveJunk = stage.getProp('daveJunk');
-				var davePiss = stage.getProp('davePiss');
-				var diamondJunk = stage.getProp('diamondJunk');
-				var spikeJunk = stage.getProp('spikeJunk');
-				var monitorJunk = stage.getProp('monitorJunk');
-				var robotJunk = stage.getProp('robotJunk');
-				var robotUsb = stage.getProp('robotUsb');
+				var daveJunk = bg.getProp('daveJunk');
+				var davePiss = bg.getProp('davePiss');
+				var diamondJunk = bg.getProp('diamondJunk');
+				var spikeJunk = bg.getProp('spikeJunk');
+				var monitorJunk = bg.getProp('monitorJunk');
+				var robotJunk = bg.getProp('robotJunk');
+				var robotUsb = bg.getProp('robotUsb');
 				switch (curBeat)
 				{
 					case 1:
@@ -3733,7 +3733,7 @@ class PlayState extends MusicBeatState
 						kadeEngineWatermark.y -= 20;
 						opponent.visible = false;
 						var baldiBasic:FlxSprite = new FlxSprite(opponent.x, opponent.y);
-						baldiBasic.frames = stage.getProp('piss').frames;
+						baldiBasic.frames = bg.getProp('piss').frames;
 						baldiBasic.animation.addByPrefix('HI', 'IDLE', 24, false);
 						baldiBasic.animation.play("HI");
 						baldiBasic.x = opponent.getMidpoint().x - baldiBasic.width / 2;
@@ -3761,12 +3761,12 @@ class PlayState extends MusicBeatState
 							healthBar.createFilledBar(iconP2.barColor, iconP1.barColor);
 							healthBar.value = healthLerp;
 							iconRPC = 'icon_badai';
-							stage.getProp('piss').visible = true;
-							FlxTween.tween(stage.getProp('piss'), {y: -300}, 2.5, {ease: FlxEase.cubeInOut});
+							bg.getProp('piss').visible = true;
+							FlxTween.tween(bg.getProp('piss'), {y: -300}, 2.5, {ease: FlxEase.cubeInOut});
 							/*
 								new FlxTimer().start(2.5, function(tmr:FlxTimer)
 								{
-									stage.getProp('piss').inCutscene = false;
+									bg.getProp('piss').inCutscene = false;
 								});
 							 */
 						});
