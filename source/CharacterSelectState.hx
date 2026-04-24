@@ -240,6 +240,8 @@ class CharacterSelectState extends MusicBeatState
 		characterText.text = char.name;
 		funnyIconMan.animation.play(char.curCharacter);
 		characterText.screenCenter(X);
+
+		DiscordRPC.changePresence('Selecting a character', 'Hovering over ${char.name}');
 	}
 
 	override function beatHit()

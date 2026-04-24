@@ -101,6 +101,8 @@ class PauseSubState extends MusicBeatSubstate
 			grpMenuShit.add(songText);
 		}
 
+		DiscordRPC.changePresence('Paused', CoolUtil.formatString(PlayState.SONG.song));
+
 		changeSelection();
 
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];

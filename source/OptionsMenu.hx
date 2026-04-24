@@ -39,6 +39,8 @@ class OptionsMenu extends MusicBeatState
 
 	override function create()
 	{
+		DiscordRPC.changePresence('In the Options');
+
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(MainMenuState.randomizeBG());
 
 		menuBG.color = 0xFFea71fd;

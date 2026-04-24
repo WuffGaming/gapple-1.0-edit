@@ -44,6 +44,7 @@ class MainMenuState extends MusicBeatState
 
 	override function create()
 	{
+		DiscordRPC.changePresence();
 		if (!FlxG.sound.music.playing)
 		{
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));

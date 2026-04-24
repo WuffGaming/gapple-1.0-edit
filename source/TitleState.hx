@@ -51,6 +51,8 @@ class TitleState extends MusicBeatState
 	{
 		PolymodHandler.loadMods();
 
+		DiscordRPC.init();
+
 		// preload all the long songs
 		var preloadSongs:Array<String> = ['Algebra', 'AppleCore'];
 

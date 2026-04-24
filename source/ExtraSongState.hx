@@ -133,6 +133,8 @@ class ExtraSongState extends MusicBeatState
 		if (controls.BACK)
 			FlxG.switchState(() -> new PlayMenuState());
 
+		DiscordRPC.changePresence('In the Extras Menu', 'Hovering over ${CoolUtil.formatString(songs[curSelected].songName)}');
+
 		if (FlxG.keys.pressed.ENTER)
 		{
 			if (!Assets.exists(Paths.chart('${songs[curSelected].songName.toLowerCase()}/info'))

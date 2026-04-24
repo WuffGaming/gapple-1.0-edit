@@ -2027,6 +2027,10 @@ class PlayState extends MusicBeatState
 
 	override public function update(elapsed:Float)
 	{
+		if (inCutscene)
+			DiscordRPC.changePresence('In a cutscene', CoolUtil.formatString(curSong));
+		else
+			DiscordRPC.changePresence('Playing ${CoolUtil.formatString(curSong)}!', '${truncateFloat(accuracy, 2)}% • Misses: ${misses} • Score: ${score}');
 		elapsedtime += elapsed;
 		if (bfSpazOut)
 		{
