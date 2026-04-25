@@ -3276,15 +3276,18 @@ class PlayState extends MusicBeatState
 				&& curBeat % OpponentDanceSnap == 0)
 				opponent2.dance(idleAlt);
 		}
-		if (swagger != null)
+		if (curSong.toLowerCase() == 'applecore')
 		{
-			if (swagger.holdTimer <= 0 && curBeat % 1 == 0 && swagger.animation.finished)
-				swagger.dance();
-		}
-		if (littleIdiot != null)
-		{
-			if (littleIdiot.animation.finished && littleIdiot.holdTimer <= 0 && curBeat % OpponentDanceSnap == 0)
-				littleIdiot.dance();
+			if (swagger != null)
+			{
+				if (swagger.holdTimer <= 0 && curBeat % 1 == 0 && swagger.animation.finished)
+					swagger.dance();
+			}
+			if (littleIdiot != null)
+			{
+				if (littleIdiot.animation.finished && littleIdiot.holdTimer <= 0 && curBeat % OpponentDanceSnap == 0)
+					littleIdiot.dance();
+			}
 		}
 
 		// FlxG.log.add('change bpm' + SONG.notes[Std.int(curStep / 16)].changeBPM);
