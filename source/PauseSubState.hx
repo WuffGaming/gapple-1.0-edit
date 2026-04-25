@@ -141,17 +141,8 @@ class PauseSubState extends MusicBeatSubstate
 				case "Exit to menu":
 					PlayState.characteroverride = 'none';
 					PlayState.formoverride = 'none';
-					if (PlayState.xtraSong)
-						FlxG.switchState(() -> new ExtraSongState());
-					else
-						FlxG.switchState(() -> new PlayMenuState());
+					PlayState.exitToMenu();
 			}
-		}
-
-		if (FlxG.keys.justPressed.J)
-		{
-			// for reference later!
-			// PlayerSettings.player1.controls.replaceBinding(Control.LEFT, Keys, FlxKey.J, null);
 		}
 	}
 

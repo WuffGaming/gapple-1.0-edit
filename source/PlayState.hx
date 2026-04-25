@@ -158,7 +158,8 @@ class PlayState extends MusicBeatState
 
 	public static var songSpeed:Float;
 
-	private var vocals:FlxSound;
+	private static var vocals:FlxSound;
+
 	var healthLerp:Float = 1;
 	var scoreLerp:Float = 1;
 
@@ -2509,8 +2510,8 @@ class PlayState extends MusicBeatState
 		canPause = false;
 		updateTime = false;
 
-		FlxG.sound.music.stop; // we dont need anymore music!
-		vocals.volume = 0;
+		destroyAudio();
+		FlxG.sound.playMusic(Paths.music('freakyMenu')); // play freakymusic because we're going to the menus!
 		if (SONG.validScore)
 		{
 			trace("score is valid");
@@ -2529,30 +2530,26 @@ class PlayState extends MusicBeatState
 					boyfriend.stunned = true;
 					var doof:DialogueBox = new DialogueBox(false, CoolUtil.coolTextFile(Paths.txt('dialogue/dialogue/coreDialogueEnd')));
 					doof.scrollFactor.set();
-					doof.finishThing = ughWhyDoesThisHaveToFuckingExist;
+					doof.finishThing = exitToMenu;
 					doof.cameras = [camDialogue];
 					schoolIntro(doof, false);
 				default:
-					FlxG.sound.playMusic(Paths.music('freakyMenu')); // play freakymusic because we're going to the menus!
-					if (xtraSong)
-						FlxG.switchState(() -> new ExtraSongState());
-					else
-						FlxG.switchState(() -> new PlayMenuState());
+					exitToMenu();
 			}
 		}
 		else
 		{
-			FlxG.sound.playMusic(Paths.music('freakyMenu'));
-			if (xtraSong)
-				FlxG.switchState(() -> new ExtraSongState());
-			else
-				FlxG.switchState(() -> new PlayMenuState());
+			exitToMenu();
 		}
 	}
 
-	function ughWhyDoesThisHaveToFuckingExist()
+	public static function exitToMenu()
 	{
-		FlxG.switchState(() -> new PlayMenuState());
+		// destroyAudio();
+		if (PlayState.xtraSong)
+			FlxG.switchState(() -> new ExtraSongState());
+		else
+			FlxG.switchState(() -> new PlayMenuState());
 	}
 
 	var endingSong:Bool = false;
@@ -4273,6 +4270,16 @@ class PlayState extends MusicBeatState
 	{
 		healthLerp = FlxMath.lerp(healthLerp, health, 0.15);
 		scoreLerp = FlxMath.lerp(scoreLerp, songScore, 0.15);
+	}
+
+	// Pauses the current song being played and destroys it.
+	public static function destroyAudio()
+	{
+		FlxG.sound.music.pause();
+		vocals.pause();
+
+		FlxG.sound.music.destroy();
+		vocals.destroy();
 	}
 
 	function updateIcons() // we don't want this to be running all the time to preserve the icon bounce. only run when icon size changes!
