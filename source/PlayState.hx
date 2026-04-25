@@ -1014,6 +1014,8 @@ class PlayState extends MusicBeatState
 		var songData = SONG;
 		Conductor.changeBPM(songData.bpm);
 
+		FlxG.sound.load(Paths.inst(PlayState.SONG.song));
+
 		curSong = songData.song;
 
 		if (SONG.needsVoices)
@@ -1022,6 +1024,12 @@ class PlayState extends MusicBeatState
 			vocals = new FlxSound();
 
 		FlxG.sound.list.add(vocals);
+
+		// Load the audio so there isn't any stuttering.
+		FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
+		FlxG.sound.music.pause();
+		vocals.play();
+		vocals.pause();
 
 		notes = new FlxTypedGroup<Note>();
 		add(notes);

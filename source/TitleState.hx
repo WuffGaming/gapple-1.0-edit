@@ -53,15 +53,6 @@ class TitleState extends MusicBeatState
 
 		DiscordRPC.init();
 
-		// preload all the long songs
-		var preloadSongs:Array<String> = ['Algebra', 'AppleCore'];
-
-		for (song in preloadSongs)
-		{
-			FlxG.sound.cache(Paths.inst(song));
-			FlxG.sound.cache(Paths.voices(song));
-		}
-
 		PlayerSettings.init();
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());
