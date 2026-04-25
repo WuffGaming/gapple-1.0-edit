@@ -142,8 +142,6 @@ class PlayState extends MusicBeatState
 
 	public static var curmult:Array<Float> = [1, 1, 1, 1];
 
-	public var curbg:BGSprite;
-
 	public static var screenshader:Shaders.PulseEffect = new PulseEffect();
 
 	public var UsingNewCam:Bool = false;
@@ -274,11 +272,7 @@ class PlayState extends MusicBeatState
 	public static var dadChar:String = 'bf';
 	public static var bfChar:String = 'bf';
 
-	var scaryBG:BGSprite;
-
 	public static var campaignScore:Int = 0;
-
-	public static var poop:BGSprite;
 
 	public static var defaultCamZoom:Float = 1.05;
 
@@ -299,13 +293,6 @@ class PlayState extends MusicBeatState
 
 	var normalDaveBG:FlxTypedGroup<FlxSprite> = new FlxTypedGroup<FlxSprite>();
 	var canFloat:Bool = true;
-
-	var swagBG:BGSprite;
-	var unswagBG:BGSprite;
-
-	var farmsky:BGSprite;
-	var threedeez:BGSprite;
-	var thirdimension:BGSprite;
 
 	var bonusShit:FlxText;
 	var kadeEngineWatermark:FlxText;
@@ -1463,6 +1450,7 @@ class PlayState extends MusicBeatState
 	override public function update(elapsed:Float)
 	{
 		elapsedtime += elapsed;
+		banduJunk += elapsed * 2.5;
 		if (bfSpazOut)
 		{
 			boyfriend.playAnim('sing' + notestuffs[FlxG.random.int(0, 3)]);
@@ -1473,7 +1461,6 @@ class PlayState extends MusicBeatState
 		{
 			bg.getProp('redTunnel').angle += elapsed * 3.5;
 
-			banduJunk += elapsed * 2.5;
 			if (badaiTime)
 			{
 				opponent.angle += elapsed * 50;
@@ -1515,14 +1502,6 @@ class PlayState extends MusicBeatState
 					}
 				}
 			 */
-		}
-		if (curbg != null)
-		{
-			if (curbg.active) // only the furiosity background is active
-			{
-				var shad = cast(curbg.shader, Shaders.GlitchShader);
-				shad.uTime.value[0] += elapsed;
-			}
 		}
 
 		updateHud();
@@ -1863,7 +1842,7 @@ class PlayState extends MusicBeatState
 		{
 			var krunkThing = 60;
 
-			poop.alpha = Math.sin(elapsedtime) / 2.5 + 0.4;
+			bg.getProp('lol').alpha = Math.sin(elapsedtime) / 2.5 + 0.4;
 
 			playerStrums.forEach(function(spr:FlxSprite)
 			{
@@ -3521,6 +3500,9 @@ class PlayState extends MusicBeatState
 						FlxTween.tween(thunderBlack, {alpha: 0}, Conductor.stepCrochet / 500);
 				}
 			case 'applecore':
+				var swagBG = bg.getProp('swagBG');
+				var unswagBG = bg.getProp('unswagBG');
+				var scaryBG = bg.getProp('scaryBG');
 				switch (curBeat)
 				{
 					case 160 | 436 | 684:
@@ -3560,7 +3542,7 @@ class PlayState extends MusicBeatState
 							FlxTween.tween(swagger, {y: swagger.y + 1000}, 1.05, {ease: FlxEase.cubeInOut});
 						});
 						unswagBG.active = unswagBG.visible = true;
-						curbg = unswagBG;
+						bg.curbg = unswagBG;
 						swagBG.visible = swagBG.active = false;
 					case 636:
 						unfairPart = true;
@@ -3591,7 +3573,7 @@ class PlayState extends MusicBeatState
 							onComplete: function(twn:FlxTween)
 							{
 								scaryBG.active = true;
-								curbg = scaryBG;
+								bg.curbg = scaryBG;
 								unswagBG.visible = unswagBG.active = false;
 								FlxTween.tween(dumbStupid, {alpha: 0}, 1.2, {
 									onComplete: function(twn:FlxTween)
@@ -3855,6 +3837,7 @@ class PlayState extends MusicBeatState
 						gfSpeed = 1;
 				}
 			case 'blitz':
+				var threedeez = bg.getProp('threedeez');
 				switch (curBeat)
 				{
 					case 60:
@@ -4054,6 +4037,7 @@ class PlayState extends MusicBeatState
 						thunderBlack.alpha = 1;
 				}
 			case 'duper':
+				var thirdimension = bg.getProp('3dsky');
 				switch (curBeat)
 				{
 					case 256:

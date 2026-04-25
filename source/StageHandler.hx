@@ -86,9 +86,9 @@ class StageHandler extends FlxGroup
 
 	public var stage = 'stage';
 
-	var namedProps:Map<String, BGSprite> = new Map<String, BGSprite>();
+	public var curbg:BGSprite;
 
-	var wavyBgs = [];
+	var namedProps:Map<String, BGSprite> = new Map<String, BGSprite>();
 
 	public function new(name:String)
 	{
@@ -99,13 +99,14 @@ class StageHandler extends FlxGroup
 
 	override public function update(elapsed)
 	{
-		/*
-			for (object in wavyBgs)
+		if (curbg != null)
+		{
+			if (curbg.active) // only the furiosity background is active
 			{
-				var shad = cast(object, Shaders.GlitchShader);
+				var shad = cast(curbg.shader, Shaders.GlitchShader);
 				shad.uTime.value[0] += elapsed;
 			}
-		 */
+		}
 	}
 
 	public function generateStage(stage):Void
@@ -162,7 +163,7 @@ class StageHandler extends FlxGroup
 				thirdhs.waveFrequency = 2;
 				thirdhs.waveSpeed = 2;
 				thirdimension.shader = thirdhs.shader;
-				wavyBgs.push(thirdimension);
+				curbg = thirdimension;
 
 				var hills:BGSprite = new BGSprite(-250, 200, 'hills');
 				hills.loadGraphic(Paths.image('backgrounds/farm/orangey hills'));
@@ -248,7 +249,7 @@ class StageHandler extends FlxGroup
 				testshader.waveSpeed = 2;
 				swagBG.shader = testshader.shader;
 				objects.add(swagBG);
-				wavyBgs.push(swagBG);
+				curbg = swagBG;
 
 				var unswagBG = new BGSprite(-600, -200, 'unswagBG');
 				unswagBG.loadGraphic(Paths.image('backgrounds/applecore/poop'));
@@ -370,10 +371,10 @@ class StageHandler extends FlxGroup
 
 				if (PlayState.SONG.song.toLowerCase() == 'disruption')
 				{
-					PlayState.poop = new BGSprite(-100, -100, 'lol');
-					PlayState.poop.makeGraphic(Std.int(1280 * 1.4), Std.int(720 * 1.4), FlxColor.BLACK);
-					PlayState.poop.scrollFactor.set(0, 0);
-					objects.add(PlayState.poop);
+					var poop = new BGSprite(-100, -100, 'lol');
+					poop.makeGraphic(Std.int(1280 * 1.4), Std.int(720 * 1.4), FlxColor.BLACK);
+					poop.scrollFactor.set(0, 0);
+					objects.add(poop);
 				}
 				// below code assumes shaders are always enabled which is bad
 				// i wouldnt consider this an eyesore though
@@ -382,7 +383,7 @@ class StageHandler extends FlxGroup
 				testshader.waveFrequency = 5;
 				testshader.waveSpeed = 2;
 				bg.shader = testshader.shader;
-				wavyBgs.push(bg);
+				curbg = bg;
 			case 'redTunnel':
 				PlayState.defaultCamZoom = 0.67;
 				PlayState.scriptedStages.push(stage);
@@ -514,7 +515,7 @@ class StageHandler extends FlxGroup
 						shader.waveSpeed = 2;
 						theprop.shader = shader.shader;
 						theprop.active = true;
-						wavyBgs.push(theprop);
+						curbg = theprop;
 					}
 
 					if (prop.visible != null)
