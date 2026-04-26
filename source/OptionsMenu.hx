@@ -19,7 +19,7 @@ class OptionsMenu extends MusicBeatState
 	var curSelected:Int = 0;
 
 	var options:Array<Option> = [
-		new DFJKOption(controls),
+		new ControlOption(controls),
 		new NewInputOption(),
 		new DownscrollOption(),
 		new MiddlescrollOption(),
@@ -32,6 +32,7 @@ class OptionsMenu extends MusicBeatState
 		#if !mobile
 		new FPSOption(),
 		#end
+		new OffsetOption(),
 	];
 
 	private var grpControls:FlxTypedGroup<Alphabet>;
@@ -62,12 +63,6 @@ class OptionsMenu extends MusicBeatState
 			// DONT PUT X IN THE FIRST PARAMETER OF new ALPHABET() !!
 		}
 
-		versionShit = new FlxText(5, FlxG.height - 18, 0, "Offset (Left, Right): " + FlxG.save.data.offset, 12);
-		versionShit.scrollFactor.set();
-		versionShit.antialiasing = true;
-		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		add(versionShit);
-
 		super.create();
 	}
 
@@ -77,26 +72,36 @@ class OptionsMenu extends MusicBeatState
 
 		if (controls.BACK)
 			FlxG.switchState(() -> new MainMenuState());
-		if (controls.UP_P)
+		if (controls.UI_UP_P)
 			changeSelection(-1);
-		if (controls.DOWN_P)
+		if (controls.UI_DOWN_P)
 			changeSelection(1);
 
-		if (controls.RIGHT_R)
+		if (controls.UI_RIGHT_R)
 		{
-			FlxG.save.data.offset++;
-			versionShit.text = "Offset (Left, Right): " + FlxG.save.data.offset;
+			if (options[curSelected].pressRight())
+			{
+				grpControls.remove(grpControls.members[curSelected]);
+				var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, options[curSelected].getDisplay(), true, false);
+				ctrl.isMenuItem = true;
+				grpControls.add(ctrl);
+			}
 		}
 
-		if (controls.LEFT_R)
+		if (controls.UI_LEFT_R)
 		{
-			FlxG.save.data.offset--;
-			versionShit.text = "Offset (Left, Right): " + FlxG.save.data.offset;
+			if (options[curSelected].pressLeft())
+			{
+				grpControls.remove(grpControls.members[curSelected]);
+				var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, options[curSelected].getDisplay(), true, false);
+				ctrl.isMenuItem = true;
+				grpControls.add(ctrl);
+			}
 		}
 
 		if (controls.ACCEPT)
 		{
-			if (options[curSelected].press())
+			if (options[curSelected].pressEnter())
 			{
 				grpControls.remove(grpControls.members[curSelected]);
 				var ctrl:Alphabet = new Alphabet(0, (70 * curSelected) + 30, options[curSelected].getDisplay(), true, false);

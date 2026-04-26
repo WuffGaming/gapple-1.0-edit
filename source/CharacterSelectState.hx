@@ -160,7 +160,7 @@ class CharacterSelectState extends MusicBeatState
 		super.update(elapsed);
 		// FlxG.camera.focusOn(FlxG.ce);
 
-		if (FlxG.keys.justPressed.ESCAPE || FlxG.keys.justPressed.BACKSPACE)
+		if (controls.BACK)
 		{
 			FlxG.sound.playMusic(Paths.music('freakyMenu'));
 			LoadingState.loadAndSwitchState(new ExtraSongState());
@@ -181,7 +181,7 @@ class CharacterSelectState extends MusicBeatState
 			FlxG.sound.play(Paths.music('gameOverEnd'));
 			new FlxTimer().start(1.9, endIt);
 		}
-		if (FlxG.keys.justPressed.LEFT && !selectedCharacter)
+		if (controls.UI_LEFT_R && !selectedCharacter)
 		{
 			curForm = 0;
 			current--;
@@ -193,7 +193,7 @@ class CharacterSelectState extends MusicBeatState
 			FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 		}
 
-		if (FlxG.keys.justPressed.RIGHT && !selectedCharacter)
+		if (controls.UI_RIGHT_R && !selectedCharacter)
 		{
 			curForm = 0;
 			current++;
@@ -204,7 +204,7 @@ class CharacterSelectState extends MusicBeatState
 			UpdateCharacter();
 			FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 		}
-		if (FlxG.keys.justPressed.DOWN && !selectedCharacter)
+		if (controls.UI_DOWN_R && !selectedCharacter)
 		{
 			curForm--;
 			if (curForm < 0)
@@ -215,7 +215,7 @@ class CharacterSelectState extends MusicBeatState
 			FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 		}
 
-		if (FlxG.keys.justPressed.UP && !selectedCharacter)
+		if (controls.UI_DOWN_R && !selectedCharacter)
 		{
 			curForm++;
 			if (curForm > characters[current].names.length - 1)

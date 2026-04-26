@@ -20,9 +20,19 @@ class Option
 	}
 
 	// Returns whether the label is to be updated.
-	public function press():Bool
+	public function pressEnter():Bool
 	{
-		return throw "stub!";
+		return false;
+	}
+
+	public function pressLeft():Bool
+	{
+		return false;
+	}
+
+	public function pressRight():Bool
+	{
+		return false;
 	}
 
 	private function updateDisplay():String
@@ -31,7 +41,7 @@ class Option
 	}
 }
 
-class DFJKOption extends Option
+class ControlOption extends Option
 {
 	private var controls:Controls;
 
@@ -41,14 +51,11 @@ class DFJKOption extends Option
 		this.controls = controls;
 	}
 
-	public override function press():Bool
+	public override function pressEnter():Bool
 	{
 		FlxG.save.data.dfjk = !FlxG.save.data.dfjk;
 
-		if (FlxG.save.data.dfjk)
-			controls.setKeyboardScheme(KeyboardScheme.Solo, true);
-		else
-			controls.setKeyboardScheme(KeyboardScheme.Duo(true), true);
+		controls.setKeyboardScheme(KeyboardScheme.Solo, true);
 
 		display = updateDisplay();
 		return true;
@@ -60,9 +67,31 @@ class DFJKOption extends Option
 	}
 }
 
+class OffsetOption extends Option
+{
+	public override function pressLeft():Bool
+	{
+		FlxG.save.data.offset--;
+		display = updateDisplay();
+		return true;
+	}
+
+	public override function pressRight():Bool
+	{
+		FlxG.save.data.offset++;
+		display = updateDisplay();
+		return true;
+	}
+
+	private override function updateDisplay():String
+	{
+		return "Offset: " + FlxG.save.data.offset;
+	}
+}
+
 class NewInputOption extends Option
 {
-	public override function press():Bool
+	public override function pressEnter():Bool
 	{
 		FlxG.save.data.newInput = !FlxG.save.data.newInput;
 		display = updateDisplay();
@@ -71,13 +100,13 @@ class NewInputOption extends Option
 
 	private override function updateDisplay():String
 	{
-		return FlxG.save.data.newInput ? "New input" : "Old Input";
+		return FlxG.save.data.newInput ? "Ghost Tapping" : "Base Tapping";
 	}
 }
 
 class DownscrollOption extends Option
 {
-	public override function press():Bool
+	public override function pressEnter():Bool
 	{
 		FlxG.save.data.downscroll = !FlxG.save.data.downscroll;
 		display = updateDisplay();
@@ -92,7 +121,7 @@ class DownscrollOption extends Option
 
 class AccuracyOption extends Option
 {
-	public override function press():Bool
+	public override function pressEnter():Bool
 	{
 		FlxG.save.data.accuracyDisplay = !FlxG.save.data.accuracyDisplay;
 		display = updateDisplay();
@@ -107,7 +136,7 @@ class AccuracyOption extends Option
 
 class FPSOption extends Option
 {
-	public override function press():Bool
+	public override function pressEnter():Bool
 	{
 		FlxG.save.data.fps = !FlxG.save.data.fps;
 		(cast(Lib.current.getChildAt(0), Main)).toggleFPS(FlxG.save.data.fps);
@@ -123,7 +152,7 @@ class FPSOption extends Option
 
 class MiddlescrollOption extends Option
 {
-	public override function press():Bool
+	public override function pressEnter():Bool
 	{
 		FlxG.save.data.middlescroll = !FlxG.save.data.middlescroll;
 		display = updateDisplay();
@@ -138,7 +167,7 @@ class MiddlescrollOption extends Option
 
 class RatingOption extends Option
 {
-	public override function press():Bool
+	public override function pressEnter():Bool
 	{
 		FlxG.save.data.ratingsOnCamera = !FlxG.save.data.ratingsOnCamera;
 		display = updateDisplay();
@@ -153,7 +182,7 @@ class RatingOption extends Option
 
 class CutsceneOption extends Option
 {
-	public override function press():Bool
+	public override function pressEnter():Bool
 	{
 		FlxG.save.data.freeplayCuts = !FlxG.save.data.freeplayCuts;
 		display = updateDisplay();
@@ -168,7 +197,7 @@ class CutsceneOption extends Option
 
 class EyesoresOption extends Option
 {
-	public override function press():Bool
+	public override function pressEnter():Bool
 	{
 		FlxG.save.data.eyesores = !FlxG.save.data.eyesores;
 		display = updateDisplay();
@@ -183,7 +212,7 @@ class EyesoresOption extends Option
 
 class HitsoundOption extends Option
 {
-	public override function press():Bool
+	public override function pressEnter():Bool
 	{
 		FlxG.save.data.donoteclick = !FlxG.save.data.donoteclick;
 		display = updateDisplay();
@@ -198,7 +227,7 @@ class HitsoundOption extends Option
 
 class InstantRespawn extends Option
 {
-	public override function press():Bool
+	public override function pressEnter():Bool
 	{
 		FlxG.save.data.InstantRespawn = !FlxG.save.data.InstantRespawn;
 		display = updateDisplay();

@@ -124,10 +124,7 @@ class PlayMenuState extends MusicBeatState
 
 		// NG.core.calls.event.logEvent('swag').send();
 
-		if (FlxG.save.data.dfjk)
-			controls.setKeyboardScheme(KeyboardScheme.Solo, true);
-		else
-			controls.setKeyboardScheme(KeyboardScheme.Duo(true), true);
+		controls.setKeyboardScheme(KeyboardScheme.Solo, true);
 
 		changeItem();
 
@@ -145,13 +142,13 @@ class PlayMenuState extends MusicBeatState
 
 		if (!selectedSomethin)
 		{
-			if (controls.UP_P)
+			if (controls.UI_UP_P)
 			{
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 				changeItem(-1);
 			}
 
-			if (controls.DOWN_P)
+			if (controls.UI_DOWN_P)
 			{
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 				changeItem(1);
