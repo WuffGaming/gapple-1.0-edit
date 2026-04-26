@@ -5,10 +5,11 @@ import flixel.FlxG;
 import openfl.display.FPS;
 import openfl.Lib;
 
-class Option
+class Option extends MusicBeatSubstate
 {
 	public function new()
 	{
+		super();
 		display = updateDisplay();
 	}
 
@@ -43,12 +44,9 @@ class Option
 
 class ControlOption extends Option
 {
-	private var controls:Controls;
-
 	public function new(controls:Controls)
 	{
 		super();
-		this.controls = controls;
 	}
 
 	public override function pressEnter():Bool
