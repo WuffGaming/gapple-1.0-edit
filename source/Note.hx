@@ -43,7 +43,7 @@ class Note extends FlxSprite
 	private var InPlayState:Bool = false;
 
 	public static var CharactersWith3D:Array<String> = []; // turns notes 3d
-	public static var CharactersWithPixel:Array<String> = []; // turns notes + ratings pixelated.
+	public static var CharactersWithPixel:Array<String> = []; // turns notes pixelated.
 
 	public var rating:String = "shit";
 
@@ -240,7 +240,7 @@ class Note extends FlxSprite
 
 			if ((CharactersWithPixel.contains(PlayState.dadChar) && !musthit)
 				|| (CharactersWithPixel.contains(PlayState.bfChar) && musthit))
-				x -= width / 4;
+				x -= width / 2;
 
 			if (prevNote.isSustainNote)
 			{
