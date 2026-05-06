@@ -223,7 +223,7 @@ class StageHandler extends FlxGroup
 			case 'POOP':
 				PlayState.defaultCamZoom = 0.5;
 				PlayState.scriptedStages.push(stage);
-				PlayState.swagger = new Character(-300, 100 - 900 - 400, 'bambi-piss-3d');
+				PlayState.swagger = new Character(-300, -1200, 'bambi-piss-3d', OPPONENT);
 				PlayState.altSong = Song.loadFromJson('alt-notes', 'applecore');
 
 				var scaryBG = new BGSprite(-350, -375, 'scaryBG');
@@ -262,7 +262,7 @@ class StageHandler extends FlxGroup
 				objects.add(unswagBG);
 				unswagBG.active = unswagBG.visible = false;
 
-				PlayState.littleIdiot = new Character(200, -175, 'unfair-junker');
+				PlayState.littleIdiot = new Character(200, -175, 'unfair-junker', OPPONENT);
 				add(PlayState.littleIdiot);
 				PlayState.littleIdiot.visible = false;
 				PlayState.poipInMahPahntsIsGud = false;

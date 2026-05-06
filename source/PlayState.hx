@@ -168,7 +168,7 @@ class PlayState extends MusicBeatState
 	public static var opponent2:Character;
 	public static var swagger:Character;
 	public static var gf:Character;
-	public static var boyfriend:Boyfriend;
+	public static var boyfriend:Character;
 	public static var littleIdiot:Character;
 
 	public static var altSong:SwagSong;
@@ -391,11 +391,11 @@ class PlayState extends MusicBeatState
 		screenshader.shader.uTime.value[0] = new flixel.math.FlxRandom().float(-100000, 100000);
 		if (formoverride == "none" || formoverride == "bf") // add temporary bf
 		{
-			boyfriend = new Boyfriend(770, 450, SONG.player1);
+			boyfriend = new Character(770, 450, SONG.player1, PLAYER);
 		}
 		else
 		{
-			boyfriend = new Boyfriend(770, 450, formoverride);
+			boyfriend = new Character(770, 450, formoverride, PLAYER);
 		}
 		var gfVersion:String = 'gf';
 		if (!SONG.forcedGF)
@@ -412,13 +412,13 @@ class PlayState extends MusicBeatState
 		{
 			gfVersion = SONG.gf;
 		}
-		gf = new Character(400, 130, gfVersion);
+		gf = new Character(400, 130, gfVersion, BOPPER);
 		gf.visible = SONG.forcedGF ? SONG.gf_visible : (boyfriend.gfForm != 'none' ? SONG.gf_visible : false);
 		gf.x += gf.gameOffset[0];
 		gf.y += gf.gameOffset[1];
 		remove(boyfriend); // remove for layering
 
-		opponent = new Character(100, 100, SONG.player2);
+		opponent = new Character(100, 100, SONG.player2, BOPPER);
 		if (SONG.player2 == SONG.gf)
 		{
 			gf.visible = false;
@@ -427,9 +427,9 @@ class PlayState extends MusicBeatState
 
 		if (SONG.song.toLowerCase() == 'wireframe')
 		{
-			opponent2 = new Character(-1250, -1250, 'badai');
+			opponent2 = new Character(-1250, -1250, 'badai', OPPONENT);
 		}
-		opponentmirror = new Character(opponent.x, opponent.y, opponent.curCharacter);
+		opponentmirror = new Character(opponent.x, opponent.y, opponent.curCharacter, OPPONENT);
 
 		var camPos:FlxPoint = new FlxPoint(opponent.getGraphicMidpoint().x, opponent.getGraphicMidpoint().y);
 
@@ -442,11 +442,11 @@ class PlayState extends MusicBeatState
 
 		if (formoverride == "none" || formoverride == "bf")
 		{
-			boyfriend = new Boyfriend(770, 450, SONG.player1);
+			boyfriend = new Character(770, 450, SONG.player1, PLAYER);
 		}
 		else
 		{
-			boyfriend = new Boyfriend(770, 450, formoverride);
+			boyfriend = new Character(770, 450, formoverride, PLAYER);
 		}
 
 		boyfriend.x += boyfriend.gameOffset[0];
@@ -2113,24 +2113,11 @@ class PlayState extends MusicBeatState
 				FlxG.sound.music.stop();
 				screenshader.shader.uampmul.value[0] = 0;
 				screenshader.Enabled = false;
+				if (FlxG.save.data.InstantRespawn)
+					FlxG.switchState(() -> new PlayState());
+				else
+					openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y, boyfriend.deadForm));
 			}
-			if (!shakeCam)
-			{
-				if (deathEnabled)
-				{
-					openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition()
-						.y, formoverride == "bf" || formoverride == "none" ? SONG.player1 : formoverride));
-				}
-			}
-			else
-			{
-				if (deathEnabled)
-				{
-					openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition()
-						.y, formoverride == "bf" || formoverride == "none" ? SONG.player1 : formoverride));
-				}
-			}
-			// FlxG.switchState(new GameOverState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 		}
 		if (unspawnNotes[0] != null)
 		{
@@ -4208,7 +4195,7 @@ class PlayState extends MusicBeatState
 	{
 		if (opponent != null)
 			remove(opponent);
-		opponent = new Character(x, y, char, false);
+		opponent = new Character(x, y, char, OPPONENT);
 		if (reposition)
 		{
 			repositionDad();
@@ -4222,7 +4209,7 @@ class PlayState extends MusicBeatState
 	{
 		if (boyfriend != null)
 			remove(boyfriend);
-		boyfriend = new Boyfriend(x, y, char);
+		boyfriend = new Character(x, y, char, PLAYER);
 		if (reposition)
 		{
 			boyfriend.x += boyfriend.gameOffset[0];
@@ -4237,7 +4224,7 @@ class PlayState extends MusicBeatState
 	{
 		if (gf != null)
 			remove(gf);
-		gf = new Character(x, y, char, false);
+		gf = new Character(x, y, char, BOPPER);
 		if (reposition)
 		{
 			gf.x += gf.gameOffset[0];

@@ -36,7 +36,7 @@ class CharacterInSelect
 
 class CharacterSelectState extends MusicBeatState
 {
-	public var char:Boyfriend;
+	public var char:Character;
 	public var current:Int = 0;
 	public var curForm:Int = 0;
 	public var characterText:FlxText;
@@ -60,6 +60,7 @@ class CharacterSelectState extends MusicBeatState
 			for (i in 0...order.length)
 			{
 				var characterList:Array<String> = CoolUtil.coolTextFile(Paths.txt('forms/${order[i]}'));
+				trace(characterList);
 				characters.push(new CharacterInSelect(characterList));
 			}
 		}
@@ -129,7 +130,7 @@ class CharacterSelectState extends MusicBeatState
 		FlxG.camera.zoom = 0.75;
 
 		// create character for layering
-		char = new Boyfriend(FlxG.width / 2, FlxG.height / 2, 'bf');
+		char = new Character(FlxG.width / 2, FlxG.height / 2, 'bf', PLAYER);
 		add(char);
 
 		characterText = new FlxText((FlxG.width / 9) - 50, (FlxG.height / 8) - 225, "Boyfriend");
@@ -231,8 +232,9 @@ class CharacterSelectState extends MusicBeatState
 	{
 		funnyIconMan.color = FlxColor.WHITE;
 		currentSelectedCharacter = characters[current];
-		char.destroy();
-		char = new Boyfriend(0, 0, currentSelectedCharacter.names[curForm]);
+		// char.destroy();
+		remove(char);
+		char = new Character(0, 0, currentSelectedCharacter.names[curForm], PLAYER);
 		char.screenCenter();
 		char.updateHitbox();
 		char.y += 300;

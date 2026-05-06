@@ -42,6 +42,8 @@ typedef CharacterData =
 
 	var gf:String; // What Girlfriend should be used?
 
+	var deathSkin:String;
+
 	var rating:String; // What type of rating should this character use?
 
 	var animations:Array<AnimationData>; // Array of all animations. Offsets are handled in the data/offsets
@@ -69,6 +71,13 @@ typedef AnimationData =
 	var ?frameIndices:Array<Int>; // If using indices, specify said indices. Plays full animation if null.
 }
 
+enum CharacterType
+{
+	OPPONENT;
+	PLAYER;
+	BOPPER;
+}
+
 class Character extends FlxSprite
 {
 	public var name:String = 'Boyfriend';
@@ -76,16 +85,18 @@ class Character extends FlxSprite
 	public var animOffsets:Map<String, Array<Dynamic>>;
 	public var debugMode:Bool = false;
 
-	public var isPlayer:Bool = false;
 	public var curCharacter:String = 'bf';
 	public var iconName:String = 'face';
 	public var rating:String = 'normal';
+	public var characterType:CharacterType = OPPONENT;
 
 	public var gfForm:String = 'gf';
+	public var deadForm:String = 'bf-dead';
 
 	public var holdTimer:Float = 0;
 	public var canDance:Bool = true;
 	public var canSing:Bool = true;
+	public var stunned:Bool = false;
 
 	public var nativelyPlayable:Bool = false;
 	public var bopDance:Bool = false;
@@ -99,13 +110,13 @@ class Character extends FlxSprite
 
 	public var altIcon:String = 'bf-old';
 
-	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:Bool = false)
+	public function new(x:Float, y:Float, ?character:String = "bf", type:CharacterType)
 	{
 		super(x, y);
 
 		animOffsets = new Map<String, Array<Dynamic>>();
 		curCharacter = character;
-		this.isPlayer = isPlayer;
+		this.characterType = type;
 
 		if (curCharacter == null)
 			curCharacter = 'bf';
@@ -113,7 +124,7 @@ class Character extends FlxSprite
 		parseDataFile();
 		dance();
 
-		if (isPlayer)
+		if (characterType == PLAYER)
 		{
 			flipX = !flipX;
 		}
@@ -133,7 +144,7 @@ class Character extends FlxSprite
 			super.update(elapsed);
 			return;
 		}
-		if (!nativelyPlayable && !isPlayer)
+		if (!nativelyPlayable && !(characterType == PLAYER))
 		{
 			if (animation.curAnim.name.startsWith('sing'))
 			{
@@ -146,6 +157,28 @@ class Character extends FlxSprite
 			{
 				dance(POOP);
 				holdTimer = 0;
+			}
+		}
+		else
+		{
+			if (animation.curAnim.name.startsWith('sing') && canSing)
+			{
+				holdTimer += elapsed;
+			}
+			else
+				holdTimer = 0;
+
+			if (animation.curAnim.name.endsWith('miss') && animation.curAnim.finished && !debugMode)
+			{
+				if (bopDance)
+					playAnim('danceLeft', true, false, 10);
+				else
+					playAnim('idle', true, false, 10);
+			}
+
+			if (animation.curAnim.name == 'firstDeath' && animation.curAnim.finished)
+			{
+				playAnim('deathLoop');
 			}
 		}
 
@@ -195,7 +228,7 @@ class Character extends FlxSprite
 		var daOffset = animOffsets.get(AnimName);
 		if (animOffsets.exists(AnimName))
 		{
-			if (isPlayer)
+			if (characterType == PLAYER)
 			{
 				if (!nativelyPlayable)
 				{
@@ -299,6 +332,8 @@ class Character extends FlxSprite
 		altIcon = data.altIcon == null ? 'bf-old' : data.altIcon; // add extreme
 
 		gfForm = data.gf == null ? 'none' : data.gf; // add impossible
+
+		deadForm = data.deathSkin == null ? 'bf-dead' : data.deathSkin; // add extremely impossible
 
 		switch (noteStyle)
 		{

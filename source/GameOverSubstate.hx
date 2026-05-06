@@ -10,47 +10,21 @@ import flixel.util.FlxTimer;
 
 class GameOverSubstate extends MusicBeatSubstate
 {
-	var bf:Boyfriend;
+	var dead:Character;
 	var camFollow:FlxObject;
 
 	var stageSuffix:String = "";
 
 	public function new(x:Float, y:Float, char:String)
 	{
-		var daStage = PlayState.curStage;
-		var daBf:String = '';
-		switch (char)
-		{
-			case 'bf-pixel':
-				stageSuffix = '-pixel';
-			default:
-				daBf = 'bf-dead';
-		}
-		if (char == "bf-pixel")
-		{
-			char = "bf-pixel-dead";
-		}
-		if (char == "what-lmao")
-		{
-			char = "bambi-bevel";
-		}
-		if (char == "bf-car")
-		{
-			char = "bf-dead";
-		}
-
 		super();
 
 		Conductor.songPosition = 0;
 
-		bf = new Boyfriend(x, y, char);
-		if (bf.animation.getByName('firstDeath') == null)
-		{
-			bf = new Boyfriend(x, y, "bf-dead");
-		}
-		add(bf);
+		dead = new Character(x, y, char, PLAYER);
+		add(dead);
 
-		camFollow = new FlxObject(bf.getGraphicMidpoint().x, bf.getGraphicMidpoint().y, 1, 1);
+		camFollow = new FlxObject(dead.getGraphicMidpoint().x, dead.getGraphicMidpoint().y, 1, 1);
 		add(camFollow);
 
 		FlxG.sound.play(Paths.sound('fnf_loss_sfx' + stageSuffix));
@@ -61,7 +35,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		FlxG.camera.scroll.set();
 		FlxG.camera.target = null;
 
-		bf.playAnim('firstDeath');
+		dead.playAnim('firstDeath');
 	}
 
 	override function update(elapsed:Float)
@@ -73,11 +47,6 @@ class GameOverSubstate extends MusicBeatSubstate
 		if (controls.ACCEPT)
 		{
 			endBullshit();
-		}
-
-		if (FlxG.save.data.InstantRespawn)
-		{
-			LoadingState.loadAndSwitchState(new PlayState());
 		}
 
 		if (controls.BACK)
@@ -101,12 +70,12 @@ class GameOverSubstate extends MusicBeatSubstate
 				FlxG.switchState(() -> new MainMenuState());
 		}
 
-		if (bf.animation.curAnim.name == 'firstDeath' && bf.animation.curAnim.curFrame == 12)
+		if (dead.animation.curAnim.name == 'firstDeath' && dead.animation.curAnim.curFrame == 12)
 		{
 			FlxG.camera.follow(camFollow, LOCKON, 0.01);
 		}
 
-		if (bf.animation.curAnim.name == 'firstDeath' && bf.animation.curAnim.finished)
+		if (dead.animation.curAnim.name == 'firstDeath' && dead.animation.curAnim.finished)
 		{
 			FlxG.sound.playMusic(Paths.music('gameOver' + stageSuffix));
 		}
@@ -132,7 +101,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		{
 			isEnding = true;
 
-			bf.playAnim('deathConfirm', true);
+			dead.playAnim('deathConfirm', true);
 			FlxG.sound.music.stop();
 			FlxG.sound.play(Paths.music('gameOverEnd' + stageSuffix));
 			new FlxTimer().start(0.7, function(tmr:FlxTimer)
