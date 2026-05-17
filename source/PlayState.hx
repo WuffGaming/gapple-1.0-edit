@@ -103,8 +103,6 @@ class PlayState extends MusicBeatState
 
 	public static var gitarooManChance:Int = 10000; // Chance of seeing Gitaroo Man, set as 1 in 10000.
 
-	public static var scriptedStages:Array<String> = [];
-
 	public static var camBeatSnap:Int = 4;
 	public static var danceBeatSnap:Int = 2;
 	public static var OpponentDanceSnap:Int = 2;
@@ -282,6 +280,7 @@ class PlayState extends MusicBeatState
 	public static var theFunne:Bool = true;
 
 	var inCutscene:Bool = false;
+	var inWireframeCutscene:Bool = true;
 
 	public static var timeCurrently:Float = 0;
 	public static var timeCurrentlyR:Float = 0;
@@ -384,6 +383,8 @@ class PlayState extends MusicBeatState
 		bg = new StageHandler(curStage);
 		bg.generateStage(curStage);
 		add(bg);
+
+		defaultCamZoom = bg.cameraZoom;
 
 		screenshader.waveAmplitude = 1;
 		screenshader.waveFrequency = 2;
@@ -1474,43 +1475,43 @@ class PlayState extends MusicBeatState
 			{
 				opponent.angle += elapsed * 50;
 			}
+			var pissBoy = bg.getProp('piss');
+			var bounceAnimState:Int = 0;
+
+			var bounceMultiplier:Float = 1;
+			var yBullshit:Float = 1;
 			// dvd screensaver lookin ass
-			/*
-				if (bg.getProp('piss') != null && bg.getProp('redTunnel') != null && !bg.getProp('piss').inCutscene)
+
+			if (pissBoy != null && bg.getProp('redTunnel') != null && !inWireframeCutscene)
+			{
+				FlxG.watch.addQuick("DAVE JUNK!!?!?!", [pissBoy.x, pissBoy.y]);
+				if (pissBoy.x >= (bg.getProp('redTunnel').width - 1000) || pissBoy.y >= (bg.getProp('redTunnel').height - 1000))
 				{
-					FlxG.watch.addQuick("DAVE JUNK!!?!?!", [bg.getProp('piss').x, bg.getProp('piss').y]);
-					if (bg.getProp('piss').x >= (bg.getProp('redTunnel').width - 1000)
-						|| bg.getProp('piss').y >= (bg.getProp('redTunnel').height - 1000))
-					{
-						bg.getProp('piss').bounceAnimState = 1;
-						bg.getProp('piss').bounceMultiplier = FlxG.random.float(-0.75, -1.15);
-						bg.getProp('piss').yBullshit = FlxG.random.float(0.95, 1.05);
-						bg.getProp('piss').dance();
-					}
-					else if (bg.getProp('piss').x <= (bg.getProp('redTunnel').x + 100)
-						|| bg.getProp('piss').y <= (bg.getProp('redTunnel').y + 100))
-					{
-						bg.getProp('piss').bounceAnimState = 2;
-						bg.getProp('piss').bounceMultiplier = FlxG.random.float(0.75, 1.15);
-						bg.getProp('piss').yBullshit = FlxG.random.float(0.95, 1.05);
-						bg.getProp('piss').dance();
-					}
-					else if (bg.getProp('piss').x >= (bg.getProp('redTunnel').width - 1150)
-						|| bg.getProp('piss').y >= (bg.getProp('redTunnel').height - 1150))
-					{
-						bg.getProp('piss').bounceAnimState = 1;
-					}
-					else if (bg.getProp('piss').x <= (bg.getProp('redTunnel').x + 250)
-						|| bg.getProp('piss').y <= (bg.getProp('redTunnel').y + 250))
-					{
-						bg.getProp('piss').bounceAnimState = 2;
-					}
-					else
-					{
-						bg.getProp('piss').bounceAnimState = 0;
-					}
+					bounceAnimState = 1;
+					bounceMultiplier = FlxG.random.float(-0.75, -1.15);
+					yBullshit = FlxG.random.float(0.95, 1.05);
+					pissBoy.animation.play('idle', true);
 				}
-			 */
+				else if (pissBoy.x <= (bg.getProp('redTunnel').x + 100) || pissBoy.y <= (bg.getProp('redTunnel').y + 100))
+				{
+					bounceAnimState = 2;
+					bounceMultiplier = FlxG.random.float(0.75, 1.15);
+					yBullshit = FlxG.random.float(0.95, 1.05);
+					pissBoy.animation.play('idle', true);
+				}
+				else if (pissBoy.x >= (bg.getProp('redTunnel').width - 1150) || pissBoy.y >= (bg.getProp('redTunnel').height - 1150))
+				{
+					pissBoy.animation.play('bounceLeft');
+				}
+				else if (pissBoy.x <= (bg.getProp('redTunnel').x + 250) || pissBoy.y <= (bg.getProp('redTunnel').y + 250))
+				{
+					pissBoy.animation.play('bounceRight');
+				}
+				else
+				{
+					pissBoy.animation.play('idle', true);
+				}
+			}
 		}
 
 		updateHud();
@@ -2570,13 +2571,22 @@ class PlayState extends MusicBeatState
 
 		var coolText:FlxText = new FlxText(0, 0, 0, placement, 32);
 		coolText.screenCenter();
-		coolText.x = FlxG.width * 0.55;
-		coolText.y -= 350;
-		if (ratingOnCamera && middlescroll)
+		if (!ratingOnCamera)
+		{
+			coolText.x = boyfriend.x - 100;
+			coolText.y = boyfriend.y;
+		}
+		else if (ratingOnCamera && middlescroll)
 		{
 			coolText.x += 350;
 			coolText.y -= 200;
 		}
+		else
+		{
+			coolText.x = FlxG.width * 0.55;
+			coolText.y -= 350;
+		}
+
 		var ratingFolder:String = 'ui/ratings';
 		var rating:FlxSprite = new FlxSprite();
 
@@ -2598,6 +2608,7 @@ class PlayState extends MusicBeatState
 			score = -100 - misses;
 			sustainScore = 0;
 			ss = false;
+			misses++;
 			shits++;
 		}
 		else if (noteDiff < Conductor.safeZoneOffset * -2)
@@ -2607,15 +2618,17 @@ class PlayState extends MusicBeatState
 			score = -100 - misses;
 			sustainScore = 0;
 			ss = false;
+			misses++;
 			shits++;
 		}
 		else if (noteDiff > Conductor.safeZoneOffset * 0.45)
 		{
 			daRating = 'bad';
-			score = 50 + (combo / scoreMultiplier) - misses;
+			score = -50 + (combo / scoreMultiplier) - misses;
 			sustainScore = 5;
 			totalNotesHit += 0.2;
 			ss = false;
+			misses++;
 			bads++;
 		}
 		else if (noteDiff > Conductor.safeZoneOffset * 0.25)
@@ -2651,21 +2664,25 @@ class PlayState extends MusicBeatState
 
 			rating.loadGraphic(Paths.image(ratingFolder + '/' + ratingstype + '/' + daRating));
 			rating.screenCenter();
-			rating.y -= 50;
 			rating.x = coolText.x - 125;
+			rating.y = coolText.y;
 			rating.acceleration.y = 550;
 			rating.velocity.y -= FlxG.random.int(140, 175);
 			rating.velocity.x -= FlxG.random.int(0, 10);
 
 			var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(ratingFolder + '/' + ratingstype + '/' + 'combo'));
 			comboSpr.screenCenter();
-			comboSpr.x = rating.x;
+			comboSpr.x = rating.x + 10;
 			comboSpr.y = rating.y + 100;
 			comboSpr.acceleration.y = 600;
 			comboSpr.velocity.y -= 150;
 
 			comboSpr.velocity.x += FlxG.random.int(1, 10);
 			add(rating);
+			if (combo > 25) // combo threshold
+			{
+				add(comboSpr);
+			}
 
 			if (ratingstype == 'pixel')
 			{
@@ -2693,9 +2710,6 @@ class PlayState extends MusicBeatState
 
 			var comboSplit:Array<String> = (combo + "").split('');
 
-			if (comboSplit.length == 2)
-				seperatedScore.push(0); // make sure theres a 0 in front or it looks weird lol!
-
 			for (i in 0...comboSplit.length)
 			{
 				var str:String = comboSplit[i];
@@ -2707,7 +2721,7 @@ class PlayState extends MusicBeatState
 			{
 				var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(ratingFolder + '/' + ratingstype + '/' + 'num' + Std.int(i)));
 				numScore.screenCenter();
-				numScore.x = rating.x + (43 * daLoop) - 50;
+				numScore.x = rating.getGraphicMidpoint().x + (43 * daLoop) - 50;
 				numScore.y = rating.y + 100;
 				if (ratingOnCamera)
 				{
@@ -2729,8 +2743,7 @@ class PlayState extends MusicBeatState
 				numScore.velocity.y -= FlxG.random.int(140, 160);
 				numScore.velocity.x = FlxG.random.float(-5, 5);
 
-				if (combo >= 10 || combo == 0)
-					add(numScore);
+				add(numScore);
 
 				FlxTween.tween(numScore, {alpha: 0}, 0.2, {
 					onComplete: function(tween:FlxTween)
@@ -3203,12 +3216,10 @@ class PlayState extends MusicBeatState
 				}
 			}
 		}
-		/*
-			if (curBeat % danceBeatSnap == 0 && bg.getProp('piss') != null)
-			{
-				bg.getProp('piss').dance();
-			}
-		 */
+		if (curBeat % danceBeatSnap == 0 && bg.getProp('piss') != null)
+		{
+			bg.getProp('piss').animation.play('idle', true);
+		}
 		if (generatedMusic)
 		{
 			notes.sort(FlxSort.byY, FlxSort.DESCENDING);
@@ -3740,12 +3751,10 @@ class PlayState extends MusicBeatState
 							iconRPC = 'icon_badai';
 							bg.getProp('piss').visible = true;
 							FlxTween.tween(bg.getProp('piss'), {y: -300}, 2.5, {ease: FlxEase.cubeInOut});
-							/*
-								new FlxTimer().start(2.5, function(tmr:FlxTimer)
-								{
-									bg.getProp('piss').inCutscene = false;
-								});
-							 */
+							new FlxTimer().start(2.5, function(tmr:FlxTimer)
+							{
+								inWireframeCutscene = false;
+							});
 						});
 				}
 			case 'keyboard':

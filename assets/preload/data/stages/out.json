@@ -1,0 +1,32 @@
+{
+  "cameraZoom": 0.8,
+  "bfOffset": [300,10],
+  "gfOffset": [70,0],
+  "opponentOffset": [-100,0],
+  "props": [
+    {
+      "name": "sky",
+      "assetPath": "backgrounds/thunda/sky",
+      "position": [-1204,-456],
+      "scroll": [0.15,0.15]
+    },
+    {
+      "name": "backMount",
+      "assetPath": "backgrounds/thunda/backmount",
+      "position": [-700,-40],
+      "scroll": [0.4,0.4]
+    },
+    {
+      "name": "middleMount",
+      "assetPath": "backgrounds/thunda/middlemount",
+      "position": [-240,200],
+      "scroll": [0.6,0.6]
+    },
+    {
+      "name": "ground",
+      "assetPath": "backgrounds/thunda/ground",
+      "position": [-660,624],
+      "scroll": [1,1]
+    }
+  ]
+}

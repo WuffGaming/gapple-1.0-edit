@@ -86,6 +86,10 @@ class StageHandler extends FlxGroup
 
 	public var stage = 'stage';
 
+	public var scripted:Bool = false;
+
+	public var cameraZoom:Float = 1.05;
+
 	public var curbg:BGSprite;
 
 	var namedProps:Map<String, BGSprite> = new Map<String, BGSprite>();
@@ -115,8 +119,8 @@ class StageHandler extends FlxGroup
 		{
 			case 'sugar':
 				PlayState.camBeatSnap = 1;
-				PlayState.defaultCamZoom = 0.85;
-				PlayState.scriptedStages.push(stage);
+				cameraZoom = 0.85;
+				scripted = true;
 
 				var swag:BGSprite = new BGSprite(120, -35, 'swag');
 				swag.loadGraphic(Paths.image('backgrounds/3dbg/pissing_too'));
@@ -128,8 +132,8 @@ class StageHandler extends FlxGroup
 				objects.add(swag);
 
 			case 'basement':
-				PlayState.defaultCamZoom = 0.9;
-				PlayState.scriptedStages.push(stage);
+				cameraZoom = 0.9;
+				scripted = true;
 
 				var twodeez:BGSprite = new BGSprite(-1982, -707, 'twodeez');
 				twodeez.loadGraphic(Paths.image('backgrounds/house/basement-2d'));
@@ -144,8 +148,8 @@ class StageHandler extends FlxGroup
 				objects.add(threedeez);
 
 			case 'farm':
-				PlayState.defaultCamZoom = 0.9;
-				PlayState.scriptedStages.push(stage);
+				cameraZoom = 0.9;
+				scripted = true;
 
 				var farmsky = new BGSprite(-700, 0, 'sky');
 				farmsky.loadGraphic(Paths.image('backgrounds/farm/sky'));
@@ -213,16 +217,16 @@ class StageHandler extends FlxGroup
 				objects.add(sign);
 
 			case 'recover':
-				PlayState.defaultCamZoom = 1.4;
-				PlayState.scriptedStages.push(stage);
+				cameraZoom = 1.4;
+				scripted = true;
 				var yea = new BGSprite(-641, -222, 'yea');
 				yea.loadGraphic(Paths.image('backgrounds/RECOVER_assets/q'));
 				yea.setGraphicSize(2478);
 				yea.updateHitbox();
 				objects.add(yea);
 			case 'POOP':
-				PlayState.defaultCamZoom = 0.5;
-				PlayState.scriptedStages.push(stage);
+				cameraZoom = 0.5;
+				scripted = true;
 				PlayState.swagger = new Character(-300, -1200, 'bambi-piss-3d', OPPONENT);
 				PlayState.altSong = Song.loadFromJson('alt-notes', 'applecore');
 
@@ -285,8 +289,8 @@ class StageHandler extends FlxGroup
 				}
 
 			case 'algebra':
-				PlayState.scriptedStages.push(stage);
-				PlayState.defaultCamZoom = 0.85;
+				scripted = true;
+				cameraZoom = 0.85;
 				PlayState.songSpeed = 1.6;
 				var bg = new BGSprite(0, 0, 'bg');
 				bg.loadGraphic(Paths.image('backgrounds/algebra/algebraBg'));
@@ -339,8 +343,8 @@ class StageHandler extends FlxGroup
 				}
 
 			case '3dbg':
-				PlayState.defaultCamZoom = 0.9;
-				PlayState.scriptedStages.push(stage);
+				cameraZoom = 0.9;
+				scripted = true;
 				var bg:BGSprite = new BGSprite(-600, -200, '3dbg');
 				bg.active = true;
 				bg.scrollFactor.set(0.1, 0.1);
@@ -353,11 +357,11 @@ class StageHandler extends FlxGroup
 					case 'origin':
 						bg.loadGraphic(Paths.image('backgrounds/3dbg/heaven'));
 					case 'tantalum':
-						PlayState.defaultCamZoom = 0.7;
+						cameraZoom = 0.7;
 						bg.loadGraphic(Paths.image('backgrounds/3dbg/metal'));
 						bg.y -= 235;
 					case 'jam':
-						PlayState.defaultCamZoom = 0.69;
+						cameraZoom = 0.69;
 						bg.loadGraphic(Paths.image('backgrounds/3dbg/strawberries'));
 						bg.scrollFactor.set(0, 0);
 						bg.y -= 200;
@@ -385,47 +389,41 @@ class StageHandler extends FlxGroup
 				bg.shader = testshader.shader;
 				curbg = bg;
 			case 'redTunnel':
-				PlayState.defaultCamZoom = 0.67;
-				PlayState.scriptedStages.push(stage);
+				cameraZoom = 0.67;
+				scripted = true;
+
 				var stupidFuckingRedBg = new BGSprite(0, 0, 'redshit');
 				stupidFuckingRedBg.makeGraphic(9999, 9999, FlxColor.fromRGB(42, 0, 0)).screenCenter();
 				objects.add(stupidFuckingRedBg);
+
 				var redTunnel = new BGSprite(-1000, -700, 'redTunnel');
 				redTunnel.loadGraphic(Paths.image('backgrounds/3dbg/redTunnel'));
 				redTunnel.setGraphicSize(Std.int(redTunnel.width * 1.15), Std.int(redTunnel.height * 1.15));
 				redTunnel.updateHitbox();
 				objects.add(redTunnel);
-				var daveFuckingDies = new PissBoy(0, 0, 'piss');
+
+				var daveFuckingDies = new BGSprite(0, 0, 'piss');
 				daveFuckingDies.screenCenter();
 				daveFuckingDies.y = 1500;
+				daveFuckingDies.frames = Paths.getSparrowAtlas('characters/dave/pissBoy');
+				daveFuckingDies.animation.addByPrefix('idle', 'IDLE', 24, false);
+				daveFuckingDies.animation.addByPrefix('bounceLeft', 'EDGE', 24, false);
+				daveFuckingDies.animation.addByPrefix('bounceRight', 'EDGE', 24, false, true);
+				daveFuckingDies.animation.play('idle');
+
 				objects.add(daveFuckingDies);
+
 				daveFuckingDies.visible = false;
 			case 'warehouse':
-				PlayState.defaultCamZoom = 0.6;
-				PlayState.scriptedStages.push(stage);
+				cameraZoom = 0.6;
+				scripted = true;
+				var warehouse = new BGSprite(-1350, -1111, 'warehouse');
+				warehouse.loadGraphic(Paths.image('backgrounds/warehouse/bg'));
 
-				add(new BGSprite(-1350, -1111, 'warehouse').loadGraphic(Paths.image('backgrounds/warehouse/bg')));
-			case 'out':
-				PlayState.defaultCamZoom = 0.8;
-				PlayState.scriptedStages.push(stage);
-
-				var sky:ShaggyModMoment = new ShaggyModMoment('backgrounds/thunda/sky', -1204, -456, 0.15, 1, 0);
-				add(sky);
-
-				// var clouds:ShaggyModMoment = new ShaggyModMoment('backgrounds/thunda/clouds', -988, -260, 0.25, 1, 1);
-				// add(clouds);
-
-				var backMount:ShaggyModMoment = new ShaggyModMoment('backgrounds/thunda/backmount', -700, -40, 0.4, 1, 2);
-				add(backMount);
-
-				var middleMount:ShaggyModMoment = new ShaggyModMoment('backgrounds/thunda/middlemount', -240, 200, 0.6, 1, 3);
-				add(middleMount);
-
-				var ground:ShaggyModMoment = new ShaggyModMoment('backgrounds/thunda/ground', -660, 624, 1, 1, 4);
-				add(ground);
+				objects.add(warehouse);
 			case 'stage':
-				PlayState.defaultCamZoom = 0.9;
-				PlayState.scriptedStages.push(stage);
+				cameraZoom = 0.9;
+				scripted = true;
 				var bg:BGSprite = new BGSprite(-600, -200, 'bg');
 				bg.loadGraphic(Paths.image('backgrounds/shared/stageback'));
 				bg.antialiasing = true;
@@ -459,7 +457,7 @@ class StageHandler extends FlxGroup
 
 				PlayState.jsonStage = true;
 
-				PlayState.defaultCamZoom = data.cameraZoom;
+				cameraZoom = data.cameraZoom;
 				for (prop in data.props)
 				{
 					var theprop:BGSprite = new BGSprite(prop.position[0], prop.position[1], prop.name);
@@ -541,15 +539,10 @@ class StageHandler extends FlxGroup
 
 	public function setStagePositions(stage):Void
 	{
-		if (PlayState.scriptedStages.contains(stage))
+		if (scripted)
 		{
 			switch (stage)
 			{
-				case 'out':
-					PlayState.boyfriend.x += 300;
-					PlayState.boyfriend.y += 10;
-					PlayState.gf.x += 70;
-					PlayState.opponent.x -= 100;
 				case 'basement':
 					PlayState.boyfriend.x += 125;
 				case 'redTunnel':
