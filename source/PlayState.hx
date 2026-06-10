@@ -2327,10 +2327,14 @@ class PlayState extends MusicBeatState
 							if (badaiTime)
 							{
 								opponent2.holdTimer = 0;
-								opponent2.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true);
+								if (!daNote.isSustainNote && opponent2.useVsliceSustains || !opponent2.useVsliceSustains)
+									opponent2.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true);
 							}
-							opponent.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true);
-							opponentmirror.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true);
+							if (!daNote.isSustainNote && opponent.useVsliceSustains || !opponent.useVsliceSustains)
+							{
+								opponent.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true);
+								opponentmirror.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true);
+							}
 							opponent.holdTimer = 0;
 							opponentmirror.holdTimer = 0;
 						}
@@ -2672,7 +2676,7 @@ class PlayState extends MusicBeatState
 
 			var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(ratingFolder + '/' + ratingstype + '/' + 'combo'));
 			comboSpr.screenCenter();
-			comboSpr.x = rating.x + 10;
+			comboSpr.x = rating.x + 100;
 			comboSpr.y = rating.y + 100;
 			comboSpr.acceleration.y = 600;
 			comboSpr.velocity.y -= 150;
@@ -2721,7 +2725,7 @@ class PlayState extends MusicBeatState
 			{
 				var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(ratingFolder + '/' + ratingstype + '/' + 'num' + Std.int(i)));
 				numScore.screenCenter();
-				numScore.x = rating.getGraphicMidpoint().x + (43 * daLoop) - 50;
+				numScore.x = rating.x + (43 * daLoop) - 40;
 				numScore.y = rating.y + 100;
 				if (ratingOnCamera)
 				{
@@ -3119,12 +3123,17 @@ class PlayState extends MusicBeatState
 						fuckingDumbassBullshitFuckYou = 'LEFT';
 				}
 			}
+			if (boyfriend.animation.exists('sing' + fuckingDumbassBullshitFuckYou + '-end'))
+				boyfriend.canEnd = true;
 			if (shakingChars.contains(opponent.curCharacter))
 			{
 				FlxG.camera.shake(0.0075, 0.1);
 				camHUD.shake(0.0045, 0.1);
 			}
-			boyfriend.playAnim('sing' + fuckingDumbassBullshitFuckYou, true);
+			if (!note.isSustainNote && boyfriend.useVsliceSustains || !boyfriend.useVsliceSustains)
+			{
+				boyfriend.playAnim('sing' + fuckingDumbassBullshitFuckYou, true);
+			}
 			if (UsingNewCam)
 			{
 				focusOnDadGlobal = false;
@@ -4175,7 +4184,22 @@ class PlayState extends MusicBeatState
 				gf.dance();
 			}
 		}
-		if (!boyfriend.animation.curAnim.name.startsWith("sing") && boyfriend.canDance && curBeat % danceBeatSnap == 0)
+		if (boyfriend.animation.curAnim.name.startsWith("sing")
+			&& boyfriend.canDance
+			&& boyfriend.animation.exists(boyfriend.animation.curAnim.name + '-end')
+			&& boyfriend.canEnd)
+		{
+			boyfriend.playAnim(boyfriend.animation.curAnim.name + '-end', true);
+			if (boyfriend.animation.finished && boyfriend.animation.curAnim.name.startsWith("sing"))
+			{
+				boyfriend.canEnd = false;
+				boyfriend.dance();
+			}
+		}
+		if (!boyfriend.animation.curAnim.name.startsWith("sing")
+			&& boyfriend.canDance
+			&& curBeat % danceBeatSnap == 0
+			&& !boyfriend.canEnd)
 		{
 			boyfriend.dance();
 

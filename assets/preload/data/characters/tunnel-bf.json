@@ -8,6 +8,7 @@
   "icon": "bf",
   "nativelyPlayable": true,
   "flipX": true,
+  "vsliceHold": true,
   "float": "default",
   "animations": [
     {

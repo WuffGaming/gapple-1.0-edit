@@ -5,6 +5,7 @@
   "gameOffset": [81, 108],
   "camOffset": [0, 0],
   "antialiasing": true,
+  "vsliceHold": true,
   "icon": "dave",
   "animations": [
     {

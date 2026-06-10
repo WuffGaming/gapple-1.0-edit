@@ -8,6 +8,7 @@
   "antialiasing": false,
   "icon": "ringi",
   "scale": 1.02,
+  "vsliceHold": true,
   "noteStyle": "3D",
   "animations": [
     {

@@ -9,6 +9,7 @@
   "altIcon": "bf-3d-old",
   "gf": "3d-gf",
   "nativelyPlayable": true,
+  "vsliceHold": true,
   "flipX": true,
   "noteStyle": "3D",
   "animations": [

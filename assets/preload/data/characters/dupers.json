@@ -6,6 +6,7 @@
   "camOffset": [0, 0],
   "antialiasing": true,
   "icon": "bambi-mad",
+  "vsliceHold": true,
   "animations": [
     {
       "name": "idle",

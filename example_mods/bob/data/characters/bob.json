@@ -7,6 +7,7 @@
   "antialiasing": true,
   "icon": "bob",
   "flipX": true,
+  "vsliceHold": true,
   "animations": [
     {
       "name": "idle",

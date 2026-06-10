@@ -26,6 +26,8 @@ typedef CharacterData =
 
 	var ?causeCameraShake:Bool; // Flip the character sprite?
 
+	var ?vsliceHold:Bool; // Does the character have Vslice-like holding of the note?
+
 	var ?antialiasing:Bool; // Alias the character?
 
 	var ?scaleSize:Bool; // Should you change the scale of the character or do setGraphicSize?
@@ -89,6 +91,7 @@ class Character extends FlxSprite
 	public var iconName:String = 'face';
 	public var rating:String = 'normal';
 	public var characterType:CharacterType = OPPONENT;
+	public var useVsliceSustains = false;
 
 	public var gfForm:String = 'gf';
 	public var deadForm:String = 'bf-dead';
@@ -96,6 +99,7 @@ class Character extends FlxSprite
 	public var holdTimer:Float = 0;
 	public var canDance:Bool = true;
 	public var canSing:Bool = true;
+	public var canEnd:Bool = false;
 	public var stunned:Bool = false;
 
 	public var nativelyPlayable:Bool = false;
@@ -168,14 +172,6 @@ class Character extends FlxSprite
 			else
 				holdTimer = 0;
 
-			if (animation.curAnim.name.endsWith('miss') && animation.curAnim.finished && !debugMode)
-			{
-				if (bopDance)
-					playAnim('danceLeft', true, false, 10);
-				else
-					playAnim('idle', true, false, 10);
-			}
-
 			if (animation.curAnim.name == 'firstDeath' && animation.curAnim.finished)
 			{
 				playAnim('deathLoop');
@@ -211,15 +207,11 @@ class Character extends FlxSprite
 
 	public function playAnim(AnimName:String, Force:Bool = false, Reversed:Bool = false, Frame:Int = 0):Void
 	{
-		if (animation.getByName(AnimName) == null)
-		{
-			return;
-		}
-		if (AnimName.toLowerCase().startsWith('idle') && !canDance)
-		{
-			return;
-		}
-		if (AnimName.toLowerCase().startsWith('sing') && !canSing)
+		if (animation.getByName(AnimName) == null
+			|| AnimName.toLowerCase().startsWith('idle')
+			&& !canDance
+			|| AnimName.toLowerCase().startsWith('sing')
+			&& !canSing)
 		{
 			return;
 		}
@@ -253,6 +245,11 @@ class Character extends FlxSprite
 		}
 		else
 			offset.set(0, 0);
+
+		if (animation.exists(AnimName + '-loop') && animation.finished)
+		{
+			animation.play(AnimName + '-loop', Force, Reversed, Frame);
+		}
 
 		if (bopDance)
 		{
@@ -320,6 +317,8 @@ class Character extends FlxSprite
 
 		if (data.causeCameraShake)
 			PlayState.shakingChars.push(curCharacter);
+
+		useVsliceSustains = data.vsliceHold == null ? false : data.vsliceHold;
 
 		floater = data.float == null ? 'false' : data.float; // add easy
 

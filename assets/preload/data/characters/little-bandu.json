@@ -8,6 +8,7 @@
   "icon": "bandu",
   "float": "badai-slow",
   "scale": 0.98,
+  "vsliceHold": true,
   "noteStyle": "3D",
   "animations": [
     {

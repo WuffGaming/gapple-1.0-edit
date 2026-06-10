@@ -7,6 +7,7 @@
   "antialiasing": false,
   "icon": "radical",
   "rating": "radical",
+  "vsliceHold": true,
   "gf": "gamingtastic",
   "nativelyPlayable": true,
   "flipX": true,
