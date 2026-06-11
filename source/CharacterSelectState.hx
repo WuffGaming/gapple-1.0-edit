@@ -205,7 +205,7 @@ class CharacterSelectState extends MusicBeatState
 			UpdateCharacter();
 			FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 		}
-		if (controls.UI_DOWN_R && !selectedCharacter)
+		if (controls.UI_UP_R && !selectedCharacter)
 		{
 			curForm--;
 			if (curForm < 0)
