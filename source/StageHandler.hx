@@ -352,7 +352,6 @@ class StageHandler extends FlxGroup
 				switch (PlayState.SONG.song.toLowerCase()) // TODO: MOVE TO SEPARATE STAGES!!
 				{
 					case 'disruption':
-						PlayState.gfSpeed = 2;
 						bg.loadGraphic(Paths.image('backgrounds/3dbg/disruptor'));
 					case 'origin':
 						bg.loadGraphic(Paths.image('backgrounds/3dbg/heaven'));

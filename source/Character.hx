@@ -32,6 +32,8 @@ typedef CharacterData =
 
 	var ?scaleSize:Bool; // Should you change the scale of the character or do setGraphicSize?
 
+	var danceStep:Null<Int>; // What step mod does this character use?
+
 	var scale:Null<Float>; // Changes scale/graphicsize by amount.
 
 	var float:String; // Which float should character use?
@@ -96,6 +98,7 @@ class Character extends FlxSprite
 	public var gfForm:String = 'gf';
 	public var deadForm:String = 'bf-dead';
 
+	public var danceStep:Int = 8;
 	public var holdTimer:Float = 0;
 	public var canDance:Bool = true;
 	public var canSing:Bool = true;
@@ -134,7 +137,7 @@ class Character extends FlxSprite
 		}
 	}
 
-	public var POOP:Bool = false; // https://cdn.discordapp.com/attachments/902006463654936587/906412566534848542/video0-14.mov
+	public var canAlt:Bool = false; // https://cdn.discordapp.com/attachments/902006463654936587/906412566534848542/video0-14.mov
 
 	override function update(elapsed:Float)
 	{
@@ -159,7 +162,7 @@ class Character extends FlxSprite
 
 			if (holdTimer >= Conductor.stepCrochet * daveVar * 0.001)
 			{
-				dance(POOP);
+				dance(canAlt);
 				holdTimer = 0;
 			}
 		}
@@ -333,6 +336,8 @@ class Character extends FlxSprite
 		gfForm = data.gf == null ? 'none' : data.gf; // add impossible
 
 		deadForm = data.deathSkin == null ? 'bf-dead' : data.deathSkin; // add extremely impossible
+
+		danceStep = data.danceStep == null ? 8 : data.danceStep; // add bloodbath
 
 		switch (noteStyle)
 		{

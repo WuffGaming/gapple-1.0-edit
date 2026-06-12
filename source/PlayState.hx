@@ -200,12 +200,8 @@ class PlayState extends MusicBeatState
 
 	private var poopStrums:FlxTypedGroup<Strum>;
 
-	public var idleAlt:Bool = false;
-
 	private var camZooming:Bool = false;
 	private var curSong:String = "";
-
-	public static var gfSpeed:Int = 1;
 
 	private var health:Float = 1;
 	private var scoreMult:Float = 1;
@@ -346,22 +342,6 @@ class PlayState extends MusicBeatState
 
 		Conductor.mapBPMChanges(SONG);
 		Conductor.changeBPM(SONG.bpm);
-
-		var crazyNumber:Int;
-		crazyNumber = FlxG.random.int(0, 3);
-		switch (crazyNumber)
-		{
-			case 0:
-				trace("secret dick message ???");
-			case 1:
-				trace("welcome baldis basics crap");
-			case 2:
-				trace("Hi, song genie here. You're playing " + SONG.song + ", right?");
-			case 3:
-				eatShit("this song doesnt have dialogue idiot. if you want this retarded trace function to call itself then why dont you play a song with ACTUAL dialogue? jesus fuck");
-			case 4:
-				trace("suck my balls");
-		}
 		if (songInfo.hasDialogue)
 		{
 			switch (SONG.song.toLowerCase())
@@ -873,17 +853,17 @@ class PlayState extends MusicBeatState
 
 		startTimer = new FlxTimer().start(Conductor.crochet / (1000 * startSpeed), function(tmr:FlxTimer) // counting down
 		{
-			opponent.dance(idleAlt);
-			gf.dance();
-			boyfriend.dance();
+			opponent.dance(opponent.canAlt);
+			gf.dance(gf.canAlt);
+			boyfriend.dance(boyfriend.canAlt);
 
 			if (opponent.curCharacter == 'bandu' || opponent.curCharacter == 'bandu-candy')
 			{
 				// SO THEIR ANIMATIONS DONT START OFF-SYNCED
 				opponent.playAnim('singUP');
 				opponentmirror.playAnim('singUP');
-				opponent.dance(idleAlt);
-				opponentmirror.dance(idleAlt);
+				opponent.dance(opponent.canAlt);
+				opponentmirror.dance(opponentmirror.canAlt);
 			}
 
 			var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
@@ -1569,7 +1549,7 @@ class PlayState extends MusicBeatState
 
 				spr.scale.set(dontLookAtAmongUs - 0.15, dontLookAtAmongUs - 0.15);
 
-				if (opponent.POOP)
+				if (opponent.canAlt)
 					spr.angle += (Math.sin(elapsed * 2) * 0.5 + 0.5) * spr.ID == 1 ? 0.65 : -0.65;
 			});
 
@@ -2177,10 +2157,11 @@ class PlayState extends MusicBeatState
 
 						poopStrums.forEach(function(sprite:Strum)
 						{
-							if (Math.abs(Math.round(Math.abs(daNote.noteData)) % 4) == sprite.ID)
+							var canDoHitCrap = Math.abs(Math.round(Math.abs(daNote.noteData)) % 4) == sprite.ID; // bull
+							if (canDoHitCrap)
 							{
 								sprite.animation.play('confirm', true);
-								if (sprite.animation.curAnim.name == 'confirm')
+								if (sprite.animation.curAnim.name.startsWith('confirm'))
 								{
 									sprite.centerOffsets();
 									sprite.offset.x -= 13;
@@ -2190,11 +2171,11 @@ class PlayState extends MusicBeatState
 								{
 									sprite.centerOffsets();
 								}
-								sprite.animation.finishCallback = function(name:String)
+								sprite.animation.onFinish.add(function(name:String)
 								{
 									sprite.animation.play('static', true);
 									sprite.centerOffsets();
-								}
+								});
 							}
 						});
 
@@ -2294,7 +2275,7 @@ class PlayState extends MusicBeatState
 						else
 						{
 							if (SONG.song.toLowerCase() == 'sugar-rush')
-								idleAlt = false;
+								opponent.canAlt = false;
 						}
 					}
 
@@ -2311,6 +2292,8 @@ class PlayState extends MusicBeatState
 								fuckingDumbassBullshitFuckYou = 'LEFT';
 						}
 					}
+					if (opponent.animation.exists('sing' + fuckingDumbassBullshitFuckYou + altAnim + '-end'))
+						opponent.canEnd = true;
 					if (shakingChars.contains(opponent.curCharacter))
 					{
 						FlxG.camera.shake(0.0075, 0.1);
@@ -2319,7 +2302,7 @@ class PlayState extends MusicBeatState
 					(SONG.song.toLowerCase() == 'applecore'
 						&& !SONG.notes[Math.floor(curStep / 16)].altAnim
 						&& !wtfThing
-						&& opponent.POOP) ? { // hi
+						&& opponent.canAlt) ? { // hi
 							if (littleIdiot != null)
 								littleIdiot.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true);
 							littleIdiot.holdTimer = 0;
@@ -2334,6 +2317,19 @@ class PlayState extends MusicBeatState
 							{
 								opponent.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true);
 								opponentmirror.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim, true);
+								if (opponent.animation.finished
+									&& opponent.animation.exists('sing' + fuckingDumbassBullshitFuckYou + altAnim + '-end')
+									&& opponent.canEnd)
+								{
+									opponent.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim + '-end', true);
+									opponentmirror.playAnim('sing' + fuckingDumbassBullshitFuckYou + altAnim + '-end', true);
+									if (opponent.animation.finished && opponent.animation.curAnim.name.startsWith("sing"))
+									{
+										opponent.canEnd = false;
+										opponent.dance();
+										opponentmirror.dance();
+									}
+								}
 							}
 							opponent.holdTimer = 0;
 							opponentmirror.holdTimer = 0;
@@ -2344,7 +2340,7 @@ class PlayState extends MusicBeatState
 						if (Math.abs(Math.round(Math.abs(daNote.noteData)) % 4) == sprite.ID)
 						{
 							sprite.animation.play('confirm', true);
-							if (sprite.animation.curAnim.name == 'confirm' && (SONG.song.toLowerCase() != 'disability'))
+							if (sprite.animation.curAnim.name.startsWith('confirm') && (SONG.song.toLowerCase() != 'disability'))
 							{
 								sprite.centerOffsets();
 								sprite.offset.x -= 13;
@@ -2354,12 +2350,12 @@ class PlayState extends MusicBeatState
 							{
 								sprite.centerOffsets();
 							}
-							sprite.animation.finishCallback = function(name:String)
+							sprite.animation.onFinish.add(function(name:String)
 							{
 								sprite.animation.play('static', true);
 								if (SONG.song.toLowerCase() != 'disability')
 									sprite.centerOffsets();
-							}
+							});
 						}
 					});
 
@@ -2484,7 +2480,7 @@ class PlayState extends MusicBeatState
 		switch (char.curCharacter)
 		{
 			case 'bandu':
-				char.POOP ? {
+				char.canAlt ? {
 					!SONG.notes[Math.floor(curStep / 16)].altAnim ? {
 						camFollow.set(littleIdiot.getMidpoint().x, littleIdiot.getMidpoint().y - 300);
 						defaultCamZoom = 0.35;
@@ -2917,7 +2913,7 @@ class PlayState extends MusicBeatState
 			});
 		}
 
-		if (boyfriend.holdTimer > Conductor.stepCrochet * 4 * 0.001 && !up && !down && !right && !left)
+		if (boyfriend.holdTimer > Conductor.stepCrochet * (boyfriend.danceStep / 4) * 0.001 && !up && !down && !right && !left)
 		{
 			if (boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
 			{
@@ -3145,7 +3141,8 @@ class PlayState extends MusicBeatState
 			{
 				if (Math.abs(note.noteData) == spr.ID)
 				{
-					spr.animation.play('confirm', true);
+					if (!note.isSustainNote)
+						spr.animation.play('confirm', true);
 				}
 			});
 
@@ -3166,6 +3163,110 @@ class PlayState extends MusicBeatState
 	override function stepHit()
 	{
 		super.stepHit();
+
+		if (curStep % gf.danceStep == 0)
+		{
+			if (!shakeCam)
+			{
+				gf.dance(gf.canAlt);
+			}
+		}
+		var opponentCanDance = true;
+		if (opponent.animation.curAnim.name.startsWith('sing') && !(opponent.animation.finished))
+			opponentCanDance = false;
+		else
+			opponentCanDance = true;
+		if (opponentCanDance)
+		{
+			if (opponent.holdTimer <= 0 && curStep % opponent.danceStep == 0)
+				opponent.dance(opponent.canAlt);
+			if (opponentmirror.holdTimer <= 0 && curStep % opponentmirror.danceStep == 0)
+				opponentmirror.dance(opponentmirror.canAlt);
+		}
+		if (opponent2 != null)
+		{
+			if ((opponent2.animation.finished || opponent2.animation.curAnim.name == 'idle')
+				&& opponent2.holdTimer <= 0
+				&& curStep % opponent2.danceStep == 0)
+				opponent2.dance(opponent2.canAlt);
+		}
+		if (boyfriend.animation.curAnim.name.startsWith("sing")
+			&& boyfriend.canDance
+			&& boyfriend.animation.exists(boyfriend.animation.curAnim.name + '-end')
+			&& boyfriend.canEnd)
+		{
+			boyfriend.playAnim(boyfriend.animation.curAnim.name + '-end', true);
+			if (boyfriend.animation.finished && boyfriend.animation.curAnim.name.startsWith("sing"))
+			{
+				boyfriend.canEnd = false;
+				boyfriend.dance(boyfriend.canAlt);
+			}
+		}
+		if (!boyfriend.animation.curAnim.name.startsWith("sing")
+			&& boyfriend.canDance
+			&& curStep % boyfriend.danceStep == 0
+			&& !boyfriend.canEnd)
+		{
+			boyfriend.dance(boyfriend.canAlt);
+
+			boyfriend.color = FlxColor.WHITE;
+		}
+
+		// health icon bounce but epic-er
+		// i hate math
+		var iconStepSpeed = gf.danceStep / 2;
+		if (curStep % iconStepSpeed == 0)
+		{
+			FlxTween.cancelTweensOf(iconP1);
+			FlxTween.cancelTweensOf(iconP2);
+			switch (iconBounce)
+			{
+				case 'algebra':
+					{
+						curStep % (iconStepSpeed * 2) == 0 ? {
+							iconP1.scale.set(0.9 * iconP1.iconScale[0], 0.9 * iconP1.iconScale[1]);
+							iconP2.scale.set(1.1 * iconP2.iconScale[0], 1.1 * iconP2.iconScale[1]);
+						} : {
+							iconP1.scale.set(1.1 * iconP1.iconScale[0], 1.1 * iconP1.iconScale[1]);
+							iconP2.scale.set(0.9 * iconP2.iconScale[0], 0.9 * iconP2.iconScale[1]);
+							}
+					}
+				default:
+					curStep % (iconStepSpeed * 2) == 0 ? {
+						if (iconP1.losing)
+							iconP1.scale.set(1.05 * iconP1.iconScale[0], 0.9 * iconP1.iconScale[1]);
+						else
+							iconP1.scale.set(1.1 * iconP1.iconScale[0], 0.8 * iconP1.iconScale[1]);
+						if (iconP2.losing)
+							iconP2.scale.set(1.05 * iconP2.iconScale[0], 1.15 * iconP2.iconScale[1]);
+						else
+							iconP2.scale.set(1.1 * iconP2.iconScale[0], 1.3 * iconP2.iconScale[1]);
+						if (!iconP1.losing)
+							FlxTween.angle(iconP1, -15, 0, Conductor.crochet / 1300 * (iconStepSpeed / 4), {ease: FlxEase.quadOut});
+						if (!iconP2.losing)
+							FlxTween.angle(iconP2, 15, 0, Conductor.crochet / 1300 * (iconStepSpeed / 4), {ease: FlxEase.quadOut});
+					} : {
+						if (iconP1.losing)
+							iconP1.scale.set(1.05 * iconP1.iconScale[0], 1.15 * iconP1.iconScale[1]);
+						else
+							iconP1.scale.set(1.1 * iconP1.iconScale[0], 1.3 * iconP1.iconScale[1]);
+						if (iconP2.losing)
+							iconP2.scale.set(1.05 * iconP2.iconScale[0], 0.9 * iconP2.iconScale[1]);
+						else
+							iconP2.scale.set(1.1 * iconP2.iconScale[0], 0.8 * iconP2.iconScale[1]);
+						if (!iconP2.losing)
+							FlxTween.angle(iconP2, -15, 0, Conductor.crochet / 1300 * (iconStepSpeed / 4), {ease: FlxEase.quadOut});
+						if (!iconP1.losing)
+							FlxTween.angle(iconP1, 15, 0, Conductor.crochet / 1300 * (iconStepSpeed / 4), {ease: FlxEase.quadOut});
+						}
+			}
+			FlxTween.tween(iconP1, {'scale.x': iconP1.iconScale[0], 'scale.y': iconP1.iconScale[1]}, Conductor.crochet / 1250 * (iconStepSpeed / 4),
+				{ease: FlxEase.quadOut});
+			FlxTween.tween(iconP2, {'scale.x': iconP2.iconScale[0], 'scale.y': iconP2.iconScale[1]}, Conductor.crochet / 1250 * (iconStepSpeed / 4),
+				{ease: FlxEase.quadOut});
+			iconP1.updateHitbox();
+			iconP2.updateHitbox();
+		}
 
 		if (FlxG.sound.music.time > Conductor.songPosition + 20 || FlxG.sound.music.time < Conductor.songPosition - 20)
 		{
@@ -3199,6 +3300,24 @@ class PlayState extends MusicBeatState
 					timeTxtTween = null;
 				}
 			});
+		}
+
+		if (curBeat % danceBeatSnap == 0)
+		{
+			if (iconP1.animatedIcon)
+			{
+				if (iconP1.losing && !iconP1.singleIcon)
+					iconP1.animation.play('losing', true);
+				else
+					iconP1.animation.play('normal', true);
+			}
+			if (iconP2.animatedIcon)
+			{
+				if (iconP2.losing && !iconP2.singleIcon)
+					iconP2.animation.play('losing', true);
+				else
+					iconP2.animation.play('normal', true);
+			}
 		}
 
 		if (!UsingNewCam)
@@ -3248,38 +3367,6 @@ class PlayState extends MusicBeatState
 			if (opponent.curCharacter == 'bandu')  {
 				krunkity = opponentmirror.animation.finished && opponent.animation.finished;
 		}*/
-		if (opponent.animation.finished)
-		{
-			switch (SONG.song.toLowerCase())
-			{
-				case 'tutorial':
-					opponent.dance(idleAlt);
-					opponentmirror.dance(idleAlt);
-				case 'disruption':
-					if (curBeat % gfSpeed == 0 && opponent.holdTimer <= 0)
-					{
-						opponent.dance(idleAlt);
-						opponentmirror.dance(idleAlt);
-					}
-				case 'applecore':
-					if (opponent.holdTimer <= 0 && curBeat % OpponentDanceSnap == 0)
-						!wtfThing ? opponent.dance(opponent.POOP) : opponent.playAnim('idle-alt', true); // i hate everything
-					if (opponentmirror.holdTimer <= 0 && curBeat % OpponentDanceSnap == 0)
-						!wtfThing ? opponentmirror.dance(opponent.POOP) : opponentmirror.playAnim('idle-alt', true); // sutpid
-				default:
-					if (opponent.holdTimer <= 0 && curBeat % OpponentDanceSnap == 0)
-						opponent.dance(idleAlt);
-					if (opponentmirror.holdTimer <= 0 && curBeat % OpponentDanceSnap == 0)
-						opponentmirror.dance(idleAlt);
-			}
-		}
-		if (opponent2 != null)
-		{
-			if ((opponent2.animation.finished || opponent2.animation.curAnim.name == 'idle')
-				&& opponent2.holdTimer <= 0
-				&& curBeat % OpponentDanceSnap == 0)
-				opponent2.dance(idleAlt);
-		}
 		if (curSong.toLowerCase() == 'applecore')
 		{
 			if (swagger != null)
@@ -3313,7 +3400,18 @@ class PlayState extends MusicBeatState
 					switch (event.name)
 					{
 						case 'Set Alt Idle':
-							idleAlt = event.alt;
+							switch (event.character)
+							{
+								case 'opponent':
+									opponent.canAlt = event.alt;
+									opponentmirror.canAlt = event.alt;
+								case 'girlfriend':
+									gf.canAlt = event.alt;
+								case 'boyfriend':
+									boyfriend.canAlt = event.alt;
+								case 'opponent2':
+									opponent2.canAlt = event.alt;
+							}
 						case 'Play Animation':
 							switch (event.character)
 							{
@@ -3340,7 +3438,7 @@ class PlayState extends MusicBeatState
 							if (event.bump)
 								kadeEngineWatermark.y -= 20;
 						case 'Change Scroll Speed':
-							songSpeed = event.value;
+							changeScroll(event.value);
 						case 'Change Camera Zoom':
 							defaultCamZoom = event.value;
 						case 'Flash Camera':
@@ -3389,7 +3487,7 @@ class PlayState extends MusicBeatState
 					case 8:
 						algebraTxt.alpha = 0;
 					case 160:
-						songSpeed = SONG.speed - 0.5;
+						changeScroll(SONG.speed - 0.5);
 						// SPIKE TURN 1!!
 						swapDad('spike');
 						iconP2.changeIcon(opponent.iconName);
@@ -3404,7 +3502,7 @@ class PlayState extends MusicBeatState
 						iconP2.changeIcon(opponent.iconName);
 						daveJunk.visible = false;
 						spikeJunk.visible = true;
-						songSpeed = SONG.speed - 0.3;
+						changeScroll(SONG.speed - 0.3);
 					case 424:
 						algebraTxt.alpha = 0;
 					case 536:
@@ -3433,7 +3531,7 @@ class PlayState extends MusicBeatState
 						davePiss.visible = true;
 						diamondJunk.visible = true;
 						diamondJunk.x += 800;
-						songSpeed = 2;
+						changeScroll(2);
 						iconP2.changeIcon(opponent.iconName);
 					case 704:
 						FlxTween.tween(diamondJunk, {x: diamondJunk.x - 800}, 0.5, {ease: FlxEase.quadOut});
@@ -3446,7 +3544,7 @@ class PlayState extends MusicBeatState
 						robotJunk.visible = true;
 						robotJunk.x -= 800;
 						diamondJunk.visible = false;
-						songSpeed = SONG.speed;
+						changeScroll(SONG.speed);
 						iconP2.changeIcon(opponent.iconName);
 					case 1400:
 						FlxTween.tween(robotJunk, {
@@ -3457,7 +3555,7 @@ class PlayState extends MusicBeatState
 						robotJunk.visible = false;
 						swapDad('playrobot');
 						health = 1;
-						songSpeed = 1.6;
+						changeScroll(1.6);
 						iconP2.changeIcon(opponent.iconName);
 					case 1852:
 						FlxTween.tween(davePiss, {
@@ -3468,7 +3566,7 @@ class PlayState extends MusicBeatState
 						// SCARY PLAYROBOT TURN
 						swapDad('playrobot-crazy');
 						health = 1;
-						songSpeed = SONG.speed;
+						changeScroll(SONG.speed);
 						iconP2.changeIcon(opponent.iconName);
 					case 1996:
 						// ANGEY DAVE TURN 2!!
@@ -3478,7 +3576,7 @@ class PlayState extends MusicBeatState
 						davePiss.visible = false;
 						iconP2.changeIcon(opponent.iconName);
 					case 2140:
-						songSpeed = SONG.speed + 0.9;
+						changeScroll(SONG.speed + 0.9);
 				}
 			case 'tantalum':
 				switch (curBeat)
@@ -3494,7 +3592,7 @@ class PlayState extends MusicBeatState
 						FlxG.camera.flash(FlxColor.WHITE, 1);
 						defaultCamZoom = 0.7;
 					case 220:
-						idleAlt = true;
+						opponent.canAlt = true;
 						opponent.playAnim('catappear', true);
 						defaultCamZoom = 1;
 					case 224:
@@ -3502,7 +3600,7 @@ class PlayState extends MusicBeatState
 						iconP2.changeIcon('ringi-toio');
 						defaultCamZoom = 0.7;
 					case 352:
-						idleAlt = false;
+						opponent.canAlt = false;
 						iconP2.changeIcon('ringi');
 						FlxG.camera.flash(FlxColor.WHITE, 1);
 						defaultCamZoom = 0.9;
@@ -3521,9 +3619,9 @@ class PlayState extends MusicBeatState
 				switch (curBeat)
 				{
 					case 160 | 436 | 684:
-						gfSpeed = 2;
+						gf.danceStep = 4;
 					case 240:
-						gfSpeed = 1;
+						gf.danceStep = 8;
 					case 223:
 						wtfThing = true;
 						what.forEach(function(spr:BGSprite)
@@ -3541,8 +3639,8 @@ class PlayState extends MusicBeatState
 						updateIcons();
 						opponent.playAnim('NOOMYPHONES', true);
 						opponentmirror.playAnim('NOOMYPHONES', true);
-						opponent.POOP = true; // WORK WORK WOKR< WOKRMKIEPATNOLIKSEHGO:"IKSJRHDLG"H
-						opponentmirror.POOP = true; // :))))))))))
+						opponent.canAlt = true; // WORK WORK WOKR< WOKRMKIEPATNOLIKSEHGO:"IKSJRHDLG"H
+						opponentmirror.canAlt = true; // :))))))))))
 						poopStrums.visible = true; // ??????
 						new FlxTimer().start(3.5, function(deez:FlxTimer)
 						{
@@ -3561,7 +3659,7 @@ class PlayState extends MusicBeatState
 						swagBG.visible = swagBG.active = false;
 					case 636:
 						unfairPart = true;
-						gfSpeed = 1;
+						gf.danceStep = 4;
 						playerStrums.forEach(function(spr:Strum)
 						{
 							spr.scale.set(0.7, 0.7);
@@ -3570,7 +3668,6 @@ class PlayState extends MusicBeatState
 						{
 							spr.alpha = 0;
 						});
-						gfSpeed = 1;
 						wtfThing = false;
 						var dumbStupid = new FlxSprite().loadGraphic(Paths.image('backgrounds/applecore/poop'));
 						dumbStupid.scrollFactor.set();
@@ -3627,12 +3724,12 @@ class PlayState extends MusicBeatState
 								swagsnd.play(true);
 								var whatthejunk = new FlxSound().loadEmbedded(Paths.sound('suckEnd'));
 								littleIdiot.playAnim('inhale');
-								littleIdiot.animation.finishCallback = function(d:String)
+								littleIdiot.animation.onFinish.add(function(d:String)
 								{
 									swagsnd.stop();
 									whatthejunk.play(true);
-									littleIdiot.animation.finishCallback = null;
-								};
+									littleIdiot.animation.onFinish.remove;
+								});
 								new FlxTimer().start(0.2, function(tmr:FlxTimer)
 								{
 									FlxTween.tween(deez, {
@@ -3845,9 +3942,9 @@ class PlayState extends MusicBeatState
 						FlxG.camera.flash(FlxColor.WHITE, 1);
 						defaultCamZoom = 0.9;
 					case 176 | 224 | 364 | 384:
-						gfSpeed = 2;
+						gf.danceStep = 4;
 					case 208 | 256 | 372 | 392:
-						gfSpeed = 1;
+						gf.danceStep = 8;
 				}
 			case 'blitz':
 				var threedeez = bg.getProp('threedeez');
@@ -4109,102 +4206,6 @@ class PlayState extends MusicBeatState
 		{
 			gf.playAnim('scared', true);
 		}
-		// health icon bounce but epic-er
-		if (curBeat % gfSpeed == 0)
-		{
-			switch (iconBounce)
-			{
-				case 'algebra':
-					{
-						curBeat % (gfSpeed * 2) == 0 ? {
-							iconP1.scale.set(0.9 * iconP1.iconScale[0], 0.9 * iconP1.iconScale[1]);
-							iconP2.scale.set(1.1 * iconP2.iconScale[0], 1.1 * iconP2.iconScale[1]);
-						} : {
-							iconP1.scale.set(1.1 * iconP1.iconScale[0], 1.1 * iconP1.iconScale[1]);
-							iconP2.scale.set(0.9 * iconP2.iconScale[0], 0.9 * iconP2.iconScale[1]);
-							}
-					}
-				default:
-					curBeat % (gfSpeed * 2) == 0 ? {
-						if (iconP1.losing)
-							iconP1.scale.set(1.05 * iconP1.iconScale[0], 0.9 * iconP1.iconScale[1]);
-						else
-							iconP1.scale.set(1.1 * iconP1.iconScale[0], 0.8 * iconP1.iconScale[1]);
-						if (iconP2.losing)
-							iconP2.scale.set(1.05 * iconP2.iconScale[0], 1.15 * iconP2.iconScale[1]);
-						else
-							iconP2.scale.set(1.1 * iconP2.iconScale[0], 1.3 * iconP2.iconScale[1]);
-						if (!iconP1.losing)
-							FlxTween.angle(iconP1, -15, 0, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut});
-						if (!iconP2.losing)
-							FlxTween.angle(iconP2, 15, 0, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut});
-					} : {
-						if (iconP1.losing)
-							iconP1.scale.set(1.05 * iconP1.iconScale[0], 1.15 * iconP1.iconScale[1]);
-						else
-							iconP1.scale.set(1.1 * iconP1.iconScale[0], 1.3 * iconP1.iconScale[1]);
-						if (iconP2.losing)
-							iconP2.scale.set(1.05 * iconP2.iconScale[0], 0.9 * iconP2.iconScale[1]);
-						else
-							iconP2.scale.set(1.1 * iconP2.iconScale[0], 0.8 * iconP2.iconScale[1]);
-						if (!iconP2.losing)
-							FlxTween.angle(iconP2, -15, 0, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut});
-						if (!iconP1.losing)
-							FlxTween.angle(iconP1, 15, 0, Conductor.crochet / 1300 * gfSpeed, {ease: FlxEase.quadOut});
-						}
-			}
-			FlxTween.tween(iconP1, {'scale.x': iconP1.iconScale[0], 'scale.y': iconP1.iconScale[1]}, Conductor.crochet / 1250 * gfSpeed,
-				{ease: FlxEase.quadOut});
-			FlxTween.tween(iconP2, {'scale.x': iconP2.iconScale[0], 'scale.y': iconP2.iconScale[1]}, Conductor.crochet / 1250 * gfSpeed,
-				{ease: FlxEase.quadOut});
-			iconP1.updateHitbox();
-			iconP2.updateHitbox();
-		}
-		if (curBeat % danceBeatSnap == 0)
-		{
-			if (iconP1.animatedIcon)
-			{
-				if (iconP1.losing && !iconP1.singleIcon)
-					iconP1.animation.play('losing', true);
-				else
-					iconP1.animation.play('normal', true);
-			}
-			if (iconP2.animatedIcon)
-			{
-				if (iconP2.losing && !iconP2.singleIcon)
-					iconP2.animation.play('losing', true);
-				else
-					iconP2.animation.play('normal', true);
-			}
-		}
-		if (curBeat % gfSpeed == 0)
-		{
-			if (!shakeCam)
-			{
-				gf.dance();
-			}
-		}
-		if (boyfriend.animation.curAnim.name.startsWith("sing")
-			&& boyfriend.canDance
-			&& boyfriend.animation.exists(boyfriend.animation.curAnim.name + '-end')
-			&& boyfriend.canEnd)
-		{
-			boyfriend.playAnim(boyfriend.animation.curAnim.name + '-end', true);
-			if (boyfriend.animation.finished && boyfriend.animation.curAnim.name.startsWith("sing"))
-			{
-				boyfriend.canEnd = false;
-				boyfriend.dance();
-			}
-		}
-		if (!boyfriend.animation.curAnim.name.startsWith("sing")
-			&& boyfriend.canDance
-			&& curBeat % danceBeatSnap == 0
-			&& !boyfriend.canEnd)
-		{
-			boyfriend.dance();
-
-			boyfriend.color = FlxColor.WHITE;
-		}
 		if (curBeat % 8 == 7 && SONG.song == 'Tutorial' && opponent.curCharacter == 'gf') // fixed your stupid fucking code ninjamuffin this is literally the easiest shit to fix like come on seriously why are you so dumb
 		{
 			opponent.playAnim('cheer', true);
@@ -4212,15 +4213,29 @@ class PlayState extends MusicBeatState
 		}
 	}
 
-	function eatShit(ass:String):Void
+	/**
+	 * A method of changing song's Scroll Speed without hurting the holds.
+	 */
+	function changeScroll(speed:Float)
 	{
-		if (dialogue[0] == null)
+		songSpeed = speed;
+		for (note in notes.members)
 		{
-			trace(ass);
+			if (note.isSustainNote)
+			{
+				note.setGraphicSize(Std.int(note.width * 0.7));
+				note.scale.y *= Conductor.stepCrochet / 100 * 1.5 * songSpeed;
+				note.updateHitbox();
+			}
 		}
-		else
+		for (note in unspawnNotes)
 		{
-			trace(dialogue[0]);
+			if (note.isSustainNote)
+			{
+				note.setGraphicSize(Std.int(note.width * 0.7));
+				note.scale.y *= Conductor.stepCrochet / 100 * 1.5 * songSpeed;
+				note.updateHitbox();
+			}
 		}
 	}
 
