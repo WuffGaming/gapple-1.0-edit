@@ -30,6 +30,9 @@ class Note extends FlxSprite
 
 	public var noteScore:Float = 1;
 
+	public var prevWidth:Float;
+	public var prevHeight:Float;
+
 	public static var swagWidth:Float = 160 * 0.7;
 	public static var PURP_NOTE:Int = 0;
 	public static var GREEN_NOTE:Int = 2;
@@ -214,6 +217,11 @@ class Note extends FlxSprite
 		if (FlxG.save.data.downscroll && sustainNote)
 			flipY = true;
 
+		// Update prevWidth & prevHeight
+		prevWidth = width;
+		prevHeight = height;
+		trace(prevWidth + ' ' + prevHeight);
+
 		if (isSustainNote && prevNote != null)
 		{
 			alpha = 0.6;
@@ -260,6 +268,7 @@ class Note extends FlxSprite
 				prevNote.updateHitbox();
 			}
 		}
+		trace(width + ' ' + height);
 	}
 
 	public function swapType(type)

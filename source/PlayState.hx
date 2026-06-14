@@ -2913,7 +2913,7 @@ class PlayState extends MusicBeatState
 			});
 		}
 
-		if (boyfriend.holdTimer > Conductor.stepCrochet * (boyfriend.danceStep / 4) * 0.001 && !up && !down && !right && !left)
+		if (boyfriend.holdTimer > Conductor.stepCrochet * (curBeat % (boyfriend.danceStep / 4)) * 0.001 && !up && !down && !right && !left)
 		{
 			if (boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
 			{
@@ -4223,17 +4223,17 @@ class PlayState extends MusicBeatState
 		{
 			if (note.isSustainNote)
 			{
-				note.setGraphicSize(Std.int(note.width * 0.7));
-				note.scale.y *= Conductor.stepCrochet / 100 * 1.5 * songSpeed;
+				if (!note.animation.curAnim.name.endsWith('end'))
+					note.scale.y = Conductor.stepCrochet / 100 * 2 * songSpeed;
 				note.updateHitbox();
 			}
 		}
 		for (note in unspawnNotes)
 		{
-			if (note.isSustainNote)
+			if (note.isSustainNote && !note.animation.curAnim.name.endsWith('end'))
 			{
-				note.setGraphicSize(Std.int(note.width * 0.7));
-				note.scale.y *= Conductor.stepCrochet / 100 * 1.5 * songSpeed;
+				if (!note.animation.curAnim.name.endsWith('end'))
+					note.scale.y = Conductor.stepCrochet / 100 * 2 * songSpeed;
 				note.updateHitbox();
 			}
 		}
