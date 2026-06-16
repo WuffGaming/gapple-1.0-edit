@@ -220,7 +220,6 @@ class Note extends FlxSprite
 		// Update prevWidth & prevHeight
 		prevWidth = width;
 		prevHeight = height;
-		trace(prevWidth + ' ' + prevHeight);
 
 		if (isSustainNote && prevNote != null)
 		{

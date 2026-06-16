@@ -11,6 +11,8 @@ typedef SongInfo =
 {
 	var songName:String;
 
+	var displayName:String;
+
 	var bgColor:Array<Int>;
 
 	var songIcon:String;
@@ -83,7 +85,7 @@ class ExtraSongState extends MusicBeatState
 
 		for (i in 0...songs.length)
 		{
-			var songText:Alphabet = new Alphabet(0, (70 * i) + 30, songs[i].songName, true, false);
+			var songText:Alphabet = new Alphabet(0, (70 * i) + 30, songs[i].displayName, true, false);
 			songText.isMenuItem = true;
 			songText.targetY = i;
 			grpSongs.add(songText);
@@ -108,9 +110,9 @@ class ExtraSongState extends MusicBeatState
 		super.create();
 	}
 
-	public function addSong(songName:String, weekNum:Array<Int>, songCharacter:String, blackoutIcon:Bool = false)
+	public function addSong(songName:String, displayName:String, weekNum:Array<Int>, songCharacter:String, blackoutIcon:Bool = false)
 	{
-		var songMeta = new SongMetadata(songName, weekNum, songCharacter, blackoutIcon);
+		var songMeta = new SongMetadata(songName, displayName, weekNum, songCharacter, blackoutIcon);
 		songs.push(songMeta);
 		return songMeta;
 	}
@@ -132,8 +134,6 @@ class ExtraSongState extends MusicBeatState
 
 		if (controls.BACK)
 			FlxG.switchState(() -> new PlayMenuState());
-
-		DiscordRPC.changePresence('In the Extras Menu', 'Hovering over ${CoolUtil.formatString(songs[curSelected].songName)}');
 
 		if (FlxG.keys.pressed.ENTER)
 		{
@@ -218,6 +218,7 @@ class ExtraSongState extends MusicBeatState
 				item.alpha = 1;
 			}
 		}
+		DiscordRPC.changePresence('In the Extras Menu', 'Hovering over ${CoolUtil.formatString(songs[curSelected].displayName)}');
 		FlxTween.color(bg, 0.25, bg.color, FlxColor.fromRGB(songs[curSelected].week[0], songs[curSelected].week[1], songs[curSelected].week[2]));
 	}
 
@@ -236,23 +237,25 @@ class ExtraSongState extends MusicBeatState
 				{
 					if (data.songName.toLowerCase() == songName)
 					{
+						var displayName = data.displayName != null ? data.displayName : data.songName;
+
 						if ((songName.toLowerCase() == 'dave-x-bambi-shipping-cute' && !FlxG.save.data.shipUnlocked)
 							|| (songName.toLowerCase() == 'recovered-project' && !FlxG.save.data.foundRecoveredProject))
-							addSong('unknown', [0, 0, 0], data.songIcon, true);
+							addSong('unknown', 'unknown', [0, 0, 0], data.songIcon, true);
 						else if (data.songName == songList[i])
-							addSong(data.songName, data.bgColor, data.songIcon, false);
+							addSong(data.songName, displayName, data.bgColor, data.songIcon, false);
 						else
-							addSong(songList[i], data.bgColor, data.songIcon, false);
+							addSong(songList[i], songList[i], data.bgColor, data.songIcon, false);
 					}
 				}
 			}
 			else if (Assets.exists(Paths.chart('${songList[i]}/${songList[i]}')))
 			{
 				trace(songList[i]);
-				addSong(songList[i], [255, 255, 255], 'dave-3d', true); // incase only info is null
+				addSong(songList[i], songList[i], [255, 255, 255], 'dave-3d', true); // incase only info is null
 			}
 			else
-				addSong('data-is-null', [0, 0, 0], 'dave-3d', true); // incase entire song is null
+				addSong('data-is-null', 'data-is-null', [0, 0, 0], 'dave-3d', true); // incase entire song is null
 		}
 	}
 }
@@ -260,13 +263,15 @@ class ExtraSongState extends MusicBeatState
 class SongMetadata
 {
 	public var songName:String = "";
+	public var displayName:String = "";
 	public var week:Array<Int> = [0, 0, 0];
 	public var songCharacter:String = "";
 	public var blackoutIcon:Bool = false;
 
-	public function new(song:String, week:Array<Int>, songCharacter:String, blackoutIcon:Bool)
+	public function new(song:String, display:String, week:Array<Int>, songCharacter:String, blackoutIcon:Bool)
 	{
 		this.songName = song;
+		this.displayName = display;
 		this.week = week;
 		this.songCharacter = songCharacter;
 		this.blackoutIcon = blackoutIcon;
