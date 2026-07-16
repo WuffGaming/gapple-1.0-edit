@@ -3118,6 +3118,7 @@ class PlayState extends MusicBeatState
 				FlxG.camera.shake(0.0075, 0.1);
 				camHUD.shake(0.0045, 0.1);
 			}
+			boyfriend.holdTime = 5; // my bandaid solution
 			if (!note.isSustainNote && boyfriend.useVsliceSustains || !boyfriend.useVsliceSustains)
 			{
 				boyfriend.playAnim('sing' + fuckingDumbassBullshitFuckYou, true);
@@ -3163,19 +3164,15 @@ class PlayState extends MusicBeatState
 				gf.dance(gf.canAlt);
 			}
 		}
-		var opponentCanDance = true;
-		if (opponent.animation.curAnim.name.startsWith('sing') && !(opponent.animation.finished))
-			opponentCanDance = false;
-		else
-			opponentCanDance = true;
-		if (opponentCanDance)
+		// this is a big mess you shouldn't do anything here
+		if (opponent.canDance)
 		{
 			if (opponent.holdTimer <= 0 && curStep % opponent.danceStep == 0)
 				opponent.dance(opponent.canAlt);
 			if (opponentmirror.holdTimer <= 0 && curStep % opponentmirror.danceStep == 0)
 				opponentmirror.dance(opponentmirror.canAlt);
 		}
-		if (opponent2 != null)
+		if (opponent2 != null && opponent2.canDance)
 		{
 			if ((opponent2.animation.finished || opponent2.animation.curAnim.name == 'idle')
 				&& opponent2.holdTimer <= 0
@@ -3188,16 +3185,16 @@ class PlayState extends MusicBeatState
 			&& boyfriend.canEnd)
 		{
 			boyfriend.playAnim(boyfriend.animation.curAnim.name + '-end', true);
-			if (boyfriend.animation.finished && boyfriend.animation.curAnim.name.startsWith("sing"))
+			if (boyfriend.animation.finished && boyfriend.animation.curAnim.name.startsWith("sing") && boyfriend.canDance)
 			{
 				boyfriend.canEnd = false;
 				boyfriend.dance(boyfriend.canAlt);
 			}
 		}
 		if (!boyfriend.animation.curAnim.name.startsWith("sing")
+			&& !boyfriend.canEnd
 			&& boyfriend.canDance
-			&& curStep % boyfriend.danceStep == 0
-			&& !boyfriend.canEnd)
+			&& curStep % boyfriend.danceStep == 0)
 		{
 			boyfriend.dance(boyfriend.canAlt);
 

@@ -100,6 +100,7 @@ class Character extends FlxSprite
 
 	public var danceStep:Int = 8;
 	public var holdTimer:Float = 0;
+	public var holdTime:Float = 0;
 	public var canDance:Bool = true;
 	public var canSing:Bool = true;
 	public var canEnd:Bool = false;
@@ -152,6 +153,9 @@ class Character extends FlxSprite
 			return;
 		}
 
+		if (holdTime > 0)
+			holdTime -= 0.05;
+
 		// combining the player and opponent animation sing code DOES fix the jittery animation issue... but also breaks super long hold notes on vslice...
 		// TODO: fix vslice holds
 		if (animation.curAnim.name.startsWith('sing') && canSing)
@@ -161,8 +165,11 @@ class Character extends FlxSprite
 
 		if (holdTimer >= Conductor.stepCrochet * danceStep * 0.001)
 		{
-			dance(canAlt);
-			holdTimer = 0;
+			if (holdTime <= 0)
+			{
+				dance(canAlt);
+				holdTimer = 0;
+			}
 		}
 
 		if (animation.curAnim.name == 'firstDeath' && animation.curAnim.finished)
