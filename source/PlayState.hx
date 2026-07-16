@@ -2913,14 +2913,6 @@ class PlayState extends MusicBeatState
 			});
 		}
 
-		if (boyfriend.holdTimer > Conductor.stepCrochet * (curBeat % (boyfriend.danceStep / 4)) * 0.001 && !up && !down && !right && !left)
-		{
-			if (boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
-			{
-				boyfriend.dance();
-			}
-		}
-
 		playerStrums.forEach(function(spr:Strum)
 		{
 			switch (spr.ID)

@@ -267,7 +267,6 @@ class Note extends FlxSprite
 				prevNote.updateHitbox();
 			}
 		}
-		trace(width + ' ' + height);
 	}
 
 	public function swapType(type)

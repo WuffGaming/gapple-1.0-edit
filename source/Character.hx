@@ -151,34 +151,23 @@ class Character extends FlxSprite
 			super.update(elapsed);
 			return;
 		}
-		if (!nativelyPlayable && !(characterType == PLAYER))
+
+		// combining the player and opponent animation sing code DOES fix the jittery animation issue... but also breaks super long hold notes on vslice...
+		// TODO: fix vslice holds
+		if (animation.curAnim.name.startsWith('sing') && canSing)
 		{
-			if (animation.curAnim.name.startsWith('sing'))
-			{
-				holdTimer += elapsed;
-			}
-
-			var daveVar:Float = 4;
-
-			if (holdTimer >= Conductor.stepCrochet * daveVar * 0.001)
-			{
-				dance(canAlt);
-				holdTimer = 0;
-			}
+			holdTimer += elapsed;
 		}
-		else
-		{
-			if (animation.curAnim.name.startsWith('sing') && canSing)
-			{
-				holdTimer += elapsed;
-			}
-			else
-				holdTimer = 0;
 
-			if (animation.curAnim.name == 'firstDeath' && animation.curAnim.finished)
-			{
-				playAnim('deathLoop');
-			}
+		if (holdTimer >= Conductor.stepCrochet * danceStep * 0.001)
+		{
+			dance(canAlt);
+			holdTimer = 0;
+		}
+
+		if (animation.curAnim.name == 'firstDeath' && animation.curAnim.finished)
+		{
+			playAnim('deathLoop');
 		}
 
 		super.update(elapsed);
