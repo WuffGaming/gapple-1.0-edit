@@ -3157,7 +3157,7 @@ class PlayState extends MusicBeatState
 	{
 		super.stepHit();
 
-		if (curStep % gf.danceStep == 0)
+		if (curStep % gf.danceStep == 0 && gf.animation.curAnim.looped == false)
 		{
 			if (!shakeCam)
 			{
@@ -3167,16 +3167,19 @@ class PlayState extends MusicBeatState
 		// this is a big mess you shouldn't do anything here
 		if (opponent.canDance)
 		{
-			if (opponent.holdTimer <= 0 && curStep % opponent.danceStep == 0)
+			if (opponent.holdTimer <= 0 && curStep % opponent.danceStep == 0 && opponent.animation.curAnim.looped == false)
 				opponent.dance(opponent.canAlt);
-			if (opponentmirror.holdTimer <= 0 && curStep % opponentmirror.danceStep == 0)
+			if (opponentmirror.holdTimer <= 0
+				&& curStep % opponentmirror.danceStep == 0
+				&& opponentmirror.animation.curAnim.looped == false)
 				opponentmirror.dance(opponentmirror.canAlt);
 		}
 		if (opponent2 != null && opponent2.canDance)
 		{
 			if ((opponent2.animation.finished || opponent2.animation.curAnim.name == 'idle')
 				&& opponent2.holdTimer <= 0
-				&& curStep % opponent2.danceStep == 0)
+				&& curStep % opponent2.danceStep == 0
+				&& opponent2.animation.curAnim.looped == false)
 				opponent2.dance(opponent2.canAlt);
 		}
 		if (boyfriend.animation.curAnim.name.startsWith("sing")
@@ -3194,7 +3197,8 @@ class PlayState extends MusicBeatState
 		if (!boyfriend.animation.curAnim.name.startsWith("sing")
 			&& !boyfriend.canEnd
 			&& boyfriend.canDance
-			&& curStep % boyfriend.danceStep == 0)
+			&& curStep % boyfriend.danceStep == 0
+			&& boyfriend.animation.curAnim.looped == false)
 		{
 			boyfriend.dance(boyfriend.canAlt);
 
