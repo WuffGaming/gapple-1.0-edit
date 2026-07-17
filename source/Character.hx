@@ -98,6 +98,8 @@ class Character extends FlxSprite
 	public var gfForm:String = 'gf';
 	public var deadForm:String = 'bf-dead';
 
+	public var defaultColor:FlxColor = FlxColor.WHITE;
+
 	public var danceStep:Int = 8;
 	public var holdTimer:Float = 0;
 	public var holdTime:Float = 0;
@@ -214,6 +216,7 @@ class Character extends FlxSprite
 		{
 			return;
 		}
+		color = defaultColor; // What color is character meant to even be Lol
 		animation.play(AnimName, Force, Reversed, Frame);
 
 		var daOffset = animOffsets.get(AnimName);
@@ -275,12 +278,12 @@ class Character extends FlxSprite
 		var path:String = Paths.json('characters/${curCharacter}');
 		if (!Assets.exists(path))
 			curCharacter = 'bf';
-		trace('${formerChar} path: ${path}');
+		// trace('${formerChar} path: ${path}');
 		var rawJson = Assets.getText(Paths.json('characters/${curCharacter}'));
 		var jsonData:CharacterData = cast Json.parse(rawJson);
 
 		var data:CharacterData = cast jsonData;
-		trace(data.name, curCharacter);
+		// trace(data.name, curCharacter);
 
 		name = data.name;
 

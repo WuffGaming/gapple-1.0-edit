@@ -2998,7 +2998,6 @@ class PlayState extends MusicBeatState
 			}
 			else
 			{
-				boyfriend.color = 0xFF000084;
 				// 'LEFT', 'DOWN', 'UP', 'RIGHT'
 				var fuckingDumbassBullshitFuckYou:String;
 				fuckingDumbassBullshitFuckYou = notestuffs[Math.round(Math.abs(direction)) % 4];
@@ -3013,6 +3012,7 @@ class PlayState extends MusicBeatState
 					}
 				}
 				boyfriend.playAnim('sing' + fuckingDumbassBullshitFuckYou, true);
+				boyfriend.color = 0xFF000084;
 			}
 
 			updateAccuracy();
@@ -3201,8 +3201,6 @@ class PlayState extends MusicBeatState
 			&& boyfriend.animation.curAnim.looped == false)
 		{
 			boyfriend.dance(boyfriend.canAlt);
-
-			boyfriend.color = FlxColor.WHITE;
 		}
 
 		// health icon bounce but epic-er

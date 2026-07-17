@@ -16,7 +16,7 @@ import flixel.util.FlxColor;
  */
 class AnimationDebug extends MusicBeatState
 {
-	var bf:Boyfriend;
+	var bf:Character;
 	var dad:Character;
 	var char:Character;
 	var textAnim:FlxText;
@@ -53,7 +53,7 @@ class AnimationDebug extends MusicBeatState
 
 		if (isDad)
 		{
-			dad = new Character(0, 0, daAnim);
+			dad = new Character(0, 0, daAnim, OPPONENT);
 			dad.screenCenter();
 			dad.debugMode = true;
 			add(dad);
@@ -63,7 +63,7 @@ class AnimationDebug extends MusicBeatState
 		}
 		else
 		{
-			bf = new Boyfriend(0, 0);
+			bf = new Character(0, 0, daAnim, PLAYER);
 			bf.screenCenter();
 			bf.debugMode = true;
 			add(bf);

@@ -54,13 +54,13 @@ class CharacterSelectState extends MusicBeatState
 
 	public function new()
 	{
-		trace('CharSelectOrder is ' + order);
+		// trace('CharSelectOrder is ' + order);
 		if (PlayState.SONG.song.toLowerCase() != 'dave-x-bambi-shipping-cute')
 		{
 			for (i in 0...order.length)
 			{
 				var characterList:Array<String> = CoolUtil.coolTextFile(Paths.txt('forms/${order[i]}'));
-				trace(characterList);
+				// trace(characterList);
 				characters.push(new CharacterInSelect(characterList));
 			}
 		}
@@ -257,8 +257,8 @@ class CharacterSelectState extends MusicBeatState
 
 	public function endIt(e:FlxTimer = null)
 	{
-		trace("ENDING");
-		trace(currentSelectedCharacter);
+		// trace("ENDING");
+		// trace(currentSelectedCharacter);
 		PlayState.characteroverride = currentSelectedCharacter.names[0];
 		PlayState.formoverride = currentSelectedCharacter.names[curForm];
 		PlayState.curmult = [1, 1, 1, 1];
