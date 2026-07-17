@@ -3584,10 +3584,12 @@ class PlayState extends MusicBeatState
 						defaultCamZoom = 0.7;
 					case 220:
 						opponent.canAlt = true;
+						opponent.canDance = false;
 						opponent.playAnim('catappear', true);
 						defaultCamZoom = 1;
 					case 224:
 						FlxG.camera.flash(FlxColor.WHITE, 1);
+						opponent.canDance = true;
 						iconP2.changeIcon('ringi-toio');
 						defaultCamZoom = 0.7;
 					case 352:
